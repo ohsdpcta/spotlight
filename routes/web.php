@@ -15,3 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/hello', 'UserController@index');
+
+// レイアウトの確認のためのルート 後で編集
+Route::get('/main', function(){
+    return view('spotlight.main');
+});

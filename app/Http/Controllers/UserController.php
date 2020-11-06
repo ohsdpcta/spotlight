@@ -8,6 +8,23 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    public function index(Request $request)
+    {
+        return view('index');
+    }
+
+    public function search(Request $request)
+    {   
+        $input = $request->input;
+        if ($input == '') {
+            $result = User::all();
+        }else{
+            $result = User::where('name', 'like', '%'.$input.'%')->get();
+        }
+        return view('search.search', ['result' => $result]);
+        }
+    }
+
     //サインアップ
     public function signup_form(){
         return View('user.signup_form');
@@ -30,6 +47,7 @@ class UserController extends Controller
         //リダイレクトする
         return redirect('/');
     }
+
     //サインイン
     public function signin_form(){
         //サインインビューを返す

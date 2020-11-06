@@ -13,3 +13,9 @@
 
 Route::get('/', 'UserController@index');
 Route::post('/search', 'UserController@search');
+//サインアップ
+Route::get('/user/signup', 'UserController@signup_form');
+Route::post('/user/signup', 'UserController@signup');
+//サインイン
+Route::get('/user/signin', 'UserController@signin_form');
+Route::post('/user/signin', 'UserController@signin');

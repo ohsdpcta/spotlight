@@ -8,13 +8,11 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    public function index(Request $request)
-    {
+    public function index(Request $request){
         return view('index');
     }
 
-    public function search(Request $request)
-    {   
+    public function search(Request $request){
         $input = $request->input;
         if ($input == '') {
             $result = User::all();
@@ -22,7 +20,6 @@ class UserController extends Controller
             $result = User::where('name', 'like', '%'.$input.'%')->get();
         }
         return view('search.search', ['result' => $result]);
-        }
     }
 
     //サインアップ

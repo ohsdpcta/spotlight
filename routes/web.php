@@ -11,7 +11,5 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/hello', 'UserController@index');
+Route::get('/', 'UserController@index');
+Route::post('/search', 'UserController@search');

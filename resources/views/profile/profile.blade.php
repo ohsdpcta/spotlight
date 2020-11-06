@@ -1,9 +1,13 @@
 {{-- @section('profile') --}}
-
-<meta charset="utf-8">
-<title>プロフィールページ</title>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>プロフィールページ</title>
+</head>
 <body>
-{{ $content }}
+    @foreach($data as $item)
+        {{ $item->content }}
+    @endforeach
 </body>
-
+</html>
 {{-- @endsection --}}

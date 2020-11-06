@@ -8,10 +8,8 @@ use App\Profile;
 
 class ProfileController extends Controller
 {
-    public function profile() {
-        $data = [
-            'content' => '適当',
-        ];
-        return view('profile.profile', $data);
+    public function profile(Request $request, $id) {
+        $data = Profile::where('user_id', $id)->get();
+        return view('profile.profile', ['data' => $data]);
     }
 }

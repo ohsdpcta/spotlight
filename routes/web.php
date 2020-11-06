@@ -15,4 +15,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('profile', 'ProfileController@profile');
+Route::get('/user/{id}/profile', 'ProfileController@profile');

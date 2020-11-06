@@ -14,4 +14,5 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/hello', 'UserController@index');
+
+Route::get('profile', 'ProfileController@profile');

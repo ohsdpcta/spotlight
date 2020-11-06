@@ -18,3 +18,6 @@ Route::get('/hello', 'UserController@index');
 //サインアップ
 Route::get('/user/signup', 'UserController@signup_form');
 Route::post('/user/signup', 'UserController@signup');
+//サインイン
+Route::get('/user/signin', 'UserController@signin_form');
+Route::post('/user/signin', 'UserController@signin');

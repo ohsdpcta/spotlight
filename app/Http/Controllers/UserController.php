@@ -30,6 +30,28 @@ class UserController extends Controller
         //リダイレクトする
         return redirect('/');
     }
+    //サインイン
+    public function signin_form(){
+        //サインインビューを返す
+        return view('user.signin_form');
+    }
+
+    public function signin(Request $request){
+        //バリデーションの設定
+        $request->validate([
+            'email'=>'required|email|max:256',
+            'password'=>'required|string|between:8,128',
+        ]);
+        //サインインする
+        if(Auth::attempt(['email' => $request->input('email'),'password' => $request->input('password')],$request->remember)):
+            // ログイン後にアクセスしようとしていたアクションにリダイレクト、無い場合はprofileへ
+            session()->flash('flash_message','ログインしました。');
+            return redirect()->intended('/');
+        endif;
+        //失敗した場合はsigninにリダイレクト
+        $auth_error = 'ログイン情報が間違っています。';
+        return view('user.signin_form',['auth_error'=>$auth_error]);
+    }
 
 
 }

@@ -23,9 +23,9 @@
             {{-- バリデーションエラーがあった場合は、old関数で入力データを復元する --}}
             <tr><th>メールアドレス</th><td><input type="email" name="email" value="{{old('email')}}"></td></tr>
             <tr><th>パスワード</th><td><input type="password" name="password" ></td></tr>
-            <tr><th>ログイン状態を保持</th><td><input type="checkbox" name="remeber" value="true"></td></tr>
+            <tr><th>ログイン状態を保持</th><td><input type="checkbox" name="remember" value="true"></td></tr>
             {{-- 各種ボタン --}}
-            <input type="submit" value="ログイン">
+            <tr><th></th><td><input type="submit" value="ログイン"></td></tr>
         </table>
     </form>
 

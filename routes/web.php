@@ -11,6 +11,7 @@
 |
 */
 
+
 Route::get('/', 'UserController@index');
 Route::post('/search', 'UserController@search');
 //サインアップ
@@ -19,3 +20,5 @@ Route::post('/user/signup', 'UserController@signup');
 //サインイン
 Route::get('/user/signin', 'UserController@signin_form');
 Route::post('/user/signin', 'UserController@signin');
+//プロファイル
+Route::get('/user/{id}/profile', 'ProfileController@profile');

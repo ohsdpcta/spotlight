@@ -101,9 +101,17 @@
 
             <div class="tab w-100 nav-justified">
                 <ul class="nav nav-tabs">
+
+                    {{-- @if ($tekitou == 'profile') --}}
                     <li class="nav-item">
                         <a href="spotlight/user/:id/profile" class="nav-link active">プロフィール</a>
                     </li>
+                    {{-- @else
+                    <li class="nav-item">
+                        <a href="spotlight/user/:id/profile" class="nav-link ">プロフィール</a>
+                    </li>
+                    @endif --}}
+
                     <li class="nav-item">
                         <a href="spotlight/user/:id/locate" class="nav-link">ロケーション</a>
                     </li>
@@ -118,39 +126,6 @@
                 <div>@yield('profile')</div>
                 
             </div>
-
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
 
         </div>
         

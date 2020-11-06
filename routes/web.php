@@ -16,5 +16,5 @@ Route::get('/', function () {
 });
 Route::get('/hello', 'UserController@index');
 //サインアップ
-Route::get('/signup', 'UserController@Signup_form');
-Route::post('/signup', 'UserController@Signup');
+Route::get('/user/signup', 'UserController@signup_form');
+Route::post('/user/signup', 'UserController@signup');

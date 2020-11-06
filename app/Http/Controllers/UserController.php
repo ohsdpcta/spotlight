@@ -9,14 +9,20 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
     //サインアップ
-    public function Signup_form(){
-        return View('user.signup');
+    public function signup_form(){
+        return View('user.signup_form');
     }
 
-    public function Signup(Request $request){
+    public function signup(Request $request){
+        // バリデーションを設定する
+        $request->validate([
+            'name'=>'required|string|max:30',
+            'email'=>'required|email|max:254|unique:users,email',
+            'password'=>'required|string|min:8|max:128|confirmed',
+        ]);
         //$userにデータを設定する
         $user = new User;
-        $user->user_name = $request->user_name;
+        $user->name = $request->name;
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
         //データベースに保存

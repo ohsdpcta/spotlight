@@ -123,7 +123,7 @@
                     </li>
                 </ul>
 
-                <div>@yield('profile')</div>
+                <div>@yield('content')</div>
                 
             </div>
 

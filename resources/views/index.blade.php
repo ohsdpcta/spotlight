@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('profile')
+@section('content')
     <form action="/search" method="post">
         @csrf
         <input type="text" name="input" value="">

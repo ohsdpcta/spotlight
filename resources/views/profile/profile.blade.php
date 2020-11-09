@@ -1,4 +1,7 @@
-{{-- @section('profile') --}}
+@extends('layouts/main')
+
+@section('content') 
+
 <html>
 <head>
     <meta charset="utf-8">
@@ -8,6 +11,8 @@
     @foreach($data as $item)
         {{ $item->content }}
     @endforeach
+
+    <a href="profile/edit">プロフィールの修正</a>
 </body>
 </html>
-{{-- @endsection --}}
+@endsection

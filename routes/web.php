@@ -24,3 +24,5 @@ Route::post('/user/signin', 'UserController@signin');
 Route::get('/user/signout', 'UserController@signout');
 // プロファイル
 Route::get('/user/{id}/profile', 'ProfileController@profile');
+Route::get('/user/{id}/profile/edit', 'ProfileController@edit');
+Route::post('/user/{id}/profile/edit', 'ProfileController@update');

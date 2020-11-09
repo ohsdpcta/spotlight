@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+@extends('layouts.main')
+@section('content')
+
+
 <head>
     <title>サインイン画面</title>
 </head>
@@ -29,3 +32,4 @@
         </table>
     </form>
 
+@endsection

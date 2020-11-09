@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+@extends('layouts.main')
+@section('content')
+
 <head>
     <title>新規登録画面</title>
 </head>
@@ -28,3 +30,4 @@
         </table>
     </form>
 
+@endsection

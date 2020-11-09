@@ -32,7 +32,7 @@
                 align-content: center;
             }
             .top p {
-                margin: 0; 
+                margin: 0;
                 padding: 0;
             }
 
@@ -43,7 +43,7 @@
                 background: #ffffff;/*背景色*/
             }
             .tab p {
-                margin: 0; 
+                margin: 0;
                 padding: 0;
             }
             .navbar-brand-center {
@@ -54,7 +54,7 @@
                 text-align:center;
                 margin: auto;
             }
-        
+
         </style>
     </head>
 
@@ -90,7 +90,7 @@
             </form>
 
         </nav>
-        
+
 
         <div class="container">
 
@@ -124,11 +124,11 @@
                 </ul>
 
                 <div>@yield('content')</div>
-                
+
             </div>
 
         </div>
-        
+
 
     </body>
 

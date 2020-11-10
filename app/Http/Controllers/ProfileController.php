@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use App\User;
 use App\Profile;
 use App\Follower;
 
-class ProfileController extends Controller
-{
+class ProfileController extends Controller{
     public function profile(Request $request, $id) {
+        $user = Auth::user();
         $data = Profile::find($id);
         // フォロー処理
         $follow = Follower::where('target_id', $id)
@@ -23,7 +24,7 @@ class ProfileController extends Controller
         }
         $follower = Follower::where('target_id', $id)->get();
 
-        return view('profile.profile', compact('data', 'follow_flg', 'follower'));
+        return view('profile.profile', compact('user', 'data', 'follow_flg', 'follower'));
     }
 
     public function edit(Request $request, $id) {

@@ -22,6 +22,7 @@
         <table>
             @csrf
             <tr><th>ユーザー名</th><td><input type="text" name="name" value="{{old('name')}}"></td></tr>
+            <tr><th>ユーザーID</th><td><input type="text" name="social_id" value="{{old('social_id')}}"></td></tr>
             <tr><th>メールアドレス</th><td><input type="email" name="email" value="{{old('email')}}"></td></tr>
             <tr><th>パスワード</th><td><input type="password" name="password" ></td></tr>
             <tr><th>パスワード確認</th><td><input type="password" name="password_confirmation" ></td></tr>

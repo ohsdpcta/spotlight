@@ -101,7 +101,7 @@
 
         <footer class="footer sticky-bottom">
         <div class="container">
-            <p class="text-muted">Place sticky footer content here.</p>
+            <p class="text-muted">ここに何か書く</p>
         </div>
         </footer>
 

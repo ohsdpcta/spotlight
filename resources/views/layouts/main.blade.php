@@ -45,14 +45,14 @@
                 margin: 0;
                 padding: 0;
             }
-            .navbar-brand-center {
+            {{-- .navbar-brand-center {
                 position: absolute;
                 width: 100%;
                 left: 0;
                 top: 0;
                 text-align:center;
                 margin: auto;
-            }
+            } --}}
             .footer {
                 bottom: 0;
                 width: 100%;

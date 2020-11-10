@@ -25,7 +25,8 @@ class UserController extends Controller
 
     //サインアップ//
     public function signup_form(){
-        return View('user.signup_form');
+        $user = Auth::user();
+        return View('user.signup_form', compact('user'));
     }
     //
     public function signup(Request $request){
@@ -56,8 +57,9 @@ class UserController extends Controller
     }
     //サインイン//
     public function signin_form(){
+        $user = Auth::user();
         //サインインビューを返す
-        return view('user.signin_form');
+        return view('user.signin_form', compact('user'));
     }
 
     //

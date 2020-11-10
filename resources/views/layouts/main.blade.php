@@ -85,7 +85,7 @@
                         <a class="nav-link" href="/user/signup">sign up</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/user/#">my page</a>
+                        <a class="nav-link" href="/user/{{ $user->id }}/profile">my page</a>
                     </li>
                 </ul>
             </div>

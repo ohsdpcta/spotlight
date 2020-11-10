@@ -13,13 +13,13 @@ class FollowerController extends Controller
         $follower->target_id = $id;
         $follower->follower_id = Auth::id();
         $follower->save();
-        return redirect('/');
+        return redirect("/user/{$id}/profile");
     }
 
     public function unfollow(Request $request, $id){
         Follower::where('target_id', $id)
             ->where('follower_id', Auth::id())
             ->delete();
-        return redirect('/');
+        return redirect("/user/{$id}/profile");
     }
 }

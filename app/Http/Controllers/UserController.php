@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Profile;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
@@ -35,16 +36,23 @@ class UserController extends Controller
             'email'=>'required|email|max:254|unique:users,email',
             'password'=>'required|string|min:8|max:128|confirmed',
         ]);
-        //$userにデータを設定する
+        // $userにデータを設定する
         $user = new User;
         $user->name = $request->name;
         $user->social_id = $request->social_id;
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
-        //データベースに保存
         $user->save();
-        //リダイレクトする
-        return redirect('/');
+        // ログイン
+        Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')]);
+        $login_user_id = Auth::id();
+        // Profileを作成
+        $profile = new Profile;
+        $profile->user_id = $login_user_id;
+        $profile->content = 'よろしくお願いします！';
+        $profile->save();
+        // ログイン後にアクセスしようとしていたアクションにリダイレクト、無い場合はprofileへ
+        return redirect()->intended("user/{$login_user_id}/profile");
     }
     //サインイン//
     public function signin_form(){
@@ -79,5 +87,9 @@ class UserController extends Controller
         return view('user.signin_form',['auth_error'=>$auth_error]);
     }
 
+    public function signout(Request $request){
+        Auth::logout();
+        return redirect('/');
+    }
 
 }

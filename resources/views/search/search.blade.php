@@ -4,7 +4,7 @@
 </head>
 <body>
     @foreach($result as $item)
-        <p>{{ $item->name }}</p>
+        <p><a href=" /user/{{$item->id}}/profile">{{ $item->name }}</a></p>
     @endforeach
 </body>
 </html>

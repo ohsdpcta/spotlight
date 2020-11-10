@@ -14,11 +14,18 @@
 
 Route::get('/', 'UserController@index');
 Route::post('/search', 'UserController@search');
-//サインアップ
+// サインアップ
 Route::get('/user/signup', 'UserController@signup_form');
 Route::post('/user/signup', 'UserController@signup');
-//サインイン
+// サインイン
 Route::get('/user/signin', 'UserController@signin_form');
 Route::post('/user/signin', 'UserController@signin');
-//プロファイル
+// サインアウト
+Route::get('/user/signout', 'UserController@signout');
+// プロファイル
 Route::get('/user/{id}/profile', 'ProfileController@profile');
+Route::get('/user/{id}/profile/edit', 'ProfileController@edit');
+Route::post('/user/{id}/profile/edit', 'ProfileController@update');
+// フォロー
+Route::get('/user/{id}/follow', 'FollowerController@follow');
+Route::get('/user/{id}/unfollow', 'FollowerController@unfollow');

@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
     public function index(Request $request){
-        return view('index');
+        $user = Auth::user();
+        return view('index', compact('user'));
     }
 
     public function search(Request $request){

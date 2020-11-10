@@ -32,7 +32,7 @@ class UserController extends Controller
         // バリデーションを設定する
         $request->validate([
             'name'=>'required|string|max:30',
-            'social_id' => 'required|unique:users,social_id|string|max:15',
+            'social_id' => 'required|unique:users,social_id|string|max:30',
             'email'=>'required|email|max:254|unique:users,email',
             'password'=>'required|string|min:8|max:128|confirmed',
         ]);

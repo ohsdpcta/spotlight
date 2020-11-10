@@ -26,3 +26,6 @@ Route::get('/user/signout', 'UserController@signout');
 Route::get('/user/{id}/profile', 'ProfileController@profile');
 Route::get('/user/{id}/profile/edit', 'ProfileController@edit');
 Route::post('/user/{id}/profile/edit', 'ProfileController@update');
+// フォロー
+Route::get('/user/{id}/follow', 'FollowerController@follow');
+Route::get('/user/{id}/unfollow', 'FollowerController@unfollow');

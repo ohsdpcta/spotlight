@@ -9,13 +9,14 @@ use App\Profile;
 class ProfileController extends Controller
 {
     public function profile(Request $request, $id) {
-        $data = Profile::where('user_id', $id)->get();
-        return view('profile.profile', ['data' => $data]);
+        $data = Profile::find($id);
+        $user_id = $data->user_id;
+        return view('profile.profile', compact('data', 'user_id'));
     }
 
     public function edit(Request $request, $id) {
         $data = Profile::find($id);
-        return view('profile.edit', ['form' => $data]);
+        return view('profile.edit', compact('data'));
     }
 
     public function update(Request $request, $id) {

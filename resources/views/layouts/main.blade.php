@@ -9,7 +9,6 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
 
-
         <style>
             header {
                 background-color: blue;
@@ -54,6 +53,13 @@
                 text-align:center;
                 margin: auto;
             }
+            .footer {
+                bottom: 0;
+                width: 100%;
+                /* Set the fixed height of the footer here */
+                height: 150px;
+                background-color: #3d3d3d;
+            }
 
         </style>
     </head>
@@ -91,44 +97,13 @@
 
         </nav>
 
+        @yield('user')
 
+        <footer class="footer sticky-bottom">
         <div class="container">
-
-            <div class="top">
-                <img src="http://placehold.jp/200x200.png" class="rounded-circle">
-                <h1>zyugemu zyugemu</h1>
-            </div>
-
-            <div class="tab w-100 nav-justified">
-                <ul class="nav nav-tabs">
-
-                    {{-- @if ($tekitou == 'profile') --}}
-                    <li class="nav-item">
-                        <a href="spotlight/user/:id/profile" class="nav-link active">プロフィール</a>
-                    </li>
-                    {{-- @else
-                    <li class="nav-item">
-                        <a href="spotlight/user/:id/profile" class="nav-link ">プロフィール</a>
-                    </li>
-                    @endif --}}
-
-                    <li class="nav-item">
-                        <a href="spotlight/user/:id/locate" class="nav-link">ロケーション</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="spotlight/user/:id/goods" class="nav-link">グッズ</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="spotlight/user/:id/sample" class="nav-link">サンプルリンク</a>
-                    </li>
-                </ul>
-
-                <div>@yield('content')</div>
-
-            </div>
-
+            <p class="text-muted">Place sticky footer content here.</p>
         </div>
-
+        </footer>
 
     </body>
 

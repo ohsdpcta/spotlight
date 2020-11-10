@@ -1,18 +1,52 @@
-@extends('layouts/main')
+@extends('layouts/user')
 
 @section('content') 
-
 <html>
+
 <head>
     <meta charset="utf-8">
     <title>プロフィールページ</title>
 </head>
+
 <body>
     @foreach($data as $item)
         {{ $item->content }}
     @endforeach
 
     <a href="profile/edit">プロフィールの修正</a>
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
 </body>
+
 </html>
 @endsection

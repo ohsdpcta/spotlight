@@ -45,14 +45,14 @@
                 margin: 0;
                 padding: 0;
             }
-            .navbar-brand-center {
+            {{-- .navbar-brand-center {
                 position: absolute;
                 width: 100%;
                 left: 0;
                 top: 0;
                 text-align:center;
                 margin: auto;
-            }
+            } --}}
             .footer {
                 bottom: 0;
                 width: 100%;
@@ -75,17 +75,17 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <a class="navbar-brand navbar-brand-center" href="#">Spotlight</a>
+            <a class="navbar-brand navbar-brand-center" href="/">Spotlight</a>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav">
-                    <li class="nav-item activie">
-                        <a class="nav-link" href="#">sign in</a>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/user/signin">sign in</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">sign up</a>
+                        <a class="nav-link" href="/user/signup">sign up</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">my page</a>
+                        <a class="nav-link" href="/user/{{ $user->id }}/profile">my page</a>
                     </li>
                 </ul>
             </div>

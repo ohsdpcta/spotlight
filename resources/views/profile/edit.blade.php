@@ -1,4 +1,4 @@
-@extends('layouts/main')
+@extends('layouts/user')
 
 @section('content')
     <form action="edit" method="post">

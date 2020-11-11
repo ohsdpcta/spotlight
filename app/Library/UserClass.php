@@ -1,15 +1,13 @@
 <?php
 
 namespace App\Library;
+
+use App\User;
 use Illuminate\Support\Facades\Auth;
 
 class UserClass{
-  public static function getLoginUser(){
-    if(Auth::user()){
-      $user = Auth::user();
-    }else{
-      $user = '';
-    }
+  public static function getUser($id){
+    $user = User::find($id);
     return $user;
   }
 }

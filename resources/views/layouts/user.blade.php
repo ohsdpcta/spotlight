@@ -5,7 +5,7 @@
 
     <div class="top">
         <img src="http://placehold.jp/200x200.png" class="rounded-circle">
-        <h1>zyugemu zyugemu</h1>
+        <h1>{{ UserClass::getUser(request()->id)->name }}</h1>
     </div>
 
     <div class="tab w-100 nav-justified">

@@ -79,7 +79,7 @@
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav">
                     {{-- 非ログイン時の処理 --}}
-                    @if(empty($user))
+                    @if(!Auth::user())
                         <li class="nav-item active">
                             <a class="nav-link" href="/user/signin">sign in</a>
                         </li>
@@ -92,7 +92,7 @@
                             <a class="nav-link" href="/user/signout">sign out</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/user/{{ $user->id }}/profile">my page</a>
+                            <a class="nav-link" href="/user/{{ Auth::id() }}/profile">my page</a>
                         </li>
                     @endif
                 </ul>

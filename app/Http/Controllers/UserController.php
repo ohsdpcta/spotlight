@@ -5,14 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Profile;
-use App\Library\UserClass;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
     public function index(Request $request){
-        $loginuser = UserClass::getLoginUser();
-        return view('index', compact('loginuser'));
+        return view('index');
     }
 
     public function search(Request $request){
@@ -27,8 +25,7 @@ class UserController extends Controller
 
     //サインアップ//
     public function signup_form(){
-        $loginuser = UserClass::getLoginUser();
-        return View('user.signup_form', compact('loginuser'));
+        return View('user.signup_form');
     }
     //
     public function signup(Request $request){
@@ -59,9 +56,8 @@ class UserController extends Controller
     }
     //サインイン//
     public function signin_form(){
-        $loginuser = UserClass::getLoginUser();
         //サインインビューを返す
-        return view('user.signin_form', compact('loginuser'));
+        return view('user.signin_form');
     }
 
     //

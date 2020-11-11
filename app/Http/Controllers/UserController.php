@@ -10,7 +10,11 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
     public function index(Request $request){
-        $user = Auth::user();
+        if(Auth::user()){
+            $user = Auth::user();
+        }else{
+            $user = '';
+        }
         return view('index', compact('user'));
     }
 

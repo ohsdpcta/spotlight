@@ -85,7 +85,9 @@
                         <a class="nav-link" href="/user/signup">sign up</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/user/{{ $user->id }}/profile">my page</a>
+                        @if(!empty($user))
+                            <a class="nav-link" href="/user/{{ $user->id }}/profile">my page</a>
+                        @endif
                     </li>
                 </ul>
             </div>

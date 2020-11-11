@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
     public function index(Request $request){
-        $user = UserClass::getLoginUser();
-        return view('index', compact('user'));
+        $loginuser = UserClass::getLoginUser();
+        return view('index', compact('loginuser'));
     }
 
     public function search(Request $request){
@@ -27,8 +27,8 @@ class UserController extends Controller
 
     //サインアップ//
     public function signup_form(){
-        $user = UserClass::getLoginUser();
-        return View('user.signup_form', compact('user'));
+        $loginuser = UserClass::getLoginUser();
+        return View('user.signup_form', compact('loginuser'));
     }
     //
     public function signup(Request $request){
@@ -59,9 +59,9 @@ class UserController extends Controller
     }
     //サインイン//
     public function signin_form(){
-        $user = UserClass::getLoginUser();
+        $loginuser = UserClass::getLoginUser();
         //サインインビューを返す
-        return view('user.signin_form', compact('user'));
+        return view('user.signin_form', compact('loginuser'));
     }
 
     //

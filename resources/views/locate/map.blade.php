@@ -18,6 +18,15 @@
 
 <body>
     <button>現在地を取得ボタン</button>
+
+    <form action="locate_edit" method="post">
+      @csrf
+          <input type="hidden" name="id" value="{{ $data->id }}">
+          <input type="text" name="location" value="{{ $data->content }}">
+          <input type="submit" value="修正">
+      </form>
+
+
     <div>
         <script>
             latlngはピンを落とす緯度と経度を設定する変数らしい
@@ -36,6 +45,7 @@
         <script async defer src="https://maps.googleapis.com/maps/api/js?key=[取得したAPIキー]&callback=initMap"></script>
         <div id="map"></div>
     </div>
+
 </body>
 
 </html>

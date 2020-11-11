@@ -78,17 +78,23 @@
             <a class="navbar-brand navbar-brand-center" href="/">Spotlight</a>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/user/signin">sign in</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/user/signup">sign up</a>
-                    </li>
-                    <li class="nav-item">
-                        @if(!empty($user))
+                    {{-- 非ログイン時の処理 --}}
+                    @if(empty($user))
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/user/signin">sign in</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/user/signup">sign up</a>
+                        </li>
+                    {{-- ログイン時の処理 --}}
+                    @else
+                        <li class="nav-item">
+                            <a class="nav-link" href="/user/signout">sign out</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="/user/{{ $user->id }}/profile">my page</a>
-                        @endif
-                    </li>
+                        </li>
+                    @endif
                 </ul>
             </div>
 

@@ -5,16 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Profile;
+use App\Library\UserClass;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
     public function index(Request $request){
-        if(Auth::user()){
-            $user = Auth::user();
-        }else{
-            $user = '';
-        }
+        $user = UserClass::getLoginUser();
         return view('index', compact('user'));
     }
 
@@ -30,7 +27,7 @@ class UserController extends Controller
 
     //サインアップ//
     public function signup_form(){
-        $user = Auth::user();
+        $user = UserClass::getLoginUser();
         return View('user.signup_form', compact('user'));
     }
     //
@@ -62,7 +59,7 @@ class UserController extends Controller
     }
     //サインイン//
     public function signin_form(){
-        $user = Auth::user();
+        $user = UserClass::getLoginUser();
         //サインインビューを返す
         return view('user.signin_form', compact('user'));
     }

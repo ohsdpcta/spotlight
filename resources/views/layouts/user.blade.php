@@ -6,6 +6,12 @@
     <div class="top">
         <img src="http://placehold.jp/200x200.png" class="rounded-circle">
         <h1>{{ UserClass::getUser(request()->id)->name }}</h1>
+        <p>フォロワー: {{ UserClass::getFollower(request()->id)['follower'] }}</p>
+        @if(UserClass::getFollower(request()->id)['follow_flg'] == 1)
+            <input type="button" onclick="location.href='/user/{{ $data->user_id }}/unfollow'" value="フォロー解除">
+        @else
+            <input type="button" onclick="location.href='/user/{{ $data->user_id }}/follow'" value="フォロー">
+        @endif
     </div>
 
     <div class="tab w-100 nav-justified">

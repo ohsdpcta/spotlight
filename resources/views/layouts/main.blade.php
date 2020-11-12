@@ -81,12 +81,28 @@
                     <ul class="navbar-nav">
                         {{-- 非ログイン時の処理 --}}
                         @if(!Auth::user())
-                            <li class="nav-item active">
-                                <a class="nav-link" href="/user/signin">sign in</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/user/signup">sign up</a>
-                            </li>
+                            @if(request()->path() == 'user/signin')
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="/user/signin">sign in</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/user/signup">sign up</a>
+                                </li>
+                            @elseif(request()->path() == 'user/signup')
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/user/signin">sign in</a>
+                                </li>
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="/user/signup">sign up</a>
+                                </li>
+                            @else
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/user/signin">sign in</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/user/signup">sign up</a>
+                                </li>
+                            @endif
                         {{-- ログイン時の処理 --}}
                         @else
                             <li class="nav-item">
@@ -109,6 +125,8 @@
                 @endif
 
             </nav>
+
+        @yield('user')
 
         </div>
 

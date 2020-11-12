@@ -58,7 +58,7 @@
                 width: 100%;
                 /* Set the fixed height of the footer here */
                 height: 100px;
-                background-color: #3d3d3d;
+                /* background-color: #3d3d3d; */
             }
 
         </style>
@@ -112,7 +112,7 @@
 
 
         {{-- フッター --}}
-        <footer class="footer sticky-bottom">
+        <footer class="footer sticky-bottom bg-dark">
             <div class="container">
                 <p class="text-muted">ここに何か書く</p>
             </div>

@@ -34,3 +34,10 @@ Route::get('/user/{id}/map', 'LocateController@map_address_form');
 //ロケーションテスト
 Route::get('/locate/{id}/street_address', 'LocateController@map_address_form');
 Route::post('/locate/{id}/street_address', 'LocateController@map_address');
+// サンプル
+Route::get('/user/{id}/sample', 'SampleController@sample');
+Route::get('/user/{id}/sample/add', 'SampleController@add');
+Route::post('/user/{id}/sample/add', 'SampleController@create');
+Route::get('/user/{id}/sample/del', 'SampleController@del');
+Route::post('/user/{id}/sample/del', 'SampleController@remove');
+

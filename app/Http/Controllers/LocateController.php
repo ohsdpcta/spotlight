@@ -18,11 +18,12 @@ class LocateController extends Controller
 
         return view('locate.map', compact('data', 'follow_flg', 'follower'));
     }
-    //テスト
+    //ロケーション+住所登録フォーム
     public function add_address_form(Request $request){
         return view('locate.add_address');
 
     }
+    //ロケーション+住所登録
     public function add_address(Request $request, $id){
         $request->validate([
             'street_address' => 'required|max:255|string'
@@ -42,5 +43,16 @@ class LocateController extends Controller
         }
         return redirect("/user/{$id}/profile");
 
+    }
+    //ロケーション住所削除
+    public function del_address_form(Request $request,$id){
+        $data = Map::where('user_id', Auth::id())->get();
+        return view('locate.del_address', compact('data'));
+    }
+    public function remove_address(Request $request,$id){
+        // レコードを削除する。
+        $return = Map::find($id);
+        Map::where('user_id', Auth::id())->delete();
+        return redirect("/user/{$id}/profile");
     }
 }

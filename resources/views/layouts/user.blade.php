@@ -5,7 +5,9 @@
 
     <div class="top">
         <img src="http://placehold.jp/200x200.png" class="rounded-circle">
-        {{-- <h1>{{ UserClass::getUser(request()->id)->name }}</h1> --}}
+        {{-- ユーザー名 --}}
+        <h1>{{ UserClass::getUser(request()->id)->name }}</h1>
+        {{-- フォローボタン表示 --}}
         @if(Auth::user() and Auth::user()->id != request()->id)
             @if(UserClass::getFollower(request()->id)['follow_flg'] == 1)
                 <input type="button" onclick="location.href='/user/{{ request()->id }}/unfollow'" value="フォロー解除">
@@ -13,6 +15,7 @@
                 <input type="button" onclick="location.href='/user/{{ request()->id }}/follow'" value="フォロー">
             @endif
         @endif
+        {{-- フォロワー数 --}}
         <p>フォロワー: {{ UserClass::getFollower(request()->id)['follower'] }}</p>
     </div>
 

@@ -57,7 +57,7 @@
                 bottom: 0;
                 width: 100%;
                 /* Set the fixed height of the footer here */
-                height: 150px;
+                height: 100px;
                 background-color: #3d3d3d;
             }
 
@@ -107,13 +107,15 @@
             </nav>
 
             @yield('user')
+
         </div>
+
 
         {{-- フッター --}}
         <footer class="footer sticky-bottom">
-        <div class="container">
-            <p class="text-muted">ここに何か書く</p>
-        </div>
+            <div class="container">
+                <p class="text-muted">ここに何か書く</p>
+            </div>
         </footer>
 
     </body>

@@ -1,11 +1,10 @@
-@extends('layouts/user')
-@section('content')
+@extends('layouts/signup')
+
+@section('signup')
 
 <head>
     <title>新規登録画面</title>
 </head>
-
-
 
 <h1>新規登録</h1>
     {{-- バリデーションエラーがある場合は出力 --}}

@@ -13,7 +13,7 @@
             </ul>
         </div>
     @endif
-    <form action="/locate/{$id}/street_address" method="POST">
+    <form action="add_address" method="POST">
         <table>
             @csrf
             {{-- 各種フォーム入力欄 --}}

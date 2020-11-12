@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Profile;
 use App\Follower;
-use App\MAP_ADDRESS;
+use App\Map;
 
 class LocateController extends Controller
 {
@@ -19,18 +19,20 @@ class LocateController extends Controller
         return view('locate.map', compact('data', 'follow_flg', 'follower'));
     }
     //テスト
-    public function map_address_form(Request $request){
-        return view('locate.street_address');
+    public function add_address_form(Request $request){
+        return view('locate.add_address');
 
     }
-    public function map_address(Request $request,$id){
+    public function add_address(Request $request, $id){
         $request->validate([
             'street_address' => 'required|max:255|string'
         ]);
-        $map_address_data = new MAP_ADDRESS;
-        $map_address_data->street_address = $request->street_address;
-        $map_address_data-> save();
-        return view('locate/{$id}/street_address');
+            $map_address_data = new Map;
+            //Auth::はログインしているユーザーのデータを持ってこれるコマンド
+            $map_address_data -> user_id = Auth::id();
+            $map_address_data -> street_address = $request->street_address;
+            $map_address_data -> save();
+        return redirect("/user/{$id}/profile");
 
     }
 }

@@ -30,7 +30,7 @@
             @endif --}}
 
             <li class="nav-item">
-                <a href="spotlight/user/:id/locate" class="nav-link">ロケーション</a>
+                <a href="/user/{{request()->id}}/locate/add_address" class="nav-link">ロケーション</a>
             </li>
             <li class="nav-item">
                 <a href="spotlight/user/:id/goods" class="nav-link">グッズ</a>

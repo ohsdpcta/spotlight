@@ -98,7 +98,7 @@
                 </ul>
             </div>
 
-            {{ logger(request()->path()) }}
+            {{-- indexのnavbarでは検索フォームを非表示 --}}
             @if(!(request()->path() == '/'))
                 <form class="form-inline mt-1 mb-1 align-right">
                     <input class="form-control mr-sm-1" type="search">

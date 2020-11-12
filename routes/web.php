@@ -32,3 +32,9 @@ Route::get('/user/{id}/unfollow', 'FollowerController@unfollow');
 //グッズ
 Route::get('/user/{id}/goods', 'GoodsController@add');
 Route::post('/user/{id}/goods', 'GoodsController@create');
+// サンプル
+Route::get('/user/{id}/sample', 'SampleController@sample');
+Route::get('/user/{id}/sample/add', 'SampleController@add');
+Route::post('/user/{id}/sample/add', 'SampleController@create');
+Route::get('/user/{id}/sample/del', 'SampleController@del');
+Route::post('/user/{id}/sample/del', 'SampleController@remove');

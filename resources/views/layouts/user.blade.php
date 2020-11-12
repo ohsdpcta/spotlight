@@ -5,7 +5,15 @@
 
     <div class="top">
         <img src="http://placehold.jp/200x200.png" class="rounded-circle">
-        <h1>zyugemu zyugemu</h1>
+        {{-- <h1>{{ UserClass::getUser(request()->id)->name }}</h1> --}}
+        @if(Auth::user() and Auth::user()->id != request()->id)
+            @if(UserClass::getFollower(request()->id)['follow_flg'] == 1)
+                <input type="button" onclick="location.href='/user/{{ request()->id }}/unfollow'" value="フォロー解除">
+            @else
+                <input type="button" onclick="location.href='/user/{{ request()->id }}/follow'" value="フォロー">
+            @endif
+        @endif
+        <p>フォロワー: {{ UserClass::getFollower(request()->id)['follower'] }}</p>
     </div>
 
     <div class="tab w-100 nav-justified">

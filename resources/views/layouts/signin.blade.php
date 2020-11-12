@@ -1,4 +1,6 @@
-
+@extends('layouts/main')
+@section('user')
+    
 <html>
 
     <head>
@@ -52,3 +54,5 @@
     </body>
 
 </html>
+
+@endsection

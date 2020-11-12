@@ -1,11 +1,9 @@
 @extends('layouts/signin')
 @section('signin')
 
-
 <head>
     <title>サインイン画面</title>
 </head>
-
 
 <h1>サインイン</h1>
     {{-- バリデーションエラーがある場合は出力 --}}

@@ -22,6 +22,9 @@ Route::get('/user/signin', 'UserController@signin_form');
 Route::post('/user/signin', 'UserController@signin');
 // サインアウト
 Route::get('/user/signout', 'UserController@signout');
+// ツイッターログイン
+Route::get('/user/signin/twitter', 'UserController@redirectToProvider');
+Route::get('/user/signin/twitter/callback', 'UserController@handleProviderCallback');
 // プロファイル
 Route::get('/user/{id}/profile', 'ProfileController@profile');
 Route::get('/user/{id}/profile/edit', 'ProfileController@edit');

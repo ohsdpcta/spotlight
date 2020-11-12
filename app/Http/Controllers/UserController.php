@@ -87,6 +87,14 @@ class UserController extends Controller
         return view('user.signin_form',['auth_error'=>$auth_error]);
     }
 
+    public function redirectToProvider(){
+        return Socialite::driver('twitter')->redirect();
+    }
+
+    public function handleProviderCallback(){
+        $user = Socialite::driver('twitter')->user();
+    }
+
     public function signout(Request $request){
         Auth::logout();
         return redirect('/');

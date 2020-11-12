@@ -68,45 +68,48 @@
     </header>
 
     <body>
+        <div class="h-100">
+            {{-- ヘッダー --}}
+            <nav class="navbar navbar-expand-sm navbar-dark bg-dark mt-0 mb-0 pt-0 pb-0 sticky-top">
 
-        <nav class="navbar navbar-expand-sm navbar-dark bg-dark mt-0 mb-0 pt-0 pb-0 sticky-top">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav4" aria-controls="navbarNav4" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav4" aria-controls="navbarNav4" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+                <a class="navbar-brand navbar-brand-center" href="/">Spotlight</a>
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav">
+                        {{-- 非ログイン時の処理 --}}
+                        @if(!Auth::user())
+                            <li class="nav-item active">
+                                <a class="nav-link" href="/user/signin">sign in</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/user/signup">sign up</a>
+                            </li>
+                        {{-- ログイン時の処理 --}}
+                        @else
+                            <li class="nav-item">
+                                <a class="nav-link" href="/user/signout">sign out</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/user/{{ Auth::id() }}/profile">my page</a>
+                            </li>
+                        @endif
+                    </ul>
+                </div>
 
-            <a class="navbar-brand navbar-brand-center" href="/">Spotlight</a>
-            <div class="collapse navbar-collapse">
-                <ul class="navbar-nav">
-                    {{-- 非ログイン時の処理 --}}
-                    @if(!Auth::user())
-                        <li class="nav-item active">
-                            <a class="nav-link" href="/user/signin">sign in</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/user/signup">sign up</a>
-                        </li>
-                    {{-- ログイン時の処理 --}}
-                    @else
-                        <li class="nav-item">
-                            <a class="nav-link" href="/user/signout">sign out</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/user/{{ Auth::id() }}/profile">my page</a>
-                        </li>
-                    @endif
-                </ul>
-            </div>
+                <form class="form-inline mt-1 mb-1 align-right">
+                    <input class="form-control mr-sm-1" type="search">
+                    <button class="btn btn-primary" type="submit">検索</button>
+                </form>
 
-            <form class="form-inline mt-1 mb-1 align-right">
-                <input class="form-control mr-sm-1" type="search">
-                <button class="btn btn-primary" type="submit">検索</button>
-            </form>
+            </nav>
 
-        </nav>
+            @yield('user')
+        </div>
 
-        @yield('user')
-
+        {{-- フッター --}}
         <footer class="footer sticky-bottom">
         <div class="container">
             <p class="text-muted">ここに何か書く</p>

@@ -29,3 +29,9 @@ Route::post('/user/{id}/profile/edit', 'ProfileController@update');
 // フォロー
 Route::get('/user/{id}/follow', 'FollowerController@follow');
 Route::get('/user/{id}/unfollow', 'FollowerController@unfollow');
+// サンプル
+Route::get('/user/{id}/sample', 'SampleController@sample');
+Route::get('/user/{id}/sample/add', 'SampleController@add');
+Route::post('/user/{id}/sample/add', 'SampleController@create');
+Route::get('/user/{id}/sample/del', 'SampleController@del');
+Route::post('/user/{id}/sample/del', 'SampleController@remove');

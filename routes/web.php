@@ -30,4 +30,7 @@ Route::post('/user/{id}/profile/edit', 'ProfileController@update');
 Route::get('/user/{id}/follow', 'FollowerController@follow');
 Route::get('/user/{id}/unfollow', 'FollowerController@unfollow');
 // ロケーション
-Route::get('/user/{id}/map', 'LocateController@map');
+Route::get('/user/{id}/map', 'LocateController@map_address_form');
+//ロケーションテスト
+Route::get('/locate/{id}/street_address', 'LocateController@map_address_form');
+Route::post('/locate/{id}/street_address', 'LocateController@map_address');

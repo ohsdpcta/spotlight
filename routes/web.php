@@ -29,6 +29,12 @@ Route::post('/user/{id}/profile/edit', 'ProfileController@update');
 // フォロー
 Route::get('/user/{id}/follow', 'FollowerController@follow');
 Route::get('/user/{id}/unfollow', 'FollowerController@unfollow');
+
+// ロケーション
+Route::get('/user/{id}/map', 'LocateController@map_address_form');
+//ロケーションテスト
+Route::get('/user/{id}/locate/add_address', 'LocateController@add_address_form');
+Route::post('/user/{id}/locate/add_address', 'LocateController@add_address');
 //グッズ
 Route::get('/user/{id}/goods', 'GoodsController@goods');
 Route::get('/user/{id}/goods/add', 'GoodsController@add');
@@ -41,3 +47,4 @@ Route::get('/user/{id}/sample/add', 'SampleController@add');
 Route::post('/user/{id}/sample/add', 'SampleController@create');
 Route::get('/user/{id}/sample/del', 'SampleController@del');
 Route::post('/user/{id}/sample/del', 'SampleController@remove');
+

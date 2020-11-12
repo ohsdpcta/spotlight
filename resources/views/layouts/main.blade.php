@@ -98,10 +98,13 @@
                 </ul>
             </div>
 
-            <form class="form-inline mt-1 mb-1 align-right">
-                <input class="form-control mr-sm-1" type="search">
-                <button class="btn btn-primary" type="submit">検索</button>
-            </form>
+            {{ logger(request()->path()) }}
+            @if(!(request()->path() == '/'))
+                <form class="form-inline mt-1 mb-1 align-right">
+                    <input class="form-control mr-sm-1" type="search">
+                    <button class="btn btn-primary" type="submit">検索</button>
+                </form>
+            @endif
 
         </nav>
 

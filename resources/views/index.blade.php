@@ -17,7 +17,7 @@
             <h1 class="text-center text-light">SpotLight</h1>
 
             {{-- 検索フォーム --}}
-            <form action="/search" method="post">
+            <form action="/user/search" method="post">
                 @csrf
                 <div class="row align-items-center text-center center">
                     <input type="text" name="input" value="" class="form-control col-md-11">

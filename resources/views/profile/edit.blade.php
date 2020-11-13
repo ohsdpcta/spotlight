@@ -2,8 +2,8 @@
 
 @section('content')
     <form action="edit" method="post">
-    @csrf
-        <input type="text" name="content" value="{{ $data->content }}">
+        @csrf
+        <textarea name="content" cols="50" rows="5">{{ $data->content }}</textarea>
         <input type="submit" value="修正">
     </form>
 @endsection

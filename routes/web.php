@@ -34,7 +34,7 @@ Route::get('/user/{id}/follow', 'FollowerController@follow');
 Route::get('/user/{id}/unfollow', 'FollowerController@unfollow');
 
 // ロケーション
-Route::get('/user/{id}/map', 'LocateController@map_address_form');
+Route::get('/user/{id}/locate', 'LocateController@view');
 //ロケーションテスト
 Route::get('/user/{id}/locate/add_address', 'LocateController@add_address_form');
 Route::post('/user/{id}/locate/add_address', 'LocateController@add_address');

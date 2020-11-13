@@ -27,6 +27,7 @@
             <tr><th>パスワード確認</th><td><input type="password" name="password_confirmation" ></td></tr>
             {{-- 各種ボタン --}}
             <tr><th></th><td><input type="submit" value="登録"></td></tr>
+            <tr><th><input type="button" onclick="location.href='/user/signin/twitter'" value="Twitterログイン"></th><td></td></tr>
         </table>
     </form>
 

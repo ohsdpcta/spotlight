@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Socialite;
 use Illuminate\Http\Request;
 use App\User;
 use App\Profile;
@@ -92,7 +93,27 @@ class UserController extends Controller
     }
 
     public function handleProviderCallback(){
-        $user = Socialite::driver('twitter')->user();
+        try{
+            $user = Socialite::driver('twitter')->user();
+            $socialUser = User::firstOrCreate([
+                'token' => $user->token,
+            ], [
+                'token' => $user->token,
+                'name' => $user->name,
+                'email' => $user->email,
+                'avatar' => $user->avatar_original,
+            ]);
+            Auth::login($socialUser, true);
+            // Profileを作成
+            $profile = new Profile;
+            $login_user_id = Auth::id();
+            $profile->user_id = $login_user_id;
+            $profile->content = 'よろしくお願いします！';
+            $profile->save();
+        }catch (Exception $e){
+            return redirect('/user/signin');
+        }
+        return redirect('/');
     }
 
     public function signout(Request $request){

@@ -31,8 +31,8 @@
     zoom: 18,   //倍率（1～21）
   });
   map.addMarker({
-    lat: 36.643587,
-    lng: 138.191324,
+    lat: {{$locate_array[0]}},
+    lng: {{$locate_array[1]}},
   });
 </script>
 

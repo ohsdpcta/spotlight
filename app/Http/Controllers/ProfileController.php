@@ -12,18 +12,18 @@ use App\Follower;
 
 class ProfileController extends Controller{
     public function profile(Request $request, $id) {
-        $data = Profile::find($id);
+        $data = Profile::where('user_id', $id)->first();
         return view('profile.profile', compact('data'));
     }
 
     public function edit(Request $request, $id) {
-        $data = Profile::find($id);
+        $data = Profile::where('user_id', $id)->first();
         return view('profile.edit', compact('data'));
     }
 
     public function update(Request $request, $id) {
         // dataに値を設定
-        $data = Profile::find($request->id);
+        $data = Profile::where('user_id', $id)->first();
         $data->content = $request->content;
         $data->save();
 

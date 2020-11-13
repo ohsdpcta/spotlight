@@ -13,7 +13,7 @@
 
 
 Route::get('/', 'UserController@index');
-Route::post('/search', 'UserController@search');
+Route::post('/user/search', 'UserController@search');
 // サインアップ
 Route::get('/user/signup', 'UserController@signup_form');
 Route::post('/user/signup', 'UserController@signup');
@@ -22,6 +22,9 @@ Route::get('/user/signin', 'UserController@signin_form');
 Route::post('/user/signin', 'UserController@signin');
 // サインアウト
 Route::get('/user/signout', 'UserController@signout');
+// ツイッターログイン
+Route::get('/user/signin/twitter', 'UserController@redirectToProvider');
+Route::get('/user/signin/twitter/callback', 'UserController@handleProviderCallback');
 // プロファイル
 Route::get('/user/{id}/profile', 'ProfileController@profile');
 Route::get('/user/{id}/profile/edit', 'ProfileController@edit');
@@ -41,8 +44,10 @@ Route::post('/user/{id}/locate/del_address', 'LocateController@remove_address');
 Route::get('/user/{id}/goods', 'GoodsController@goods');
 Route::get('/user/{id}/goods/add', 'GoodsController@add');
 Route::post('/user/{id}/goods/add', 'GoodsController@create');
-Route::get('/user/{id}/goods/del', 'GoodsController@del');
-Route::post('/user/{id}/goods/del', 'GoodsController@remove');
+Route::get('/user/{id}/goods/{goods_id}/del', 'GoodsController@del');
+Route::post('/user/{id}/goods/{goods_id}/del', 'GoodsController@remove');
+Route::get('/user/{id}/goods/multi_del', 'GoodsController@multi_del');
+Route::post('/user/{id}/goods/multi_del', 'GoodsController@multi_remove');
 // サンプル
 Route::get('/user/{id}/sample', 'SampleController@sample');
 Route::get('/user/{id}/sample/add', 'SampleController@add');

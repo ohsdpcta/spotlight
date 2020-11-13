@@ -12,7 +12,7 @@ class GoodsController extends Controller
         $data = Goods::where('user_id', $id)->get();
         return view('goods.goods', compact('data'));
     }
-    
+
     public function add(Request $request)
     {
         return view('goods.add');
@@ -27,16 +27,25 @@ class GoodsController extends Controller
         $addgoods->save();
         return redirect("user/{$id}/goods");
     }
-    public function del(Request $request, $id) {
-        $data = Goods::where('id', $id)->get();
+
+    public function del(Request $request, $id, $goods_id) {
+        $data = Goods::find($goods_id);
         return view('Goods.del', compact('data'));
     }
 
-    public function remove(Request $request, $id) {
+    public function remove(Request $request, $id, $goods_id) {
         // レコードを削除する。
-        $return = Goods::find($id);
-        Goods::where('id', $id)->delete();
-        return redirect("/user/{$return->user_id}/goods");
+        Goods::find($goods_id)->delete();
+        return redirect("/user/{$id}/goods");
+    }
+    //複数選択削除
+    public function multi_del(Request $request, $id ) {
+        $data = Goods::find($id);
+        return view('goods.multi_del', compact('data'));
+    }
+    public function multi_remove(Request $request,$id){
+        //レコードを複数削除する.
+        return redirect("/user/{$id}/goods");
     }
 }
 

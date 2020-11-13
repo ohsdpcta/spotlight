@@ -49,4 +49,18 @@ Route::get('/user/{id}/sample/add', 'SampleController@add');
 Route::post('/user/{id}/sample/add', 'SampleController@create');
 Route::get('/user/{id}/sample/del', 'SampleController@del');
 Route::post('/user/{id}/sample/del', 'SampleController@remove');
-
+//ユーザ情報編集
+Route::get('/user/{id}/edit/', 'EditController@edit');
+Route::get('/user/{id}/edit/user', 'EditController@user_edit');
+Route::post('/user/{id}/edit/user', 'EditController@user_edit');
+Route::get('/user/{id}/edit/locate', 'EditController@add_address_form');
+Route::post('/user/{id}/edit/locate', 'EditController@add_address');
+Route::get('/user/{id}/edit/locate/del_address', 'LocateController@del_address_form');
+Route::post('/user/{id}/edit/locate/del_address', 'LocateController@remove_address');
+Route::get('/user/{id}/edit/goods', 'EditController@goods');
+Route::get('/user/{id}/edit/goods/add', 'EditController@add');
+Route::post('/user/{id}/edit/goods/add', 'EditController@create');
+Route::get('/user/{id}/edit/goods/del', 'EditController@del');
+Route::post('/user/{id}/edit/goods/del', 'EditController@remove');
+Route::get('/user/{id}/edit/sample', 'EditController@sample_edit');
+Route::post('/user/{id}/edit/sample', 'EditController@sample_edit');

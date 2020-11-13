@@ -28,7 +28,7 @@
     div: '#map', //地図を表示する要素
     lat: {{$locate_array[0]}}, //緯度
     lng: {{$locate_array[1]}}, //軽度
-    zoom: 16,   //倍率（1～21）
+    zoom: 18,   //倍率（1～21）
   });
   map.addMarker({
     lat: 36.643587,

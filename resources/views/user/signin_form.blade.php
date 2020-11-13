@@ -26,6 +26,7 @@
             <tr><th>ログイン状態を保持</th><td><input type="checkbox" name="remember" value="true"></td></tr>
             {{-- 各種ボタン --}}
             <tr><th></th><td><input type="submit" value="ログイン"></td></tr>
+            <tr><th><input type="button" onclick="location.href='/user/signin/twitter'" value="Twitterログイン"></th><td></td></tr>
         </table>
     </form>
 

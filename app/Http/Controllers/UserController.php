@@ -108,18 +108,22 @@ class UserController extends Controller
             $socialUser = User::firstOrCreate([
                 'token' => $user->token,
             ], [
+                'social_id' => $user->nickname,
                 'token' => $user->token,
                 'name' => $user->name,
                 'email' => $user->email,
                 'avatar' => $user->avatar_original,
             ]);
             Auth::login($socialUser, true);
-            // Profileを作成
             $login_user_id = Auth::id();
-            $profile = new Profile;
-            $profile->user_id = $login_user_id;
-            $profile->content = 'よろしくお願いします！';
-            $profile->save();
+            $old_profile = Profile::where('user_id', $login_user_id)->first();
+            if(!$old_profile){
+                // Profileを作成
+                $profile = new Profile;
+                $profile->user_id = $login_user_id;
+                $profile->content = 'よろしくお願いします！';
+                $profile->save();
+            }
         }catch (Exception $e){
             return redirect('/user/signin');
         }

@@ -1,21 +1,28 @@
-<!DOCTYPE HTML>
-<html>
-    <body>
-        <h1>ユーザー情報編集</h1>
-            <p><a href="locate">ロケーション情報編集</a></p>
-            <p><a href="goods">グッズ情報変更</a></p>
-            <p><a href="sample">サンプル情報変更</a></p>
-    </body>
-</html>
+@extends('layouts/edit')
 
-</head>
-    <body>
-        <form action="/user/{{request()->id}}/profile" method="post">
-            @csrf
-                ユーザ名:<input type="text" name="name"><br>
-                メールアドレス:<input type="text" name="mail"><br>
-                パスワード:<input type="text" name="pass"><br>
-            <input type="submit" value="登録">
-        </form>
-    </body>
-</html>
+{{-- ------------------------------------------------------------------------- --}}
+
+@section('R_form')
+
+    <style>
+        label {color:#ffffff;}
+    </style>
+
+
+    <h3 class="text-light">ユーザー情報設定</h3>
+    <br>
+    <form action="/user/{{request()->id}}/profile" method="post">
+        @csrf
+        <div class="form-group">
+            <label>UserName</label><input type="text" name="name" class="form-control">
+            <br>
+            <label>Mail</label><input type="text" name="mail" class="form-control">
+            <br>
+            <label>PassWord</label><input type="text" name="pass" class="form-control">
+            <br>
+            <input type="submit" value="登録" class="btn btn-primary">
+            <br>
+        </div>
+    </form>
+
+@endsection

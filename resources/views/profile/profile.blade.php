@@ -1,19 +1,13 @@
-@extends('layouts/user')
-
-@section('content')
-
+{{-- @section('profile') --}}
 <html>
-
 <head>
     <meta charset="utf-8">
     <title>プロフィールページ</title>
 </head>
-
 <body>
-    <p><a href="profile/edit">プロフィールの修正</a></p>
-    {{ $data->content }}
+    @foreach($data as $item)
+        {{ $item->content }}
+    @endforeach
 </body>
-
 </html>
-
-@endsection
+{{-- @endsection --}}

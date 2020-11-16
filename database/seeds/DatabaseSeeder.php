@@ -15,7 +15,6 @@ class DatabaseSeeder extends Seeder
             UsersTableSeeder::class,
             ProfileTableSeeder::class,
             FollowersTableSeeder::class,
-            MapTableSeeder::class,
         ]);
     }
 }

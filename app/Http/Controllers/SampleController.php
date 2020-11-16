@@ -38,4 +38,33 @@ class SampleController extends Controller
         Sample::where('id', $id)->delete();
         return redirect("/user/{$return->user_id}/sample");
     }
+
+    public function multidel(Request $request, $id) {
+        $data = Sample::where('user_id', $id)->get();
+        return view('sample.multidel', compact('data'));
+    }
+
+    public function confirm(Request $request, $id) {
+        $data = new Sample($request->all());
+
+        // 配列から文字列に
+        $checkbox = '';
+        if (isset($request->checkbox)) {
+            $checkbox = implode("\n",$request->checkbox);
+        }
+        return view('sample.confirm', compact('data', 'checkbox'));
+    }
+
+    public function complate(Request $request, $id)
+    {
+        // // チェックボックス（配列）をカンマ区切りの文字列に
+        // $checkbox = '';
+        // if (isset($request->checkbox)) {
+        //     $checkbox = implode(",",$request->checkbox);
+        // }
+        // // データを保存
+        // Sample::whereIn('id', $checkbox)->delete();
+        return redirect("/user/{$id}/sample");
+    }
+
 }

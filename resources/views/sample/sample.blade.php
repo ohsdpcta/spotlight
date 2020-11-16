@@ -1,4 +1,4 @@
-@extends('layouts/main')
+@extends('layouts/user')
 
 @section('content')
 
@@ -8,7 +8,8 @@
     <title>サンプルページ</title>
 </head>
 <body>
-    <p><a href="sample/add">サンプルリンクの追加</a></p><br>
+    <p><a href="sample/add">サンプルリンクの追加</a></p>
+    <p><a href="sample/multidel">サンプルリンクの一括削除</a></p><br>
 
     @foreach($data as $item)
         <p><a href="{{ $item->url }}">{{ $item->name }}　　　

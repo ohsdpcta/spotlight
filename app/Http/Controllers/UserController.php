@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Socialite;
 use Illuminate\Http\Request;
 use App\User;
 use App\Profile;
@@ -9,10 +10,12 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    // インデックス
     public function index(Request $request){
         return view('index');
     }
 
+    // 検索結果
     public function search(Request $request){
         $input = $request->input;
         if ($input == '') {
@@ -23,11 +26,12 @@ class UserController extends Controller
         return view('search.search', ['result' => $result]);
     }
 
-    //サインアップ//
+    //サインアップフォーム
     public function signup_form(){
         return View('user.signup_form');
     }
-    //
+
+    // サインアップ
     public function signup(Request $request){
         // バリデーションを設定する
         $request->validate([
@@ -54,20 +58,19 @@ class UserController extends Controller
         // ログイン後にアクセスしようとしていたアクションにリダイレクト、無い場合はprofileへ
         return redirect()->intended("user/{$login_user_id}/profile");
     }
-    //サインイン//
+
+    //サインインフォーム
     public function signin_form(){
-        //サインインビューを返す
         return view('user.signin_form');
     }
 
-    //
+    // サインイン
     public function signin(Request $request){
         //バリデーションの設定
         $request->validate([
             'login_id'=>'string|max:256',
             'password'=>'required|string|between:8,128',
         ]);
-        //サインインする
         $login_id = $request->login_id;
         if (filter_var($login_id, \FILTER_VALIDATE_EMAIL)) {
             if(Auth::attempt(['email'=> $login_id,'password' => $request->input('password')],$request->remember)):
@@ -87,9 +90,43 @@ class UserController extends Controller
         return view('user.signin_form',['auth_error'=>$auth_error]);
     }
 
+    // サインアウト
     public function signout(Request $request){
         Auth::logout();
         return redirect('/');
     }
 
+
+    // Twitterログイン
+    public function redirectToProvider(){
+        return Socialite::driver('twitter')->redirect();
+    }
+    // Twitterログインコールバック
+    public function handleProviderCallback(){
+        try{
+            $user = Socialite::driver('twitter')->user();
+            $socialUser = User::firstOrCreate([
+                'token' => $user->token,
+            ], [
+                'social_id' => $user->nickname,
+                'token' => $user->token,
+                'name' => $user->name,
+                'email' => $user->email,
+                'avatar' => $user->avatar_original,
+            ]);
+            Auth::login($socialUser, true);
+            $login_user_id = Auth::id();
+            $old_profile = Profile::where('user_id', $login_user_id)->first();
+            if(!$old_profile){
+                // Profileを作成
+                $profile = new Profile;
+                $profile->user_id = $login_user_id;
+                $profile->content = 'よろしくお願いします！';
+                $profile->save();
+            }
+        }catch (Exception $e){
+            return redirect('/user/signin');
+        }
+        return redirect("/user/{$login_user_id}/profile");
+    }
 }

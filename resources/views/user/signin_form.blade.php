@@ -1,12 +1,9 @@
-@extends('layouts/user')
-@section('content')
-
+@extends('layouts/signin')
+@section('signin')
 
 <head>
     <title>サインイン画面</title>
 </head>
-
-
 
 <h1>サインイン</h1>
     {{-- バリデーションエラーがある場合は出力 --}}
@@ -29,6 +26,7 @@
             <tr><th>ログイン状態を保持</th><td><input type="checkbox" name="remember" value="true"></td></tr>
             {{-- 各種ボタン --}}
             <tr><th></th><td><input type="submit" value="ログイン"></td></tr>
+            <tr><th><input type="button" onclick="location.href='/user/signin/twitter'" value="Twitterログイン"></th><td></td></tr>
         </table>
     </form>
 

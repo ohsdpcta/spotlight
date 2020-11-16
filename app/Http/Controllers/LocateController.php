@@ -13,8 +13,14 @@ class LocateController extends Controller
 {
     // gmap表示
     public function view(Request $request, $id) {
-        $latlng = '36.643587,138.191324';
-        $locate_array = explode(",", $latlng);
+        // 3d34.7029743!4d135.4881499
+        // 3d55.378051!4d-3.435973
+        // 3d34.661249!4d135.4774788
+        $gmap_url = "https://www.google.co.jp/maps/place/%E6%9D%B1%E4%BA%AC%E3%83%93%E3%83%83%E3%82%B0%E3%82%B5%E3%82%A4%E3%83%88/@35.6298179,139.7920981,17z/data=!3m1!4b1!4m5!3m4!1s0x601889dc629d1e7b:0xa4d1509a76045a01!8m2!3d35.6298179!4d139.7942868";
+        preg_match('/3d\d{1,3}\.\d{6,7}!4d-?\d{1,3}\.\d{6,7}/', $gmap_url, $ping_locate_info);
+        $delete_words = ['3d', '4d'];
+        $ping_locates = str_replace($delete_words, '', $ping_locate_info[0]);
+        $locate_array = explode('!', $ping_locates);
         return view('locate.map', compact('locate_array'));
     }
 

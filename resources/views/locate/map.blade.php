@@ -5,48 +5,36 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <title>ロケーション</title>
-    <style>
-        #map {
-        width: 100%;
-        height: 400px;
-        background-color: grey;
-        }
-    </style>
+  <meta charset="utf-8">
+  <title>ロケーション</title>
+  <script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key="></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gmaps.js/0.4.12/gmaps.min.js"></script>
+  <style>
+    #map {
+      width: 100%;
+      height: 400px;
+      background-color: grey;
+    }
+  </style>
 </head>
 
 <body>
-    <button>現在地を取得ボタン</button>
-
-    <form action="locate_edit" method="post">
-      @csrf
-          <input type="hidden" name="id" value="{{ $data->id }}">
-          <input type="text" name="location" value="{{ $data->content }}">
-          <input type="submit" value="修正">
-      </form>
-
-
-    <div>
-        <script>
-            latlngはピンを落とす緯度と経度を設定する変数らしい
-            function initMap() {
-                var latlng = new google.maps.LatLng( 34.808502, 135.639683 );//中心の緯度, 経度
-                var map = new google.maps.Map(document.getElementById('map'), {
-                  zoom: 14,//ズームの調整
-                  center: latlng//上で設定した中心
-                });
-                var marker = new google.maps.Marker({
-                  position: latlng,
-                  map: map
-                });
-              }
-        </script>
-        <script async defer src="https://maps.googleapis.com/maps/api/js?key=[取得したAPIキー]&callback=initMap"></script>
-        <div id="map"></div>
-    </div>
-
+    <div id="map"></div>
 </body>
+
+<script>
+  map = new GMaps({
+    div: '#map', //地図を表示する要素
+    lat: {{$locate_array[0]}}, //緯度
+    lng: {{$locate_array[1]}}, //軽度
+    zoom: 18,   //倍率（1～21）
+  });
+  map.addMarker({
+    lat: {{$locate_array[0]}},
+    lng: {{$locate_array[1]}},
+  });
+</script>
 
 </html>
 

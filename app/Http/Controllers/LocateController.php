@@ -11,18 +11,18 @@ use App\Map;
 
 class LocateController extends Controller
 {
-    public function map(Request $request, $id) {
-
-        $data = tekitou::find($id);
-        $locate = tekitou::where('taeget_id' ,$id);
-
-        return view('locate.map', compact('data', 'follow_flg', 'follower'));
+    // gmap表示
+    public function view(Request $request, $id) {
+        $latlng = '36.643587,138.191324';
+        $locate_array = explode(",", $latlng);
+        return view('locate.map', compact('locate_array'));
     }
+
     //ロケーション+住所登録フォーム
     public function add_address_form(Request $request){
         return view('locate.add_address');
-
     }
+
     //ロケーション+住所登録
     public function add_address(Request $request, $id){
         $request->validate([

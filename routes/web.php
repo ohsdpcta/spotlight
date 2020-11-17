@@ -75,6 +75,7 @@ Route::get('/user/{id}/edit/goods/{goods_id}/del', 'EditController@del');
 Route::post('/user/{id}/edit/goods/{goods_id}/del', 'EditController@remove');
 //サンプル
 Route::get('/user/{id}/edit/sample', 'EditController@sample_edit');
+Route::post('/user/{id}/edit/sample', 'EditController@sample_edit');
 Route::get('/user/{id}/edit/sample/add', 'EditController@sample_add');
 Route::post('/user/{id}/edit/sample/add', 'EditController@sample_create');
 Route::get('/user/{id}/edit/sample/del', 'EditController@sample_del');

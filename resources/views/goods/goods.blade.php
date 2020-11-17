@@ -11,7 +11,7 @@
     <form action="goods/multi_del" method="GET">
         @csrf
         @foreach($data as $item)
-            <p><input type="checkbox" name="check_goods[]" value="{{$item->id}}">
+            <p><input type="checkbox" name="check_goods[]" value="{{$item->id}}">&nbsp;
             <a href="{{ $item->url }}">{{ $item->name }}</a>
             <a href="/user/{{request()->id}}/goods/{{$item->id}}/del">削除</p>
         @endforeach

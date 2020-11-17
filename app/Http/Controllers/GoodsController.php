@@ -39,14 +39,18 @@ class GoodsController extends Controller
         return redirect("/user/{$id}/goods");
     }
     //複数選択削除
-    public function multi_del(Request $request, $id ) {
-
-        $checkGoods = $request->input('check_goods');
-        return view('goods.multi_del',compact('checkGoods'));
+    public function multi_del(Request $request, $id) {
+        $check_goods = $request->input('check_goods');
+        foreach($check_goods as $item){
+            //where('カラム名','任意')
+            $data = Goods::where('id',$item)->get();
+            logger($data);
+        }
+        return view('goods.multi_del')->with('id',$data);
     }
     public function multi_remove(Request $request,$id){
         //レコードを複数削除する.
-        $checkGoods = $request->input('check_goods');
+
         return redirect("/user/{$id}/goods");
     }
 }

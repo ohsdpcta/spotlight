@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Profile;
+use App\Sample;
 use App\Goods;
 use App\Map;
 use Illuminate\Support\Facades\Auth;
@@ -12,10 +13,6 @@ use Illuminate\Support\Facades\Auth;
 class EditController extends Controller
 {
     public function edit(Request $request)
-    {
-        return view('edit.edit');
-    }
-    public function user_edit(Request $request)
     {
         return view('edit.user');
     }
@@ -67,12 +64,12 @@ class EditController extends Controller
     public function goods(Request $request, $id)
     {
         $data = Goods::where('user_id', $id)->get();
-        return view('goods.goods', compact('data'));
+        return view('edit.goods_edit', compact('data'));
     }
 
     public function add(Request $request)
     {
-        return view('goods.add');
+        return view('edit.add');
     }
 
     public function create(Request $request, $id)
@@ -82,21 +79,22 @@ class EditController extends Controller
         $addgoods->name = $request->name;
         $addgoods->url = $request->url;
         $addgoods->save();
-        return redirect("user/{$id}/goods");
+        return redirect("user/{$id}/edit/goods");
     }
 
     public function del(Request $request, $id, $goods_id) {
         $data = Goods::find($goods_id);
-        return view('Goods.del', compact('data'));
+        return view('edit.del', compact('data'));
     }
 
     public function remove(Request $request, $id, $goods_id) {
         // レコードを削除する。
         Goods::find($goods_id)->delete();
-        return redirect("/user/{$id}/goods");
+        return redirect("user/{$id}/edit/goods");
     }
     //複数選択削除
     public function multi_del(Request $request, $id ) {
+
         $data = Goods::find($id);
         return view('goods.multi_del', compact('data'));
     }
@@ -104,8 +102,34 @@ class EditController extends Controller
         //レコードを複数削除する.
         return redirect("/user/{$id}/goods");
     }
-    public function sample_edit(Request $request)
+    public function sample_edit(Request $request, $id)
     {
-        return view('edit.sample_edit');
+        $data = Sample::where('user_id', $id)->get();
+        return view('edit.sample_edit', compact('data'));
+    }
+    public function sample_add(Request $request) {
+        return view('edit.sample_add');
+    }
+    public function sample_create(Request $request, $id) {
+        // レコードを追加する。
+        $addsample = new Sample;
+        $addsample->user_id = $id;
+        $addsample->name = $request->name;
+        $addsample->url = $request->url;
+        $addsample->save();
+        return redirect("user/{$id}/edit/sample");
+    }
+
+    public function sample_del(Request $request, $id) {
+        $data = Sample::where('id', $id)->get();
+        return view('edit.sample_del', compact('data'));
+    }
+
+    public function sample_remove(Request $request, $id) {
+        // レコードを削除する。
+        $return = Sample::find($id);
+        Sample::where('id', $id)->delete();
+        return redirect("/user/{$return->user_id}/sample");
     }
 }
+

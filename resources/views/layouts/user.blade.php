@@ -24,7 +24,7 @@
 
             {{-- @if ($tekitou == 'profile') --}}
             <li class="nav-item">
-                <a href="spotlight/user/:id/profile" class="nav-link active">プロフィール</a>
+                <a class="nav-link @if(request()->is('*profile')) active @endif" href="/user/{{request()->id}}/profile">プロフィール</a>
             </li>
             {{-- @else
             <li class="nav-item">
@@ -33,14 +33,13 @@
             @endif --}}
 
             <li class="nav-item">
-                <a href="/user/{{request()->id}}/locate/add_address" class="nav-link">ロケーション</a>
+                <a class="nav-link @if(request()->is('*locate')) active @endif" href="/user/{{request()->id}}/locate">ロケーション</a>
             </li>
             <li class="nav-item">
-                <a href="spotlight/user/:id/goods" class="nav-link">グッズ</a>
+                <a class="nav-link @if(request()->is('*goods')) active @endif" href="/user/{{request()->id}}/goods">グッズ</a>
             </li>
             <li class="nav-item">
-                <a href="spotlight/user/:id/sample" class="nav-link">サンプルリンク</a>
-            </li>
+                <a class="nav-link @if(request()->is('*sample')) active @endif" href="/user/{{request()->id}}/sample">サンプルリンク</a>
         </ul>
 
         <div>@yield('content')</div>

@@ -38,33 +38,22 @@ class SampleController extends Controller
         Sample::where('id', $id)->delete();
         return redirect("/user/{$return->user_id}/sample");
     }
-
-    public function multidel(Request $request, $id) {
-        $data = Sample::where('user_id', $id)->get();
-        return view('sample.multidel', compact('data'));
-    }
-
-    public function confirm(Request $request, $id) {
-        $data = new Sample($request->all());
-
-        // 配列から文字列に
-        $checkbox = '';
-        if (isset($request->checkbox)) {
-            $checkbox = implode("\n",$request->checkbox);
+        //複数選択削除
+    public function multi_del(Request $request, $id) {
+        $data = array();    //配列の初期化
+        $check_sample = $request->input('check_sample');  //チェックボックスのデータを取得
+        foreach($check_sample as $item){
+            //where('カラム名','任意')
+            $data[] = Sample::where('id',$item)->first();
         }
-        return view('sample.confirm', compact('data', 'checkbox'));
+        return view('sample.multi_del', compact('data'));
     }
-
-    public function complate(Request $request, $id)
-    {
-        // // チェックボックス（配列）をカンマ区切りの文字列に
-        // $checkbox = '';
-        // if (isset($request->checkbox)) {
-        //     $checkbox = implode(",",$request->checkbox);
-        // }
-        // // データを保存
-        // Sample::whereIn('id', $checkbox)->delete();
+    public function multi_remove(Request $request,$id){
+        //レコードを複数削除する.
+        $sample_id = $request->input('sample_id');
+        foreach($sample_id as $item){
+            Sample::where('id',$item)->delete();
+        }
         return redirect("/user/{$id}/sample");
     }
-
 }

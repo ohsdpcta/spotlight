@@ -2,11 +2,11 @@
 
 @section('content')
     <form action="del" method="post">
-    @csrf
-        @foreach($data as $item)
-            リンク名: {{ $item->name }}<br>
-        　　 URL: {{ $item->url }}<br><br>
-        @endforeach
+        @csrf
+
+            リンク名: {{ $data->name }}<br>
+        　　 URL: <a href="{{$data->url }}">{{ $data->url }}</a><br><br>
+
         <input type="submit" value="削除">このサンプルリンクを削除します。よろしいですか？
     </form>
 @endsection

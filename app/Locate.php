@@ -4,8 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Map extends Model
+class Locate extends Model
 {
-    protected $table = 'map';
+    protected $table = 'locates';
     protected $guarded = array('id');
 }

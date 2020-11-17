@@ -14,6 +14,7 @@
 
 Route::get('/', 'UserController@index');
 Route::post('/user/search', 'UserController@search');
+
 // サインアップ
 Route::get('/user/signup', 'UserController@signup_form');
 Route::post('/user/signup', 'UserController@signup');
@@ -25,21 +26,23 @@ Route::get('/user/signout', 'UserController@signout');
 // ツイッターログイン
 Route::get('/user/signin/twitter', 'UserController@redirectToProvider');
 Route::get('/user/signin/twitter/callback', 'UserController@handleProviderCallback');
+
 // プロファイル
 Route::get('/user/{id}/profile', 'ProfileController@profile');
 Route::get('/user/{id}/profile/edit', 'ProfileController@edit');
 Route::post('/user/{id}/profile/edit', 'ProfileController@update');
+
 // フォロー
 Route::get('/user/{id}/follow', 'FollowerController@follow');
 Route::get('/user/{id}/unfollow', 'FollowerController@unfollow');
 
 // ロケーション
-Route::get('/user/{id}/locate', 'LocateController@view');
-//ロケーションテスト
-Route::get('/user/{id}/locate/add_address', 'LocateController@add_address_form');
-Route::post('/user/{id}/locate/add_address', 'LocateController@add_address');
-Route::get('/user/{id}/locate/del_address', 'LocateController@del_address_form');
-Route::post('/user/{id}/locate/del_address', 'LocateController@remove_address');
+Route::get('/user/{id}/locate', 'LocateController@view_locate');
+Route::get('/user/{id}/locate/add_locate', 'LocateController@add_locate_form');
+Route::post('/user/{id}/locate/add_locate', 'LocateController@add_locate');
+Route::get('/user/{id}/locate/del_locate', 'LocateController@del_locate_form');
+Route::post('/user/{id}/locate/del_locate', 'LocateController@remove_locate');
+
 //グッズ
 Route::get('/user/{id}/goods', 'GoodsController@goods');
 Route::get('/user/{id}/goods/add', 'GoodsController@add');
@@ -58,10 +61,10 @@ Route::post('/user/{id}/sample/del', 'SampleController@remove');
 Route::get('/user/{id}/edit/', 'EditController@edit');
 Route::post('/user/{id}/edit/', 'EditController@edit');
 //ロケーション編集
-Route::get('/user/{id}/edit/locate', 'EditController@add_address_form');
-Route::post('/user/{id}/edit/locate', 'EditController@add_address');
-Route::get('/user/{id}/edit/locate/del_address', 'LocateController@del_address_form');
-Route::post('/user/{id}/edit/locate/del_address', 'LocateController@remove_address');
+Route::get('/user/{id}/edit/locate', 'EditController@add_locate_form');
+Route::post('/user/{id}/edit/locate', 'EditController@add_locate');
+Route::get('/user/{id}/edit/locate/del_locate', 'LocateController@del_locate_form');
+Route::post('/user/{id}/edit/locate/del_locate', 'LocateController@remove_locate');
 //グッズ
 Route::get('/user/{id}/edit/goods', 'EditController@goods');
 //グッズ追加

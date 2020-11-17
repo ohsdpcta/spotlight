@@ -17,7 +17,7 @@
             }
 
             body {
-                background-color: #858585;
+                background-color: #2c2c2c;
                 /* margin-top: 50px; */
             }
 
@@ -132,7 +132,7 @@
         {{-- フッター --}}
         <footer class="footer sticky-bottom bg-dark">
             <div class="container">
-                <p class="text-muted">ここに何か書く</p>
+                <p class="text-muted">フッター</p>
             </div>
         </footer>
 

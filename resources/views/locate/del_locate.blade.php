@@ -4,7 +4,7 @@
 
 <html>
 
-    <form action="del_address" method="POST">
+    <form action="del_locate" method="POST">
         @csrf
         <div>
             <label><input type="submit" value="削除"></label>

@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Locate extends Model
 {
-    protected $table = 'map';
+    protected $table = 'locates';
     protected $guarded = array('id');
 }

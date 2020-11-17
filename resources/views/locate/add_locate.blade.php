@@ -13,12 +13,12 @@
             </ul>
         </div>
     @endif
-    <form action="add_address" method="POST">
+    <form action="add_locate" method="POST">
         <table>
             @csrf
             {{-- 各種フォーム入力欄 --}}
             {{-- バリデーションエラーがあった場合は、old関数で入力データを復元する --}}
-            <tr><th>活動場所(住所)</th><td><input type="text" name="street_address" value="{{old('street_address')}}"></td></tr>
+            <tr><th>活動場所(住所)</th><td><input type="text" name="coordinate" value="{{old('coordinate')}}"></td></tr>
             {{-- 各種ボタン --}}
             <tr><th></th><td><input type="submit" value="登録"></td></tr>
         </table>

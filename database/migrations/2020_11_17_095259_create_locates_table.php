@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMapTable extends Migration
+class CreateLocatesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateMapTable extends Migration
      */
     public function up()
     {
-        Schema::create('map', function (Blueprint $table) {
+        Schema::create('locates', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('user_id');
-            $table->string('street_address');
+            $table->text('coordinate');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateMapTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('map');
+        Schema::dropIfExists('locates');
     }
 }

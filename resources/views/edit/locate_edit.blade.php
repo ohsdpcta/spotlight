@@ -1,12 +1,13 @@
-<!DOCTYPE HTML>
-<html>
-    <body>
-        <h1>ロケーション情報編集</h1>
-        <p><a href="/user/{{request()->id}}/edit/">戻る</a></p>
-    </body>
-</html>
+@extends('layouts/edit')
 
-<html>
+{{-- ------------------------------------------------------------------------------------------------------- --}}
+
+@section('R_form')
+
+    <style>
+        label {color:#ffffff;}
+    </style>
+
     {{-- バリデーションエラーがある場合は出力 --}}
     @if ($errors->any())
         <div class="alert alert-danger">
@@ -17,15 +18,18 @@
             </ul>
         </div>
     @endif
+
+    <h3 class="text-light">ロケーション情報編集</h3>
+    <br>
     <form action="locate" method="POST">
-        <table>
-            @csrf
-            {{-- 各種フォーム入力欄 --}}
+        @csrf
+        <div class="form-group">
             {{-- バリデーションエラーがあった場合は、old関数で入力データを復元する --}}
-            <tr><th>活動場所(住所)</th><td><input type="text" name="street_address" value="{{old('street_address')}}"></td></tr>
-            {{-- 各種ボタン --}}
-            <tr><th></th><td><input type="submit" value="登録"></td></tr>
-        </table>
+            <label>活動場所(GoogleMapURL)</label><input type="text" name="coordinate" value="{{old('coordinate')}}" class="form-control">
+            <br>
+            <input type="submit" value="登録" class="btn btn-primary">
+            <br>
+        </div>
     </form>
 
-</html>
+@endsection

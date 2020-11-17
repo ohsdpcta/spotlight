@@ -2,6 +2,7 @@
 <html>
     <body>
         <h1>ロケーション情報編集</h1>
+        <p><a href="/user/{{request()->id}}/edit/">戻る</a></p>
     </body>
 </html>
 

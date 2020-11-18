@@ -13,7 +13,8 @@
         @foreach($data as $item)
             <p><input type="checkbox" name="check_goods[]" value="{{$item->id}}">&nbsp;
             <a href="{{ $item->url }}">{{ $item->name }}</a>
-            <a href="/user/{{request()->id}}/goods/{{$item->id}}/del">削除</p>
+            <a href="/user/{{request()->id}}/goods/{{$item->id}}/del">削除
+            <a href="/user/{{request()->id}}/goods/{{$item->id}}/edit">編集</p>
         @endforeach
             {{--{{request()->id()}}でURLのユーザーID取得  --}}
             <p><input type="submit" value="選択削除"></p>

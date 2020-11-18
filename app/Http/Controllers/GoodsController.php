@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Goods;
+use GuzzleHttp\Psr7\Request as Psr7Request;
+use Illuminate\Support\Facades\Auth;
 
 class GoodsController extends Controller
 {
@@ -25,6 +27,31 @@ class GoodsController extends Controller
         $addgoods->name = $request->name;
         $addgoods->url = $request->url;
         $addgoods->save();
+        return redirect("user/{$id}/goods");
+    }
+    //編集
+    public function edit(Request $request,$id,$goods_id)
+    {
+        $data = Goods::find($goods_id);
+        return view('goods.edit',compact('data'));
+    }
+    public function update(Request $request,$id,$goods_id)
+    {
+        if(Auth::id() == $id){
+            $addgoods = Goods::where('user_id', Auth::id())->first();
+            if($addgoods){
+                $addgoods->name = $request->name;
+                $addgoods->url = $request->url;
+                $addgoods->save();
+            }else{
+                $addgoods = new Goods;
+                //Auth::はログインしているユーザーのデータを持ってこれるコマンド
+                $addgoods->user_id = $id;
+                $addgoods->name = $request->name;
+                $addgoods->url = $request->url;
+                $addgoods->save();
+            }
+        }
         return redirect("user/{$id}/goods");
     }
     //削除

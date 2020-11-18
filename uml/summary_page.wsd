@@ -1,0 +1,71 @@
+@startuml
+actor user
+boundary browser
+
+control route
+control UserController
+control ProfileController
+control LocateController
+control GoodsController
+control SampleController
+
+boundary summary.edit_account
+boundary summary.edit_profile
+boundary summary.edit_locate
+boundary summary.summary_goods
+boundary summary.add_goods
+boundary summary.edit_goods
+boundary summary.delete_goods
+
+user -> browser:アカウント情報編集[/user/{id}/summary/account]
+browser -> route:GET[/user{id}/summary/account]
+route -> UserController:@edit
+UserController -> summary.edit_account:アカウント情報編集フォーム
+summary.edit_account -> route:POST[/user/{id}/summary/account] 編集内容送信
+route -> UserController:@update
+UserController -> browser:[/user/{id}/summary/account] return
+
+user -> browser:プロフィール編集[/user/{id}/summary/profile]
+browser -> route:GET[/user/{id}/summary/profile]
+route -> ProfileController:@edit
+ProfileController -> summary.edit_profile:プロフィール編集フォーム
+summary.edit_profile -> route:POST[/user/{id}/summary/profile] 編集内容送信
+route -> ProfileController:@update プロフィール更新処理
+ProfileController -> browser:[/user/{id}/summary/profile] return
+
+user -> browser:活動場所編集[/user/{id}/summary/locate]
+browser -> route:GET[/user/{id}/summary/locate]
+route -> LocateController:@edit
+LocateController -> summary.edit_locate:活動場所編集フォーム
+summary.edit_locate ->route:POST[/user/{id}/summary/locate] 編集内容送信
+route -> LocateController:@update 活動場所更新処理
+LocateController -> browser:[/user/{id}/summary/locate] return
+
+
+user -> browser:グッズ編集[/user{id}/summary/goods]
+browser -> route:GET[/user{id}/summary/goods]
+route -> GoodsController:@summary グッズ編集一覧画面表示
+GoodsController -> summary.summary_goods:グッズ新規作成フォーム、グッズ一覧表示[グッズ名、編集ボタン、削除ボタン]
+
+summary.summary_goods -> route:GET[/user/{id}/summary/goods/add] 新規作成ボタンクリック
+route -> GoodsController:@add グッズ作成フォーム表示処理
+GoodsController -> summary.add_goods:グッズ作成フォーム表示
+summary.add_goods -> route:POST[/user{id}/summary/goods/add] 作成内容送信
+route -> GoodsController:@create グッズ登録処理
+GoodsController -> browser:[/user{id}/summary/goods] return
+
+summary.summary_goods -> route:GET[/user/{id}/summary/goods/edit] 編集ボタンクリック
+route -> GoodsController:@edit グッズ編集フォーム表示処理
+GoodsController -> summary.edit_goods:グッズ編集フォーム表示
+summary.edit_goods -> route:POST[/user/{id}/summary/goods/update] 編集内容送信
+route -> GoodsController:@update グッズ更新処理
+GoodsController -> browser:[/user{id}/summary/goods] return
+
+summary.summary_goods -> route:GET[/user/{id}/summary/goods/delete] 削除ボタンクリック
+route -> GoodsController:@delete グッズ削除確認画面表示処理
+GoodsController -> summary.delete_goods:グッズ削除確認画面表示
+summary.delete_goods -> route:POST[/user/{id}/summary/goods/remove] 削除内容送信
+route -> GoodsController:@remove グッズ削除処理
+GoodsController -> browser:[/user/{id}/summary/goods] return
+
+@enduml

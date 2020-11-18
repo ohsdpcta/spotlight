@@ -24,8 +24,13 @@
                 @else
                     <input type="button" onclick="location.href='/user/{{ request()->id }}/follow'" class="btn btn-primary" value=" フォロー ">
                 @endif
+            {{-- ユーザーページ編集 --}}
                 <div class="pt-1">
-                    <input type="button" onclick="location.href='/user/{{request()->id}}/edit/user'" class="btn btn-success" value="プロフィール編集">
+                    <input type="button" onclick="location.href='/user/{{request()->id}}/summary/@if(request()->is('*profile'))profile\
+                                                                                             @elseif(request()->is('*locate'))locate\
+                                                                                             @elseif(request()->is('*goods'))goods\
+                                                                                             @elseif(request()->is('*sample'))sample @endif'"\
+                    class="btn btn-success" value="ユーザーページ編集">
                 </div>
             {{-- @endif後で表示 --}}
             </div>
@@ -37,7 +42,6 @@
                 <p>フォロー中: {{ UserClass::getFollower(request()->id)['follower'] }}　　　
                    フォロワー: {{ UserClass::getFollower(request()->id)['follower'] }}</p>
             </div>
-            
         </div>
     </div>
 

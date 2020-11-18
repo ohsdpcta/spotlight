@@ -20,22 +20,26 @@
 </head>
 
 <body>
+  @if($locate_array)
     <div id="map"></div>
+  @else
+    ロケーションが未設定です
+  @endif
 </body>
-
-<script>
-  map = new GMaps({
-    div: '#map', //地図を表示する要素
-    lat: {{$locate_array[0]}}, //緯度
-    lng: {{$locate_array[1]}}, //軽度
-    zoom: 18,   //倍率（1～21）
-  });
-  map.addMarker({
-    lat: {{$locate_array[0]}},
-    lng: {{$locate_array[1]}},
-  });
-</script>
-
+@if($locate_array)
+  <script>
+    map = new GMaps({
+      div: '#map', //地図を表示する要素
+      lat: {{$locate_array[0]}}, //緯度
+      lng: {{$locate_array[1]}}, //軽度
+      zoom: 18,   //倍率（1～21）
+    });
+    map.addMarker({
+      lat: {{$locate_array[0]}},
+      lng: {{$locate_array[1]}},
+    });
+  </script>
+@endif
 </html>
 
 @endsection

@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             ProfileTableSeeder::class,
             FollowersTableSeeder::class,
             LocateTableSeeder::class,
+            GoodsTableSeeder::class,
         ]);
     }
 }

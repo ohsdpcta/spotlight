@@ -1,4 +1,4 @@
-@extends('layouts/user')
+@extends('layouts.user')
 
 @section('content')
     <form action="del" method="post">

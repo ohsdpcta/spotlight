@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 use App\Sample;
 
 class SampleController extends Controller
@@ -26,17 +26,41 @@ class SampleController extends Controller
         $addsample->save();
         return redirect("user/{$id}/sample");
     }
+    //編集
+    public function edit(Request $request,$id,$user_id)
+    {
+        $data = Sample::find($user_id);
+        return view('sample.edit',compact('data'));
+    }
+    public function update(Request $request,$id,$user_id)
+    {
+        if(Auth::id() == $id){
+            $addsample = Sample::where('user_id', Auth::id())->first();
+            if($addsample){
+                $addsample->name = $request->name;
+                $addsample->url = $request->url;
+                $addsample->save();
+            }else{
+                $addsample = new Sample;
+                //Auth::はログインしているユーザーのデータを持ってこれるコマンド
+                $addsample->user_id = $id;
+                $addsample->name = $request->name;
+                $addsample->url = $request->url;
+                $addsample->save();
+            }
+        }
+        return redirect("user/{$id}/sample");
+    }
 
-    public function del(Request $request, $id) {
-        $data = Sample::where('id', $id)->get();
+    public function del(Request $request, $id,$user_id) {
+        $data = Sample::find($user_id);
         return view('sample.del', compact('data'));
     }
 
-    public function remove(Request $request, $id) {
+    public function remove(Request $request, $id,$user_id) {
         // レコードを削除する。
-        $return = Sample::find($id);
-        Sample::where('id', $id)->delete();
-        return redirect("/user/{$return->user_id}/sample");
+        Sample::find($user_id)->delete();
+        return redirect("/user/{$id}/sample");
     }
         //複数選択削除
     public function multi_del(Request $request, $id) {

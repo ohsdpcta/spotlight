@@ -57,8 +57,10 @@ Route::post('/user/{id}/goods/multi_del', 'GoodsController@multi_remove');
 Route::get('/user/{id}/sample', 'SampleController@sample');
 Route::get('/user/{id}/sample/add', 'SampleController@add');
 Route::post('/user/{id}/sample/add', 'SampleController@create');
-Route::get('/user/{id}/sample/del', 'SampleController@del');
-Route::post('/user/{id}/sample/del', 'SampleController@remove');
+Route::get('/user/{id}/sample/{user_id}/edit', 'SampleController@edit');
+Route::post('/user/{id}/sample/{user_id}/edit', 'SampleController@update');
+Route::get('/user/{id}/sample/{user_id}/del', 'SampleController@del');
+Route::post('/user/{id}/sample/{user_id}/del', 'SampleController@remove');
 Route::get('/user/{id}/sample/multi_del', 'SampleController@multi_del');
 Route::post('/user/{id}/sample/multi_del', 'SampleController@multi_remove');
 //ユーザ情報編集

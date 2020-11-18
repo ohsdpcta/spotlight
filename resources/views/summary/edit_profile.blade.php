@@ -14,8 +14,8 @@
             <form action="/user/{{request()->id}}/summary/profile" method="post">
                 @csrf
                 <label>あなたを知らせるためのプロフィールを記入することができます。</label>
-                <textarea name="content" cols="80" rows="5">{{ $data->content }}</textarea>
-                <input type="submit" value="修正">
+                <textarea name="content" cols="80" rows="5" class="form-control">{{ $data->content }}</textarea>
+                <input type="submit" value="修正" class="float-right">
             </form>
         </div>
 

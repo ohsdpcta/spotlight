@@ -18,7 +18,7 @@ class ProfileController extends Controller{
 
     public function edit(Request $request, $id) {
         $data = Profile::where('user_id', $id)->first();
-        return view('profile.edit', compact('data'));
+        return view('summary.edit_profile', compact('data'));
     }
 
     public function update(Request $request, $id) {
@@ -27,6 +27,6 @@ class ProfileController extends Controller{
         $data->content = $request->content;
         $data->save();
 
-        return redirect("user/{$id}/profile");
+        return redirect("user/{$id}/summary/profile");
     }
 }

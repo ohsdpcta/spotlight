@@ -35,6 +35,7 @@ Route::post('/user/{id}/profile/edit', 'ProfileController@update');
 // フォロー
 Route::get('/user/{id}/follow', 'FollowerController@follow');
 Route::get('/user/{id}/unfollow', 'FollowerController@unfollow');
+
 // ロケーション
 Route::get('/user/{id}/locate', 'LocateController@view_locate');
 Route::get('/user/{id}/locate/add_locate', 'LocateController@add_locate_form');

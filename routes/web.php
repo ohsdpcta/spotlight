@@ -63,26 +63,41 @@ Route::get('/user/{id}/sample/{user_id}/del', 'SampleController@del');
 Route::post('/user/{id}/sample/{user_id}/del', 'SampleController@remove');
 Route::get('/user/{id}/sample/multi_del', 'SampleController@multi_del');
 Route::post('/user/{id}/sample/multi_del', 'SampleController@multi_remove');
-//ユーザ情報編集
-Route::get('/user/{id}/edit/', 'EditController@edit');
-Route::post('/user/{id}/edit/', 'EditController@edit');
-//ロケーション編集
-Route::get('/user/{id}/edit/locate', 'EditController@add_locate_form');
-Route::post('/user/{id}/edit/locate', 'EditController@add_locate');
-Route::get('/user/{id}/edit/locate/del_locate', 'LocateController@del_locate_form');
-Route::post('/user/{id}/edit/locate/del_locate', 'LocateController@remove_locate');
-//グッズ
-Route::get('/user/{id}/edit/goods', 'EditController@goods');
-//グッズ追加
-Route::get('/user/{id}/edit/goods/add', 'EditController@add');
-Route::post('/user/{id}/edit/goods/add', 'EditController@create');
-//グッズ削除
-Route::get('/user/{id}/edit/goods/{goods_id}/del', 'EditController@del');
-Route::post('/user/{id}/edit/goods/{goods_id}/del', 'EditController@remove');
-//サンプル
-Route::get('/user/{id}/edit/sample', 'EditController@sample_edit');
-Route::post('/user/{id}/edit/sample', 'EditController@sample_edit');
-Route::get('/user/{id}/edit/sample/add', 'EditController@sample_add');
-Route::post('/user/{id}/edit/sample/add', 'EditController@sample_create');
-Route::get('/user/{id}/edit/sample/del', 'EditController@sample_del');
-Route::post('/user/{id}/edit/sample/del', 'EditController@sample_remove');
+
+// 以下編集画面のルート-------------------------------------------------------------------------------
+
+// アカウント情報編集
+Route::get('/user/{id}/summary/account', 'UserController@edit');
+Route::post('/user/{id}/summary/account', 'UserController@update');
+
+// プロフィール編集
+Route::get('/user/{id}/summary/profile', 'ProfileController@edit');
+Route::post('/user/{id}/summary/profile', 'ProfileController@update');
+
+// ロケーション編集
+Route::get('/user/{id}/summary/locate', 'LocateController@edit');
+Route::post('/user/{id}/summary/locate', 'LocateController@update');
+
+// グッズ編集
+Route::get('/user/{id}/summary/goods', 'GoodsController@summary');//一覧画面
+
+Route::get('/user/{id}/summary/goods/add', 'GoodsController@add');//追加画面
+Route::post('/user/{id}/summary/goods/add', 'GoodsController@create');//追加するぜ！
+
+Route::get('/user/{id}/summary/goods/edit', 'GoodsController@edit');//編集画面
+Route::post('/user/{id}/summary/goods/update', 'GoodsController@update');//編集するぜ！
+
+Route::get('/user/{id}/summary/goods/delete', 'GoodsController@delete');//削除画面
+Route::post('/user/{id}/summary/goods/remove', 'GoodsController@remove');//削除するぜ！
+
+// サンプル編集
+Route::get('/user/{id}/summary/sample', 'SampleController@summary');//一覧画面
+
+Route::get('/user/{id}/summary/sample/add', 'SampleController@add');//追加画面
+Route::post('/user/{id}/summary/sample/add', 'SampleController@create');//追加するぜ！
+
+Route::get('/user/{id}/summary/sample/edit', 'SampleController@edit');//編集画面
+Route::post('/user/{id}/summary/sample/update', 'SampleController@update');//編集するぜ！
+
+Route::get('/user/{id}/summary/sample/delete', 'SampleController@delete');//削除画面
+Route::post('/user/{id}/summary/sample/remove', 'SampleController@remove');//削除するぜ！

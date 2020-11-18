@@ -8,7 +8,9 @@
 </head>
 <body>
     <p><a href="goods/add">商品の追加</a></p><br>
-    @if(!empty($data))
+    @if(count($data)==0)
+        商品が登録されていません
+    @else
         <form action="goods/multi_del" method="GET">
             @csrf
             @foreach($data as $item)
@@ -20,8 +22,6 @@
                 {{--{{request()->id()}}でURLのユーザーID取得  --}}
                 <p><input type="submit" value="選択削除"></p>
         </form>
-    @else
-        aaa
     @endif
 </body>
 </html>

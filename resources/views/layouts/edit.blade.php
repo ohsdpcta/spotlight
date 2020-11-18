@@ -27,10 +27,10 @@
                 <div class="bg-dark col-lg-3 col-md-3 col-sm-3 mb-1">
                     <h3 class="text-light mt-2">設定</h3>
                     <div class="form-group">
-                        <p><a class="text-primary btn disabled" href="/user/{{request()->id}}/edit/">ユーザー情報</a></p>
-                        <p><a class="text-primary btn" href="locate">ロケーション情報</a></p>
-                        <p><a class="text-primary btn" href="goods">グッズ情報</a></p>
-                        <p><a class="text-primary btn" href="sample">サンプル情報</a></p>
+                        <p><a class="text-primary btn @if(request()->is('*edit')) disabled @endif" href="/user/{{request()->id}}/edit/">ユーザー情報</a></p>
+                        <p><a class="text-primary btn @if(request()->is('*edit/locate')) disabled @endif" href="/user/{{request()->id}}/edit/locate/">ロケーション情報</a></p>
+                        <p><a class="text-primary btn @if(request()->is('*edit/goods')) disabled @endif" href="/user/{{request()->id}}/edit/goods/">グッズ情報</a></p>
+                        <p><a class="text-primary btn @if(request()->is('*edit/sample')) disabled @endif" href="/user/{{request()->id}}/edit/sample/">サンプル情報</a></p>
                     </div>
                 </div>
 

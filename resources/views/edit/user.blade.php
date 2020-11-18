@@ -9,7 +9,7 @@
     </style>
 
 
-    <h3 class="text-light">ユーザー情報設定</h3>
+    <h3 class="text-light">ユーザー情報変更</h3>
     <br>
     <form action="/user/{{request()->id}}/profile" method="post">
         @csrf

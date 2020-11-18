@@ -12,7 +12,7 @@ class GoodsController extends Controller
         $data = Goods::where('user_id', $id)->get();
         return view('goods.goods', compact('data'));
     }
-
+    //新規追加
     public function add(Request $request)
     {
         return view('goods.add');
@@ -27,7 +27,7 @@ class GoodsController extends Controller
         $addgoods->save();
         return redirect("user/{$id}/goods");
     }
-
+    //削除
     public function del(Request $request, $id, $goods_id) {
         $data = Goods::find($goods_id);
         return view('Goods.del', compact('data'));
@@ -43,8 +43,7 @@ class GoodsController extends Controller
         $data = array();    //配列の初期化
         $check_goods = $request->input('check_goods');  //チェックボックスのデータを取得
         foreach($check_goods as $item){
-            //where('カラム名','任意')
-            $data[] = Goods::where('id',$item)->first();
+            $data[] = Goods::where('id',$item)->first();    //where('カラム名','任意')
         }
         return view('goods.multi_del', compact('data'));
     }
@@ -54,7 +53,6 @@ class GoodsController extends Controller
         foreach($goods_id as $item){
             Goods::where('id',$item)->delete();
         }
-        logger($goods_id);
         return redirect("/user/{$id}/goods");
     }
 }

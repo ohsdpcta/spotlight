@@ -26,7 +26,7 @@
                 
                 {{-- 選択削除チェックボックス --}}
                 <form method="post" action="remove">
-                    <input type="checkbox" name="goods_delete[]" value="{{$item->id}}">{{ $item->name }}
+                    <input type="checkbox" name="goods_delete[]" value="{{$item->id}}">
                 </form>
 
             </div>

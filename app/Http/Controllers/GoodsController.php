@@ -28,7 +28,7 @@ class GoodsController extends Controller
         $addgoods->name = $request->name;
         $addgoods->url = $request->url;
         $addgoods->save();
-        return redirect("user/{$id}/goods");
+        return redirect("user/{$id}/summary/goods");
     }
     //編集
     public function edit(Request $request,$id,$goods_id)

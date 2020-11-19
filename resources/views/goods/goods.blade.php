@@ -1,6 +1,7 @@
-@extends('layouts.user')
+@extends('layouts/user')
 
 @section('content')
+
 <html>
 <head>
     <meta charset="utf-8">
@@ -8,11 +9,16 @@
 </head>
 <body>
     @if(count($data)==0)
-        商品が登録されていません
+        リンクが登録されていません
     @else
-        @foreach($data as $item)
-            <a href="{{ $item->url }}">{{ $item->name }}</a></br>
-        @endforeach
+        <ul class="list-group">
+            @foreach ($data as $item)
+                <li class="list-group-item">
+                <a href="{{ $item->url }}">{{ $item->name }}</a>
+                </li>
+            @endforeach
+        </ul>
+        {{ $data->links('vendor.pagination.sample-pagination') }}
     @endif
 </body>
 </html>

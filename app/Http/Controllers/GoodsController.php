@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class GoodsController extends Controller
 {
+    // 一覧
     public function goods(Request $request, $id){
         $data = Goods::where('user_id', $id)->get();
         return view('goods.goods', compact('data'));

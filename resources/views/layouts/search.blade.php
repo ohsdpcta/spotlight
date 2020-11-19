@@ -17,13 +17,13 @@
             <h3 class="text-center text-light">SpotLight</h3>
 
             {{-- 検索フォーム --}}
-            <form action="/user/search" method="post">
+            <form action="/user/search">
                 @csrf
                 <div class="row align-items-center text-center center">
-                    <input type="text" name="input" value="" class="form-control col-md-11" placeholder="Where do you want SPOTLIGHTING">
+                    <input type="text" name="search" value="" class="form-control col-md-11" placeholder="Where do you want SPOTLIGHTING">
                     <button type="sumbit" class="btn btn-dark col-md-1" ><i class="fas fa-search"></i></button>
                 </div>
-            
+            </form>
             <div class="bg-secondary row mt-3 mb-3 col-md-10 col-md-offset-1">
                 <p>ここにタグとかつける？</p>
             </div>

@@ -9,35 +9,30 @@ use Illuminate\Support\Facades\Auth;
 
 class GoodsController extends Controller
 {
-    // 編集一覧表示画面
-    public function summary(Request $request, $id)
-    {
+    // 一覧
+    public function goods(Request $request, $id){
         $data = Goods::where('user_id', $id)->get();
-        return view('summary.summary_goods', compact('data'));
+        return view('goods.goods', compact('data'));
     }
     //新規追加
-    public function add(Request $request)
-    {
-        return view('summary.add_goods');
+    public function add(Request $request){
+        return view('goods.add');
     }
 
-    public function create(Request $request, $id)
-    {
+    public function create(Request $request, $id){
         $addgoods = new Goods;
         $addgoods->user_id = $id;
         $addgoods->name = $request->name;
         $addgoods->url = $request->url;
         $addgoods->save();
-        return redirect("user/{$id}/summary/goods");
+        return redirect("user/{$id}/goods");
     }
     //編集
-    public function edit(Request $request,$id,$goods_id)
-    {
+    public function edit(Request $request,$id,$goods_id){
         $data = Goods::find($goods_id);
         return view('goods.edit',compact('data'));
     }
-    public function update(Request $request,$id,$goods_id)
-    {
+    public function update(Request $request,$id,$goods_id){
         if(Auth::id() == $id){
             $addgoods = Goods::where('user_id', Auth::id())->first();
             if($addgoods){

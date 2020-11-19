@@ -12,45 +12,44 @@
 */
 
 Route::get('/', 'UserController@index');
+Route::get('/user/search', 'UserController@search');
 
-Route::prefix('/user')->group(function(){
-    // 検索結果
-    Route::post('search', 'UserController@search');
-    // サインアップ
-    Route::get('signup', 'UserController@signup_form')->middleware('guest');
-    Route::post('signup', 'UserController@signup')->middleware('guest');
-    // サインイン
-    Route::get('signin', 'UserController@signin_form')->middleware('guest');
-    Route::post('signin', 'UserController@signin')->middleware('guest');
-    // サインアウト
-    Route::get('signout', 'UserController@signout')->middleware('auth');
-    // ツイッターログイン
-    Route::get('signin/twitter', 'UserController@redirectToProvider')->middleware('guest');
-    Route::get('signin/twitter/callback', 'UserController@handleProviderCallback')->middleware('guest');
+// サインアップ
+Route::get('/user/signup', 'UserController@signup_form');
+Route::post('/user/signup', 'UserController@signup');
+// サインイン
+Route::get('/user/signin', 'UserController@signin_form');
+Route::post('/user/signin', 'UserController@signin');
+// サインアウト
+Route::get('/user/signout', 'UserController@signout');
+// ツイッターログイン
+Route::get('/user/signin/twitter', 'UserController@redirectToProvider');
+Route::get('/user/signin/twitter/callback', 'UserController@handleProviderCallback');
 
-    Route::prefix('/{id}')->group(function(){
-        // プロフィール
-        Route::get('profile', 'ProfileController@profile');
+// プロファイル
+Route::get('/user/{id}/profile', 'ProfileController@profile');
+Route::get('/user/{id}/profile/edit', 'ProfileController@edit');
+Route::post('/user/{id}/profile/edit', 'ProfileController@update');
 
-        // フォロー
-        Route::get('follow', 'FollowerController@follow')->middleware('auth');
-        Route::get('unfollow', 'FollowerController@unfollow')->middleware('auth');
+// フォロー
+Route::get('/user/{id}/follow', 'FollowerController@follow');
+Route::get('/user/{id}/unfollow', 'FollowerController@unfollow');
 
-        // ロケーション
-        Route::get('locate', 'LocateController@view_locate');
-        Route::get('locate/add_locate', 'LocateController@add_locate_form')->middleware('auth');
-        Route::post('locate/add_locate', 'LocateController@add_locate')->middleware('auth');
-        Route::get('locate/del_locate', 'LocateController@del_locate_form')->middleware('auth');
-        Route::post('locate/del_locate', 'LocateController@remove_locate')->middleware('auth');
+// ロケーション
+Route::get('/user/{id}/locate', 'LocateController@view_locate');
+Route::get('/user/{id}/locate/add_locate', 'LocateController@add_locate_form');
+Route::post('/user/{id}/locate/add_locate', 'LocateController@add_locate');
+Route::get('/user/{id}/locate/del_locate', 'LocateController@del_locate_form');
+Route::post('/user/{id}/locate/del_locate', 'LocateController@remove_locate');
 
-        //グッズ
-        Route::get('goods', 'GoodsController@goods');
-        Route::get('goods/multi_del', 'GoodsController@multi_del')->middleware('auth');
-        Route::post('goods/multi_del', 'GoodsController@multi_remove')->middleware('auth');
-        // サンプル
-        Route::get('sample', 'SampleController@sample');
-        Route::get('sample/multi_del', 'SampleController@multi_del')->middleware('auth');
-        Route::post('sample/multi_del', 'SampleController@multi_remove')->middleware('auth');
+//グッズ
+Route::get('/user/{id}/goods', 'GoodsController@goods');
+Route::get('/user/{id}/goods/multi_del', 'GoodsController@multi_del');
+Route::post('/user/{id}/goods/multi_del', 'GoodsController@multi_remove');
+// サンプル
+Route::get('/user/{id}/sample', 'SampleController@sample');
+Route::get('/user/{id}/sample/multi_del', 'SampleController@multi_del');
+Route::post('/user/{id}/sample/multi_del', 'SampleController@multi_remove');
 
 // 以下編集画面のルート-------------------------------------------------------------------------------
 

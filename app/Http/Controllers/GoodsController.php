@@ -12,7 +12,7 @@ class GoodsController extends Controller
     // 編集一覧表示画面
     public function summary(Request $request, $id)
     {
-        $data = Goods::where('user_id', $id)->get();
+        $data = Goods::find($id)->paginate(10);
         return view('summary.summary_goods', compact('data'));
     }
     //新規追加

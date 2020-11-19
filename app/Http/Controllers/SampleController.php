@@ -9,7 +9,7 @@ use App\Sample;
 class SampleController extends Controller
 {
     public function sample(Request $request, $id) {
-        $data = Sample::where('user_id', $id)->get();
+        $data = Sample::find($id)->paginate(10);
         return view('sample.sample', compact('data'));
     }
 

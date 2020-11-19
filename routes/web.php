@@ -64,9 +64,9 @@ Route::prefix('/user')->group(function(){
             Route::post('profile', 'ProfileController@update')->middleware('auth');
 
             // ロケーション編集
-            Route::get('/user/{id}/summary/locate', 'LocateController@edit')->middleware('auth');
-            Route::post('/user/{id}/summary/locate', 'LocateController@update')->middleware('auth');
-            Route::post('/user/{id}/summary/locate/remove', 'LocateController@remove')->middleware('auth');
+            Route::get('locate', 'LocateController@edit')->middleware('auth');
+            Route::post('locate', 'LocateController@update')->middleware('auth');
+            Route::post('locate/remove', 'LocateController@remove')->middleware('auth');
 
             // グッズ編集
             Route::get('goods', 'GoodsController@summary')->middleware('auth');//一覧画面

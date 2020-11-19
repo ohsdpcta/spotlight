@@ -65,6 +65,7 @@ Route::post('/user/{id}/summary/profile', 'ProfileController@update');
 // ロケーション編集
 Route::get('/user/{id}/summary/locate', 'LocateController@edit');
 Route::post('/user/{id}/summary/locate', 'LocateController@update');
+Route::post('/user/{id}/summary/locate/remove', 'LocateController@remove');
 
 // グッズ編集
 Route::get('/user/{id}/summary/goods', 'GoodsController@summary');//一覧画面

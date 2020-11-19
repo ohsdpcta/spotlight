@@ -28,12 +28,12 @@ class LocateController extends Controller
     }
 
     //ロケーション+住所登録フォーム
-    public function add_locate_form(Request $request){
-        return view('locate.add_locate');
+    public function edit(Request $request){
+        return view('summary.edit_locate');
     }
 
     //ロケーション+住所登録
-    public function add_locate(Request $request, $id){
+    public function update(Request $request, $id){
         $request->validate([
             'coordinate' => 'required|string'
         ]);
@@ -50,18 +50,12 @@ class LocateController extends Controller
                 $locate->save();
             }
         }
-        return redirect("/user/{$id}/profile");
+        return redirect("/user/{$id}/summary/locate");
 
     }
-    //ロケーション住所削除
-    public function del_locate_form(Request $request,$id){
-        $data = Locate::where('user_id', Auth::id())->get();
-        return view('locate.del_locate', compact('data'));
-    }
-    public function remove_locate(Request $request,$id){
+    public function remove(Request $request,$id){
         // レコードを削除する。
-        $return = Locate::find($id);
         Locate::where('user_id', Auth::id())->delete();
-        return redirect("/user/{$id}/profile");
+        return redirect("/user/{$id}/summary/locate");
     }
 }

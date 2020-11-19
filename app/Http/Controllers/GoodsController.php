@@ -9,15 +9,16 @@ use Illuminate\Support\Facades\Auth;
 
 class GoodsController extends Controller
 {
-    public function goods(Request $request, $id)
+    // 編集一覧表示画面
+    public function summary(Request $request, $id)
     {
         $data = Goods::find($id)->paginate(10);
-        return view('goods.goods', compact('data'));
+        return view('summary.summary_goods', compact('data'));
     }
     //新規追加
     public function add(Request $request)
     {
-        return view('goods.add');
+        return view('summary.add_goods');
     }
 
     public function create(Request $request, $id)
@@ -27,7 +28,7 @@ class GoodsController extends Controller
         $addgoods->name = $request->name;
         $addgoods->url = $request->url;
         $addgoods->save();
-        return redirect("user/{$id}/goods");
+        return redirect("user/{$id}/summary/goods");
     }
     //編集
     public function edit(Request $request,$id,$goods_id)

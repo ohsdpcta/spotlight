@@ -5,11 +5,11 @@
 
     <div class="top">
         <div class="row">
-            <div class="col-md-3 pt-2 pl-4">
+            <div class="col-md-3 col-sm-3 pt-2 pl-2 pb-2">
                 <img src="http://placehold.jp/200x200.png" class="rounded-circle">
             </div>
             {{-- ユーザー名 --}}
-            <div class="col-4 pt-2 pr-2 pb-2 pl-1">
+            <div class="col-md-6 col-sm-6 pt-2 pr-2 pb-2 pl-2">
                 <h1>{{ UserClass::getUser(request()->id)->name }}</h1>
                 {{-- タグ(仮) --}}
                 <div class="pt-4">
@@ -17,7 +17,7 @@
                 </div>
             </div>
             {{-- フォローボタン表示 --}}
-            <div class="col-4 pt-3 pl-1">
+            <div class="col-md-2 col-sm-2 pt-3 pl-1">
             {{-- @if(Auth::user() and Auth::user()->id != request()->id)あとで表示 --}}
                 @if(UserClass::getFollower(request()->id)['follow_flg'] == 1)
                     <input type="button" onclick="location.href='/user/{{ request()->id }}/unfollow'" class="btn btn-primary" value="フォロー解除">
@@ -38,9 +38,8 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-1 col-md-3"></div>
             {{-- フォロワー数 --}}
-            <div class="col-1 col-md-6 pl-1">
+            <div class="col-md-6 mt-2">
                 <p>フォロー中: {{ UserClass::getFollower(request()->id)['follower'] }}　　　
                 フォロワー: {{ UserClass::getFollower(request()->id)['follower'] }}</p>
             </div>

@@ -20,7 +20,7 @@
             <form action="/user/search" method="post">
                 @csrf
                 <div class="row align-items-center text-center center">
-                    <input type="text" name="input" value="" class="form-control col-md-11">
+                    <input type="search" name="input" value="" class="form-control col-md-11">
                     <button type="sumbit" class="btn btn-dark col-md-1"><i class="fas fa-search"></i></button>
                 </div>
             

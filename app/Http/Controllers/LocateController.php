@@ -16,10 +16,14 @@ class LocateController extends Controller
         $gmap_url = Locate::where('user_id', $id)
             ->select('coordinate')
             ->first();
-        preg_match('/3d\d{1,3}\.\d{6,7}!4d-?\d{1,3}\.\d{6,7}/', $gmap_url, $ping_locate_info);
-        $delete_words = ['3d', '4d'];
-        $ping_locates = str_replace($delete_words, '', $ping_locate_info[0]);
-        $locate_array = explode('!', $ping_locates);
+        if(!empty($gmap_url)){
+            preg_match('/3d\d{1,3}\.\d{6,7}!4d-?\d{1,3}\.\d{6,7}/', $gmap_url, $ping_locate_info);
+            $delete_words = ['3d', '4d'];
+            $ping_locates = str_replace($delete_words, '', $ping_locate_info[0]);
+            $locate_array = explode('!', $ping_locates);
+        }else{
+            $locate_array = [];
+        }
         return view('locate.view_locate', compact('locate_array'));
     }
 

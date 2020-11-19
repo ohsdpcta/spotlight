@@ -11,7 +11,7 @@
 
     <h3 class="text-light">ユーザー情報変更</h3>
     <br>
-    <form action="/user/{{request()->id}}/profile" method="post">
+    <form action="/user/{{request()->id}}/summary/account" method="post">
         @csrf
         <div class="form-group">
             <label>UserName</label><input type="text" name="name" class="form-control">

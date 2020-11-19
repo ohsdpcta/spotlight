@@ -13,7 +13,7 @@
 
 
 Route::get('/', 'UserController@index');
-Route::post('/user/search', 'UserController@search');
+Route::get('/user/search', 'UserController@search');
 
 // サインアップ
 Route::get('/user/signup', 'UserController@signup_form');

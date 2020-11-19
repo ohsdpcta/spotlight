@@ -115,9 +115,9 @@
 
                 {{-- indexのnavbarでは検索フォームを非表示 --}}
                 @if(!(request()->path() == '/'))
-                    <form class="form-inline mt-1 mb-1 align-right" action="/user/search" method="post">
+                    <form class="form-inline mt-1 mb-1 align-right" action="/user/search">
                         @csrf
-                        <input class="form-control mr-sm-1" type="search" name="input">
+                        <input class="form-control mr-sm-1" type="search" name="search">
                         <button class="btn btn-primary" type="submit">検索</button>
                     </form>
                 @endif

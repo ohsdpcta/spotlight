@@ -8,13 +8,17 @@
     <title>サンプルページ</title>
 </head>
 <body>
-
     @if(count($data)==0)
         リンクが登録されていません
     @else
-
-            <a href="{{ $item->url }}">{{ $item->name }}</a>
-
+        <ul class="list-group">
+            @foreach ($data as $item)
+                <li class="list-group-item">
+                <a href="{{ $item->url }}">{{ $item->name }}</a>
+                </li>
+            @endforeach
+        </ul>
+        {{ $data->links('vendor.pagination.sample-pagination') }}
     @endif
 </body>
 </html>

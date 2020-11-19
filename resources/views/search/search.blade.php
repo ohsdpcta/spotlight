@@ -34,6 +34,8 @@
                 </div>
             @endforeach
         </div>
+        <br>
+        {{ $result->links('vendor.pagination.sample-pagination') }}
     </body>
 
 @endsection

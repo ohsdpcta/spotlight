@@ -20,7 +20,10 @@
             <div class="col-lg-11 col-md-11 col-sm-10 col-xs-7 align-items-center d-flex">
                 <p>{{ $item->name }}</p>
                 <button type="button" class="btn btn-secondary btn-block" onclick="location.href='/user/{{$item->id}}/summary/goods/edit'">編集</button>
-                <button type="button" class="btn btn-secondary btn-block" onclick="location.href='/user/{{$item->id}}/summary/goods/delete'">削除</button>
+                {{-- 選択削除チェックボックス --}}
+                <form method="post" action="remove">
+                    <input type="checkbox" name="goods_delete[]" value="$item->id">{{ $item->name }}
+                </form>
             </div>
         </div>
     @endforeach

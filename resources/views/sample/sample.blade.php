@@ -1,7 +1,6 @@
-@extends('layouts/user')
+@extends('layouts.user')
 
 @section('content')
-
 <html>
 <head>
     <meta charset="utf-8">

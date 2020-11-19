@@ -8,13 +8,12 @@
     <title>サンプルページ</title>
 </head>
 <body>
-
     @if(count($data)==0)
         リンクが登録されていません
     @else
-
-            <a href="{{ $item->url }}">{{ $item->name }}</a>
-
+        @foreach($data as $item)
+            <a href="{{ $item->url }}">{{ $item->name }}</a></br>
+        @endforeach
     @endif
 </body>
 </html>

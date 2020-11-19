@@ -15,7 +15,7 @@ Route::get('/', 'UserController@index');
 
 Route::prefix('/user')->group(function(){
     // 検索結果
-    Route::post('search', 'UserController@search');
+    Route::get('search', 'UserController@search');
     // サインアップ
     Route::get('signup', 'UserController@signup_form')->middleware('guest');
     Route::post('signup', 'UserController@signup')->middleware('guest');

@@ -19,7 +19,7 @@ class LocateController extends Controller
         }else{
             $locate_array = [];
         }
-        return view('locate.view_locate', compact('locate_array'));
+        return view('index.locate', compact('locate_array'));
     }
 
     public function edit_locate(Request $request, $id) {

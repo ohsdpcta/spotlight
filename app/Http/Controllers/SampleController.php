@@ -10,7 +10,7 @@ class SampleController extends Controller
 {
     public function index(Request $request, $id) {
         $data = Sample::find($id)->paginate(10);
-        return view('sample.sample', compact('data'));
+        return view('index.sample', compact('data'));
     }
 
     public function summary(Request $request, $id){

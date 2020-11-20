@@ -6,11 +6,10 @@
 
 <head>
     <meta charset="utf-8">
-    <title>プロフィールページ</title>
+    <title>プロフィール / Spotlight</title>
 </head>
 
 <body>
-
     {{ $data->content }}
 </body>
 

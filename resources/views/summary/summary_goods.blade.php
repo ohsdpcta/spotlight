@@ -2,6 +2,9 @@
 
 {{-- ----------------------------------------------------------------- --}}
 
+<meta charset="utf-8">
+<title>グッズ編集 / Spotlight</title>
+
 @section('R_form')
 
 <div class="container">

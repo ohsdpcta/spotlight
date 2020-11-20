@@ -111,8 +111,9 @@
                                     @elseif(request()->is('*locate'))locate\
                                     @elseif(request()->is('*goods'))goods\
                                     @elseif(request()->is('*sample'))sample\
+                                    @else()profile\
                                     @endif"
-                                    >my page</a>
+                                >my page</a>
                             </li>
                         @endif
                     </ul>

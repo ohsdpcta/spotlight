@@ -14,6 +14,12 @@ class GoodsController extends Controller
         $data = Goods::find($id)->paginate(10);
         return view('goods.goods', compact('data'));
     }
+
+    public function summary(Request $request, $id){
+        $data = Goods::find($id)->paginate(10);
+        return view('summary.summary_goods', compact('data'));
+    }
+
     //新規追加
     public function add(Request $request){
         return view('goods.add');

@@ -13,6 +13,11 @@ class SampleController extends Controller
         return view('sample.sample', compact('data'));
     }
 
+    public function summary(Request $request, $id){
+        $data = Sample::find($id)->paginate(10);
+        return view('summary.summary_sample', compact('data'));
+    }
+
     public function add(Request $request) {
         return view('sample.add');
     }

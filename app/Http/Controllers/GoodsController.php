@@ -14,6 +14,12 @@ class GoodsController extends Controller
         $data = Goods::where('user_id', $id)->get();
         return view('goods.goods', compact('data'));
     }
+
+    public function summary(Request $request, $id){
+        $data = Goods::where('user_id', $id)->get();
+        return view('summary.summary_goods', compact('data'));
+    }
+
     //新規追加
     public function add(Request $request){
         return view('goods.add');

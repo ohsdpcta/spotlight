@@ -19,7 +19,7 @@ class SampleController extends Controller
     }
 
     public function add(Request $request) {
-        return view('sample.add');
+        return view('summary.add_sample');
     }
 
     public function create(Request $request, $id) {

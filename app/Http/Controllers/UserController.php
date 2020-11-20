@@ -76,13 +76,15 @@ class UserController extends Controller
             if(Auth::attempt(['email'=> $login_id,'password' => $request->input('password')],$request->remember)):
                 // ログイン後にアクセスしようとしていたアクションにリダイレクト、無い場合はprofileへ
                 session()->flash('flash_message','ログインしました。');
-                return redirect()->intended('/');
+                $id = Auth::id();
+                return redirect()->intended("user/$id/profile");
             endif;
         } else {
             if(Auth::attempt(['social_id'=> $login_id,'password' => $request->input('password')],$request->remember)):
                 // ログイン後にアクセスしようとしていたアクションにリダイレクト、無い場合はprofileへ
                 session()->flash('flash_message','ログインしました。');
-                return redirect()->intended('/');
+                $id = Auth::id();
+                return redirect()->intended("user/$id/profile");
             endif;
         }
         //失敗した場合はsigninにリダイレクト

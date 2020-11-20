@@ -11,7 +11,7 @@ use App\Profile;
 use App\Follower;
 
 class ProfileController extends Controller{
-    public function profile(Request $request, $id) {
+    public function index(Request $request, $id) {
         $data = Profile::where('user_id', $id)->first();
         return view('profile.profile', compact('data'));
     }

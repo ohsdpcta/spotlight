@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class GoodsController extends Controller
 {
     // 一覧
-    public function goods(Request $request, $id){
+    public function index(Request $request, $id){
         $data = Goods::find($id)->paginate(10);
         return view('goods.goods', compact('data'));
     }

@@ -8,7 +8,7 @@ use App\Sample;
 
 class SampleController extends Controller
 {
-    public function sample(Request $request, $id) {
+    public function index(Request $request, $id) {
         $data = Sample::find($id)->paginate(10);
         return view('sample.sample', compact('data'));
     }

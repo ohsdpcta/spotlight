@@ -30,25 +30,25 @@ Route::prefix('/user')->group(function(){
 
     Route::prefix('/{id}')->group(function(){
         // プロフィール
-        Route::get('profile', 'ProfileController@profile');
+        Route::get('profile', 'ProfileController@index');
 
         // フォロー
         Route::get('follow', 'FollowerController@follow')->middleware('auth');
         Route::get('unfollow', 'FollowerController@unfollow')->middleware('auth');
 
         // ロケーション
-        Route::get('locate', 'LocateController@view_locate');
+        Route::get('locate', 'LocateController@index');
         Route::get('locate/add_locate', 'LocateController@add_locate_form')->middleware('auth');
         Route::post('locate/add_locate', 'LocateController@add_locate')->middleware('auth');
         Route::get('locate/del_locate', 'LocateController@del_locate_form')->middleware('auth');
         Route::post('locate/del_locate', 'LocateController@remove_locate')->middleware('auth');
 
         //グッズ
-        Route::get('goods', 'GoodsController@goods');
+        Route::get('goods', 'GoodsController@index');
         Route::get('goods/multi_del', 'GoodsController@multi_del')->middleware('auth');
         Route::post('goods/multi_del', 'GoodsController@multi_remove')->middleware('auth');
         // サンプル
-        Route::get('sample', 'SampleController@sample');
+        Route::get('sample', 'SampleController@index');
         Route::get('sample/multi_del', 'SampleController@multi_del')->middleware('auth');
         Route::post('sample/multi_del', 'SampleController@multi_remove')->middleware('auth');
 

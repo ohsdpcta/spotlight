@@ -7,9 +7,9 @@
 <div class="container">
 
     {{-- 新規追加ボタン --}}
-    <button type="button" class="btn btn-secondary btn-block" onclick="location.href='/user/{{$item->id}}/summary/sample/add'">新規追加</button>
+    <button type="button" class="btn btn-secondary btn-block" onclick="location.href='/user/{{ request()->id }}/summary/sample/add'">新規追加</button>
 
-    @foreach($result as $item)
+    @foreach($data as $item)
         {{-- 背景の四角 --}}
         <div class="row bg-dark mt-1 pt-1 pb-1 pl-1 maru">
             {{-- サムネ --}}
@@ -24,6 +24,7 @@
             </div>
         </div>
     @endforeach
+    {{ $data->links('vendor.pagination.sample-pagination') }}
 </div>
 
 @endsection

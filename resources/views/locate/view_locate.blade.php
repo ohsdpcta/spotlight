@@ -20,7 +20,6 @@
 </head>
 
 <body>
-  {{ logger($locate_array) }}
   @if($locate_array)
     <div id="map"></div>
   @else

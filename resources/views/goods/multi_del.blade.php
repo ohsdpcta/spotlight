@@ -1,5 +1,8 @@
 @extends('layouts.user')
 
+<meta charset="utf-8">
+<title>グッズ削除 / Spotlight</title>
+
 @section('content')
     <form action="multi_del" method="post">
         @csrf

@@ -11,7 +11,7 @@ class GoodsController extends Controller
 {
     // 一覧
     public function goods(Request $request, $id){
-        $data = Goods::where('user_id', $id)->get();
+        $data = Goods::find($id)->paginate(10);
         return view('goods.goods', compact('data'));
     }
 
@@ -85,4 +85,3 @@ class GoodsController extends Controller
         return redirect("/user/{$id}/goods");
     }
 }
-

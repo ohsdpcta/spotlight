@@ -22,7 +22,7 @@ class GoodsController extends Controller
 
     //新規追加
     public function add(Request $request){
-        return view('goods.add');
+        return view('summary.add_goods');
     }
 
     public function create(Request $request, $id){

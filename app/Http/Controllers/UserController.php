@@ -17,11 +17,11 @@ class UserController extends Controller
 
     // 検索結果
     public function search(Request $request){
-        $input = $request->search;
+        $input = $request->input;
         if ($input == '') {
-            $result = User::paginate(10);
+            $result = User::all();
         }else{
-            $result = User::where('name', 'like', '%'.$input.'%')->paginate(10);
+            $result = User::where('name', 'like', '%'.$input.'%')->get();
         }
         return view('search.search', ['result' => $result]);
     }

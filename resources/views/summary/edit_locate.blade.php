@@ -32,13 +32,6 @@
                     <tr><th></th><td><input type="submit" value="登録"></td></tr>
                 </table>
             </form>
-            <form action="locate/remove" method="post">
-                @csrf
-                {{-- 削除ボタン --}}
-                <table>
-                    <tr><th></th><td><input type="submit" value="削除"></td></tr>
-                </table>
-            </form>
 
         </div>
 

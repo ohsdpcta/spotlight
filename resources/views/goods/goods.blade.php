@@ -1,24 +1,27 @@
-@extends('layouts/user')
+@extends('layouts.user')
 
 @section('content')
-
 <html>
 <head>
     <meta charset="utf-8">
     <title>サンプルページ</title>
 </head>
 <body>
+    <p><a href="goods/add">商品の追加</a></p><br>
     @if(count($data)==0)
-        リンクが登録されていません
+        商品が登録されていません
     @else
-        <ul class="list-group">
-            @foreach ($data as $item)
-                <li class="list-group-item">
+        <form action="goods/multi_del" method="GET">
+            @csrf
+            @foreach($data as $item)
+                <p><input type="checkbox" name="check_goods[]" value="{{$item->id}}">&nbsp;
                 <a href="{{ $item->url }}">{{ $item->name }}</a>
-                </li>
+                <a href="/user/{{request()->id}}/goods/{{$item->id}}/del">削除
+                <a href="/user/{{request()->id}}/goods/{{$item->id}}/edit">編集</p>
             @endforeach
-        </ul>
-        {{ $data->links('vendor.pagination.sample-pagination') }}
+                {{--{{request()->id()}}でURLのユーザーID取得  --}}
+                <p><input type="submit" value="選択削除"></p>
+        </form>
     @endif
 </body>
 </html>

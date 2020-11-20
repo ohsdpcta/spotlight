@@ -10,7 +10,7 @@
 </head>
 
 <body>
-
+    <p><a href="profile/edit">プロフィールの修正</a></p>
     {{ $data->content }}
 </body>
 

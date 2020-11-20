@@ -17,9 +17,9 @@
     @csrf
     <div class="form-group">
         {{-- <label>サンプル画像</label><input type="text" name="name" class="form-control"> --}}
-        <label>サンプル名</label><input type="text" name="name" class="form-control">
+        <label>サンプル名</label><input type="text" name="name" class="form-control" value="{{ $data->name }}">
         <br>
-        <label>URL</label><input type="text" name="url" class="form-control">
+        <label>URL</label><input type="text" name="url" class="form-control" value="{{ $data->url }}">
         <br>
         <input type="submit" value="確定" class="btn btn-primary">
     </div>

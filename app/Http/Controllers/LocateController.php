@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-use App\Profile;
-use App\Follower;
 use App\Locate;
 
 class LocateController extends Controller

@@ -1,9 +1,9 @@
 @extends('layouts/signin')
-@section('signin')
 
-<head>
-    <title>サインイン画面</title>
-</head>
+<meta charset="utf-8">
+<title>サインイン / Spotlight</title>
+
+@section('signin')
 
 <h1>サインイン</h1>
     {{-- バリデーションエラーがある場合は出力 --}}

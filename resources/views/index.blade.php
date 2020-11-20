@@ -1,5 +1,8 @@
 @extends('layouts.main')
 
+<meta charset="utf-8">
+<title>トップ / Spotlight</title>
+
 @section('user')
 
     <style>

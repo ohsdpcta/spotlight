@@ -70,25 +70,19 @@ Route::prefix('/user')->group(function(){
 
             // グッズ編集
             Route::get('goods', 'GoodsController@summary')->middleware('auth');//一覧画面
-
             Route::get('goods/add', 'GoodsController@add')->middleware('auth');//追加画面
             Route::post('goods/add', 'GoodsController@create')->middleware('auth');//追加するぜ！
-
             Route::get('goods/edit', 'GoodsController@edit')->middleware('auth');//編集画面
             Route::post('goods/edit', 'GoodsController@update')->middleware('auth');//編集するぜ！
-
             Route::get('goods/delete', 'GoodsController@delete')->middleware('auth');//削除画面
             Route::post('goods/delete', 'GoodsController@remove')->middleware('auth');//削除するぜ！
 
             // サンプル編集
             Route::get('sample', 'SampleController@summary')->middleware('auth');//一覧画面
-
             Route::get('sample/add', 'SampleController@add')->middleware('auth');//追加画面
             Route::post('sample/add', 'SampleController@create')->middleware('auth');//追加するぜ！
-
             Route::get('sample/edit', 'SampleController@edit')->middleware('auth');//編集画面
             Route::post('sample/edit', 'SampleController@update')->middleware('auth');//編集するぜ！
-
             Route::get('sample/delete', 'SampleController@delete')->middleware('auth');//削除画面
             Route::post('sample/delete', 'SampleController@remove')->middleware('auth');//削除するぜ！
         });

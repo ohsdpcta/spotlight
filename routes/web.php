@@ -30,7 +30,7 @@ Route::prefix('/user')->group(function(){
 
     Route::prefix('/{id}')->group(function(){
         // プロフィール
-        Route::get('profile', 'ProfileController@profile');
+        Route::get('profile', 'ProfileController@index');
 
         // フォロー
         Route::get('follow', 'FollowerController@follow')->middleware('auth');
@@ -44,11 +44,11 @@ Route::prefix('/user')->group(function(){
         Route::post('locate/del_locate', 'LocateController@remove_locate')->middleware('auth');
 
         //グッズ
-        Route::get('goods', 'GoodsController@goods');
+        Route::get('goods', 'GoodsController@index');
         Route::get('goods/multi_del', 'GoodsController@multi_del')->middleware('auth');
         Route::post('goods/multi_del', 'GoodsController@multi_remove')->middleware('auth');
         // サンプル
-        Route::get('sample', 'SampleController@sample');
+        Route::get('sample', 'SampleController@index');
         Route::get('sample/multi_del', 'SampleController@multi_del')->middleware('auth');
         Route::post('sample/multi_del', 'SampleController@multi_remove')->middleware('auth');
 

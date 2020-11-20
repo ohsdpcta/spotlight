@@ -37,7 +37,7 @@ Route::prefix('/user')->group(function(){
         Route::get('unfollow', 'FollowerController@unfollow')->middleware('auth');
 
         // ロケーション
-        Route::get('locate', 'LocateController@view_locate');
+        Route::get('locate', 'LocateController@index');
         Route::get('locate/add_locate', 'LocateController@add_locate_form')->middleware('auth');
         Route::post('locate/add_locate', 'LocateController@add_locate')->middleware('auth');
         Route::get('locate/del_locate', 'LocateController@del_locate_form')->middleware('auth');

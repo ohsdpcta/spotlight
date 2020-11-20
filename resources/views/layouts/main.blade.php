@@ -107,10 +107,10 @@
                                 <a class="nav-link" href="/user/signout">sign out</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/user/{{ Auth::id() }}/@if(request()->is('*summary/profile'))profile\
-                                    @elseif(request()->is('*summary/locate'))locate\
-                                    @elseif(request()->is('*summary/goods'))goods\
-                                    @elseif(request()->is('*summary/sample'))sample\
+                                <a class="nav-link" href="/user/{{ Auth::id() }}/@if(request()->is('*profile'))profile\
+                                    @elseif(request()->is('*locate'))locate\
+                                    @elseif(request()->is('*goods'))goods\
+                                    @elseif(request()->is('*sample'))sample\
                                     @endif"
                                     >my page</a>
                             </li>

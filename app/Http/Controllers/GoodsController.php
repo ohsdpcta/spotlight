@@ -79,4 +79,3 @@ class GoodsController extends Controller
         return redirect("/user/{$id}/goods");
     }
 }
-

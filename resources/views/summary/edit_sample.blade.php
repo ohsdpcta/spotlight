@@ -2,6 +2,9 @@
 
 {{-- ----------------------------------------------------------------- --}}
 
+<meta charset="utf-8">
+<title>サンプル編集 / Spotlight</title>
+
 @section('R_form')
 
 <style>

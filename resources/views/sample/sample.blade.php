@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>サンプルページ</title>
+    <title>サンプル / Spotlight</title>
 </head>
 <body>
     @if(count($data)==0)

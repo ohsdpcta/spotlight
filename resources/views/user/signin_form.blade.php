@@ -2,7 +2,8 @@
 @section('signin')
 
 <head>
-    <title>サインイン画面</title>
+    <meta charset="utf-8">
+<title>サインイン / Spotlight</title>
 </head>
 
 <h1>サインイン</h1>

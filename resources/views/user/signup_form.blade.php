@@ -3,7 +3,8 @@
 @section('signup')
 
 <head>
-    <title>新規登録画面</title>
+    <meta charset="utf-8">
+    <title>新規登録 / Spotlight</title>
 </head>
 
 <h1>新規登録</h1>

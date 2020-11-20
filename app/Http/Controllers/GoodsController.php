@@ -12,7 +12,7 @@ class GoodsController extends Controller
     // 一覧
     public function index(Request $request, $id){
         $data = Goods::find($id)->paginate(10);
-        return view('goods.goods', compact('data'));
+        return view('index.goods', compact('data'));
     }
 
     public function summary(Request $request, $id){

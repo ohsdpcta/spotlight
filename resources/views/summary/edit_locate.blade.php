@@ -1,4 +1,4 @@
-@extends('layouts/edit')
+@extends('layouts/summary')
 
 {{-- ------------------------------------------------------------------------- --}}
 
@@ -56,7 +56,7 @@
     @if($locate_array)
         <div id="map"></div>
     @else
-        活動場所(住所)を登録するとマップが表示されます。
+        <label>活動場所(住所)を登録するとマップが表示されます。</label>
     @endif
 </body>
     @if($locate_array)

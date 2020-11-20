@@ -23,12 +23,12 @@ class UserController extends Controller
         }else{
             $result = User::where('name', 'like', '%'.$input.'%')->paginate(10);
         }
-        return view('search.search', ['result' => $result]);
+        return view('search_result', ['result' => $result]);
     }
 
     //サインアップフォーム
     public function signup_form(){
-        return View('user.signup_form');
+        return View('user.signup');
     }
 
     // サインアップ
@@ -61,7 +61,7 @@ class UserController extends Controller
 
     //サインインフォーム
     public function signin_form(){
-        return view('user.signin_form');
+        return view('user.signin');
     }
 
     // サインイン
@@ -87,7 +87,7 @@ class UserController extends Controller
         }
         //失敗した場合はsigninにリダイレクト
         $auth_error = 'ログイン情報が間違っています。';
-        return view('user.signin_form',['auth_error'=>$auth_error]);
+        return view('user.signin',['auth_error'=>$auth_error]);
     }
 
     // サインアウト

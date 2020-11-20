@@ -22,7 +22,7 @@
             {{-- リンク --}}
             <div class="col-lg-11 col-md-11 col-sm-10 col-xs-7 align-items-center d-flex">
                 <p>{{ $item->name }}</p>
-                <button type="button" class="btn btn-secondary btn-block" onclick="location.href='/user/{{$item->id}}/summary/sample/add'">編集</button>
+                <button type="button" class="btn btn-secondary btn-block" onclick="location.href='/user/{{$item->id}}/summary/sample/edit'">編集</button>
                 <button type="button" class="btn btn-secondary btn-block" onclick="location.href='/user/{{$item->id}}/summary/sample/delete'">削除</button>
             </div>
         </div>

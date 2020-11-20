@@ -20,7 +20,7 @@ Route::prefix('/user')->group(function(){
     Route::get('signup', 'UserController@signup_form')->middleware('guest');
     Route::post('signup', 'UserController@signup')->middleware('guest');
     // サインイン
-    Route::get('signin', 'UserController@signin_form')->middleware('guest');
+    Route::get('signin', 'UserController@signin_form')->middleware('guest')->name('user.signin');
     Route::post('signin', 'UserController@signin')->middleware('guest');
     // サインアウト
     Route::get('signout', 'UserController@signout')->middleware('auth');

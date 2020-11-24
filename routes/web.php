@@ -52,6 +52,9 @@ Route::prefix('/user')->group(function(){
         Route::get('sample/multi_del', 'SampleController@multi_del')->middleware('auth');
         Route::post('sample/multi_del', 'SampleController@multi_remove')->middleware('auth');
 
+        // 投げ銭
+        Route::get('tip', 'UserController@tip');
+
 // 以下編集画面のルート-------------------------------------------------------------------------------
 
         Route::prefix('/summary')->group(function(){

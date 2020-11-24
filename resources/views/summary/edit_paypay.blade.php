@@ -48,7 +48,7 @@
 <body>
     @if($url)
         <a href="{{ $url }}">{{$url}}</a>
-        <form action="paypay/delete" method="post">
+        <form action="delete" method="post">
             @csrf
             {{-- 削除ボタン --}}
             <table>

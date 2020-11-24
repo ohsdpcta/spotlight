@@ -34,9 +34,12 @@
                         @endif'"
                     >
                 </div>
-                <div class="pt-2">
-                    <a href="/user/{{request()->id}}/tip"><img src="https://iconlab.kentakomiya.com/wp/wp-content/uploads/2019/06/icon0084.png" alt="投げ銭" width="30" height="30"></a>
-                </div>
+                {{-- 投げ銭ボタン --}}
+                @if( !empty(UserClass::get_paypay_url(request()->id)) )
+                    <div class="pt-2">
+                        <a href="/user/{{request()->id}}/tip"><img src="https://iconlab.kentakomiya.com/wp/wp-content/uploads/2019/06/icon0084.png" alt="投げ銭" width="30" height="30"></a>
+                    </div>
+                @endif
             {{-- @endif後で表示 --}}
             </div>
         </div>

@@ -138,7 +138,6 @@ class UserController extends Controller
     public function tip(Request $request, $id){
         $target_user = Paypay::where('user_id', $id)->first();
         $url = $target_user->url;
-        logger($url);
         return view('social.paypay', compact('url'));
     }
 

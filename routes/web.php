@@ -88,6 +88,11 @@ Route::prefix('/user')->group(function(){
             Route::post('sample/edit', 'SampleController@update')->middleware('auth');//編集するぜ！
             Route::get('sample/delete', 'SampleController@delete')->middleware('auth');//削除画面
             Route::post('sample/delete', 'SampleController@remove')->middleware('auth');//削除するぜ！
+
+            // PayPayURL
+            Route::get('paypay', 'PaypayController@edit')->middleware('auth');//削除するぜ！
+            Route::post('paypay', 'PaypayController@update')->middleware('auth');//削除するぜ！
+            Route::post('paypay/delete', 'PaypayController@remove')->middleware('auth');//削除するぜ！
         });
     });
 });

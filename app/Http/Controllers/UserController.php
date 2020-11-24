@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Profile;
 use App\Paypay;
+use App\Library\UserClass;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
@@ -136,8 +137,7 @@ class UserController extends Controller
 
     // 投げ銭
     public function tip(Request $request, $id){
-        $target_user = Paypay::where('user_id', $id)->first();
-        $url = $target_user->url;
+        $url = UserClass::get_paypay_url($id);
         return view('social.paypay', compact('url'));
     }
 

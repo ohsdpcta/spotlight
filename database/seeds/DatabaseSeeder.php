@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             LocateTableSeeder::class,
             GoodsTableSeeder::class,
             SampleTableSeeder::class,
+            PaypayTableSeeder::class,
         ]);
     }
 }

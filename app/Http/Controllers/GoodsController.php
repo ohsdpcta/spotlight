@@ -34,9 +34,9 @@ class GoodsController extends Controller
         return redirect("user/{$id}/goods");
     }
     //編集
-    public function edit(Request $request,$id,$goods_id){
-        $data = Goods::find($goods_id);
-        return view('goods.edit',compact('data'));
+    public function edit(Request $request,$id){
+        $data = Goods::find($id);
+        return view('summary.edit_goods',compact('data'));
     }
     public function update(Request $request,$id,$goods_id){
         if(Auth::id() == $id){

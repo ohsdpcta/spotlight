@@ -6,6 +6,7 @@ use Socialite;
 use Illuminate\Http\Request;
 use App\User;
 use App\Profile;
+use App\Library\UserClass;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
@@ -131,4 +132,12 @@ class UserController extends Controller
         }
         return redirect("/user/{$login_user_id}/profile");
     }
+
+
+    // 投げ銭
+    public function tip(Request $request, $id){
+        $url = UserClass::get_paypay_url($id);
+        return view('social.paypay', compact('url'));
+    }
+
 }

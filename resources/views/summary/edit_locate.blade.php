@@ -38,23 +38,23 @@
                 @csrf
                 {{-- 各種フォーム入力欄 --}}
                 {{-- バリデーションエラーがあった場合は、old関数で入力データを復元する --}}
-                <tr><th><label>活動場所(住所)</label></th><td>
-                <input type="text" name="coordinate" value="{{old('coordinate')}}" class="form-control"></td></tr>
+                <label>活動場所(座標)</label><br>
+                <input type="text" name="coordinate" value="{{old('coordinate')}}" maxlength="30" placeholder="登録したい住所の座標を入力してください。" class="form-control"><br>
                 {{-- 各種ボタン --}}
-                <tr><th></th><td><input type="submit" value="登録"></td></tr>
-            </table>
-        </form>
-        <form action="locate/delete" method="post">
-            @csrf
-            {{-- 削除ボタン --}}
-            <table>
-                <tr><th></th><td><input type="submit" value="削除"></td></tr>
+                <input type="submit" value="登録" class="float-right"><br>
             </table>
         </form>
     </div>
 <body>
     @if($locate_array)
-        <div id="map"></div>
+        <div id="map"></div><br>
+        <form action="locate/delete" method="post">
+            @csrf
+            {{-- 削除ボタン --}}
+            <table>
+                <input type="submit" value="住所を削除" class="float-right">
+            </table>
+        </form>
     @else
         <label>活動場所(住所)を登録するとマップが表示されます。</label>
     @endif

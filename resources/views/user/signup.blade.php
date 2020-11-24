@@ -1,10 +1,9 @@
 @extends('layouts/signup')
 
-@section('signup')
+<meta charset="utf-8">
+<title>サインアップ / Spotlight</title>
 
-<head>
-    <title>新規登録画面</title>
-</head>
+@section('signup')
 
 <h1>新規登録</h1>
     {{-- バリデーションエラーがある場合は出力 --}}

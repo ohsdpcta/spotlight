@@ -1,10 +1,11 @@
 @extends('layouts.user')
 
 @section('content')
+
 <html>
 <head>
     <meta charset="utf-8">
-    <title>サンプルページ</title>
+    <title>グッズ / Spotlight</title>
 </head>
 <body>
     @if(count($data)==0)

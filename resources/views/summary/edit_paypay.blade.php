@@ -10,7 +10,7 @@
     <script src="https://maps.googleapis.com/maps/api/js?key="></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gmaps.js/0.4.12/gmaps.min.js"></script>
     <meta charset="utf-8">
-    <title>ロケーション編集 / Spotlight</title>
+    <title>PayPayURL編集 / Spotlight</title>
     <style>
         label {color:#ffffff;}
         #map {
@@ -21,7 +21,7 @@
     </style>
 </head>
 <body>
-    <h3 class="text-light">ロケーション編集</h3>
+    <h3 class="text-light">PayPayURL編集</h3>
     <div class="pt-3">
         {{-- バリデーションエラーがある場合は出力 --}}
         @if ($errors->any())
@@ -33,46 +33,32 @@
                 </ul>
             </div>
         @endif
-        <form action="/user/{{request()->id}}/summary/locate" method="post">
+        <form action="/user/{{request()->id}}/summary/paypay" method="post">
             <table>
                 @csrf
                 {{-- 各種フォーム入力欄 --}}
                 {{-- バリデーションエラーがあった場合は、old関数で入力データを復元する --}}
-                <label>活動場所(座標)</label><br>
-                <input type="text" name="coordinate" value="{{old('coordinate')}}" maxlength="30" placeholder="登録したい住所の座標を入力してください。" class="form-control"><br>
+                <label>PayPayURL</label><br>
+                <input type="text" name="url" value="{{old('url')}}" maxlength="70" placeholder="PayPayのURLを入力してください。" class="form-control"><br>
                 {{-- 各種ボタン --}}
                 <input type="submit" value="登録" class="float-right"><br>
             </table>
         </form>
     </div>
 <body>
-    @if($locate_array)
-        <div id="map"></div><br>
+    @if($url)
+        <a href="{{ $url }}">{{$url}}</a>
         <form action="delete" method="post">
             @csrf
             {{-- 削除ボタン --}}
             <table>
-                <input type="submit" value="住所を削除" class="float-right">
+                <input type="submit" value="削除" class="float-right">
             </table>
         </form>
     @else
-        <label>活動場所(住所)を登録するとマップが表示されます。</label>
+        <label>URLが未登録です。</label>
     @endif
 </body>
-    @if($locate_array)
-        <script>
-            map = new GMaps({
-                div: '#map', //地図を表示する要素
-                lat: {{$locate_array[0]}}, //緯度
-                lng: {{$locate_array[1]}}, //軽度
-                zoom: 18,   //倍率（1～21）
-            });
-            map.addMarker({
-                lat: {{$locate_array[0]}},
-                lng: {{$locate_array[1]}},
-            });
-        </script>
-    @endif
 </html>
 
 @endsection

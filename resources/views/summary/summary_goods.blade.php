@@ -1,6 +1,9 @@
-@extends('layouts/edit')
+@extends('layouts/summary')
 
 {{-- ----------------------------------------------------------------- --}}
+
+<meta charset="utf-8">
+<title>グッズ編集 / Spotlight</title>
 
 @section('R_form')
 
@@ -42,8 +45,8 @@
                 </div>
 
                 {{-- グッズ編集へのリンク --}}
-                <h3 class="col-md-8 text-light fontsize d-flex align-items-center border">{{ $item->name }}</h3>
-                <button class="col-md-2 btn btn-secondary btn-block" type="button" onclick="location.href='/user/{{$item->id}}/summary/goods/edit'">編集</button>
+                <h3 class="col-md-8 text-light fontsize d-flex align-items-center">{{ $item->name }}</h3>
+                <button class="col-md-2 btn btn-secondary btn-block" type="button" onclick="location.href='/user/{{$item->user_id}}/summary/goods/{{$item->id}}/edit'">編集</button>
 
                 {{-- 選択削除チェックボックス --}}
                 <form method="post" action="remove" class="col-lg-1 col-md-1 col-sm-1 col-xs-1 d-flex align-items-center">
@@ -54,6 +57,7 @@
         {{-- </div> --}}
 
     @endforeach
+    {{ $data->links('vendor.pagination.sample-pagination') }}
 
 </div>
 

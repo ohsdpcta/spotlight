@@ -1,6 +1,9 @@
-@extends('layouts/edit')
+@extends('layouts/summary')
 
 {{-- ----------------------------------------------------------------- --}}
+
+<meta charset="utf-8">
+<title>グッズ追加 / Spotlight</title>
 
 @section('R_form')
 

@@ -10,13 +10,19 @@ use Illuminate\Support\Facades\Auth;
 class GoodsController extends Controller
 {
     // 一覧
-    public function goods(Request $request, $id){
-        $data = Goods::where('user_id', $id)->get();
-        return view('goods.goods', compact('data'));
+    public function index(Request $request, $id){
+        $data = Goods::find($id)->paginate(10);
+        return view('index.goods', compact('data'));
     }
+
+    public function summary(Request $request, $id){
+        $data = Goods::find($id)->paginate(10);
+        return view('summary.summary_goods', compact('data'));
+    }
+
     //新規追加
     public function add(Request $request){
-        return view('goods.add');
+        return view('summary.add_goods');
     }
 
     public function create(Request $request, $id){
@@ -28,9 +34,9 @@ class GoodsController extends Controller
         return redirect("user/{$id}/goods");
     }
     //編集
-    public function edit(Request $request,$id,$goods_id){
-        $data = Goods::find($goods_id);
-        return view('goods.edit',compact('data'));
+    public function edit(Request $request,$id){
+        $data = Goods::find($id);
+        return view('summary.edit_goods',compact('data'));
     }
     public function update(Request $request,$id,$goods_id){
         if(Auth::id() == $id){
@@ -79,4 +85,3 @@ class GoodsController extends Controller
         return redirect("/user/{$id}/goods");
     }
 }
-

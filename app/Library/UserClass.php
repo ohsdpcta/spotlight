@@ -4,6 +4,7 @@ namespace App\Library;
 
 use App\User;
 use App\Follower;
+use App\Paypay;
 use Illuminate\Support\Facades\Auth;
 
 class UserClass{
@@ -28,5 +29,15 @@ class UserClass{
       'follow_flg' => $follow_flg,
     ];
     return $follow_data;
+  }
+
+  public static function get_paypay_url($id){
+    $target = Paypay::where('user_id', $id)->first();
+    if($target){
+      $url = $target->url;
+    }else{
+      $url = '';
+    }
+    return $url;
   }
 }

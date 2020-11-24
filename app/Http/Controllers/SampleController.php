@@ -8,13 +8,18 @@ use App\Sample;
 
 class SampleController extends Controller
 {
-    public function sample(Request $request, $id) {
+    public function index(Request $request, $id) {
         $data = Sample::find($id)->paginate(10);
-        return view('sample.sample', compact('data'));
+        return view('index.sample', compact('data'));
+    }
+
+    public function summary(Request $request, $id){
+        $data = Sample::find($id)->paginate(10);
+        return view('summary.summary_sample', compact('data'));
     }
 
     public function add(Request $request) {
-        return view('sample.add');
+        return view('summary.add_sample');
     }
 
     public function create(Request $request, $id) {
@@ -27,10 +32,9 @@ class SampleController extends Controller
         return redirect("user/{$id}/sample");
     }
     //編集
-    public function edit(Request $request,$id,$user_id)
-    {
-        $data = Sample::find($user_id);
-        return view('sample.edit',compact('data'));
+    public function edit(Request $request,$id){
+        $data = Sample::find($id);
+        return view('summary.edit_sample',compact('data'));
     }
     public function update(Request $request,$id,$user_id)
     {

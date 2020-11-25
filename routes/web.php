@@ -52,6 +52,9 @@ Route::prefix('/user')->group(function(){
         Route::get('sample/multi_del', 'SampleController@multi_del')->middleware('auth');
         Route::post('sample/multi_del', 'SampleController@multi_remove')->middleware('auth');
 
+        // 投げ銭
+        Route::get('tip', 'UserController@tip');
+
 // 以下編集画面のルート-------------------------------------------------------------------------------
 
         Route::prefix('/summary')->group(function(){
@@ -85,6 +88,11 @@ Route::prefix('/user')->group(function(){
             Route::post('sample/{user_id}/edit', 'SampleController@update')->middleware('auth');//編集するぜ！
             Route::get('sample/delete', 'SampleController@delete')->middleware('auth');//削除画面
             Route::post('sample/delete', 'SampleController@remove')->middleware('auth');//削除するぜ！
+
+            // PayPayURL
+            Route::get('paypay', 'PaypayController@edit')->middleware('auth');//削除するぜ！
+            Route::post('paypay', 'PaypayController@update')->middleware('auth');//削除するぜ！
+            Route::post('paypay/delete', 'PaypayController@remove')->middleware('auth');//削除するぜ！
         });
     });
 });

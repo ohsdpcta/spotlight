@@ -16,7 +16,7 @@ class GoodsController extends Controller
     }
 
     public function summary(Request $request, $id){
-        $data = Goods::find('user_id', $id)->paginate(10);
+        $data = Goods::where('user_id', $id)->paginate(10);
         return view('summary.summary_goods', compact('data'));
     }
 

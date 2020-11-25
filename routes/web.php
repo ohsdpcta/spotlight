@@ -81,8 +81,8 @@ Route::prefix('/user')->group(function(){
             Route::get('sample', 'SampleController@summary')->middleware('auth');//一覧画面
             Route::get('sample/add', 'SampleController@add')->middleware('auth');//追加画面
             Route::post('sample/add', 'SampleController@create')->middleware('auth');//追加するぜ！
-            Route::get('sample/edit', 'SampleController@edit')->middleware('auth');//編集画面
-            Route::post('sample/edit', 'SampleController@update')->middleware('auth');//編集するぜ！
+            Route::get('sample/{user_id}/edit', 'SampleController@edit')->middleware('auth');//編集画面
+            Route::post('sample/{user_id}/edit', 'SampleController@update')->middleware('auth');//編集するぜ！
             Route::get('sample/delete', 'SampleController@delete')->middleware('auth');//削除画面
             Route::post('sample/delete', 'SampleController@remove')->middleware('auth');//削除するぜ！
         });

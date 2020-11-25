@@ -32,7 +32,7 @@ class SampleController extends Controller
         return redirect("user/{$id}/sample");
     }
     //編集
-    public function edit(Request $request,$id){
+    public function edit(Request $request, $id){
         $data = Sample::find($id);
         return view('summary.edit_sample',compact('data'));
     }

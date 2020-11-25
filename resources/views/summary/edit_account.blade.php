@@ -12,16 +12,14 @@
     </style>
 
 
-    <h3 class="text-light">ユーザー情報変更</h3>
+    <h3 class="text-light">ユーザー情報編集</h3>
     <br>
     <form action="/user/{{request()->id}}/summary/account" method="post">
         @csrf
         <div class="form-group">
-            <label>UserName</label><input type="text" name="name" class="form-control">
+            <label>UserName</label><input type="text" name="name" value="{{ $data->name }}" class="form-control">
             <br>
-            <label>Mail</label><input type="text" name="mail" class="form-control">
-            <br>
-            <label>PassWord</label><input type="text" name="pass" class="form-control">
+            <label>Email</label><input type="text" name="email" value="{{ $data->email }}" class="form-control">
             <br>
             <input type="submit" value="登録" class="btn btn-primary">
             <br>

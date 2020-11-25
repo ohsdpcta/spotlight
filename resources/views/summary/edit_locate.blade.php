@@ -48,7 +48,7 @@
 <body>
     @if($locate_array)
         <div id="map"></div><br>
-        <form action="delete" method="post">
+        <form action="/user/{{request()->id}}/summary/locate/delete" method="post">
             @csrf
             {{-- 削除ボタン --}}
             <table>

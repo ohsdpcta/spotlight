@@ -9,12 +9,12 @@ use App\Sample;
 class SampleController extends Controller
 {
     public function index(Request $request, $id) {
-        $data = Sample::find($id)->paginate(10);
+        $data = Sample::where('user_id', $id)->paginate(10);
         return view('index.sample', compact('data'));
     }
 
     public function summary(Request $request, $id){
-        $data = Sample::find($id)->paginate(10);
+        $data = Sample::where('user_id', $id)->paginate(10);
         return view('summary.summary_sample', compact('data'));
     }
 

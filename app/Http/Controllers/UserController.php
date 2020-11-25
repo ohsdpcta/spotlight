@@ -133,6 +133,21 @@ class UserController extends Controller
         return redirect("/user/{$login_user_id}/profile");
     }
 
+    public function edit(Request $request, $id) {
+        $data = User::where('id', $id)->first();
+        return view('summary.edit_account', compact('data'));
+    }
+
+    public function update(Request $request, $id) {
+        // dataに値を設定
+        $data = User::where('id', $id)->first();
+        $data->name = $request->name;
+        $data->email = $request->email;
+        $data->save();
+
+        return redirect("user/{$id}/summary/account");
+    }
+
 
     // 投げ銭
     public function tip(Request $request, $id){

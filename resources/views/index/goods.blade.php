@@ -18,7 +18,6 @@
                 </li>
             @endforeach
         </ul>
-        {{ $data->links() }}
     @endif
 </body>
 </html>

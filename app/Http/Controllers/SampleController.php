@@ -29,10 +29,10 @@ class SampleController extends Controller
         $addsample->name = $request->name;
         $addsample->url = $request->url;
         $addsample->save();
-        return redirect("user/{$id}/sample");
+        return redirect("user/{$id}/summary/sample");
     }
     //編集
-    public function edit(Request $request,$id){
+    public function edit(Request $request, $id){
         $data = Sample::find($id);
         return view('summary.edit_sample',compact('data'));
     }
@@ -53,7 +53,7 @@ class SampleController extends Controller
                 $addsample->save();
             }
         }
-        return redirect("user/{$id}/sample");
+        return redirect("user/{$id}/summary/sample");
     }
 
     public function del(Request $request, $id,$user_id) {
@@ -64,7 +64,7 @@ class SampleController extends Controller
     public function remove(Request $request, $id,$user_id) {
         // レコードを削除する。
         Sample::find($user_id)->delete();
-        return redirect("/user/{$id}/sample");
+        return redirect("/user/{$id}/summary/sample");
     }
         //複数選択削除
     public function multi_del(Request $request, $id) {
@@ -82,6 +82,6 @@ class SampleController extends Controller
         foreach($sample_id as $item){
             Sample::where('id',$item)->delete();
         }
-        return redirect("/user/{$id}/sample");
+        return redirect("/user/{$id}/summary/sample");
     }
 }

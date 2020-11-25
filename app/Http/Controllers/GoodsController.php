@@ -31,7 +31,7 @@ class GoodsController extends Controller
         $addgoods->name = $request->name;
         $addgoods->url = $request->url;
         $addgoods->save();
-        return redirect("user/{$id}/goods");
+        return redirect("user/{$id}/summary/goods");
     }
     //編集
     public function edit(Request $request,$id){
@@ -54,7 +54,7 @@ class GoodsController extends Controller
                 $addgoods->save();
             }
         }
-        return redirect("user/{$id}/goods");
+        return redirect("user/{$id}/summary/goods");
     }
     //削除
     public function del(Request $request, $id, $goods_id) {
@@ -65,7 +65,7 @@ class GoodsController extends Controller
     public function remove(Request $request, $id, $goods_id) {
         // レコードを削除する。
         Goods::find($goods_id)->delete();
-        return redirect("/user/{$id}/goods");
+        return redirect("/user/{$id}/summary/goods");
     }
     //複数選択削除
     public function multi_del(Request $request, $id) {
@@ -82,6 +82,6 @@ class GoodsController extends Controller
         foreach($goods_id as $item){
             Goods::where('id',$item)->delete();
         }
-        return redirect("/user/{$id}/goods");
+        return redirect("/user/{$id}/summary/goods");
     }
 }

@@ -18,7 +18,7 @@
                 </li>
             @endforeach
         </ul>
-        {{ $data->links('vendor.pagination.sample-pagination') }}
+        {{ $data->links() }}
     @endif
 </body>
 </html>

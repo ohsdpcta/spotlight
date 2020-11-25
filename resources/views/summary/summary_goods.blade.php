@@ -57,7 +57,7 @@
         {{-- </div> --}}
 
     @endforeach
-    {{ $data->links('vendor.pagination.sample-pagination') }}
+    {{ $data->links() }}
 
 </div>
 

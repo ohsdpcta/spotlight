@@ -154,7 +154,9 @@ class UserController extends Controller
         $data = User::find($id);
         $data->name = $request->name;
         $data->email = $request->email;
-        $data->save();
+        if($data->save()){
+            session()->flash('flash_message', 'アカウント情報の編集が完了しました');
+        }
 
         return redirect("user/{$id}/summary/account");
     }

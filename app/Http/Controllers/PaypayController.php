@@ -22,13 +22,14 @@ class PaypayController extends Controller
             $paypay = Paypay::where('user_id', Auth::id())->first();
             if($paypay){
                 $paypay->url = $request->url;
-                $paypay->save();
             }else{
                 $paypay = new Paypay;
                 //Auth::はログインしているユーザーのデータを持ってこれるコマンド
                 $paypay->user_id = Auth::id();
                 $paypay->url = $request->url;
-                $paypay->save();
+            }
+            if($paypay->save()){
+                session()->flash('flash_message', 'URLの設定が完了しました');
             }
         }
         return redirect("/user/{$id}/summary/paypay");

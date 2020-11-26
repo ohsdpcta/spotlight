@@ -8,6 +8,7 @@ use App\User;
 use App\Profile;
 use App\Library\UserClass;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -141,6 +142,14 @@ class UserController extends Controller
 
     // アカウント情報編集
     public function update(Request $request, $id) {
+        // バリデーションを設定する
+        $request->validate([
+            'name'=>'required|string|max:30',
+            'email'=>[
+                'required','email','max:254',
+                Rule::unique('users')->ignore(Auth::id()),
+            ],
+        ]);
         // dataに値を設定
         $data = User::find($id);
         $data->name = $request->name;

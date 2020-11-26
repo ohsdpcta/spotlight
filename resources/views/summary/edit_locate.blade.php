@@ -33,7 +33,7 @@
                 </ul>
             </div>
         @endif
-        <form action="/user/{{request()->id}}/summary/locate" method="post">
+        <form action="/user/{{Auth::id()}}/summary/locate" method="post">
             <table>
                 @csrf
                 {{-- 各種フォーム入力欄 --}}
@@ -48,7 +48,7 @@
 <body>
     @if($locate_array)
         <div id="map"></div><br>
-        <form action="/user/{{request()->id}}/summary/locate/delete" method="post">
+        <form action="/user/{{Auth::id()}}/summary/locate/delete" method="post">
             @csrf
             {{-- 削除ボタン --}}
             <table>

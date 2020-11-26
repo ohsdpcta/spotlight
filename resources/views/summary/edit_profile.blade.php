@@ -13,7 +13,7 @@
 
     <h3 class="text-light">プロフィール編集</h3>
         <div class="pt-3">
-            <form action="/user/{{request()->id}}/summary/profile" method="post">
+            <form action="/user/{{Auth::id()}}/summary/profile" method="post">
                 @csrf
                 <label>あなたを知らせるためのプロフィールを記入することができます。</label>
                 <textarea name="content" cols="80" rows="5" class="form-control">{{ $data->content }}</textarea><br>

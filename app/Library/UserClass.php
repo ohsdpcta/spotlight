@@ -16,6 +16,7 @@ class UserClass{
   public static function getFollower($id){
     // フォロー処理
     $follower = count(Follower::where('target_id', $id)->get());
+    $follow_count = count(Follower::where('follower_id',$id)->get());//ふぉろー中数表示プログラム
     $follow = Follower::where('target_id', $id)
       ->where('follower_id', Auth::id())
       ->get();
@@ -27,6 +28,7 @@ class UserClass{
     $follow_data = [
       'follower' => $follower,
       'follow_flg' => $follow_flg,
+      'follow_count' => $follow_count,
     ];
     return $follow_data;
   }

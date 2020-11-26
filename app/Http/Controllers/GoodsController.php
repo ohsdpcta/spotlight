@@ -30,28 +30,23 @@ class GoodsController extends Controller
         $addgoods->user_id = $id;
         $addgoods->name = $request->name;
         $addgoods->url = $request->url;
-        $addgoods->save();
+        if($addgoods->save()){
+            session()->flash('flash_message', 'グッズの登録が完了しました');
+        }
         return redirect("user/{$id}/summary/goods");
     }
     //編集
-    public function edit(Request $request,$id){
-        $data = Goods::find($id);
+    public function edit(Request $request, $id, $goods_id){
+        $data = Goods::find($goods_id);
         return view('summary.edit_goods',compact('data'));
     }
-    public function update(Request $request,$id,$goods_id){
+    public function update(Request $request, $id, $goods_id){
         if(Auth::id() == $id){
-            $addgoods = Goods::where('user_id', Auth::id())->first();
-            if($addgoods){
-                $addgoods->name = $request->name;
-                $addgoods->url = $request->url;
-                $addgoods->save();
-            }else{
-                $addgoods = new Goods;
-                //Auth::はログインしているユーザーのデータを持ってこれるコマンド
-                $addgoods->user_id = $id;
-                $addgoods->name = $request->name;
-                $addgoods->url = $request->url;
-                $addgoods->save();
+            $addgoods = Goods::find($goods_id);
+            $addgoods->name = $request->name;
+            $addgoods->url = $request->url;
+            if($addgoods->save()){
+                session()->flash('flash_message', 'グッズの編集が完了しました');
             }
         }
         return redirect("user/{$id}/summary/goods");

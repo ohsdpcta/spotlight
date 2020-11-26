@@ -37,7 +37,9 @@ class PaypayController extends Controller
 
     public function remove(Request $request, $id){
         // レコードを削除する。
-        Paypay::where('user_id', Auth::id())->delete();
+        if(Paypay::where('user_id', Auth::id())->delete()){
+            session()->flash('flash_message', 'URLを削除しました');
+        }
         return redirect("/user/{$id}/summary/paypay");
     }
 

@@ -55,7 +55,9 @@ class LocateController extends Controller
 
     public function remove(Request $request,$id){
         // レコードを削除する。
-        Locate::where('user_id', Auth::id())->delete();
+        if(Locate::where('user_id', Auth::id())->delete()){
+            session()->flash('flash_message', 'ロケーションを削除しました');
+        }
         return redirect("/user/{$id}/summary/locate");
     }
 }

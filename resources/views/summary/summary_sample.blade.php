@@ -47,9 +47,9 @@
                     <img src="http://placehold.jp/50x50.png" class="rounded-circle">
                 </div>
 
-                {{-- グッズ編集へのリンク --}}
+                {{-- サンプル編集へのリンク --}}
                 <h3 class="col-md-8 text-light fontsize d-flex align-items-center">{{ $item->name }}</h3>
-                <button class="col-md-2 btn btn-secondary btn-block" type="button" onclick="location.href='/user/{{$item->id}}/summary/sample/edit'">編集</button>
+            <button class="col-md-2 btn btn-secondary btn-block" type="button" onclick="location.href='/user/{{Auth::id()}}/summary/sample/{{$item->id}}/edit'">編集</button>
 
                 {{-- 選択削除チェックボックス --}}
                 <form method="post" action="remove" class="col-lg-1 col-md-1 col-sm-1 col-xs-1 d-flex align-items-center">

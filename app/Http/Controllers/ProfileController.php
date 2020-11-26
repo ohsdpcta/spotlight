@@ -21,8 +21,9 @@ class ProfileController extends Controller{
         // dataに値を設定
         $data = Profile::where('user_id', $id)->first();
         $data->content = $request->content;
-        $data->save();
-
+        if($data->save()){
+            session()->flash('flash_message', 'プロフィールの編集が完了しました');
+        }
         return redirect("user/{$id}/summary/profile");
     }
 }

@@ -14,7 +14,7 @@
 
     <h3 class="text-light">ユーザー情報編集</h3>
     <br>
-    <form action="/user/{{request()->id}}/summary/account" method="post">
+    <form action="/user/{{Auth::id()}}/summary/account" method="post">
         @csrf
         <div class="form-group">
             <label>UserName</label><input type="text" name="name" value="{{ $data->name }}" class="form-control">

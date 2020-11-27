@@ -27,7 +27,7 @@
             {{-- ユーザーページ編集 --}}
                 <div class="pt-1">
                     <input class="btn btn-success" value="ユーザーページ編集" type="button"
-                        onclick="location.href='/user/{{request()->id}}/summary/@if(request()->is('*profile'))profile\
+                        onclick="location.href='/user/{{Auth::id()}}/summary/@if(request()->is('*profile'))profile\
                         @elseif(request()->is('*locate'))locate\
                         @elseif(request()->is('*goods'))goods\
                         @elseif(request()->is('*sample'))sample\

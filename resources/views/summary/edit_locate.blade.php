@@ -40,6 +40,7 @@
                 {{-- バリデーションエラーがあった場合は、old関数で入力データを復元する --}}
                 <label>活動場所(座標)</label><br>
                 <input type="text" name="coordinate" value="{{old('coordinate')}}" maxlength="30" placeholder="登録したい住所の座標を入力してください。" class="form-control"><br>
+                <span id="latlng" class="text-light"></span>
                 {{-- 各種ボタン --}}
                 <input type="submit" value="登録" class="float-right"><br>
             </table>
@@ -56,7 +57,7 @@
             </table>
         </form>
     @else
-        <label>活動場所(住所)を登録するとマップが表示されます。</label>
+        <div id="map"></div>
     @endif
 </body>
     @if($locate_array)
@@ -71,6 +72,29 @@
                 lat: {{$locate_array[0]}},
                 lng: {{$locate_array[1]}},
             });
+        </script>
+    @else
+        <script>
+            map = new GMaps({
+                div: '#map', //地図を表示する要素
+                lat: 36.38992, //緯度
+                lng: 139.06065, //軽度
+                zoom: 18,   //倍率（1～21）
+            });
+
+            map.addListener('click', function(e) {
+                getClickLatLng(e.latLng, map);
+            });
+
+            function getClickLatLng(lat_lng, map) {
+                document.getElementById('latlng').textContent = lat_lng.lat() + ',' + lat_lng.lng();
+                map.removeMarkers();
+                // マーカーを設置
+                map.addMarker({
+                    lat: lat_lng.lat(),
+                    lng: lat_lng.lng(),
+                });
+            }
         </script>
     @endif
 </html>

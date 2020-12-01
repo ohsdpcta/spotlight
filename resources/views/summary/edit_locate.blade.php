@@ -58,12 +58,12 @@
     @endif
 </body>
     <script>
-        const [default_lat, default_lng] = setDefaultProperty();
+        const [default_lat, default_lng, default_zoom] = setDefaultProperty();
         map = new GMaps({
             div: '#map', //地図を表示する要素
             lat: default_lat, //緯度
             lng: default_lng, //軽度
-            zoom: 18,   //倍率（1～21）
+            zoom: default_zoom,   //倍率（1～21）
         });
         map.addMarker({
             lat: default_lat,
@@ -86,14 +86,17 @@
 
         function setDefaultProperty(){
             let lat, lng;
+            const latlng_data = @json($locate_array);
             if({{count($locate_array)}}){
-                lat = {{$locate_array[0]}};
-                lng = {{$locate_array[1]}};
+                lat = latlng_data[0];
+                lng = latlng_data[1];
+                zoom = 18;
             }else{
                 lat = 35.6896342;
                 lng = 139.6921006;
+                zoom = 5;
             }
-            return [lat, lng];
+            return [lat, lng, zoom];
         }
     </script>
 </html>

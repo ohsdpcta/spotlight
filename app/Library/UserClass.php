@@ -42,4 +42,15 @@ class UserClass{
     }
     return $url;
   }
+
+  // public static function getTag($id){
+  //   $tags = \App\Tag::with('users')->find($id);
+  //   return $tags;
+  // }
+  public static function getTag($id){
+    $tags =\app\Tag::with(['users' => function($id){
+      $id->where('id', '==', $id);
+    }])->get();
+    return $tags;
+  }
 }

@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller
-{
+{ 
     // インデックス
     public function index(Request $request){
         return view('index');

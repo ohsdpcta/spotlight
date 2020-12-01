@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             SampleTableSeeder::class,
             PaypayTableSeeder::class,
             TagsTableSeeder::class,
+            UserTagTableSeeder::class,
         ]);
     }
 }

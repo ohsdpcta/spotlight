@@ -57,42 +57,45 @@
         </form>
     @endif
 </body>
-    {{-- @if($locate_array)
-        <script>
-            map = new GMaps({
-                div: '#map', //地図を表示する要素
-                lat: {{$locate_array[0]}}, //緯度
-                lng: {{$locate_array[1]}}, //軽度
-                zoom: 18,   //倍率（1～21）
-            });
+    <script>
+        const [default_lat, default_lng] = setDefaultProperty();
+        map = new GMaps({
+            div: '#map', //地図を表示する要素
+            lat: default_lat, //緯度
+            lng: default_lng, //軽度
+            zoom: 18,   //倍率（1～21）
+        });
+        map.addMarker({
+            lat: default_lat,
+            lng: default_lng,
+        });
+
+        map.addListener('click', function(e) {
+            getClickLatLng(e.latLng, map);
+        });
+
+        function getClickLatLng(lat_lng, map) {
+            document.getElementById('latlng').value = lat_lng.lat() + ',' + lat_lng.lng();
+            map.removeMarkers();
+            // マーカーを設置
             map.addMarker({
-                lat: {{$locate_array[0]}},
-                lng: {{$locate_array[1]}},
+                lat: lat_lng.lat(),
+                lng: lat_lng.lng(),
             });
-        </script>
-    @else --}}
-        <script>
-            map = new GMaps({
-                div: '#map', //地図を表示する要素
-                lat: 36.38992, //緯度
-                lng: 139.06065, //軽度
-                zoom: 18,   //倍率（1～21）
-            });
+        }
 
-            map.addListener('click', function(e) {
-                getClickLatLng(e.latLng, map);
-            });
-
-            function getClickLatLng(lat_lng, map) {
-                document.getElementById('latlng').value = lat_lng.lat() + ',' + lat_lng.lng();
-                map.removeMarkers();
-                // マーカーを設置
-                map.addMarker({
-                    lat: lat_lng.lat(),
-                    lng: lat_lng.lng(),
-                });
+        function setDefaultProperty(){
+            let lat, lng;
+            if({{count($locate_array)}}){
+                lat = {{$locate_array[0]}};
+                lng = {{$locate_array[1]}};
+            }else{
+                lat = 35.6896342;
+                lng = 139.6921006;
             }
-        </script>
+            return [lat, lng];
+        }
+    </script>
 </html>
 
 @endsection

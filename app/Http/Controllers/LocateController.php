@@ -40,13 +40,14 @@ class LocateController extends Controller
             $locate = Locate::where('user_id', Auth::id())->first();
             if($locate){
                 $locate->coordinate = $request->coordinate;
-                $locate->save();
             }else{
                 $locate = new Locate;
                 //Auth::はログインしているユーザーのデータを持ってこれるコマンド
                 $locate->user_id = Auth::id();
                 $locate->coordinate = $request->coordinate;
-                $locate->save();
+            }
+            if($locate->save()){
+                session()->flash('flash_message', 'ロケーションの設定が完了しました');
             }
         }
         return redirect("/user/{$id}/summary/locate");
@@ -54,7 +55,9 @@ class LocateController extends Controller
 
     public function remove(Request $request,$id){
         // レコードを削除する。
-        Locate::where('user_id', Auth::id())->delete();
+        if(Locate::where('user_id', Auth::id())->delete()){
+            session()->flash('flash_message', 'ロケーションを削除しました');
+        }
         return redirect("/user/{$id}/summary/locate");
     }
 }

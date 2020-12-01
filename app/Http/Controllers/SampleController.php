@@ -28,42 +28,37 @@ class SampleController extends Controller
         $addsample->user_id = $id;
         $addsample->name = $request->name;
         $addsample->url = $request->url;
-        $addsample->save();
+        if($addsample->save()){
+            session()->flash('flash_message', 'サンプルの登録が完了しました');
+        }
         return redirect("user/{$id}/summary/sample");
     }
     //編集
-    public function edit(Request $request, $id){
-        $data = Sample::find($id);
+    public function edit(Request $request, $id, $sample_id){
+        $data = Sample::find($sample_id);
         return view('summary.edit_sample',compact('data'));
     }
-    public function update(Request $request,$id,$user_id)
+    public function update(Request $request, $id, $sample_id)
     {
         if(Auth::id() == $id){
-            $addsample = Sample::where('user_id', Auth::id())->first();
-            if($addsample){
-                $addsample->name = $request->name;
-                $addsample->url = $request->url;
-                $addsample->save();
-            }else{
-                $addsample = new Sample;
-                //Auth::はログインしているユーザーのデータを持ってこれるコマンド
-                $addsample->user_id = $id;
-                $addsample->name = $request->name;
-                $addsample->url = $request->url;
-                $addsample->save();
+            $addsample = Sample::find($sample_id);
+            $addsample->name = $request->name;
+            $addsample->url = $request->url;
+            if($addsample->save()){
+                session()->flash('flash_message', 'サンプルの編集が完了しました');
             }
         }
         return redirect("user/{$id}/summary/sample");
     }
 
-    public function del(Request $request, $id,$user_id) {
-        $data = Sample::find($user_id);
+    public function del(Request $request, $id,$goods_id) {
+        $data = Sample::find($goods_id);
         return view('sample.del', compact('data'));
     }
 
-    public function remove(Request $request, $id,$user_id) {
+    public function remove(Request $request, $id,$goods_id) {
         // レコードを削除する。
-        Sample::find($user_id)->delete();
+        Sample::find($goods_id)->delete();
         return redirect("/user/{$id}/summary/sample");
     }
         //複数選択削除

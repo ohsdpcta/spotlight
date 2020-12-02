@@ -37,8 +37,19 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function tag()
-    {
-        return $this->belongsTo('App\Tag');
+
+
+
+    // public function tag()
+    // {
+    //     return $this->belongsTo('App\Tag');
+    // }
+
+    // public function tag(){
+    //     return $this->hasMany('App/Tag');
+    // }
+
+    public function publishedUsers(){
+        return $this->hasMany('App\User')->where('id', 1);
     }
 }

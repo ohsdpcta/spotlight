@@ -3,6 +3,7 @@
 namespace App\Library;
 
 use App\User;
+use App\Tag;
 use App\Follower;
 use App\Paypay;
 use Illuminate\Support\Facades\Auth;
@@ -21,9 +22,9 @@ class UserClass{
       ->where('follower_id', Auth::id())
       ->get();
     if(count($follow)>=1){
-        $follow_flg = 1;
+      $follow_flg = 1;
     }else{
-        $follow_flg = 0;
+      $follow_flg = 0;
     }
     $follow_data = [
       'follower' => $follower,
@@ -47,10 +48,19 @@ class UserClass{
   //   $tags = \App\Tag::with('users')->find($id);
   //   return $tags;
   // }
+  // public static function getTag($id){
+  //   $tags =\app\Tag::with(['tag' => function($id){
+  //     $id->where('id', '==', $id);
+  //   }])->get();
+  //   return $tags;
+  // }
   public static function getTag($id){
-    $tags =\app\Tag::with(['users' => function($id){
-      $id->where('id', '==', $id);
-    }])->get();
+    $tags = User::with([
+      'publishedUsers:id',
+      'publishedUsers.tags',
+    ])->get();
     return $tags;
   }
+
+  // https://blog.hiroyuki90.com/articles/laravel-with/ ←ここを見ながらやった
 }

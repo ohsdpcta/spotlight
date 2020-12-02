@@ -31,6 +31,7 @@ class EmailVerification extends Mailable
     {
         return $this
             ->subject('【site】仮登録が完了しました')
+            ->from($this->data['email'], $this->data['name'])
             ->view('emails.contact')
             ->with(['token' => $this->user->email_verify_token,]);
     }

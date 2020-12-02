@@ -54,11 +54,11 @@ class UserClass{
   //   }])->get();
   //   return $tags;
   // }
-  public static function getTag($id){
-    $tags = User::with([
-      'publishedUsers:id',
-      'publishedUsers.tags',
-    ])->get();
+
+  // 引数の$idは、各ユーザーのid
+  public static function getTag($id)
+  {
+    $tags = User::with(['tags'])->find($id);
     return $tags;
   }
 

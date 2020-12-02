@@ -11,7 +11,7 @@
             {{-- ユーザー名 --}}
             <div class="border col-md-6 col-sm-6 pt-2 pr-2 pb-2 pl-2">
                 <h1>{{ UserClass::getUser(request()->id)->name }}</h1>
-                {{-- タグ(仮) --}}
+                {{-- タグ --}}
                 <div class="border pt-4">
                     @forelse( UserClass::getTag(request()->id) as $tag )
                         <h5>{{ $tag }}</h5>

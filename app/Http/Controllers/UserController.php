@@ -13,6 +13,8 @@ use App\Mail\HelloEmail;
 use Illuminate\Support\Facades\Validator;
 use Mail;
 
+use Illuminate\Validation\Rule;
+
 class UserController extends Controller
 {
     // インデックス
@@ -153,6 +155,33 @@ class UserController extends Controller
             return redirect('/user/signin');
         }
         return redirect("/user/{$login_user_id}/profile");
+    }
+
+    // アカウント情報編集フォーム
+    public function edit(Request $request, $id) {
+        $data = User::where('id', $id)->first();
+        return view('summary.edit_account', compact('data'));
+    }
+
+    // アカウント情報編集
+    public function update(Request $request, $id) {
+        // バリデーションを設定する
+        $request->validate([
+            'name'=>'required|string|max:30',
+            'email'=>[
+                'required','email','max:254',
+                Rule::unique('users')->ignore(Auth::id()),
+            ],
+        ]);
+        // dataに値を設定
+        $data = User::find($id);
+        $data->name = $request->name;
+        $data->email = $request->email;
+        if($data->save()){
+            session()->flash('flash_message', 'アカウント情報の編集が完了しました');
+        }
+
+        return redirect("user/{$id}/summary/account");
     }
 
 

@@ -33,7 +33,7 @@
                 </ul>
             </div>
         @endif
-        <form action="/user/{{request()->id}}/summary/paypay" method="post">
+        <form action="/user/{{Auth::id()}}/summary/paypay" method="post">
             <table>
                 @csrf
                 {{-- 各種フォーム入力欄 --}}
@@ -48,7 +48,7 @@
 <body>
     @if($url)
         <a href="{{ $url }}">{{$url}}</a>
-        <form action="delete" method="post">
+        <form action="/user/{{Auth::id()}}/summary/paypay/delete" method="post">
             @csrf
             {{-- 削除ボタン --}}
             <table>

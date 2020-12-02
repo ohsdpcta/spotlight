@@ -11,12 +11,12 @@ class GoodsController extends Controller
 {
     // 一覧
     public function index(Request $request, $id){
-        $data = Goods::find($id)->paginate(10);
+        $data = Goods::where('user_id', $id)->paginate(10);
         return view('index.goods', compact('data'));
     }
 
     public function summary(Request $request, $id){
-        $data = Goods::find($id)->paginate(10);
+        $data = Goods::where('user_id', $id)->paginate(10);
         return view('summary.summary_goods', compact('data'));
     }
 
@@ -30,31 +30,26 @@ class GoodsController extends Controller
         $addgoods->user_id = $id;
         $addgoods->name = $request->name;
         $addgoods->url = $request->url;
-        $addgoods->save();
-        return redirect("user/{$id}/goods");
+        if($addgoods->save()){
+            session()->flash('flash_message', 'グッズの登録が完了しました');
+        }
+        return redirect("user/{$id}/summary/goods");
     }
     //編集
-    public function edit(Request $request,$id){
-        $data = Goods::find($id);
+    public function edit(Request $request, $id, $goods_id){
+        $data = Goods::find($goods_id);
         return view('summary.edit_goods',compact('data'));
     }
-    public function update(Request $request,$id,$goods_id){
+    public function update(Request $request, $id, $goods_id){
         if(Auth::id() == $id){
-            $addgoods = Goods::where('user_id', Auth::id())->first();
-            if($addgoods){
-                $addgoods->name = $request->name;
-                $addgoods->url = $request->url;
-                $addgoods->save();
-            }else{
-                $addgoods = new Goods;
-                //Auth::はログインしているユーザーのデータを持ってこれるコマンド
-                $addgoods->user_id = $id;
-                $addgoods->name = $request->name;
-                $addgoods->url = $request->url;
-                $addgoods->save();
+            $addgoods = Goods::find($goods_id);
+            $addgoods->name = $request->name;
+            $addgoods->url = $request->url;
+            if($addgoods->save()){
+                session()->flash('flash_message', 'グッズの編集が完了しました');
             }
         }
-        return redirect("user/{$id}/goods");
+        return redirect("user/{$id}/summary/goods");
     }
     //削除
     public function del(Request $request, $id, $goods_id) {
@@ -65,7 +60,7 @@ class GoodsController extends Controller
     public function remove(Request $request, $id, $goods_id) {
         // レコードを削除する。
         Goods::find($goods_id)->delete();
-        return redirect("/user/{$id}/goods");
+        return redirect("/user/{$id}/summary/goods");
     }
     //複数選択削除
     public function multi_del(Request $request, $id) {
@@ -82,6 +77,6 @@ class GoodsController extends Controller
         foreach($goods_id as $item){
             Goods::where('id',$item)->delete();
         }
-        return redirect("/user/{$id}/goods");
+        return redirect("/user/{$id}/summary/goods");
     }
 }

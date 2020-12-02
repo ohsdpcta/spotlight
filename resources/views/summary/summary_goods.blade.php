@@ -28,7 +28,7 @@
 
     <div class="row">
         {{-- 新規追加ボタン --}}
-        <button type="button" class="btn btn-secondary btn-block col-md-2 offset-md-10 mb-1" onclick="location.href='/user/{{request()->id}}/summary/goods/add'"><i class="fas fa-plus"></i></button>
+        <button type="button" class="btn btn-secondary btn-block col-md-2 offset-md-10 mb-1" onclick="location.href='/user/{{Auth::id()}}/summary/goods/add'"><i class="fas fa-plus"></i></button>
     </div>
 
     <hr>

@@ -33,46 +33,72 @@
                 </ul>
             </div>
         @endif
-        <form action="/user/{{request()->id}}/summary/locate" method="post">
+        <form action="/user/{{Auth::id()}}/summary/locate" method="post">
             <table>
                 @csrf
                 {{-- 各種フォーム入力欄 --}}
                 {{-- バリデーションエラーがあった場合は、old関数で入力データを復元する --}}
                 <label>活動場所(座標)</label><br>
-                <input type="text" name="coordinate" value="{{old('coordinate')}}" maxlength="30" placeholder="登録したい住所の座標を入力してください。" class="form-control"><br>
+                <input type="text" id="latlng" class="form-control" name="coordinate" value="{{old('coordinate')}}" maxlength="30" placeholder="登録したい住所の座標を入力してください。"><br>
                 {{-- 各種ボタン --}}
                 <input type="submit" value="登録" class="float-right"><br>
             </table>
         </form>
     </div>
 <body>
+    <div id="map"></div><br>
     @if($locate_array)
-        <div id="map"></div><br>
-        <form action="/user/{{request()->id}}/summary/locate/delete" method="post">
+        <form action="/user/{{Auth::id()}}/summary/locate/delete" method="post">
             @csrf
             {{-- 削除ボタン --}}
             <table>
                 <input type="submit" value="住所を削除" class="float-right">
             </table>
         </form>
-    @else
-        <label>活動場所(住所)を登録するとマップが表示されます。</label>
     @endif
 </body>
-    @if($locate_array)
-        <script>
-            map = new GMaps({
-                div: '#map', //地図を表示する要素
-                lat: {{$locate_array[0]}}, //緯度
-                lng: {{$locate_array[1]}}, //軽度
-                zoom: 18,   //倍率（1～21）
-            });
+    <script>
+        const [default_lat, default_lng, default_zoom] = setDefaultProperty();
+        map = new GMaps({
+            div: '#map', //地図を表示する要素
+            lat: default_lat, //緯度
+            lng: default_lng, //軽度
+            zoom: default_zoom,   //倍率（1～21）
+        });
+        map.addMarker({
+            lat: default_lat,
+            lng: default_lng,
+        });
+
+        map.addListener('click', function(e) {
+            getClickLatLng(e.latLng, map);
+        });
+
+        function getClickLatLng(lat_lng, map) {
+            document.getElementById('latlng').value = lat_lng.lat() + ',' + lat_lng.lng();
+            map.removeMarkers();
+            // マーカーを設置
             map.addMarker({
-                lat: {{$locate_array[0]}},
-                lng: {{$locate_array[1]}},
+                lat: lat_lng.lat(),
+                lng: lat_lng.lng(),
             });
-        </script>
-    @endif
+        }
+
+        function setDefaultProperty(){
+            let lat, lng;
+            const latlng_data = @json($locate_array);
+            if({{count($locate_array)}}){
+                lat = latlng_data[0];
+                lng = latlng_data[1];
+                zoom = 18;
+            }else{
+                lat = 35.6896342;
+                lng = 139.6921006;
+                zoom = 5;
+            }
+            return [lat, lng, zoom];
+        }
+    </script>
 </html>
 
 @endsection

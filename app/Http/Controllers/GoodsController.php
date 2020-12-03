@@ -20,7 +20,7 @@ class GoodsController extends Controller
         $data = Goods::where('user_id', $id)->paginate(10);
         $goods = new Goods;
         $goods->user_id = $id;
-        // $this->authorize('edit', $goods);
+        $this->authorize('edit', $goods);
         return view('summary.summary_goods', compact('data'));
     }
 
@@ -28,7 +28,7 @@ class GoodsController extends Controller
     public function add(Request $request, $id){
         $goods = new Goods;
         $goods->user_id = $id;
-        // $this->authorize('edit', $goods);
+        $this->authorize('edit', $goods);
         return view('summary.add_goods');
     }
 
@@ -73,6 +73,7 @@ class GoodsController extends Controller
     public function remove(Request $request, $id, $goods_id) {
         // レコードを削除する。
         Goods::find($goods_id)->delete();
+        $goods = Goods::where('user_id', $id)->first();
         $this->authorize('edit', $goods);
         return redirect("/user/{$id}/summary/goods");
     }
@@ -91,7 +92,8 @@ class GoodsController extends Controller
         //レコードを複数削除する.
         $goods_id = $request->input('goods_id');
         foreach($goods_id as $item){
-            Goods::where('id',$item)->delete();
+            Goods::where('id',$item)->
+                ();
         }
         $goods = new Goods;
         $this->authorize('edit', $goods);

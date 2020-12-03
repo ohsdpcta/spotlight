@@ -27,4 +27,14 @@ class FollowerController extends Controller
             ->delete();
         return redirect("/user/{$id}/profile");
     }
+
+    public function followerlist(Request $request, $id){
+        $data = Follower::where('target_id', $id)->paginate(10);
+        return view('index.followerlist', compact('data'));
+    }
+
+    public function followlist(Request $request, $id){
+        $data = Follower::where('follower_id', $id)->paginate(10);
+        return view('index.followlist', compact('data'));
+    }
 }

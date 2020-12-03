@@ -46,8 +46,10 @@
         <div class="row">
             {{-- フォロワー数 --}}
             <div class="col-md-6 mt-2">
-                <p>フォロー中: {{ UserClass::getFollower(request()->id)['follow_count'] }}　　　
-                フォロワー: {{ UserClass::getFollower(request()->id)['follower'] }}</p>
+                <a href="/user/{{ request()->id }}/followlist">{{ UserClass::getFollower(request()->id)['follow_count'] }} フォロー中
+                <a class="pl-2" href="/user/{{ request()->id }}/followerlist">{{ UserClass::getFollower(request()->id)['follower'] }} フォロワー
+                {{--<p>フォロー中: {{ UserClass::getFollower(request()->id)['follow_count'] }}　　　
+                フォロワー: {{ UserClass::getFollower(request()->id)['follower'] }}</p> --}}
             </div>
         </div>
     </div>

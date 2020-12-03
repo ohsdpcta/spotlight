@@ -57,7 +57,7 @@ class UserController extends Controller
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
         if ($validator->fails()) {
-            return redirect('/contact')
+            return redirect('/user.signup')
                 ->withErrors($validator)
                 ->withInput();
         }
@@ -190,5 +190,9 @@ class UserController extends Controller
         $url = UserClass::get_paypay_url($id);
         return view('social.paypay', compact('url'));
     }
-
+    // メール
+    public function authentication(Request $request){
+        $user = Auth::user();
+        return view('emails.authentication',compact('user'));
+    }
 }

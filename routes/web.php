@@ -27,6 +27,8 @@ Route::prefix('/user')->group(function(){
     // ツイッターログイン
     Route::get('signin/twitter', 'UserController@redirectToProvider')->middleware('guest');
     Route::get('signin/twitter/callback', 'UserController@handleProviderCallback')->middleware('guest');
+    //メール
+    Route::get('emails/authentication','UserController@authentication')->middleware('auth');
 
     Route::prefix('/{id}')->group(function(){
         // プロフィール
@@ -54,6 +56,7 @@ Route::prefix('/user')->group(function(){
 
         // 投げ銭
         Route::get('tip', 'UserController@tip');
+
 
 // 以下編集画面のルート-------------------------------------------------------------------------------
 

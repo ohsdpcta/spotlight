@@ -13,11 +13,17 @@
                 <h1>{{ UserClass::getUser(request()->id)->name }}</h1>
                 {{-- タグ --}}
                 <div class="border pt-4">
-                    @forelse( UserClass::getTag(request()->id) as $tag )
-                        <h5>{{ $tag }}</h5>
+                    
+                    {{UserClass::getTag(request()->id)}}
+                    
+
+
+
+                    {{-- @forelse( UserClass::getTag(request()->id) as $tag )
+                        <h5>{{ $tag["name"] }}</h5>
                     @empty
-                        <h5> </h5>
-                    @endforelse
+                        <h5>タグが設定されていません</h5>
+                    @endforelse --}}
                 </div>
             </div>
 

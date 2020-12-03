@@ -7,6 +7,7 @@ use App\Tag;
 use App\Follower;
 use App\Paypay;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Arr;
 
 class UserClass{
   public static function getUser($id){
@@ -58,7 +59,19 @@ class UserClass{
   // 引数の$idは、各ユーザーのid
   public static function getTag($id)
   {
-    $tags = User::with(['tags'])->find($id);
+    // $tags = User::with(['tags'])->find($id);
+    // $tags = User::where('id',$id)->first();
+    // $tags = Arr::dot($tags);
+    // $tags = $this->belongsToMany('App\Tag')->withPivot('tag_name');
+    
+    // $tags = App\Tag::with('tag_name')->get();
+    // foreach ($tags as $tag) {
+    //     echo $tags->tags->tag_name;
+    // }
+
+    $tags = App\User::find($id)->
+
+    logger($tags);
     return $tags;
   }
 

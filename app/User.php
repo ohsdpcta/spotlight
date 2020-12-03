@@ -40,7 +40,17 @@ class User extends Authenticatable
 
     public function tags()
     {
-        return $this->belongsToMany('App\Tag', 'user_tag');
+        return $this->belongsToMany('App\Tag', 'id');
     }
+
+    // $tagname = App\Tag::with('tag')->get();
+    // foreach ($tagname as $book) {
+    //     echo $tagname->tags->tag_name;
+    // }
+
+    // public function tags2()
+    // {
+    //     return $this->hasMany('App\Tag')->where('id', 3);
+    // }
 
 }

@@ -22,6 +22,7 @@ class ProfileController extends Controller {
     public function update(Request $request, $id) {
         // dataに値を設定
         $data = Profile::where('user_id', $id)->first();
+        $this->authorize('edit', $data);
         $data->content = $request->content;
         if($data->save()){
             session()->flash('flash_message', 'プロフィールの編集が完了しました');

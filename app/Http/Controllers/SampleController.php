@@ -63,6 +63,7 @@ class SampleController extends Controller {
 
     public function del(Request $request, $id,$goods_id) {
         $data = Sample::find($goods_id);
+        $this->authorize('edit', $data);
         return view('sample.del', compact('data'));
     }
 
@@ -70,7 +71,6 @@ class SampleController extends Controller {
         // レコードを削除する。
         Sample::find($goods_id)->delete();
         $sample = new Sample;
-        $sample->user_id = $id;
         $this->authorize('edit', $sample);
         return redirect("/user/{$id}/summary/sample");
     }
@@ -83,7 +83,6 @@ class SampleController extends Controller {
             $data[] = Sample::where('id',$item)->first();
         }
         $sample = new Sample;
-        $sample->user_id = $id;
         $this->authorize('edit', $sample);
         return view('sample.multi_del', compact('data'));
     }
@@ -93,6 +92,8 @@ class SampleController extends Controller {
         foreach($sample_id as $item){
             Sample::where('id',$item)->delete();
         }
+        $sample = new Sample;
+        $this->authorize('edit', $sample);
         return redirect("/user/{$id}/summary/sample");
     }
 }

@@ -31,11 +31,11 @@ class FollowerController extends Controller
 
     public function followlist(Request $request, $id){
         $data = User::find($id)->followees()->get();
-        return view('index.followlist', compact('data'));
+        return view('index.followee', compact('data'));
     }
 
     public function followerlist(Request $request, $id){
         $data = User::find($id)->followers()->get();
-        return view('index.followerlist', compact('data'));
+        return view('index.follower', compact('data'));
     }
 }

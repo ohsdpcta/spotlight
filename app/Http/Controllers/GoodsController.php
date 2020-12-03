@@ -20,7 +20,7 @@ class GoodsController extends Controller
         $data = Goods::where('user_id', $id)->paginate(10);
         $goods = new Goods;
         $goods->user_id = $id;
-        $this->authorize('edit', $goods);
+        // $this->authorize('edit', $goods);
         return view('summary.summary_goods', compact('data'));
     }
 
@@ -28,13 +28,14 @@ class GoodsController extends Controller
     public function add(Request $request, $id){
         $goods = new Goods;
         $goods->user_id = $id;
-        $this->authorize('edit', $goods);
+        // $this->authorize('edit', $goods);
         return view('summary.add_goods');
     }
 
     public function create(Request $request, $id){
         $addgoods = new Goods;
         $addgoods->user_id = $id;
+        $this->authorize('edit', $addgoods);
         $addgoods->name = $request->name;
         $addgoods->url = $request->url;
         if($addgoods->save()){
@@ -45,12 +46,13 @@ class GoodsController extends Controller
     //編集
     public function edit(Request $request, $id, $goods_id){
         $data = Goods::find($goods_id);
-        $goods = new Goods;
-        $goods->user_id = $id;
-        $this->authorize('edit', $goods);
+        $this->authorize('edit', $data);
         return view('summary.edit_goods',compact('data'));
     }
     public function update(Request $request, $id, $goods_id){
+        $addgoods = new Goods;
+        $addgoods->user_id = $id;
+        $this->authorize('edit', $addgoods);
         if(Auth::id() == $id){
             $addgoods = Goods::find($goods_id);
             $addgoods->name = $request->name;
@@ -64,8 +66,6 @@ class GoodsController extends Controller
     //削除
     public function del(Request $request, $id, $goods_id) {
         $data = Goods::find($goods_id);
-        $goods = new Goods;
-        $goods->user_id = $id;
         $this->authorize('edit', $goods);
         return view('Goods.del', compact('data'));
     }
@@ -73,6 +73,7 @@ class GoodsController extends Controller
     public function remove(Request $request, $id, $goods_id) {
         // レコードを削除する。
         Goods::find($goods_id)->delete();
+        $this->authorize('edit', $goods);
         return redirect("/user/{$id}/summary/goods");
     }
     //複数選択削除
@@ -83,7 +84,6 @@ class GoodsController extends Controller
             $data[] = Goods::where('id',$item)->first();    //where('カラム名','任意')
         }
         $goods = new Goods;
-        $goods->user_id = $id;
         $this->authorize('edit', $goods);
         return view('goods.multi_del', compact('data'));
     }
@@ -93,6 +93,8 @@ class GoodsController extends Controller
         foreach($goods_id as $item){
             Goods::where('id',$item)->delete();
         }
+        $goods = new Goods;
+        $this->authorize('edit', $goods);
         return redirect("/user/{$id}/summary/goods");
     }
 }

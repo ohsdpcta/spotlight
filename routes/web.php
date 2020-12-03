@@ -66,6 +66,8 @@ Route::prefix('/user')->group(function(){
             // アカウント情報編集
             Route::get('account', 'UserController@edit')->middleware('verified');
             Route::post('account', 'UserController@update')->middleware('verified');
+            Route::get('account/delete', 'UserController@delete')->middleware('verified');
+            Route::post('account/delete', 'UserController@remove')->middleware('verified');
 
             // プロフィール編集
             Route::get('profile', 'ProfileController@edit')->middleware('verified');

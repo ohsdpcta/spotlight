@@ -69,7 +69,8 @@ class SampleController extends Controller {
 
     public function remove(Request $request, $id,$goods_id) {
         // レコードを削除する。
-        $sample = Sample::find($goods_id)->delete();
+        Sample::find($goods_id)->delete();
+        $sample = new Sample;
         $this->authorize('edit', $sample);
         return redirect("/user/{$id}/summary/sample");
     }

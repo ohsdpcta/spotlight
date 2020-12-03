@@ -16,6 +16,11 @@
             </ul>
         </div>
     @endif
+    @if (Session::has('success'))
+        <div id="sample">
+            <p>{{ Session::get('success') }}</p>
+        </div>
+    @endif
     <form action="/user/signup" method="POST">
         <table>
             @csrf

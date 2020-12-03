@@ -160,11 +160,15 @@ class UserController extends Controller
     // アカウント情報編集フォーム
     public function edit(Request $request, $id) {
         $data = User::where('id', $id)->first();
+        $user = Profile::where('user_id', $id)->first();
+        $this->authorize('edit', $user);
         return view('summary.edit_account', compact('data'));
     }
 
     // アカウント情報編集
     public function update(Request $request, $id) {
+        $user = Profile::where('user_id', $id)->first();
+        $this->authorize('edit', $user);
         // バリデーションを設定する
         $request->validate([
             'name'=>'required|string|max:30',

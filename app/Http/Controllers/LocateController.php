@@ -26,7 +26,7 @@ class LocateController extends Controller
         $locate_data = Locate::where('user_id', $id)->first();
         $locate = new Locate;
         $locate->user_id = $id;
-        // $this->authorize('edit', $locate);
+        $this->authorize('edit', $locate);
         if(!empty($locate_data->coordinate)){
             $locate_array = explode(',', $locate_data->coordinate);
         }else{

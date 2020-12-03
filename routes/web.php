@@ -62,7 +62,7 @@ Route::prefix('/user')->group(function(){
             Route::get('account', 'UserController@edit')->middleware('auth');
             Route::post('account', 'UserController@update')->middleware('auth');
             Route::get('account/delete', 'UserController@delete')->middleware('auth');
-            Route::post('accountdelete', 'UserController@remove')->middleware('auth');
+            Route::post('account/delete', 'UserController@remove')->middleware('auth');
 
             // プロフィール編集
             Route::get('profile', 'ProfileController@edit')->middleware('auth');

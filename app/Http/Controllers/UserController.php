@@ -160,12 +160,17 @@ class UserController extends Controller
 
         return redirect("user/{$id}/summary/account");
     }
-
+    // アカウント削除
     public function delete(Request $request, $id) {
         $data = User::find($id);
         return view('summary.delete_account', compact('data'));
     }
 
+    public function remove(Request $request, $id) {
+        // レコードを削除する。
+        User::find($id)->delete();
+        return redirect("/");
+    }
 
     // 投げ銭
     public function tip(Request $request, $id){

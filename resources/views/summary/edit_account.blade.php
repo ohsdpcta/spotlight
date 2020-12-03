@@ -22,5 +22,6 @@
             <input type="submit" value="修正" class="btn btn-primary">
         </div>
     </form>
+    <button type="button" class="btn btn-danger" onclick="location.href='/user/{{Auth::id()}}/summary/account/delete'">削除</button>
 
 @endsection

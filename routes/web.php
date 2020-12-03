@@ -39,6 +39,8 @@ Route::prefix('/user')->group(function(){
         // フォロー
         Route::get('follow', 'FollowerController@follow')->middleware('verified');
         Route::get('unfollow', 'FollowerController@unfollow')->middleware('verified');
+        Route::get('followlist', 'FollowerController@followlist')->middleware('verified');
+        Route::get('followerlist', 'FollowerController@followerlist')->middleware('verified');
 
         // ロケーション
         Route::get('locate', 'LocateController@index');

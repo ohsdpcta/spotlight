@@ -42,7 +42,7 @@ class User extends Authenticatable
         return $this->belongsTo('App\Tag');
     }
 
-    public function followee(){
+    public function followees(){
         return $this->belongsToMany(User::class, 'followers', 'follower_id', 'target_id');
     }
 

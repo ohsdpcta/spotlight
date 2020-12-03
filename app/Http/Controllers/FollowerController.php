@@ -30,12 +30,12 @@ class FollowerController extends Controller
     }
 
     public function followlist(Request $request, $id){
-        $data = User::find($id)->followee()->get();
+        $data = User::find($id)->followees()->get();
         return view('index.followlist', compact('data'));
     }
 
     public function followerlist(Request $request, $id){
-        $data = Follower::where('target_id', $id)->paginate(10);
+        $data = User::find($id)->followers()->get();
         return view('index.followerlist', compact('data'));
     }
 }

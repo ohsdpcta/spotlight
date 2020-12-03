@@ -29,9 +29,9 @@ class ProfilePolicy
      * @param  \App\Profile  $profile
      * @return mixed
      */
-    public function view(User $user, Profile $profile)
+    public function edit(User $user, Profile $profile)
     {
-        //
+        return (string)Auth::user()->id === $profile->user_id;
     }
 
     /**
@@ -42,7 +42,7 @@ class ProfilePolicy
      */
     public function create(User $user)
     {
-        //
+        return (string)Auth::user()->id === $profile->user_id;
     }
 
     /**
@@ -66,7 +66,7 @@ class ProfilePolicy
      */
     public function delete(User $user, Profile $profile)
     {
-        return $user->id === $profile->user_id;
+        return (string)Auth::user()->id === $profile->user_id;
     }
 
     /**

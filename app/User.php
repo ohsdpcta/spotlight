@@ -40,4 +40,16 @@ class User extends Authenticatable
     public function profile(){
         return $this->belongsTo('App\Profile');
     }
+
+    public function locate(){
+        return $this->belongsTo('App\Locate');
+    }
+
+    public function goods(){
+        return $this->belongsTo('App\Goods');
+    }
+
+    public function sample(){
+        return $this->belongsTo('App\Sample');
+    }
 }

@@ -8,4 +8,8 @@ class Goods extends Model
 {
     protected $table = 'goods';
     protected $guarded = array('id');
+
+    public function user(){
+        return $this->belongsTo('App\User');
+    }
 }

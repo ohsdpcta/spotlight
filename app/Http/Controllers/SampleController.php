@@ -31,7 +31,6 @@ class SampleController extends Controller {
     public function create(Request $request, $id) {
         // レコードを追加する。
         $addsample = new Sample;
-        // $this->authorize('create', $addsample);
         $addsample->user_id = $id;
         $this->authorize('edit', $addsample);
         $addsample->name = $request->name;
@@ -49,9 +48,11 @@ class SampleController extends Controller {
     }
     public function update(Request $request, $id, $sample_id)
     {
+        $sample = new Sample;
+        $sample->user_id = $id;
+        $this->authorize('edit', $sample);
         if(Auth::id() == $id){
             $addsample = Sample::find($sample_id);
-            $this->authorize('edit', $addsample);
             $addsample->name = $request->name;
             $addsample->url = $request->url;
             if($addsample->save()){

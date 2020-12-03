@@ -92,8 +92,7 @@ class GoodsController extends Controller
         //レコードを複数削除する.
         $goods_id = $request->input('goods_id');
         foreach($goods_id as $item){
-            Goods::where('id',$item)->
-                ();
+            Goods::where('id',$item)->first();
         }
         $goods = new Goods;
         $this->authorize('edit', $goods);

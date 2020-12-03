@@ -3,7 +3,7 @@
 @section('user')
     <html>
         <head>
-            <title>検索ページ</title>
+            <title>フォロー中 / Spotlight</title>
         </head>
 
         <style>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Follower;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 
 class FollowerController extends Controller
@@ -28,13 +29,13 @@ class FollowerController extends Controller
         return redirect("/user/{$id}/profile");
     }
 
+    public function followlist(Request $request, $id){
+        $data = User::find($id)->followee()->get();
+        return view('index.followlist', compact('data'));
+    }
+
     public function followerlist(Request $request, $id){
         $data = Follower::where('target_id', $id)->paginate(10);
         return view('index.followerlist', compact('data'));
-    }
-
-    public function followlist(Request $request, $id){
-        $data = Follower::where('follower_id', $id)->paginate(10);
-        return view('index.followlist', compact('data'));
     }
 }

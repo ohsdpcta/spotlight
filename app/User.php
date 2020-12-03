@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use app\Tag;
 
 class User extends Authenticatable
 {
@@ -37,19 +38,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-
-
-
-    // public function tag()
-    // {
-    //     return $this->belongsTo('App\Tag');
-    // }
-
-    // public function tag(){
-    //     return $this->hasMany('App/Tag');
-    // }
-
-    public function publishedUsers(){
-        return $this->hasMany('App\User')->where('id', 1);
+    public function tags()
+    {
+        return $this->belongsToMany('App\Tag', 'user_tag');
     }
+
 }

@@ -10,13 +10,10 @@ class Tag extends Model
 
     public function users()
     {
-        return $this->hasMany('App\User');
+        return $this->belongsToMany('App\User', 'user_tag');
     }
 
-    // public function user(){
-    //     return $this->belongsTo('App\User');
-    // }
-    /**
+    /*
      * 値を結合する子モデルの取得
      *
      * @param  string  $childType
@@ -27,10 +24,6 @@ class Tag extends Model
     public function resolveChildRouteBinding($childType, $value, $field)
     {
         return parent::resolveChildRouteBinding($childType, $value, $field);
-    }
-
-    public function publishedUsers(){
-        return $this->hasMany('App\User')->where('id', 1);
     }
 
 }

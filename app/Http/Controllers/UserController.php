@@ -195,4 +195,8 @@ class UserController extends Controller
         $user = Auth::user();
         return view('emails.authentication',compact('user'));
     }
+    public function confirmation(Request $request,$id){
+
+        return redirect("user/{$id}/summary/profile");
+    }
 }

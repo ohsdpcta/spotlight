@@ -18,22 +18,24 @@
             </div>
             {{-- フォローボタン表示 --}}
             <div class="col-md-2 col-sm-2 pt-3 pl-1">
-            {{-- @if(Auth::user() and Auth::user()->id != request()->id)あとで表示 --}}
-                @if(UserClass::getFollower(request()->id)['follow_flg'] == 1)
-                    <input type="button" onclick="location.href='/user/{{ request()->id }}/unfollow'" class="btn btn-primary" value="フォロー解除">
+                @if(Auth::user() and Auth::user()->id != request()->id)
+                    @if(UserClass::getFollower(request()->id)['follow_flg'] == 1)
+                        <input type="button" onclick="location.href='/user/{{ request()->id }}/unfollow'" class="btn btn-primary" value="フォロー解除">
+                    @else
+                        <input type="button" onclick="location.href='/user/{{ request()->id }}/follow'" class="btn btn-primary" value=" フォロー ">
+                    @endif
+                {{-- ユーザーページ編集 --}}
                 @else
-                    <input type="button" onclick="location.href='/user/{{ request()->id }}/follow'" class="btn btn-primary" value=" フォロー ">
+                    <div class="pt-1">
+                        <input class="btn btn-success" value="ユーザーページ編集" type="button"
+                            onclick="location.href='/user/{{Auth::id()}}/summary/@if(request()->is('*profile'))profile\
+                            @elseif(request()->is('*locate'))locate\
+                            @elseif(request()->is('*goods'))goods\
+                            @elseif(request()->is('*sample'))sample\
+                            @endif'"
+                        >
+                    </div>
                 @endif
-            {{-- ユーザーページ編集 --}}
-                <div class="pt-1">
-                    <input class="btn btn-success" value="ユーザーページ編集" type="button"
-                        onclick="location.href='/user/{{Auth::id()}}/summary/@if(request()->is('*profile'))profile\
-                        @elseif(request()->is('*locate'))locate\
-                        @elseif(request()->is('*goods'))goods\
-                        @elseif(request()->is('*sample'))sample\
-                        @endif'"
-                    >
-                </div>
                 {{-- 投げ銭ボタン --}}
                 @if( !empty(UserClass::get_paypay_url(request()->id)) )
                     <div class="pt-2">

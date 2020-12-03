@@ -6,7 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
 
@@ -36,6 +36,23 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function profile(){
+        return $this->belongsTo('App\Profile');
+    }
+
+    public function locate(){
+        return $this->belongsTo('App\Locate');
+    }
+
+    public function goods(){
+        return $this->belongsTo('App\Goods');
+    }
+
+    public function sample(){
+        return $this->belongsTo('App\Sample');
+    }
 
     public function tag()
     {

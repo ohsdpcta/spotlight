@@ -62,32 +62,32 @@ class SampleController extends Controller {
         return redirect("user/{$id}/summary/sample");
     }
 
-    public function del(Request $request, $id,$goods_id) {
-        $data = Sample::find($goods_id);
-        $this->authorize('edit', $data);
-        return view('sample.del', compact('data'));
-    }
+    // public function del(Request $request, $id,$goods_id) {
+    //     $data = Sample::find($goods_id);
+    //     $this->authorize('edit', $data);
+    //     return view('summary.delete_sample', compact('data'));
+    // }
 
-    public function remove(Request $request, $id,$goods_id) {
-        // レコードを削除する。
-        Sample::find($goods_id)->delete();
-        $sample = new Sample;
-        $this->authorize('edit', $sample);
-        return redirect("/user/{$id}/summary/sample");
-    }
+    // public function remove(Request $request, $id,$goods_id) {
+    //     // レコードを削除する。
+    //     Sample::find($goods_id)->delete();
+    //     $sample = new Sample;
+    //     $this->authorize('edit', $sample);
+    //     return redirect("/user/{$id}/summary/sample");
+    // }
         //複数選択削除
-    public function multi_del(Request $request, $id) {
+    public function del(Request $request, $id) {
         $data = array();    //配列の初期化
-        $check_sample = $request->input('check_sample');  //チェックボックスのデータを取得
-        foreach($check_sample as $item){
+        $check_sample = new Sample($request->all());  //チェックボックスのデータを取得
+        foreach ((array)$check_sample as $item){
             //where('カラム名','任意')
             $data[] = Sample::where('id',$item)->first();
         }
         $sample = new Sample;
-        $this->authorize('edit', $sample);
-        return view('sample.multi_del', compact('data'));
+        // $this->authorize('edit', $sample);
+        return view('summary.delete_sample', compact('data'));
     }
-    public function multi_remove(Request $request,$id){
+    public function remove(Request $request,$id){
         //レコードを複数削除する.
         $sample_id = $request->input('sample_id');
         foreach($sample_id as $item){

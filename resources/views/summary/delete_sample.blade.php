@@ -13,19 +13,15 @@
 
 <h3 class="text-light">サンプル情報削除</h3>
 <hr>
-<form action="delete" method="post">
+<form action="del" method="post">
     @csrf
     <div class="form-group">
         {{-- <label>サンプル画像</label><input type="text" name="name" class="form-control"> --}}
-        <p>{{ $item->name }}</p>
-        <br>
+        @foreach ($data as $item)
+            {{ $item['name'] }}{{ $item['url']}}
+        @endforeach
         <input type="submit" value="削除" class="btn btn-danger">
     </div>
 </form>
 
 @endsection
-
-
-
-
-

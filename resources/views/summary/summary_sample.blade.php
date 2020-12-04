@@ -60,6 +60,7 @@
         {{-- </div> --}}
 
     @endforeach
+    <br><button class="float-right btn btn-danger" type="button" onclick="location.href='/user/{{Auth::id()}}/summary/sample/{{$item->id}}/del'">削除</button>
     {{ $data->links('vendor.pagination.sample-pagination') }}
 
 </div>

@@ -1,6 +1,8 @@
 @extends('layouts/main')
 @section('user')
 
+{{-- -------------------------------------------------------------- --}}
+
 <div class="container">
 
     <div class="top">
@@ -56,19 +58,11 @@
         </div>
     </div>
 
-    <div class="tab w-100 nav-justified">
+    <div class="tab">
         <ul class="nav nav-tabs">
-
-            {{-- @if ($tekitou == 'profile') --}}
             <li class="nav-item">
                 <a class="nav-link @if(request()->is('*profile')) active @endif" href="/user/{{request()->id}}/profile">プロフィール</a>
             </li>
-            {{-- @else
-            <li class="nav-item">
-                <a href="spotlight/user/:id/profile" class="nav-link ">プロフィール</a>
-            </li>
-            @endif --}}
-
             <li class="nav-item">
                 <a class="nav-link @if(request()->is('*locate')) active @endif" href="/user/{{request()->id}}/locate">ロケーション</a>
             </li>

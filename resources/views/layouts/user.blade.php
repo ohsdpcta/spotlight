@@ -18,14 +18,15 @@
             </div>
             {{-- フォローボタン表示 --}}
             <div class="col-md-2 col-sm-2 pt-3 pl-1">
-                @if(Auth::user() and Auth::user()->id != request()->id)
+                @cannot('edit', $data)
                     @if(UserClass::getFollower(request()->id)['follow_flg'] == 1)
                         <input type="button" onclick="location.href='/user/{{ request()->id }}/unfollow'" class="btn btn-primary" value="フォロー解除">
                     @else
                         <input type="button" onclick="location.href='/user/{{ request()->id }}/follow'" class="btn btn-primary" value=" フォロー ">
                     @endif
+                @endcannot
                 {{-- ユーザーページ編集 --}}
-                @else
+                @can('edit', $data)
                     <div class="pt-1">
                         <input class="btn btn-success" value="ユーザーページ編集" type="button"
                             onclick="location.href='/user/{{Auth::id()}}/summary/@if(request()->is('*profile'))profile\
@@ -35,7 +36,7 @@
                             @endif'"
                         >
                     </div>
-                @endif
+                @endcan
                 {{-- 投げ銭ボタン --}}
                 @if( !empty(UserClass::get_paypay_url(request()->id)) )
                     <div class="pt-2">

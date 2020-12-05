@@ -28,8 +28,8 @@
             }
 
             .top {
-                padding: 0.5em 1em;
-                margin: 2em 0;
+                padding: 0.5em 1em 0; /*上 左右 下*/
+                margin: 2em 0 0;
                 color: #2c2c2f;
                 background: #ffffff;/*背景色*/
                 align-content: center;

@@ -63,10 +63,11 @@ class GoodsController extends Controller
         }
         return redirect("user/{$id}/summary/goods");
     }
+
     // 削除確認画面
     public function delete(Request $request, $id) {
-        $goods_id_str = implode(',', $request->goods_delete);
-        $data = Goods::find($request->goods_delete);
+        $checked_id_str = implode(',', $request->checked_items);
+        $data = Goods::find($request->checked_items);
         if(empty($data)){
             session()->flash('flash_message_error', '削除したい項目にチェックを入れてください');
             return redirect("/user/53/summary/goods");
@@ -74,12 +75,11 @@ class GoodsController extends Controller
         foreach($data as $item){
             $this->authorize('edit', $item);
         }
-        return view('summary.delete_goods', compact('data', 'goods_id_str'));
+        return view('summary.delete_goods', compact('data', 'checked_id_str'));
     }
-
     // 削除処理
     public function remove(Request $request, $id) {
-        $goods_id = explode(',', $request->goods_id_str);
+        $goods_id = explode(',', $request->checked_id_str);
         $data = Goods::find($goods_id);
         foreach($data as $item){
             $this->authorize('edit', $item);

@@ -21,7 +21,7 @@
             {{ $item->name }} ( <a href="{{ $item->url }}">{{ $item->url }}</a> )
             <br>
         @endforeach
-        <input type="hidden" name="goods_id_str" value="{{ $goods_id_str }}">
+        <input type="hidden" name="checked_id_str" value="{{ $checked_id_str }}">
         <input type="submit" value="削除" class="btn btn-danger">
     </div>
 </form>

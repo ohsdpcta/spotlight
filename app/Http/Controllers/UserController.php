@@ -142,8 +142,10 @@ class UserController extends Controller
                 'email' => $user->email,
                 'avatar' => $user->avatar_original,
             ]);
-            $socialUser->email_verified_at = now();
-            $socialUser->save();
+            if(empty($socialUser->email_verified_at)){
+                $socialUser->email_verified_at = now();
+                $socialUser->save();
+            }
             Auth::login($socialUser, true);
             $login_user_id = Auth::id();
             $old_profile = Profile::where('user_id', $login_user_id)->first();

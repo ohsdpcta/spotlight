@@ -66,12 +66,12 @@ class GoodsController extends Controller
 
     // 削除確認画面
     public function delete(Request $request, $id) {
+        if(empty($request->checked_items)){
+            session()->flash('flash_message_error', '削除したい項目にチェックを入れてください');
+            return redirect("/user/{$id}/summary/goods");
+        }
         $checked_id_str = implode(',', $request->checked_items);
         $data = Goods::find($request->checked_items);
-        if(empty($data)){
-            session()->flash('flash_message_error', '削除したい項目にチェックを入れてください');
-            return redirect("/user/53/summary/goods");
-        }
         foreach($data as $item){
             $this->authorize('edit', $item);
         }
@@ -79,8 +79,8 @@ class GoodsController extends Controller
     }
     // 削除処理
     public function remove(Request $request, $id) {
-        $goods_id = explode(',', $request->checked_id_str);
-        $data = Goods::find($goods_id);
+        $delete_item_id = explode(',', $request->checked_id_str);
+        $data = Goods::find($delete_item_id);
         foreach($data as $item){
             $this->authorize('edit', $item);
         }

@@ -32,8 +32,8 @@ class ProfileController extends Controller {
             'content'=>'required|between:1,150',
         ];
         $messages = [
-            'content.required' => '１文字以上を入力してください。',
-            'content.between' => '入力文字数を超えています。',
+            'content.required' => '１文字以上で入力してください。',
+            'content.between' => '１５０文字以内で入力してください。',
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
         if ($validator->fails()) {

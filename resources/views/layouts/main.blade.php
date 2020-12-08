@@ -2,9 +2,15 @@
 
     <head>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/common/css/bootstrap.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.2/css/drawer.min.css">
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+        <script src="/common/js/bootstrap.js"></script> 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/iScroll/5.2.0/iscroll.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.2/js/drawer.min.js"></script>
         <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
 
         <style>
@@ -22,8 +28,8 @@
             }
 
             .top {
-                padding: 0.5em 1em;
-                margin: 2em 0;
+                padding: 0.5em 1em 0; /*上 左右 下*/
+                margin: 2em 0 0;
                 color: #2c2c2f;
                 background: #ffffff;/*背景色*/
                 align-content: center;
@@ -43,20 +49,17 @@
                 margin: 0;
                 padding: 0;
             }
-            {{-- .navbar-brand-center {
-                position: absolute;
-                width: 100%;
-                left: 0;
-                top: 0;
-                text-align:center;
-                margin: auto;
-            } --}}
             .footer {
                 bottom: 0;
                 width: 100%;
                 /* Set the fixed height of the footer here */
                 height: 100px;
                 /* background-color: #3d3d3d; */
+            }
+            .nav-justified {
+                display: table;
+                table-layout: fixed;
+                width: 100%;
             }
 
         </style>
@@ -73,6 +76,12 @@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav4" aria-controls="navbarNav4" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
+                <script>
+                    $(document).ready(function() {
+                      $('.drawer').drawer();
+                    });
+                </script>
 
                 <a class="navbar-brand navbar-brand-center" href="/">Spotlight</a>
                 <div class="collapse navbar-collapse">
@@ -127,6 +136,8 @@
                         <button class="btn btn-primary" type="submit">検索</button>
                     </form>
                 @endif
+
+
 
             </nav>
             @if(session('flash_message'))

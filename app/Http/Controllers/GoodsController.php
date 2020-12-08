@@ -85,6 +85,7 @@ class GoodsController extends Controller
             $this->authorize('edit', $item);
         }
         $data->each->delete();
+        session()->flash('flash_message', '削除が完了しました');
         return redirect("/user/{$id}/summary/goods");
     }
 }

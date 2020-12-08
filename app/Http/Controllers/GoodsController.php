@@ -7,6 +7,7 @@ use App\Goods;
 use App\Profile;
 use GuzzleHttp\Psr7\Request as Psr7Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class GoodsController extends Controller
 {
@@ -36,6 +37,26 @@ class GoodsController extends Controller
         $addgoods = new Goods;
         $addgoods->user_id = $id;
         $this->authorize('edit', $addgoods);
+        // //バリデーションの設定
+        $rules = [
+            'name'=>'required|between:1,25',
+            'url'=>'required|between:1,190|url',
+        ];
+        $messages = [
+            'name.required' => 'グッズ名を入力してください。',
+            'name.between' => '２５文字以内で入力してください。',
+            'url.required' => 'URLを入力してください',
+            'url.between' => '１９０文字以内で入力してください。',
+            'url.url' => 'URLを正しく入力してください。',
+        ];
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if ($validator->fails()) {
+            return redirect("user/{$id}/summary/goods/add")
+                ->withErrors($validator)
+                ->withInput();
+        }
+        $goods = $validator->validate();
+        
         $addgoods->name = $request->name;
         $addgoods->url = $request->url;
         if($addgoods->save()){
@@ -53,6 +74,26 @@ class GoodsController extends Controller
         $addgoods = new Goods;
         $addgoods->user_id = $id;
         $this->authorize('edit', $addgoods);
+        // //バリデーションの設定
+        $rules = [
+            'name'=>'required|between:1,25',
+            'url'=>'required|between:1,190|url',
+        ];
+        $messages = [
+            'name.required' => 'グッズ名を入力してください。',
+            'name.between' => '２５文字以内で入力してください。',
+            'url.required' => 'URLを入力してください',
+            'url.between' => '１９０文字以内で入力してください。',
+            'url.url' => 'URLを正しく入力してください。',
+        ];
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if ($validator->fails()) {
+            return redirect("user/{$id}/summary/goods/{$goods_id}/edit")
+                ->withErrors($validator)
+                ->withInput();
+        }
+        $goods = $validator->validate();
+
         if(Auth::id() == $id){
             $addgoods = Goods::find($goods_id);
             $addgoods->name = $request->name;

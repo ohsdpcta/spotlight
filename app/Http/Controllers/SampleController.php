@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 use App\Sample;
 
@@ -33,6 +34,25 @@ class SampleController extends Controller {
         $addsample = new Sample;
         $addsample->user_id = $id;
         $this->authorize('edit', $addsample);
+        // //バリデーションの設定
+        $rules = [
+            'name'=>'required|between:1,25',
+            'url'=>'required|between:1,190|url',
+        ];
+        $messages = [
+            'name.required' => 'サンプル名を入力してください。',
+            'name.between' => '２５文字以内で入力してください。',
+            'url.required' => 'URLを入力してください',
+            'url.between' => '１９０文字以内で入力してください。',
+            'url.url' => 'URLを正しく入力してください。',
+        ];
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if ($validator->fails()) {
+            return redirect("user/{$id}/summary/sample/add")
+                ->withErrors($validator)
+                ->withInput();
+        }
+        $sample = $validator->validate();
         $addsample->name = $request->name;
         $addsample->url = $request->url;
         if($addsample->save()){
@@ -51,6 +71,25 @@ class SampleController extends Controller {
         $sample = new Sample;
         $sample->user_id = $id;
         $this->authorize('edit', $sample);
+        // //バリデーションの設定
+        $rules = [
+            'name'=>'required|between:1,25',
+            'url'=>'required|between:1,190|url',
+        ];
+        $messages = [
+            'name.required' => 'サンプル名を入力してください。',
+            'name.between' => '２５文字以内で入力してください。',
+            'url.required' => 'URLを入力してください',
+            'url.between' => '１９０文字以内で入力してください。',
+            'url.url' => 'URLを正しく入力してください。',
+        ];
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if ($validator->fails()) {
+            return redirect("user/{$id}/summary/sample/{$sample_id}/edit")
+                ->withErrors($validator)
+                ->withInput();
+        }
+        $sample = $validator->validate();
         if(Auth::id() == $id){
             $addsample = Sample::find($sample_id);
             $addsample->name = $request->name;

@@ -63,39 +63,28 @@ class GoodsController extends Controller
         }
         return redirect("user/{$id}/summary/goods");
     }
-    //削除
-    public function del(Request $request, $id, $goods_id) {
-        $data = Goods::find($goods_id);
-        $this->authorize('edit', $goods);
-        return view('Goods.del', compact('data'));
+    // 削除確認画面
+    public function delete(Request $request, $id) {
+        $goods_id_str = implode(',', $request->goods_delete);
+        $data = Goods::find($request->goods_delete);
+        if(empty($data)){
+            session()->flash('flash_message_error', '削除したい項目にチェックを入れてください');
+            return redirect("/user/53/summary/goods");
+        }
+        foreach($data as $item){
+            $this->authorize('edit', $item);
+        }
+        return view('summary.delete_goods', compact('data', 'goods_id_str'));
     }
 
-    public function remove(Request $request, $id, $goods_id) {
-        // レコードを削除する。
-        Goods::find($goods_id)->delete();
-        $goods = Goods::where('user_id', $id)->first();
-        $this->authorize('edit', $goods);
-        return redirect("/user/{$id}/summary/goods");
-    }
-    //複数選択削除
-    public function multi_del(Request $request, $id) {
-        $data = array();    //配列の初期化
-        $check_goods = $request->input('check_goods');  //チェックボックスのデータを取得
-        foreach($check_goods as $item){
-            $data[] = Goods::where('id',$item)->first();    //where('カラム名','任意')
+    // 削除処理
+    public function remove(Request $request, $id) {
+        $goods_id = explode(',', $request->goods_id_str);
+        $data = Goods::find($goods_id);
+        foreach($data as $item){
+            $this->authorize('edit', $item);
         }
-        $goods = new Goods;
-        $this->authorize('edit', $goods);
-        return view('goods.multi_del', compact('data'));
-    }
-    public function multi_remove(Request $request,$id){
-        //レコードを複数削除する.
-        $goods_id = $request->input('goods_id');
-        foreach($goods_id as $item){
-            Goods::where('id',$item)->first();
-        }
-        $goods = new Goods;
-        $this->authorize('edit', $goods);
+        $data->each->delete();
         return redirect("/user/{$id}/summary/goods");
     }
 }

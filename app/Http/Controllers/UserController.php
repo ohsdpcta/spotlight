@@ -8,6 +8,7 @@ use App\User;
 use App\Profile;
 use App\Library\UserClass;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 //メール
 use App\Mail\HelloEmail;
 use Illuminate\Support\Facades\Validator;
@@ -141,6 +142,10 @@ class UserController extends Controller
                 'email' => $user->email,
                 'avatar' => $user->avatar_original,
             ]);
+            if(empty($socialUser->email_verified_at)){
+                $socialUser->email_verified_at = now();
+                $socialUser->save();
+            }
             Auth::login($socialUser, true);
             $login_user_id = Auth::id();
             $old_profile = Profile::where('user_id', $login_user_id)->first();

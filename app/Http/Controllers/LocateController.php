@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Locate;
+use App\Profile;
 
 class LocateController extends Controller
 {
@@ -23,6 +24,9 @@ class LocateController extends Controller
     //ロケーション+住所登録フォーム
     public function edit(Request $request, $id){
         $locate_data = Locate::where('user_id', $id)->first();
+        $locate = new Locate;
+        $locate->user_id = $id;
+        $this->authorize('edit', $locate);
         if(!empty($locate_data->coordinate)){
             $locate_array = explode(',', $locate_data->coordinate);
         }else{
@@ -36,6 +40,9 @@ class LocateController extends Controller
         $request->validate([
             'coordinate' => 'required|string'
         ]);
+        $locate = new Locate;
+        $locate->user_id = $id;
+        $this->authorize('edit', $locate);
         if(Auth::id() == $id){
             $locate = Locate::where('user_id', Auth::id())->first();
             if($locate){
@@ -55,6 +62,9 @@ class LocateController extends Controller
 
     public function remove(Request $request,$id){
         // レコードを削除する。
+        $locate = new Locate;
+        $locate->user_id = $id;
+        $this->authorize('edit', $locate);
         if(Locate::where('user_id', Auth::id())->delete()){
             session()->flash('flash_message', 'ロケーションを削除しました');
         }

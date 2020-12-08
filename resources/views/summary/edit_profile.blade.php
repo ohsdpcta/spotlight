@@ -15,6 +15,15 @@
         <div class="pt-3">
             <form action="/user/{{Auth::id()}}/summary/profile" method="post">
                 @csrf
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <label>あなたを知らせるためのプロフィールを記入することができます。</label>
                 <textarea name="content" cols="80" rows="5" class="form-control">{{ $data->content }}</textarea><br>
                 <input type="submit" value="修正" class="float-right">

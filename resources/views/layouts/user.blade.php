@@ -34,9 +34,8 @@
                             <input type="button" onclick="location.href='/user/{{ request()->id }}/follow'" class="btn btn-primary" value=" フォロー ">
                         @endif
                     </div>
-                    
                 {{-- ユーザーページ編集 --}}
-                @else
+                @elseif(Auth::user() != '')
                     <div class="col-3 pt-2">
                         <input class="btn btn-success" value="ユーザーページ編集" type="button"
                             onclick="location.href='/user/{{Auth::id()}}/summary/@if(request()->is('*profile'))profile\
@@ -64,7 +63,7 @@
             <a class="border col-xl-2 col-lg-2 col-md-2 col-sm-3 col-xs-2" href="/user/{{ request()->id }}/followerlist">{{ UserClass::getFollower(request()->id)['follower'] }} Follower </a>
             <a class="border col-xl-2 col-lg-2 col-md-2 col-sm-3 col-xs-2" href="/user/{{ request()->id }}/followlist">{{ UserClass::getFollower(request()->id)['follow_count'] }} Follow </a>
         </div>
-        
+
     </div>
 
     <div class="tab nav-justified">

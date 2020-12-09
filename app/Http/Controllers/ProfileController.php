@@ -17,7 +17,7 @@ class ProfileController extends Controller {
 
         $markdown = Markdown::parse(e($data->content));
         logger(now());
-        return view('index.profile', compact('data', 'markdown'));
+        return view('index.profile', compact('markdown'));
     }
 
     public function edit(Request $request, $id) {

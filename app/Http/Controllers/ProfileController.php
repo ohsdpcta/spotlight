@@ -7,17 +7,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 use App\Profile;
-use Illuminate\Mail\Markdown;
 
 use Illuminate\Validation\Rule;
 
 class ProfileController extends Controller {
     public function index(Request $request, $id) {
         $data = Profile::where('user_id', $id)->first();
-
-        $markdown = Markdown::parse(e($data->content));
         logger(now());
-        return view('index.profile', compact('markdown'));
+        return view('index.profile', compact('data'));
     }
 
     public function edit(Request $request, $id) {

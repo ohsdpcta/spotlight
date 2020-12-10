@@ -21,12 +21,10 @@
                 font-size: small;
                 text-align:center
             }
-
             body {
                 background-color: #2c2c2c;
                 /* margin-top: 50px; */
             }
-
             .top {
                 padding: 0.5em 1em 0; /*上 左右 下*/
                 margin: 2em 0 0;
@@ -38,7 +36,6 @@
                 margin: 0;
                 padding: 0;
             }
-
             .tab {
                 padding: 0.5em 1em;
                 margin: 2em 0;
@@ -61,94 +58,78 @@
                 table-layout: fixed;
                 width: 100%;
             }
-
         </style>
     </head>
 
-    <header>
-    </header>
+    <header></header>
 
     <body>
-        <div class="">{{-- h-100でフッターを下に押し付けていたdiv --}}
-            {{-- ヘッダー --}}
-            <nav class="navbar navbar-expand-sm navbar-dark bg-dark mt-0 mb-0 pt-0 pb-0 sticky-top">
-
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav4" aria-controls="navbarNav4" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <script>
-                    $(document).ready(function() {
-                      $('.drawer').drawer();
-                    });
-                </script>
-
-                <a class="navbar-brand navbar-brand-center" href="/">Spotlight</a>
-                <div class="collapse navbar-collapse">
-                    <ul class="navbar-nav">
-                        {{-- 非ログイン時の処理 --}}
-                        @if(!Auth::user())
-                            @if(request()->path() == 'user/signin')
-                                <li class="nav-item active">
-                                    <a class="nav-link" href="/user/signin">sign in</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/user/signup">sign up</a>
-                                </li>
-                            @elseif(request()->path() == 'user/signup')
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/user/signin">sign in</a>
-                                </li>
-                                <li class="nav-item active">
-                                    <a class="nav-link" href="/user/signup">sign up</a>
-                                </li>
-                            @else
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/user/signin">sign in</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/user/signup">sign up</a>
-                                </li>
-                            @endif
-                        {{-- ログイン時の処理 --}}
+        {{-- ヘッダー --}}
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark mt-0 mb-0 pt-0 pb-0 sticky-top">
+            <a class="navbar-brand navbar-brand-center" href="/">Spotlight</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav">
+                    {{-- 非ログイン時の処理 --}}
+                    @if(!Auth::user())
+                        @if(request()->path() == 'user/signin')
+                            <li class="nav-item active">
+                                <a class="nav-link" href="/user/signin">sign in</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/user/signup">sign up</a>
+                            </li>
+                        @elseif(request()->path() == 'user/signup')
+                            <li class="nav-item">
+                                <a class="nav-link" href="/user/signin">sign in</a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" href="/user/signup">sign up</a>
+                            </li>
                         @else
                             <li class="nav-item">
-                                <a class="nav-link" href="/user/signout">sign out</a>
+                                <a class="nav-link" href="/user/signin">sign in</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/user/{{ Auth::id() }}/@if(request()->is('*profile'))profile\
-                                    @elseif(request()->is('*locate'))locate\
-                                    @elseif(request()->is('*goods'))goods\
-                                    @elseif(request()->is('*sample'))sample\
-                                    @else()profile\
-                                    @endif"
-                                >my page</a>
+                                <a class="nav-link" href="/user/signup">sign up</a>
                             </li>
                         @endif
-                    </ul>
-                </div>
+                    {{-- ログイン時の処理 --}}
+                    @else
+                        <li class="nav-item">
+                            <a class="nav-link" href="/user/signout">sign out</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/user/{{ Auth::id() }}/@if(request()->is('*profile'))profile\
+                                @elseif(request()->is('*locate'))locate\
+                                @elseif(request()->is('*goods'))goods\
+                                @elseif(request()->is('*sample'))sample\
+                                @else()profile\
+                                @endif"
+                            >my page</a>
+                        </li>
+                    @endif
+                </ul>
+            </div>
 
-                {{-- indexのnavbarでは検索フォームを非表示 --}}
-                @if(!(request()->path() == '/'))
-                    <form class="form-inline mt-1 mb-1 align-right" action="/user/search">
-                        @csrf
-                        <input class="form-control mr-sm-1" type="search" name="search">
-                        <button class="btn btn-primary" type="submit">検索</button>
-                    </form>
-                @endif
-
-
-
-            </nav>
-            @if(session('flash_message'))
-                <div class="alert text-center py-3 my-0" style="color:#fff; background-color:#414579">
-                    {{ session('flash_message') }}
-                </div>
+            {{-- indexのnavbarでは検索フォームを非表示 --}}
+            @if(!(request()->path() == '/'))
+                <form class="form-inline mt-1 mb-1 align-right" action="/user/search">
+                    @csrf
+                    <input class="form-control mr-sm-1" type="search" name="search">
+                    <button class="btn btn-primary" type="submit">検索</button>
+                </form>
             @endif
+        </nav>
+
+
+        @if(session('flash_message'))
+            <div class="alert text-center py-3 my-0" style="color:#fff; background-color:#414579">
+                {{ session('flash_message') }}
+            </div>
+        @endif
+
 
         @yield('user')
-
-        </div>
 
 
         {{-- フッター --}}

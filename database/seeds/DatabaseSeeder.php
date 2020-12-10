@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
             GoodsTableSeeder::class,
             SampleTableSeeder::class,
             PaypayTableSeeder::class,
+            TagsTableSeeder::class,
+            UserTagTableSeeder::class,
         ]);
     }
 }

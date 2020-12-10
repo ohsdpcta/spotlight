@@ -19,11 +19,9 @@
         <div class="form-group">
             <label>UserName</label><input type="text" name="name" value="{{ $data->name }}" class="form-control">
             <br>
-            <label>Email</label><input type="text" name="email" value="{{ $data->email }}" class="form-control">
-            <br>
-            <input type="submit" value="登録" class="btn btn-primary">
-            <br>
+            <input type="submit" value="修正" class="btn btn-primary">
         </div>
     </form>
+    <button type="button" class="btn btn-danger" onclick="location.href='/user/{{Auth::id()}}/summary/account/delete'">削除</button>
 
 @endsection

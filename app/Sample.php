@@ -11,4 +11,8 @@ class Sample extends Model
     protected $fillable = [
         'checkbox',
     ];
+
+    public function user(){
+        return $this->belongsTo('App\User');
+    }
 }

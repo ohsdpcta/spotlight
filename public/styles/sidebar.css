@@ -1,0 +1,29 @@
+nav {
+	position: fixed;
+	top: 0;
+	right: 0;
+	width: 300px;
+	height: 100%;
+	background-color: #333;
+	transition: all 0.2s;
+	transform: translate(300px);
+	z-index: 1000;
+}
+nav.open {
+	transform: translate(0); 
+}
+nav ul {
+	margin: 0;
+	padding: 1em;
+	list-style-type: none;
+}
+nav ul li {
+	padding: 1em 0;
+	border-bottom: 1px solid #fff;
+}
+nav ul li a {
+	display: block;
+	text-align: center;
+	text-decoration: none;
+	color: #fff;
+}

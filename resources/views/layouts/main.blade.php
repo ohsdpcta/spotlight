@@ -12,53 +12,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/iScroll/5.2.0/iscroll.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.2/js/drawer.min.js"></script>
         <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
-
-        <style>
-            header {
-                background-color: blue;
-            }
-            header h1 {
-                font-size: small;
-                text-align:center
-            }
-            body {
-                background-color: #2c2c2c;
-                /* margin-top: 50px; */
-            }
-            .top {
-                padding: 0.5em 1em 0; /*上 左右 下*/
-                margin: 2em 0 0;
-                color: #2c2c2f;
-                background: #ffffff;/*背景色*/
-                align-content: center;
-            }
-            .top p {
-                margin: 0;
-                padding: 0;
-            }
-            .tab {
-                padding: 0.5em 1em;
-                margin: 2em 0;
-                color: #2c2c2f;
-                background: #ffffff;/*背景色*/
-            }
-            .tab p {
-                margin: 0;
-                padding: 0;
-            }
-            .footer {
-                bottom: 0;
-                width: 100%;
-                /* Set the fixed height of the footer here */
-                height: 100px;
-                /* background-color: #3d3d3d; */
-            }
-            .nav-justified {
-                display: table;
-                table-layout: fixed;
-                width: 100%;
-            }
-        </style>
+        <!-- cssは移設しました -->
+        <link rel="stylesheet" href="{{ asset('styles/main.css') }}">
     </head>
 
     <header></header>
@@ -66,6 +21,7 @@
     <body>
         {{-- ヘッダー --}}
         <nav class="navbar navbar-expand-sm navbar-dark bg-dark mt-0 mb-0 pt-0 pb-0 sticky-top">
+
             <a class="navbar-brand navbar-brand-center" href="/">Spotlight</a>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav">
@@ -121,12 +77,30 @@
             @endif
         </nav>
 
-
         @if(session('flash_message'))
             <div class="alert text-center py-3 my-0" style="color:#fff; background-color:#414579">
                 {{ session('flash_message') }}
             </div>
         @endif
+
+        <!-- サイドメニュー https://296.co.jp/article/09392320181809143-->
+        <button type="button" class="btn_menu">開閉ボタン</button>
+        <nav>
+            <ul>
+                <li><a href="/">メニュー1</a></li>
+                <li><a href="/">メニュー2</a></li>
+                <li><a href="/">メニュー3</a></li>
+                <li><a href="/">メニュー4</a></li>
+                <li><a href="/">メニュー5</a></li>
+            </ul>
+        </nav>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script>
+            $(function(){
+                $('.btn_menu').click(function(){$('nav').toggleClass('open');});
+            })
+        </script>
 
 
         @yield('user')

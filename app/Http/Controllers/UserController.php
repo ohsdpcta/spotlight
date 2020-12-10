@@ -174,25 +174,18 @@ class UserController extends Controller
     public function update(Request $request, $id) {
         $user = Profile::where('user_id', $id)->first();
         $this->authorize('edit', $user);
-        // //バリデーションの設定
-        $rules = [
+        // バリデーションを設定する
+        $request->validate([
             'name'=>'required|string|max:30',
-        ];
-        $messages = [
-            'name.required' => 'ユーザー名を入力してください。',
-            'name.max' => '３０文字以内で入力してください。',
-            'name.string' => '入力方法が違います。',
-        ];
-        $validator = Validator::make($request->all(), $rules, $messages);
-        if ($validator->fails()) {
-            return redirect("user/{$id}/summary/account")
-                ->withErrors($validator)
-                ->withInput();
-        }
-        $user = $validator->validate();
+            'email'=>[
+                'required','email','max:254',
+                Rule::unique('users')->ignore(Auth::id()),
+            ],
+        ]);
         // dataに値を設定
         $data = User::find($id);
         $data->name = $request->name;
+        $data->email = $request->email;
         if($data->save()){
             session()->flash('flash_message', 'アカウント情報の編集が完了しました');
         }

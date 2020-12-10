@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 
 use App\Sample;
 
@@ -34,25 +33,6 @@ class SampleController extends Controller {
         $addsample = new Sample;
         $addsample->user_id = $id;
         $this->authorize('edit', $addsample);
-        // //バリデーションの設定
-        $rules = [
-            'name'=>'required|between:1,25',
-            'url'=>'required|between:1,190|url',
-        ];
-        $messages = [
-            'name.required' => 'サンプル名を入力してください。',
-            'name.between' => '２５文字以内で入力してください。',
-            'url.required' => 'URLを入力してください',
-            'url.between' => '１９０文字以内で入力してください。',
-            'url.url' => 'URLを正しく入力してください。',
-        ];
-        $validator = Validator::make($request->all(), $rules, $messages);
-        if ($validator->fails()) {
-            return redirect("user/{$id}/summary/sample/add")
-                ->withErrors($validator)
-                ->withInput();
-        }
-        $sample = $validator->validate();
         $addsample->name = $request->name;
         $addsample->url = $request->url;
         if($addsample->save()){
@@ -71,25 +51,6 @@ class SampleController extends Controller {
         $sample = new Sample;
         $sample->user_id = $id;
         $this->authorize('edit', $sample);
-        // //バリデーションの設定
-        $rules = [
-            'name'=>'required|between:1,25',
-            'url'=>'required|between:1,190|url',
-        ];
-        $messages = [
-            'name.required' => 'サンプル名を入力してください。',
-            'name.between' => '２５文字以内で入力してください。',
-            'url.required' => 'URLを入力してください',
-            'url.between' => '１９０文字以内で入力してください。',
-            'url.url' => 'URLを正しく入力してください。',
-        ];
-        $validator = Validator::make($request->all(), $rules, $messages);
-        if ($validator->fails()) {
-            return redirect("user/{$id}/summary/sample/{$sample_id}/edit")
-                ->withErrors($validator)
-                ->withInput();
-        }
-        $sample = $validator->validate();
         if(Auth::id() == $id){
             $addsample = Sample::find($sample_id);
             $addsample->name = $request->name;
@@ -101,28 +62,39 @@ class SampleController extends Controller {
         return redirect("user/{$id}/summary/sample");
     }
 
-    // 削除確認画面
-    public function delete(Request $request, $id) {
-        if(empty($request->checked_items)){
-            session()->flash('flash_message_error', '削除したい項目にチェックを入れてください');
-            return redirect("/user/{$id}/summary/sample");
-        }
-        $checked_id_str = implode(',', $request->checked_items);
-        $data = Sample::find($request->checked_items);
-        foreach($data as $item){
-            $this->authorize('edit', $item);
-        }
-        return view('summary.delete_sample', compact('data', 'checked_id_str'));
+    public function del(Request $request, $id,$goods_id) {
+        $data = Sample::find($goods_id);
+        $this->authorize('edit', $data);
+        return view('sample.del', compact('data'));
     }
-    // 削除処理
-    public function remove(Request $request, $id) {
-        $delete_item_id = explode(',', $request->checked_id_str);
-        $data = Sample::find($delete_item_id);
-        foreach($data as $item){
-            $this->authorize('edit', $item);
+
+    public function remove(Request $request, $id,$goods_id) {
+        // レコードを削除する。
+        Sample::find($goods_id)->delete();
+        $sample = new Sample;
+        $this->authorize('edit', $sample);
+        return redirect("/user/{$id}/summary/sample");
+    }
+        //複数選択削除
+    public function multi_del(Request $request, $id) {
+        $data = array();    //配列の初期化
+        $check_sample = $request->input('check_sample');  //チェックボックスのデータを取得
+        foreach($check_sample as $item){
+            //where('カラム名','任意')
+            $data[] = Sample::where('id',$item)->first();
         }
-        $data->each->delete();
-        session()->flash('flash_message', '削除が完了しました');
+        $sample = new Sample;
+        $this->authorize('edit', $sample);
+        return view('sample.multi_del', compact('data'));
+    }
+    public function multi_remove(Request $request,$id){
+        //レコードを複数削除する.
+        $sample_id = $request->input('sample_id');
+        foreach($sample_id as $item){
+            Sample::where('id',$item)->delete();
+        }
+        $sample = new Sample;
+        $this->authorize('edit', $sample);
         return redirect("/user/{$id}/summary/sample");
     }
 }

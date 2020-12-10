@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    {{ $markdown }}
+    {{ Illuminate\Mail\Markdown::parse(e($data->content)) }}
 </body>
 
 </html>

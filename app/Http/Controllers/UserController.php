@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Mail\HelloEmail;
 use Illuminate\Support\Facades\Validator;
 use Mail;
+use Carbon\Carbon;
 
 use Illuminate\Validation\Rule;
 
@@ -55,15 +56,19 @@ class UserController extends Controller
             'password.required' => 'パスワードを入力して下さい。',
             'password.max' => 'パスワードは128文字以下で入力して下さい。',
         ];
+
+
+        //メール送信
         $validator = Validator::make($request->all(), $rules, $messages);
         if ($validator->fails()) {
-            return redirect('/user.signup')
+            return redirect('/user/signup')
                 ->withErrors($validator)
                 ->withInput();
         }
         $data = $validator->validate();
         Mail::to('admin@hoge.co.jp')->send(new HelloEmail($data));
         session()->flash('success', '送信いたしました！');
+        
 
         // $userにデータを設定する
         $user = new User;
@@ -71,7 +76,12 @@ class UserController extends Controller
         $user->social_id = $request->social_id;
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
+        $user->email_verify_token = base64_encode($request->email);
         $user->save();
+
+        
+        
+        
         // ログイン
         Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')]);
         $login_user_id = Auth::id();
@@ -206,11 +216,38 @@ class UserController extends Controller
     }
     // メール
     public function authentication(Request $request){
-        $user = Auth::user();
-        return view('emails.authentication',compact('user'));
+        $users = Auth::user();
+        
+        
+        
+        
+        return view('emails.authentication');
     }
-    public function confirmation(Request $request,$id){
-
-        return redirect("user/{$id}/summary/profile");
+    public function confirmation(Request $request){
+        $users = Auth::user();
+         // 使用可能なトークンか
+         if ( !User::where('email_verify_token',$users->email_verify_token)->exists() )
+         {
+             return view('auth.main.register')->with('message', '無効なトークンです。');
+         } else {
+             $user = User::where('email_verify_token', $users->email_verify_token)->first();
+            
+                 
+                 
+             // ユーザーステータス更新
+             logger("status". $user->status );
+             $user->status = config('const.USER_STATUS.MAIL_AUTHED');
+             $user->email_verified_at = Carbon::now();
+             logger("status". $user->status );
+             if($user->save()) {
+                
+                 return view('auth.main.registered');
+             } else{
+                logger("status". $user->status );
+                 return view('auth.main.register')->with('message', 'メール認証に失敗しました。再度、メールからリンクをクリックしてください。');
+             }
+         }
+        return view('auth.main.registered');
     }
+    
 }

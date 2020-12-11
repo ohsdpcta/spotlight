@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Paypay;
 use App\Library\UserClass;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class PaypayController extends Controller
 {
@@ -15,9 +16,22 @@ class PaypayController extends Controller
     }
 
     public function update(Request $request, $id){
-        $request->validate([
-            'url' => 'required|string'
-        ]);
+        // //バリデーションの設定
+        $rules = [
+            'url'=>'required|between:1,190|url',
+        ];
+        $messages = [
+            'url.required' => 'URLを入力してください',
+            'url.between' => '１９０文字以内で入力してください。',
+            'url.url' => 'URLを正しく入力してください。',
+        ];
+        $validator = Validator::make($request->all(), $rules, $messages);
+            if ($validator->fails()) {
+                return redirect("user/{$id}/summary/paypay")
+                    ->withErrors($validator)
+                    ->withInput();
+        }
+        $paypay = $validator->validate();
         if(Auth::id() == $id){
             $paypay = Paypay::where('user_id', Auth::id())->first();
             if($paypay){

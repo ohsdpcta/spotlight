@@ -29,8 +29,8 @@
                 </div>
             @endif
             <label>あなたを知らせるためのプロフィールを記入することができます。</label>
-            <textarea id="content" name="content" cols="80" rows="5" class="form-control">{{ $data->content }}</textarea><br>
-            <input type="submit" value="修正" class="float-right"><br>
+            <input type="hidden" id="content" name="content" cols="80" rows="5" class="form-control"><br>
+            <input type="submit" id="edit" class="btn btn-success float-right" value="修正"><br>
         </form>
     </div>
     <div id="editor" style="background-color:#fff;"></div>
@@ -43,7 +43,15 @@
             initialEditType: 'markdown',
             previewStyle: 'vertical'
         });
+        const old_content = @json($data->content);
+        editor.insertText(old_content);
         editor.getHtml();
+
+        document.getElementById('edit').onclick = function() {
+            let content = editor.getMarkdown();
+            document.getElementById('content').value = content;
+            document.getElementById('content').style.display ="none";
+        };
     </script>
 
 @endsection

@@ -62,8 +62,8 @@
         const [default_lat, default_lng, default_zoom] = setDefaultProperty();
         map = new GMaps({
             div: '#map', //地図を表示する要素
-            lat: default_lat, //緯度
-            lng: default_lng, //軽度
+            lat: default_lat, // 緯度
+            lng: default_lng, // 経度
             zoom: default_zoom,   //倍率（1～21）
         });
         map.addMarker({

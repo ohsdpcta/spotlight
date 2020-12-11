@@ -33,31 +33,20 @@ Route::prefix('/user')->group(function(){
     Route::get('emails/authentication','UserController@authentication')->middleware('verified');
 
     Route::prefix('/{id}')->group(function(){
-        // プロフィール
-        Route::get('profile', 'ProfileController@index');
-
         // フォロー
         Route::get('follow', 'FollowerController@follow')->middleware('verified');
         Route::get('unfollow', 'FollowerController@unfollow')->middleware('verified');
         Route::get('followlist', 'FollowerController@followlist')->middleware('verified');
         Route::get('followerlist', 'FollowerController@followerlist')->middleware('verified');
 
+        // プロフィール
+        Route::get('profile', 'ProfileController@index');
         // ロケーション
         Route::get('locate', 'LocateController@index');
-        Route::get('locate/add_locate', 'LocateController@add_locate_form')->middleware('verified');
-        Route::post('locate/add_locate', 'LocateController@add_locate')->middleware('verified');
-        Route::get('locate/del_locate', 'LocateController@del_locate_form')->middleware('verified');
-        Route::post('locate/del_locate', 'LocateController@remove_locate')->middleware('verified');
-
         //グッズ
         Route::get('goods', 'GoodsController@index');
-        Route::get('goods/multi_del', 'GoodsController@multi_del')->middleware('verified');
-        Route::post('goods/multi_del', 'GoodsController@multi_remove')->middleware('verified');
         // サンプル
         Route::get('sample', 'SampleController@index');
-        Route::get('sample/multi_del', 'SampleController@multi_del')->middleware('verified');
-        Route::post('sample/multi_del', 'SampleController@multi_remove')->middleware('verified');
-
         // 投げ銭
         Route::get('tip', 'UserController@tip');
 

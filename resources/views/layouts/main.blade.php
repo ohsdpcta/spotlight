@@ -14,6 +14,7 @@
         <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
         <!-- cssは移設しました -->
         <link rel="stylesheet" href="{{ asset('styles/main.css') }}">
+        <link rel="stylesheet" href="{{ asset('styles/sidebar.css') }}">
     </head>
 
     <header></header>
@@ -83,9 +84,9 @@
             </div>
         @endif
 
-        <!-- サイドメニュー https://296.co.jp/article/09392320181809143-->
         <button type="button" class="btn_menu">開閉ボタン</button>
-        <nav>
+        <!-- サイドメニュー https://296.co.jp/article/09392320181809143-->
+        <nav class="sidebar">
             <ul>
                 <li><a href="/">メニュー1</a></li>
                 <li><a href="/">メニュー2</a></li>
@@ -98,7 +99,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script>
             $(function(){
-                $('.btn_menu').click(function(){$('nav').toggleClass('open');});
+                $('.btn_menu').click(function(){$('nav.sidebar').toggleClass('open');});
             })
         </script>
 

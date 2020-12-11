@@ -10,7 +10,11 @@
 </head>
 
 <body>
+<<<<<<< HEAD
     {{ Illuminate\Mail\Markdown::parse(e($data->content)) }}
+=======
+    {{ $data->content }}
+>>>>>>> develop
 </body>
 
 </html>

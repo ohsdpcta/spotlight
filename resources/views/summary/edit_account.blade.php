@@ -16,6 +16,15 @@
     <br>
     <form action="/user/{{Auth::id()}}/summary/account" method="post">
         @csrf
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="form-group">
             <label>UserName</label><input type="text" name="name" value="{{ $data->name }}" class="form-control">
             <br>

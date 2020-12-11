@@ -9,7 +9,17 @@ nav.sidebar {
 	transform: translate(300px);
 	z-index: 1000;
 }
+button.btn_menu {
+	position: fixed;
+	top: 50px;
+	right: 300px;
+	transition: all 0.2s;
+	transform: translate(300px);
+}
 nav.open {
+	transform: translate(0);
+}
+button.open {
 	transform: translate(0);
 }
 nav.sidebar ul {

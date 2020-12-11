@@ -12,6 +12,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/iScroll/5.2.0/iscroll.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.2/js/drawer.min.js"></script>
         <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+        
         <!-- cssは移設しました -->
         <link rel="stylesheet" href="{{ asset('styles/main.css') }}">
         <link rel="stylesheet" href="{{ asset('styles/sidebar.css') }}">
@@ -84,7 +85,7 @@
             </div>
         @endif
 
-        <button type="button" class="btn_menu">開閉ボタン</button>
+        <button type="button" class="btn_menu"><i class="fas fa-bars"></i></button>
         <!-- サイドメニュー https://296.co.jp/article/09392320181809143-->
         <nav class="sidebar">
             <ul>
@@ -100,11 +101,13 @@
         <script>
             $(function(){
                 $('.btn_menu').click(function(){$('nav.sidebar').toggleClass('open');});
+                $('.btn_menu').click(function(){$('button.btn_menu').toggleClass('open');});
             })
         </script>
 
+        @yield('user')
 
-
+{{-- ---------------------------------------------------------------------------------- --}}
 
         {{-- フッター --}}
         <footer class="footer sticky-bottom bg-dark">

@@ -25,8 +25,16 @@
             <tr><th>パスワード</th><td><input type="password" name="password" ></td></tr>
             <tr><th>ログイン状態を保持</th><td><input type="checkbox" name="remember" value="true"></td></tr>
             {{-- 各種ボタン --}}
-            <tr><th></th><td><input type="submit" value="ログイン"></td></tr>
-            <tr><th><input type="button" onclick="location.href='/user/signin/twitter'" value="Twitterログイン"></th><td></td></tr>
+            <tr><th></th><td><input type="submit" class="btn btn-primary" value="ログイン"></td></tr>
+            <tr><th>ソーシャルログイン</th></tr>
+            <tr><th>
+                <a onclick="location.href='/user/signin/twitter'" class="btn btn-light">
+                    <i class="fab fa-twitter text-primary"></i> Twitter
+                </a>
+                <a onclick="location.href='/user/signin/google'" class="btn btn-light">
+                    <img src="https://www.flaticon.com/svg/static/icons/svg/281/281764.svg" width="15" height="15"> Google
+                </a>
+            </th></tr>
         </table>
     </form>
 

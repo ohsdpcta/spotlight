@@ -162,6 +162,43 @@ class UserController extends Controller
         return redirect("/user/{$login_user_id}/profile");
     }
 
+    // Googleログイン
+    public function redirectToProviderGoogle(){
+        return Socialite::driver('google')->redirect();
+    }
+    // Googleログインコールバック
+    public function handleProviderCallbackGoogle(){
+        try{
+            $user = Socialite::driver('google')->user();
+            $socialUser = User::firstOrCreate([
+                'email' => $user->email,
+            ], [
+                'social_id' => $user->id,
+                'token' => $user->token,
+                'name' => $user->name,
+                'email' => $user->email,
+                'avatar' => $user->avatar_original,
+            ]);
+            if(empty($socialUser->email_verified_at)){
+                $socialUser->email_verified_at = now();
+                $socialUser->save();
+            }
+            Auth::login($socialUser, true);
+            $login_user_id = Auth::id();
+            $old_profile = Profile::where('user_id', $login_user_id)->first();
+            if(!$old_profile){
+                // Profileを作成
+                $profile = new Profile;
+                $profile->user_id = $login_user_id;
+                $profile->content = 'よろしくお願いします！';
+                $profile->save();
+            }
+        }catch (Exception $e){
+            return redirect('/user/signin');
+        }
+        return redirect("/user/{$login_user_id}/profile");
+    }
+
     // アカウント情報編集フォーム
     public function edit(Request $request, $id) {
         $data = User::where('id', $id)->first();

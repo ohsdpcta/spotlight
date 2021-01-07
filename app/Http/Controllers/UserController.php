@@ -8,6 +8,7 @@ use App\User;
 use App\Profile;
 use App\Library\UserClass;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 //メール
 use App\Mail\HelloEmail;
 use Illuminate\Support\Facades\Validator;
@@ -151,6 +152,10 @@ class UserController extends Controller
                 'email' => $user->email,
                 'avatar' => $user->avatar_original,
             ]);
+            if(empty($socialUser->email_verified_at)){
+                $socialUser->email_verified_at = now();
+                $socialUser->save();
+            }
             Auth::login($socialUser, true);
             $login_user_id = Auth::id();
             $old_profile = Profile::where('user_id', $login_user_id)->first();
@@ -179,18 +184,25 @@ class UserController extends Controller
     public function update(Request $request, $id) {
         $user = Profile::where('user_id', $id)->first();
         $this->authorize('edit', $user);
-        // バリデーションを設定する
-        $request->validate([
+        // //バリデーションの設定
+        $rules = [
             'name'=>'required|string|max:30',
-            'email'=>[
-                'required','email','max:254',
-                Rule::unique('users')->ignore(Auth::id()),
-            ],
-        ]);
+        ];
+        $messages = [
+            'name.required' => 'ユーザー名を入力してください。',
+            'name.max' => '３０文字以内で入力してください。',
+            'name.string' => '入力方法が違います。',
+        ];
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if ($validator->fails()) {
+            return redirect("user/{$id}/summary/account")
+                ->withErrors($validator)
+                ->withInput();
+        }
+        $user = $validator->validate();
         // dataに値を設定
         $data = User::find($id);
         $data->name = $request->name;
-        $data->email = $request->email;
         if($data->save()){
             session()->flash('flash_message', 'アカウント情報の編集が完了しました');
         }

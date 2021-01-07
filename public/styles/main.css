@@ -1,4 +1,6 @@
-
+body{
+    font-family: "Arial", "メイリオ", "ヒラギノ角ゴシック";
+}
 header {
     background-color: blue;
 }
@@ -7,13 +9,13 @@ header h1 {
     text-align:center
 }
 body {
-    background-color: #2c2c2c;
+    background-color: #ffffff;
     /* margin-top: 50px; */
 }
 .top {
     padding: 0.5em 1em 0; /*上 左右 下*/
     margin: 2em 0 0;
-    color: #2c2c2f;
+    color: #ffffff;
     background: #ffffff;/*背景色*/
     align-content: center;
 }
@@ -24,7 +26,7 @@ body {
 .tab {
     padding: 0.5em 1em;
     margin: 2em 0;
-    color: #2c2c2f;
+    color: #ffffff;
     background: #ffffff;/*背景色*/
 }
 .tab p {

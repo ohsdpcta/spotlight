@@ -22,9 +22,9 @@
 
     <body>
         {{-- ヘッダー --}}
-        <nav class="navbar navbar-expand-sm navbar-dark bg-dark mt-0 mb-0 pt-0 pb-0 sticky-top">
+        <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom mt-0 mb-0 pt-0 pb-0 sticky-top">
 
-            <a class="navbar-brand navbar-brand-center" href="/">Spotlight</a>
+            <a class="navbar-brand navbar-brand-center text-dark" href="/">Spotlight</a>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav">
                     {{-- 非ログイン時の処理 --}}
@@ -87,7 +87,7 @@
 
         <button type="button" class="btn_menu"><i class="fas fa-bars"></i></button>
         <!-- サイドメニュー https://296.co.jp/article/09392320181809143-->
-        <nav class="sidebar">
+        <nav class="sidebar ">
             <ul>
                 <li><a href="/">メニュー1</a></li>
                 <li><a href="/">メニュー2</a></li>
@@ -110,7 +110,7 @@
 {{-- ---------------------------------------------------------------------------------- --}}
 
         {{-- フッター --}}
-        <footer class="footer sticky-bottom bg-dark">
+        <footer class="footer sticky-bottom bg-light">
             <div class="container">
                 <p class="text-muted">フッター</p>
             </div>

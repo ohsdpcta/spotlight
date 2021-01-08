@@ -86,14 +86,32 @@
         @endif
 
         <button type="button" class="btn_menu"><i class="fas fa-bars"></i></button>
-        <!-- サイドメニュー https://296.co.jp/article/09392320181809143-->
-        <nav class="sidebar ">
-            <ul>
-                <li><a href="/">メニュー1</a></li>
-                <li><a href="/">メニュー2</a></li>
-                <li><a href="/">メニュー3</a></li>
-                <li><a href="/">メニュー4</a></li>
-                <li><a href="/">メニュー5</a></li>
+        <!-- サイド(ドロワー)メニュー https://296.co.jp/article/09392320181809143-->
+        <nav class="border container sidebar text-dark">
+            <br>
+            <ul id="accordion_menu">
+                <li>
+                    <a data-toggle="collapse" href="#menu01" aria-controls="#menu01" aria-expanded="false">フォロー</a>
+                </li>
+                <ul id="menu01" class="collapse" data-parent="#accordion_menu">
+                    <li><a href="#">リンクサブメニュー2-1</a></li>
+                </ul>
+                <li>
+                    <a data-toggle="collapse" href="#menu02" aria-controls="#menu02" aria-expanded="false">フォロワー</a>
+                </li>
+                <ul id="menu02" class="collapse" data-parent="#accordion_menu">
+                    <li><a href="#">リンクサブメニュー2-1</a></li>
+                    <li><a href="#">リンクサブメニュー2-2</a></li>
+                    <li><a href="#">リンクサブメニュー2-3</a></li>
+                </ul>
+                <li>
+                    <a data-toggle="collapse" href="#menu03" aria-controls="#menu03" aria-expanded="false">リンクメニュー３</a>
+                </li>
+                <ul id="menu03" class="collapse" data-parent="#accordion_menu">
+                    <li><a href="#">リンクサブメニュー3-1</a></li>
+                    <li><a href="#">リンクサブメニュー3-2</a></li>
+                    <li><a href="#">リンクサブメニュー3-3</a></li>
+                </ul>
             </ul>
         </nav>
 

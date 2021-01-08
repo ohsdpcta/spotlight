@@ -1,5 +1,5 @@
 body{
-    font-family: "Arial", "メイリオ", "ヒラギノ角ゴシック";
+    font-family:  "ヒラギノ角ゴ ProN W3", HiraKakuProN-W3, 游ゴシック, "Yu Gothic", メイリオ, Meiryo, Verdana, Helvetica, Arial, sans-serif;
 }
 header {
     background-color: blue;
@@ -45,3 +45,6 @@ body {
     table-layout: fixed;
     width: 100%;
 }
+.button:hover {
+    background:rgb(225, 223, 233);
+    }

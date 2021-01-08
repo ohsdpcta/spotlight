@@ -20,15 +20,14 @@
         <div class="container">
             @foreach($result as $item)
                 {{-- 背景の四角 --}}
-                <div class="row bg-light border mt-1 pt-1 pb-1 pl-1 maru">
+                <div class="row bg-white border mt-1 pt-1 pb-1 pl-1 maru">
                     {{-- サムネ --}}
                     <div class="">
                         <img src="http://placehold.jp/50x50.png" class="rounded-circle">
                     </div>
                     {{-- リンク --}}
                     <div class="col-lg-8 col-md-11 col-sm-10 col-xs-7 align-items-center d-flex">
-                        <button type="button" class="btn border btn-block" onclick="location.href='/user/{{$item->id}}/profile'">{{ $item->name }}</button>
-                        {{-- <p><a class="text-light" href="/user/{{$item->id}}/profile">{{ $item->name }}</a></p> --}}
+                        <button type="button" class="button btn border btn-block" onclick="location.href='/user/{{$item->id}}/profile'">{{ $item->name }}</button>
                     </div>
                 </div>
             @endforeach

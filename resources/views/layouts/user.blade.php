@@ -15,7 +15,7 @@
             </div>
 
             {{-- ユーザー名 --}}
-            <div class="border col-xl-6 col-lg-6 col-md-8 col-sm-12 col-xs-12 pt-2 pr-2 pb-2 pl-2">
+            <div class="border col-xl-6 col-lg-6 col-md-8 col-sm-12 col-xs-12 pt-2 pr-2 pb-2 pl-2 text-dark">
                 <h1>{{ UserClass::getUser(request()->id)->name }}</h1>
                 {{-- タグ(仮) --}}
                 <div class="pt-4">

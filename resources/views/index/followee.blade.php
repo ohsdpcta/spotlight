@@ -15,9 +15,9 @@
 
         <body>
             <div class="container pt-2">
-                <h2 class="text-light">フォロー中</h2>
+                <h2 class="text-dark">フォロー中</h2>
                 @if(count($data)===0)
-                    <p class="text-light">フォロー中のユーザーがいません<p>
+                    <p class="text-dark">フォロー中のユーザーがいません<p>
                 @else
                     @foreach($data as $item)
                         {{-- 背景の四角 --}}

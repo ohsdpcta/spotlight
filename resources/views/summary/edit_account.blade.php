@@ -12,7 +12,7 @@
     </style>
 
 
-    <h3 class="text-light">ユーザー情報編集</h3>
+    <h3 class="text-dark">ユーザー情報編集</h3>
     <br>
     <form action="/user/{{Auth::id()}}/summary/account" method="post">
         @csrf

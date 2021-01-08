@@ -15,7 +15,7 @@
         </style>
     </head>
 
-    <h3 class="text-light">プロフィール編集</h3>
+    <h3 class="text-dark">プロフィール編集</h3>
     <div class="pt-3">
         <form action="/user/{{Auth::id()}}/summary/profile" method="post">
             @csrf

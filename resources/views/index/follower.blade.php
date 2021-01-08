@@ -15,13 +15,13 @@
 
         <body>
             <div class="container pt-2">
-                <h2 class="text-light">フォロワー</h2>
+                <h2 class="text-dark">フォロワー</h2>
                 @if(count($data)===0)
-                    <p class="text-light">フォロワーがいません<p>
+                    <p class="text-dark">フォロワーがいません<p>
                 @else
                     @foreach($data as $item)
                         {{-- 背景の四角 --}}
-                        <div class="row bg-dark mt-1 pt-1 pb-1 pl-1 maru">
+                        <div class="row bg-white mt-1 pt-1 pb-1 pl-1 maru">
                             {{-- サムネ --}}
                             <div class="">
                                 <img src="http://placehold.jp/50x50.png" class="rounded-circle">

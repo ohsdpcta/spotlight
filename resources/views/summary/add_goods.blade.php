@@ -11,7 +11,7 @@
     label {color:#ffffff;}
 </style>
 
-<h3 class="text-light">グッズ情報追加</h3>
+<h3 class="text-dark">グッズ情報追加</h3>
 <hr>
 <form action="add" method="post">
     @csrf

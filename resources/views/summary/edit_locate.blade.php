@@ -40,7 +40,7 @@
                     {{-- 各種フォーム入力欄 --}}
                     {{-- バリデーションエラーがあった場合は、old関数で入力データを復元する --}}
                     <label>活動場所(座標)</label><br>
-                    <input type="text" id="latlng" class="form-control" name="coordinate" value="{{old('coordinate')}}" maxlength="30" placeholder="登録したい住所の座標を入力してください。"><br>
+                    <input type="text" id="latlng" class="form-control" name="coordinate" value="{{old('coordinate')}}" placeholder="登録したい住所の座標を入力してください。"><br>
                     {{-- 各種ボタン --}}
                     <input type="submit" value="登録" class="float-right"><br>
                 </table>

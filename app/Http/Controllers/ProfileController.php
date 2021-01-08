@@ -13,7 +13,6 @@ use Illuminate\Validation\Rule;
 class ProfileController extends Controller {
     public function index(Request $request, $id) {
         $data = Profile::where('user_id', $id)->first();
-        logger(now());
         return view('index.profile', compact('data'));
     }
 

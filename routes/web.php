@@ -26,9 +26,12 @@ Route::prefix('/user')->group(function(){
     Route::post('signin', 'UserController@signin')->middleware('guest');
     // サインアウト
     Route::get('signout', 'UserController@signout')->middleware('verified');
-    // ツイッターログイン
+    // Twitterログイン
     Route::get('signin/twitter', 'UserController@redirectToProvider')->middleware('guest');
     Route::get('signin/twitter/callback', 'UserController@handleProviderCallback')->middleware('guest');
+    // Googleログイン
+    Route::get('signin/google', 'UserController@redirectToProviderGoogle')->middleware('guest');
+    Route::get('signin/google/callback', 'UserController@handleProviderCallbackGoogle')->middleware('guest');
     //メール
     Route::get('emails/authentication','UserController@authentication')->middleware('verified');
 

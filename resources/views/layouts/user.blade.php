@@ -11,7 +11,11 @@
 
             <!-- トップ画像 -->
             <div class="border col-xl-3 col-lg-3 col-md-4 col-sm-12 pt-2 pb-2">
-                <img src="http://placehold.jp/200x200.png" class="rounded-circle">
+                @if(UserClass::getUser(request()->id)->avatar)
+                    <img src="{{ UserClass::getUser(request()->id)->avatar }}" width="200" height="200" class="rounded-circle">
+                @else
+                    <img src="http://placehold.jp/200x200.png" class="rounded-circle">
+                @endif
             </div>
 
             {{-- ユーザー名 --}}

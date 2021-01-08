@@ -24,14 +24,19 @@ Route::prefix('/user')->group(function(){
      // サインイン
     Route::get('signin', 'UserController@signin_form')->middleware('guest')->name('user.signin');
     Route::post('signin', 'UserController@signin')->middleware('guest');
-     // サインアウト
-    Route::get('signout', 'UserController@signout')->middleware('Mailvarification');
-     // ツイッターログイン
+
+    // サインアウト
+    Route::get('signout', 'UserController@signout')->middleware('verified');
+    // Twitterログイン
     Route::get('signin/twitter', 'UserController@redirectToProvider')->middleware('guest');
     Route::get('signin/twitter/callback', 'UserController@handleProviderCallback')->middleware('guest');
-     //メール
+    // Googleログイン
+    Route::get('signin/google', 'UserController@redirectToProviderGoogle')->middleware('guest');
+    Route::get('signin/google/callback', 'UserController@handleProviderCallbackGoogle')->middleware('guest');
+    //メール
     Route::get('emails/authentication','UserController@authentication')->middleware('auth');
     Route::post('emails/confirmation','UserController@confirmation')->middleware('guest');
+
 
 
     Route::prefix('/{id}')->group(function(){

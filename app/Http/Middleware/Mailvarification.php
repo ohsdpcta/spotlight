@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Auth;
 
 class Mailvarification
 {
@@ -17,7 +18,7 @@ class Mailvarification
     {
         $user = Auth::user();
         if($user->status == config('const.USER_STATUS.MAIL_AUTHED')){
-            return $next($request);
+            return ('auth.main.registered');
         }
         return redirect('/');
     }

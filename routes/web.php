@@ -30,8 +30,8 @@ Route::prefix('/user')->group(function(){
     Route::get('signin/twitter', 'UserController@redirectToProvider')->middleware('guest');
     Route::get('signin/twitter/callback', 'UserController@handleProviderCallback')->middleware('guest');
      //メール
-    Route::get('emails/authentication','UserController@authentication')->middleware('Mailvarification');
-    Route::post('emails/confirmation','UserController@confirmation')->middleware('Mailvarification');
+    Route::get('emails/authentication','UserController@authentication')->middleware('auth');
+    Route::post('emails/confirmation','UserController@confirmation')->middleware('guest');
 
 
     Route::prefix('/{id}')->group(function(){

@@ -28,7 +28,7 @@
                             </div>
                             {{-- リンク --}}
                             <div class="col-lg-11 col-md-11 col-sm-10 col-xs-7 align-items-center d-flex">
-                                <button type="button" class="btn btn-secondary btn-block" onclick="location.href='/user/{{$item->id}}/profile'">{{ $item->name }}</button>
+                                <button type="button" class="btn btn-block border" onclick="location.href='/user/{{$item->id}}/profile'">{{ $item->name }}</button>
                                 {{-- <p><a class="text-light" href="/user/{{$item->id}}/profile">{{ $item->name }}</a></p> --}}
                             </div>
                         </div>

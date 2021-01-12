@@ -90,28 +90,58 @@
         <nav class="border container sidebar text-dark">
             <br>
             <ul id="accordion_menu">
+                {{-- フォロー一覧 --}}
                 <li>
                     <a data-toggle="collapse" href="#menu01" aria-controls="#menu01" aria-expanded="false">フォロー</a>
                 </li>
                 <ul id="menu01" class="collapse" data-parent="#accordion_menu">
-                    <li><a href="#">リンクサブメニュー2-1</a></li>
+                    @if(count($data)===0)
+                        <li class="text-dark">フォロー中のユーザーがいません<li>
+                    @else
+                    {{-- 項 --}}
+                        @foreach($data as $item)
+                            <li>
+                                <a href="location.href='/user/{{$item->id}}/profile'">
+                                    @if(UserClass::getUser(request()->id)->avatar)
+                                        <img src="{{ UserClass::getUser(request()->id)->avatar }}" width="200" height="200" class="rounded-circle">
+                                    @else
+                                        <img src="http://placehold.jp/200x200.png" class="rounded-circle">
+                                    @endif
+                                    {{ UserClass::getUser(request()->id)->name }}
+                                </a>
+                            </li>
+                        @endforeach
+                    @endif
                 </ul>
+
+                {{-- フォロワー一覧 --}}
                 <li>
                     <a data-toggle="collapse" href="#menu02" aria-controls="#menu02" aria-expanded="false">フォロワー</a>
                 </li>
                 <ul id="menu02" class="collapse" data-parent="#accordion_menu">
-                    <li><a href="#">リンクサブメニュー2-1</a></li>
-                    <li><a href="#">リンクサブメニュー2-2</a></li>
-                    <li><a href="#">リンクサブメニュー2-3</a></li>
+                    @if(count($data)===0)
+                        <li class="text-dark">フォロワーがいません<li>
+                    @else
+                    {{-- 項 --}}
+                        @foreach($data as $item)
+                            <li>
+                                <a href="location.href='/user/{{$item->id}}/profile'">
+                                    <img src="http://placehold.jp/50x50.png" class="rounded-circle pl-1 pr-1">
+                                    {{ $item->name }}
+                                </a>
+                            </li>
+                        @endforeach
+                    @endif
                 </ul>
-                <li>
+
+                {{-- <li>
                     <a data-toggle="collapse" href="#menu03" aria-controls="#menu03" aria-expanded="false">リンクメニュー３</a>
                 </li>
                 <ul id="menu03" class="collapse" data-parent="#accordion_menu">
                     <li><a href="#">リンクサブメニュー3-1</a></li>
                     <li><a href="#">リンクサブメニュー3-2</a></li>
                     <li><a href="#">リンクサブメニュー3-3</a></li>
-                </ul>
+                </ul> --}}
             </ul>
         </nav>
 

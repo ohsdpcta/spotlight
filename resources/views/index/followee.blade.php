@@ -21,14 +21,14 @@
                 @else
                     @foreach($data as $item)
                         {{-- 背景の四角 --}}
-                        <div class="row bg-dark mt-1 pt-1 pb-1 pl-1 maru">
+                        <div class="row border mt-1 pt-1 pb-1 pl-1 maru">
                             {{-- サムネ --}}
                             <div class="">
                                 <img src="http://placehold.jp/50x50.png" class="rounded-circle">
                             </div>
                             {{-- リンク --}}
                             <div class="col-lg-11 col-md-11 col-sm-10 col-xs-7 align-items-center d-flex">
-                                <button type="button" class="btn btn-secondary btn-block" onclick="location.href='/user/{{$item->id}}/profile'">{{ $item->name }}</button>
+                                <button type="button" class="btn btn-block border" onclick="location.href='/user/{{$item->id}}/profile'">{{ $item->name }}</button>
                                 {{-- <p><a class="text-light" href="/user/{{$item->id}}/profile">{{ $item->name }}</a></p> --}}
                             </div>
                         </div>

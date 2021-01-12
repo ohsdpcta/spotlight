@@ -95,53 +95,25 @@
                     <a data-toggle="collapse" href="#menu01" aria-controls="#menu01" aria-expanded="false">フォロー</a>
                 </li>
                 <ul id="menu01" class="collapse" data-parent="#accordion_menu">
+                    <?php $data = UserClass::getFollowList(Auth::user()->id) ?>
                     @if(count($data)===0)
                         <li class="text-dark">フォロー中のユーザーがいません<li>
                     @else
                     {{-- 項 --}}
                         @foreach($data as $item)
                             <li>
-                                <a href="location.href='/user/{{$item->id}}/profile'">
-                                    @if(UserClass::getUser(request()->id)->avatar)
+                                <a href="/user/{{$item->target_id}}/profile">
+                                    @if(UserClass::getUser($item->target_id)->avatar)
                                         <img src="{{ UserClass::getUser(request()->id)->avatar }}" width="200" height="200" class="rounded-circle">
                                     @else
-                                        <img src="http://placehold.jp/200x200.png" class="rounded-circle">
+                                        <img src="http://placehold.jp/30x30.png" class="rounded-circle">
                                     @endif
-                                    {{ UserClass::getUser(request()->id)->name }}
+                                    {{UserClass::getUser($item->target_id)->name}}
                                 </a>
                             </li>
                         @endforeach
                     @endif
                 </ul>
-
-                {{-- フォロワー一覧 --}}
-                <li>
-                    <a data-toggle="collapse" href="#menu02" aria-controls="#menu02" aria-expanded="false">フォロワー</a>
-                </li>
-                <ul id="menu02" class="collapse" data-parent="#accordion_menu">
-                    @if(count($data)===0)
-                        <li class="text-dark">フォロワーがいません<li>
-                    @else
-                    {{-- 項 --}}
-                        @foreach($data as $item)
-                            <li>
-                                <a href="location.href='/user/{{$item->id}}/profile'">
-                                    <img src="http://placehold.jp/50x50.png" class="rounded-circle pl-1 pr-1">
-                                    {{ $item->name }}
-                                </a>
-                            </li>
-                        @endforeach
-                    @endif
-                </ul>
-
-                {{-- <li>
-                    <a data-toggle="collapse" href="#menu03" aria-controls="#menu03" aria-expanded="false">リンクメニュー３</a>
-                </li>
-                <ul id="menu03" class="collapse" data-parent="#accordion_menu">
-                    <li><a href="#">リンクサブメニュー3-1</a></li>
-                    <li><a href="#">リンクサブメニュー3-2</a></li>
-                    <li><a href="#">リンクサブメニュー3-3</a></li>
-                </ul> --}}
             </ul>
         </nav>
 
@@ -160,7 +132,29 @@
         {{-- フッター --}}
         <footer class="footer sticky-bottom bg-light">
             <div class="container">
-                <p class="text-muted">フッター</p>
+                <div class="row pt-2 pb-2 pr-2 pl-2">
+                    <div class="col-4 text-muted">
+                        <h5>about us...</h5>
+                        <p>D'où Venons Nous Que Sommes Nous Où Allons Nous</p>
+                    </div>
+                    <div class="col-4 text-muted">
+                        <h5>navigation</h5>
+                        <ul>
+                            <li>top</li>
+                            <li>search</li>
+                            <li>signup</li>
+                            <li>signin</li>
+                            <li>mypage</li>
+                        </ul>                </div>
+                    <div class="col-4 text-muted">
+                        <h5 class="text-muted">contact info</h5>
+                        <ul>
+                            <li>☎</li>
+                            <li>〒</li>
+                            <li>✉</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </footer>
 

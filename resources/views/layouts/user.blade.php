@@ -10,7 +10,7 @@
         <div class="row">
 
             <!-- トップ画像 -->
-            <div class="border col-xl-3 col-lg-3 col-md-4 col-sm-12 pt-2 pb-2">
+            <div class="border-bottom col-xl-3 col-lg-3 col-md-4 col-sm-12 pt-2 pb-2">
                 @if(UserClass::getUser(request()->id)->avatar)
                     <img src="{{ UserClass::getUser(request()->id)->avatar }}" width="200" height="200" class="rounded-circle">
                 @else
@@ -19,7 +19,7 @@
             </div>
 
             {{-- ユーザー名 --}}
-            <div class="border col-xl-6 col-lg-6 col-md-8 col-sm-12 col-xs-12 pt-2 pr-2 pb-2 pl-2 text-dark">
+            <div class="border-bottom col-xl-6 col-lg-6 col-md-8 col-sm-12 col-xs-12 pt-2 pr-2 pb-2 pl-2 text-dark">
                 <h1>{{ UserClass::getUser(request()->id)->name }}</h1>
                 <p>{{'@'}}{{ UserClass::getUser(request()->id)->social_id }}</p>
                 {{-- タグ(仮) --}}
@@ -29,7 +29,7 @@
             </div>
 
             {{-- フォローボタン, 編集ページリンク等…… --}}
-            <div class="border col-xl-3 col-lg-3 col-md-12 col-sm-12">
+            <div class="border-bottom col-xl-3 col-lg-3 col-md-12 col-sm-12">
                 <!-- フォローボタン -->
                 @if(Auth::user() and Auth::user()->id != request()->id)
                     <div class="col-3">
@@ -65,8 +65,8 @@
 
         <!-- フォロー、フォロワー -->
         <div class="row">
-            <a class="border col-xl-2 col-lg-2 col-md-2 col-sm-3 col-xs-2" href="/user/{{ request()->id }}/followerlist">{{ UserClass::getFollower(request()->id)['follower'] }} Follower </a>
-            <a class="border col-xl-2 col-lg-2 col-md-2 col-sm-3 col-xs-2" href="/user/{{ request()->id }}/followlist">{{ UserClass::getFollower(request()->id)['follow_count'] }} Follow </a>
+            <a class="border-bottom col-xl-2 col-lg-2 col-md-2 col-sm-3 col-xs-2" href="/user/{{ request()->id }}/followerlist">{{ UserClass::getFollower(request()->id)['follower'] }} Follower </a>
+            <a class="border-bottom col-xl-2 col-lg-2 col-md-2 col-sm-3 col-xs-2" href="/user/{{ request()->id }}/followlist">{{ UserClass::getFollower(request()->id)['follow_count'] }} Follow </a>
         </div>
 
     </div>

@@ -11,7 +11,7 @@
 
     {{-- ページトップ部分 --}}
     <div class=" pt-3 pb-3 mb-1 h-40">
-        <div class="border container mb-1">
+        <div class="container mb-1">
 
             {{-- spotlightロゴ --}}
             <h3 class="text-center text-dark">SpotLight</h3>

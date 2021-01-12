@@ -20,7 +20,7 @@
         <div class="container">
             @foreach($result as $item)
                 {{-- 背景の四角 --}}
-                <div class="row bg-white border mt-1 pt-1 pb-1 pl-1 maru">
+                <div class="border-bottom row bg-white mt-1 pt-1 pb-1 pl-1 maru">
                     {{-- サムネ --}}
                     <div class="">
                         <img src="http://placehold.jp/50x50.png" class="rounded-circle">

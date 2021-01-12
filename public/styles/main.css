@@ -34,10 +34,9 @@ body {
     padding: 0;
 }
 .footer {
-    bottom: 0;
+    /* bottom: 0; */
     width: 100%;
     /* Set the fixed height of the footer here */
-    height: 100px;
     /* background-color: #3d3d3d; */
 }
 .nav-justified {

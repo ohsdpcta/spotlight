@@ -40,7 +40,7 @@
     @endif
     <form method="get" action="/user/{{Auth::id()}}/summary/goods/delete">
         @csrf
-        <input type="submit" value="削除">
+        <input class="btn btn-danger" type="submit" value="削除">
 
         @foreach($data as $item)
 
@@ -58,7 +58,7 @@
                     <button class="col-md-2 btn btn-secondary btn-block" type="button" onclick="location.href='/user/{{$item->user_id}}/summary/goods/{{$item->id}}/edit'">編集</button>
 
                     {{-- 選択削除チェックボックス --}}
-                    <input type="checkbox" class="col-lg-1 col-md-1 col-sm-1 col-xs-1 d-flex align-items-center" name="checked_items[]" value="{{$item->id}}">
+                    <input type="checkbox" class="col-lg-1 col-md-1 col-sm-1 col-xs-1 d-flex align-items-center form-control mt-1" name="checked_items[]" value="{{$item->id}}">
 
                 </div>
             {{-- </div> --}}

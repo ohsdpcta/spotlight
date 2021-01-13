@@ -29,7 +29,7 @@
                 </div>
             @endif
             <label>あなたを知らせるためのプロフィールを記入することができます。</label>
-            <input type="hidden" id="content" name="content" cols="80" rows="5" class="form-control"><br>
+            <input type="hidden" id="content" name="content" cols="80" rows="5" class="form-control">
             <input type="submit" id="edit" class="btn btn-success float-right" value="修正"><br>
         </form>
     </div>

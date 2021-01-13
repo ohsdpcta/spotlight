@@ -7,3 +7,5 @@
         <a href="{{url('/user/emails/authentication')}}">アカウントの本登録はこちら</a>
 
 
+
+

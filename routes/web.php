@@ -11,7 +11,7 @@
 |
 */
 
-
+Auth::routes(['verify' => true]);
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'UserController@index');
 
@@ -24,7 +24,6 @@ Route::prefix('/user')->group(function(){
      // サインイン
     Route::get('signin', 'UserController@signin_form')->middleware('guest')->name('user.signin');
     Route::post('signin', 'UserController@signin')->middleware('guest');
-
     // サインアウト
     Route::get('signout', 'UserController@signout')->middleware('verified');
     // Twitterログイン
@@ -35,7 +34,8 @@ Route::prefix('/user')->group(function(){
     Route::get('signin/google/callback', 'UserController@handleProviderCallbackGoogle')->middleware('guest');
     //メール
     Route::get('emails/authentication','UserController@authentication')->middleware('auth');
-    Route::post('emails/confirmation','UserController@confirmation')->middleware('guest');
+    Route::post('emails/confirmation','UserController@confirmation')->middleware('auth');
+
 
 
 

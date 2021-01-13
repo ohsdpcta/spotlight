@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Doctrine\DBAL\Schema\View;
 use Illuminate\Support\Facades\Auth;
 
 class Mailvarification
@@ -17,8 +18,9 @@ class Mailvarification
     public function handle($request, Closure $next)
     {
         $user = Auth::user();
-        if($user->status == config('const.USER_STATUS.MAIL_AUTHED')){
-            return ('auth.main.registered');
+        logger($user->status);
+        if($user->status == '2'){
+            return view('auth.main.registered');
         }
         return redirect('/');
     }

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 //メール
 use App\Mail\HelloEmail;
+use GuzzleHttp\Psr7\Request as Psr7Request;
 use Illuminate\Support\Facades\Validator;
 use Mail;
 
@@ -266,34 +267,28 @@ class UserController extends Controller
         return view('social.paypay', compact('url'));
     }
     // メール
-    public function authentication(Request $request){
+    public function authentication(Request $request){ //いらない説
         $users = Auth::user();
 
         return view('emails.authentication',compact('users'));
     }
     public function confirmation(Request $request){
-
-
+        $users = Auth::user();
          // 使用可能なトークンか
         if ( !User::where('email_verify_token',$users->email_verify_token)->exists() )
         {
+            logger('aaa');
             return view('auth.main.register')->with('message', '無効なトークンです。');
         } else {
             $user_data = User::where('email_verify_token', $users->email_verify_token)->first();
-
              // ユーザーステータス更新
 
-
             //$user_data->email_verified_at = Carbon::now();
-            $user_data->status = config('const.USER_STATUS.MAIL_AUTHED');
-
-        }
+            $user_data->status = '2';
             $user_data->save();
-            logger(config('const.USER_STATUS.MAIL_AUTHED'));
+            logger('aasssa');
             return view('auth.main.registered');
-
-
-        //return view('auth.main.registered');
+        }
     }
 
 }

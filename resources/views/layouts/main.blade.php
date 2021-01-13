@@ -89,32 +89,42 @@
         <!-- サイド(ドロワー)メニュー https://296.co.jp/article/09392320181809143-->
         <nav class="border container sidebar text-dark">
             <br>
-            <ul id="accordion_menu">
-                {{-- フォロー一覧 --}}
-                <li>
-                    <a data-toggle="collapse" href="#menu01" aria-controls="#menu01" aria-expanded="false">フォロー</a>
-                </li>
-                <ul id="menu01" class="collapse" data-parent="#accordion_menu">
-                    <?php $data = UserClass::getFollowList(Auth::user()->id) ?>
-                    @if(count($data)===0)
-                        <li class="text-dark">フォロー中のユーザーがいません<li>
-                    @else
-                    {{-- 項 --}}
-                        @foreach($data as $item)
-                            <li>
-                                <a href="/user/{{$item->target_id}}/profile">
-                                    @if(UserClass::getUser($item->target_id)->avatar)
-                                        <img src="{{ UserClass::getUser(request()->id)->avatar }}" width="200" height="200" class="rounded-circle">
-                                    @else
-                                        <img src="http://placehold.jp/30x30.png" class="rounded-circle">
-                                    @endif
-                                    {{UserClass::getUser($item->target_id)->name}}
-                                </a>
-                            </li>
-                        @endforeach
-                    @endif
-                </ul>
+            {{-- 非ログイン時 --}}
+            @if(!Auth::user())
+            <ul>
+                <li class="mt-2"><a href="/user/signup">signup</a></li>
+                <li class="mt-2"><a href="/user/signin">signin</a></li>
             </ul>
+            {{-- ログイン時 --}}
+            @else
+                <ul id="accordion_menu">
+                    {{-- フォロー一覧 --}}
+                    <li>
+                        <a data-toggle="collapse" href="#menu01" aria-controls="#menu01" aria-expanded="false">フォロー</a>
+                    </li>
+                    <ul id="menu01" class="collapse" data-parent="#accordion_menu">
+                        <?php $data = UserClass::getFollowList(Auth::user()->id) ?>
+                        @if(count($data)===0)
+                            <li class="text-dark">フォロー中のユーザーがいません<li>
+                        @else
+                        {{-- 項 --}}
+                            @foreach($data as $item)
+                                <li>
+                                    <a href="/user/{{$item->target_id}}/profile">
+                                        @if(UserClass::getUser($item->target_id)->avatar)
+                                            <img src="{{ UserClass::getUser(request()->id)->avatar }}" width="200" height="200" class="rounded-circle">
+                                        @else
+                                            <img src="http://placehold.jp/30x30.png" class="rounded-circle">
+                                        @endif
+                                        {{UserClass::getUser($item->target_id)->name}}
+                                    </a>
+                                </li>
+                            @endforeach
+                        @endif
+                    </ul>
+                </ul>
+            @endif
+
         </nav>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

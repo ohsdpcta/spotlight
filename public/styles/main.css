@@ -12,6 +12,10 @@ body {
     background-color: #ffffff;
     /* margin-top: 50px; */
 }
+button {
+    position: relative;
+    z-index: 1;
+}
 .top {
     padding: 0.5em 1em 0; /*上 左右 下*/
     margin: 2em 0 0;

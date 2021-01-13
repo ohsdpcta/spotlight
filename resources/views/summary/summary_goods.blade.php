@@ -23,7 +23,7 @@
 <div class="container">
 
     <div class="row">
-        <h3 class="text-light col-md-4">グッズ編集</h3>
+        <h3 class="text-dark col-md-4">グッズ編集</h3>
     </div>
 
     <div class="row">
@@ -33,30 +33,38 @@
 
     <hr>
 
-    @foreach($data as $item)
+    @if(session('flash_message_error'))
+        <div class="alert text-center py-3 my-0" style="color:#fff; background-color:#df1e00">
+            {{ session('flash_message_error') }}
+        </div>
+    @endif
+    <form method="get" action="/user/{{Auth::id()}}/summary/goods/delete">
+        @csrf
+        <input type="submit" value="削除">
 
-        {{-- <div class="row"> --}}
-            {{-- 背景の四角 --}}
-            <div class="row black maru pt-1 pb-1 mb-1 mt-1">
+        @foreach($data as $item)
 
-                {{-- サムネ --}}
-                <div class="col-md-1">
-                    <img src="http://placehold.jp/50x50.png" class="rounded-circle">
+            {{-- <div class="row"> --}}
+                {{-- 背景の四角 --}}
+                <div class="row black maru pt-1 pb-1 mb-1 mt-1">
+
+                    {{-- サムネ --}}
+                    <div class="col-md-1">
+                        <img src="http://placehold.jp/50x50.png" class="rounded-circle">
+                    </div>
+
+                    {{-- グッズ編集へのリンク --}}
+                    <h3 class="col-md-8 text-light fontsize d-flex align-items-center">{{ $item->name }}</h3>
+                    <button class="col-md-2 btn btn-secondary btn-block" type="button" onclick="location.href='/user/{{$item->user_id}}/summary/goods/{{$item->id}}/edit'">編集</button>
+
+                    {{-- 選択削除チェックボックス --}}
+                    <input type="checkbox" class="col-lg-1 col-md-1 col-sm-1 col-xs-1 d-flex align-items-center" name="checked_items[]" value="{{$item->id}}">
+
                 </div>
+            {{-- </div> --}}
 
-                {{-- グッズ編集へのリンク --}}
-                <h3 class="col-md-8 text-light fontsize d-flex align-items-center">{{ $item->name }}</h3>
-                <button class="col-md-2 btn btn-secondary btn-block" type="button" onclick="location.href='/user/{{$item->user_id}}/summary/goods/{{$item->id}}/edit'">編集</button>
-
-                {{-- 選択削除チェックボックス --}}
-                <form method="post" action="remove" class="col-lg-1 col-md-1 col-sm-1 col-xs-1 d-flex align-items-center">
-                    <input type="checkbox" name="goods_delete[]" value="{{$item->id}}">
-                </form>
-
-            </div>
-        {{-- </div> --}}
-
-    @endforeach
+        @endforeach
+    </form>
     {{ $data->links('vendor.pagination.sample-pagination') }}
 
 </div>

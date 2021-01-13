@@ -8,6 +8,12 @@ use App\User;
 use App\Profile;
 use App\Library\UserClass;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+//メール
+use App\Mail\HelloEmail;
+use Illuminate\Support\Facades\Validator;
+use Mail;
+
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller
@@ -36,12 +42,30 @@ class UserController extends Controller
     // サインアップ
     public function signup(Request $request){
         // バリデーションを設定する
-        $request->validate([
+        $rules = [
             'name'=>'required|string|max:30',
             'social_id' => 'required|unique:users,social_id|string|max:30',
             'email'=>'required|email|max:254|unique:users,email',
             'password'=>'required|string|min:8|max:128|confirmed',
-        ]);
+        ];
+        $messages = [
+            'name.required' => '名前を入力して下さい。',
+            'name.max' => '名前は30文字以下で入力して下さい。',
+            'email.required' => 'メールアドレスを入力して下さい。',
+            'email.email' => '正しいメールアドレスを入力して下さい。',
+            'password.required' => 'パスワードを入力して下さい。',
+            'password.max' => 'パスワードは128文字以下で入力して下さい。',
+        ];
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if ($validator->fails()) {
+            return redirect('/user.signup')
+                ->withErrors($validator)
+                ->withInput();
+        }
+        $data = $validator->validate();
+        Mail::to('admin@hoge.co.jp')->send(new HelloEmail($data));
+        session()->flash('success', '送信いたしました！');
+
         // $userにデータを設定する
         $user = new User;
         $user->name = $request->name;
@@ -118,6 +142,47 @@ class UserController extends Controller
                 'email' => $user->email,
                 'avatar' => $user->avatar_original,
             ]);
+            if(empty($socialUser->email_verified_at)){
+                $socialUser->email_verified_at = now();
+                $socialUser->save();
+            }
+            Auth::login($socialUser, true);
+            $login_user_id = Auth::id();
+            $old_profile = Profile::where('user_id', $login_user_id)->first();
+            if(!$old_profile){
+                // Profileを作成
+                $profile = new Profile;
+                $profile->user_id = $login_user_id;
+                $profile->content = 'よろしくお願いします！';
+                $profile->save();
+            }
+        }catch (Exception $e){
+            return redirect('/user/signin');
+        }
+        return redirect("/user/{$login_user_id}/profile");
+    }
+
+    // Googleログイン
+    public function redirectToProviderGoogle(){
+        return Socialite::driver('google')->redirect();
+    }
+    // Googleログインコールバック
+    public function handleProviderCallbackGoogle(){
+        try{
+            $user = Socialite::driver('google')->user();
+            $socialUser = User::firstOrCreate([
+                'email' => $user->email,
+            ], [
+                'social_id' => $user->id,
+                'token' => $user->token,
+                'name' => $user->name,
+                'email' => $user->email,
+                'avatar' => $user->avatar_original,
+            ]);
+            if(empty($socialUser->email_verified_at)){
+                $socialUser->email_verified_at = now();
+                $socialUser->save();
+            }
             Auth::login($socialUser, true);
             $login_user_id = Auth::id();
             $old_profile = Profile::where('user_id', $login_user_id)->first();
@@ -137,35 +202,64 @@ class UserController extends Controller
     // アカウント情報編集フォーム
     public function edit(Request $request, $id) {
         $data = User::where('id', $id)->first();
+        $user = Profile::where('user_id', $id)->first();
+        $this->authorize('edit', $user);
         return view('summary.edit_account', compact('data'));
     }
 
     // アカウント情報編集
     public function update(Request $request, $id) {
-        // バリデーションを設定する
-        $request->validate([
+        $user = Profile::where('user_id', $id)->first();
+        $this->authorize('edit', $user);
+        // //バリデーションの設定
+        $rules = [
             'name'=>'required|string|max:30',
-            'email'=>[
-                'required','email','max:254',
-                Rule::unique('users')->ignore(Auth::id()),
-            ],
-        ]);
+        ];
+        $messages = [
+            'name.required' => 'ユーザー名を入力してください。',
+            'name.max' => '３０文字以内で入力してください。',
+            'name.string' => '入力方法が違います。',
+        ];
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if ($validator->fails()) {
+            return redirect("user/{$id}/summary/account")
+                ->withErrors($validator)
+                ->withInput();
+        }
+        $user = $validator->validate();
         // dataに値を設定
         $data = User::find($id);
         $data->name = $request->name;
-        $data->email = $request->email;
         if($data->save()){
             session()->flash('flash_message', 'アカウント情報の編集が完了しました');
         }
 
         return redirect("user/{$id}/summary/account");
     }
+    // アカウント削除
+    public function delete(Request $request, $id) {
+        $data = User::find($id);
+        return view('summary.delete_account', compact('data'));
+    }
 
+    public function remove(Request $request, $id) {
+        // レコードを削除する。
+        User::find($id)->delete();
+        return redirect("/");
+    }
 
     // 投げ銭
     public function tip(Request $request, $id){
         $url = UserClass::get_paypay_url($id);
         return view('social.paypay', compact('url'));
     }
+    // メール
+    public function authentication(Request $request){
+        $user = Auth::user();
+        return view('emails.authentication',compact('user'));
+    }
+    public function confirmation(Request $request,$id){
 
+        return redirect("user/{$id}/summary/profile");
+    }
 }

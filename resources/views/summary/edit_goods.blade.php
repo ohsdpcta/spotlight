@@ -11,10 +11,19 @@
     label {color:#ffffff;}
 </style>
 
-<h3 class="text-light">グッズ情報編集</h3>
+<h3 class="text-dark">グッズ情報編集</h3>
 <hr>
 <form action="edit" method="post">
     @csrf
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <div class="form-group">
         {{-- <label>サンプル画像</label><input type="text" name="name" class="form-control"> --}}
         <label>グッズ名</label><input type="text" name="name" class="form-control" value="{{$data->name}}">

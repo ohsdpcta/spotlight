@@ -7,7 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use app\Tag;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
 
@@ -38,19 +38,33 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function tags()
+
+    public function profile(){
+        return $this->belongsTo('App\Profile');
+    }
+
+    public function locate(){
+        return $this->belongsTo('App\Locate');
+    }
+
+    public function goods(){
+        return $this->belongsTo('App\Goods');
+    }
+
+    public function sample(){
+        return $this->belongsTo('App\Sample');
+    }
+
+    public function tag()
     {
         return $this->belongsToMany('App\Tag', 'id');
     }
 
-    // $tagname = App\Tag::with('tag')->get();
-    // foreach ($tagname as $book) {
-    //     echo $tagname->tags->tag_name;
-    // }
+    public function followees(){
+        return $this->belongsToMany(User::class, 'followers', 'follower_id', 'target_id');
+    }
 
-    // public function tags2()
-    // {
-    //     return $this->hasMany('App\Tag')->where('id', 3);
-    // }
-
+    public function followers(){
+        return $this->belongsToMany(User::class, 'followers', 'target_id', 'follower_id');
+    }
 }

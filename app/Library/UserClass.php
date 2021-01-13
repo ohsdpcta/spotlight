@@ -35,6 +35,12 @@ class UserClass{
     return $follow_data;
   }
 
+  public static function getFollowList($id){
+    $followlist = Follower::where('follower_id', $id)->get();
+    logger(gettype($followlist));
+    return $followlist;
+  }
+
   public static function get_paypay_url($id){
     $target = Paypay::where('user_id', $id)->first();
     if($target){

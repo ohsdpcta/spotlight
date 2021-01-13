@@ -11,7 +11,7 @@
     label {color:#ffffff;}
 </style>
 
-<h3 class="text-light">サンプル情報編集</h3>
+<h3 class="text-dark">サンプル情報編集</h3>
 <hr>
 <form action="edit" method="post">
     @csrf

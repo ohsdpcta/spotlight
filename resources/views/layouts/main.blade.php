@@ -12,240 +12,19 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/iScroll/5.2.0/iscroll.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.2/js/drawer.min.js"></script>
         <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
-
-        <style>
-            header {
-                background-color: blue;
-            }
-            header h1 {
-                font-size: small;
-                text-align:center
-            }
-
-            body {
-                background-color: #2c2c2c;
-                /* margin-top: 50px; */
-            }
-
-            .top {
-                padding: 0.5em 1em 0; /*上 左右 下*/
-                margin: 2em 0 0;
-                color: #2c2c2f;
-                background: #ffffff;/*背景色*/
-                align-content: center;
-            }
-            .top p {
-                margin: 0;
-                padding: 0;
-            }
-
-            .tab {
-                padding: 0.5em 1em;
-                margin: 2em 0;
-                color: #2c2c2f;
-                background: #ffffff;/*背景色*/
-            }
-            .tab p {
-                margin: 0;
-                padding: 0;
-            }
-            .footer {
-                bottom: 0;
-                width: 100%;
-                /* Set the fixed height of the footer here */
-                height: 100px;
-                /* background-color: #3d3d3d; */
-            }
-            .nav-justified {
-                display: table;
-                table-layout: fixed;
-                width: 100%;
-            }
-            
-/* -------------------------------------------------------------------- */
-
-            @import url('https://fonts.googleapis.com/css?family=Varela+Round');
-            html, body {
-                overflow-x: hidden;
-                height: 100%;
-            }
-            body {
-                /* background: #fff; */
-                padding: 0;
-                margin: 0;
-                /* font-family: 'Varela Round', sans-serif; */
-            }
-            /* .header {
-                display: block;
-                margin: 0 auto;
-                width: 100%;
-                max-width: 100%;
-                box-shadow: none;
-                background-color: #FC466B;
-                position: fixed;
-                height: 60px!important;
-                overflow: hidden;
-                z-index: 10; */
-            }
-            .mainInner{
-                display: table;
-                height: 100%;
-                width: 100%;
-                text-align: center;
-            }
-            .mainInner div{
-                display:table-cell;
-                vertical-align: middle;
-                font-size: 3em;
-                font-weight: bold;
-                letter-spacing: 1.25px;
-            }
-            #sidebarMenu {
-                height: 100%;
-                /* position: fixed; */
-                left: 0;
-                width: 250px;
-                margin-top: 60px;
-                transform: translateX(-250px);
-                transition: transform 250ms ease-in-out;
-                background: linear-gradient(180deg, #FC466B 0%, #3F5EFB 100%);
-            }
-            .sidebarMenuInner{
-                margin:0;
-                padding:0;
-                border-top: 1px solid rgba(255, 255, 255, 0.10);
-            }
-            .sidebarMenuInner li{
-                list-style: none;
-                color: #fff;
-                text-transform: uppercase;
-                font-weight: bold;
-                padding: 20px;
-                cursor: pointer;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.10);
-            }
-            .sidebarMenuInner li span{
-                display: block;
-                font-size: 14px;
-                color: rgba(255, 255, 255, 0.50);
-            }
-            .sidebarMenuInner li a{
-                color: #fff;
-                text-transform: uppercase;
-                font-weight: bold;
-                cursor: pointer;
-                text-decoration: none;
-            }
-            input[type="checkbox"]:checked ~ #sidebarMenu {
-                transform: translateX(0);
-            }
-
-            input[type=checkbox] {
-                transition: all 0.3s;
-                box-sizing: border-box;
-                display: none;
-            }
-            .sidebarIconToggle {
-                transition: all 0.3s;
-                box-sizing: border-box;
-                cursor: pointer;
-                position: absolute;
-                z-index: 99;
-                height: 100%;
-                width: 100%;
-                top: 22px;
-                left: 15px;
-                height: 22px;
-                width: 22px;
-            }
-            .spinner {
-                transition: all 0.3s;
-                box-sizing: border-box;
-                position: absolute;
-                height: 3px;
-                width: 100%;
-                background-color: #fff;
-            }
-            .horizontal {
-                transition: all 0.3s;
-                box-sizing: border-box;
-                position: relative;
-                float: left;
-                margin-top: 3px;
-            }
-            .diagonal.part-1 {
-                position: relative;
-                transition: all 0.3s;
-                box-sizing: border-box;
-                float: left;
-            }
-            .diagonal.part-2 {
-                transition: all 0.3s;
-                box-sizing: border-box;
-                position: relative;
-                float: left;
-                margin-top: 3px;
-            }
-            input[type=checkbox]:checked ~ .sidebarIconToggle > .horizontal {
-                transition: all 0.3s;
-                box-sizing: border-box;
-                opacity: 0;
-            }
-            input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-1 {
-                transition: all 0.3s;
-                box-sizing: border-box;
-                transform: rotate(135deg);
-                margin-top: 8px;
-            }
-            input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
-                transition: all 0.3s;
-                box-sizing: border-box;
-                transform: rotate(-135deg);
-                margin-top: -9px;
-            }
-
-/* ------------------------------------------------------------------------ */
-
-        </style>
+        
+        <!-- cssは移設しました -->
+        <link rel="stylesheet" href="{{ asset('styles/main.css') }}">
+        <link rel="stylesheet" href="{{ asset('styles/sidebar.css') }}">
     </head>
 
-    <header>
-    </header>
+    <header></header>
 
     <body>
         {{-- ヘッダー --}}
-        <nav class="navbar navbar-expand-sm navbar-dark bg-dark mt-0 mb-0 pt-0 pb-0 sticky-top">
+        <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom mt-0 mb-0 pt-0 pb-0 sticky-top">
 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav4" aria-controls="navbarNav4" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-{{-- ---------------------------------------------------------------------------------- --}}
-
-{{-- 
-        サイドバーボタン
-        <input type="checkbox" class="openSidebarMenu" id="openSidebarMenu">
-        <label for="openSidebarMenu" class="sidebarIconToggle">
-            <div class="spinner diagonal part-1"></div>
-            <div class="spinner horizontal"></div>
-            <div class="spinner diagonal part-2"></div>
-        </label>
-
-        <div id="sidebarMenu">
-            <ul class="sidebarMenuInner">
-            <li>Jelena Jovanovic <span>Web Developer</span></li>
-            <li><a href="https://vanila.io" target="_blank">Company</a></li>
-            <li><a href="https://instagram.com/plavookac" target="_blank">Instagram</a></li>
-            <li><a href="https://twitter.com/plavookac" target="_blank">Twitter</a></li>
-            <li><a href="https://www.youtube.com/channel/UCDfZM0IK6RBgud8HYGFXAJg" target="_blank">YouTube</a></li>
-            <li><a href="https://www.linkedin.com/in/plavookac/" target="_blank">Linkedin</a></li>
-            </ul>
-        </div>
- --}}
-
-{{-- ------------------------------------------------------------------------------------------------------- --}}
-
-            <a class="navbar-brand navbar-brand-center" href="/">Spotlight</a>
+            <a class="navbar-brand navbar-brand-center text-dark" href="/">Spotlight</a>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav">
                     {{-- 非ログイン時の処理 --}}
@@ -298,27 +77,94 @@
                     <button class="btn btn-primary" type="submit">検索</button>
                 </form>
             @endif
-
         </nav>
+
         @if(session('flash_message'))
             <div class="alert text-center py-3 my-0" style="color:#fff; background-color:#414579">
                 {{ session('flash_message') }}
             </div>
         @endif
 
+        <button type="button" class="btn_menu"><i class="fas fa-bars"></i></button>
+        <!-- サイド(ドロワー)メニュー https://296.co.jp/article/09392320181809143-->
+        <nav class="border container sidebar text-dark">
+            <br>
+            {{-- 非ログイン時 --}}
+            @if(!Auth::user())
+            <ul>
+                <li class="mt-2"><a href="/user/signup">signup</a></li>
+                <li class="mt-2"><a href="/user/signin">signin</a></li>
+            </ul>
+            {{-- ログイン時 --}}
+            @else
+                <ul id="accordion_menu">
+                    {{-- フォロー一覧 --}}
+                    <li>
+                        <a data-toggle="collapse" href="#menu01" aria-controls="#menu01" aria-expanded="false">フォロー</a>
+                    </li>
+                    <ul id="menu01" class="collapse" data-parent="#accordion_menu">
+                        <?php $data = UserClass::getFollowList(Auth::user()->id) ?>
+                        @if(count($data)===0)
+                            <li class="text-dark">フォロー中のユーザーがいません<li>
+                        @else
+                        {{-- 項 --}}
+                            @foreach($data as $item)
+                                <li>
+                                    <a href="/user/{{$item->target_id}}/profile">
+                                        @if(UserClass::getUser($item->target_id)->avatar)
+                                            <img src="{{ UserClass::getUser(request()->id)->avatar }}" width="200" height="200" class="rounded-circle">
+                                        @else
+                                            <img src="http://placehold.jp/30x30.png" class="rounded-circle">
+                                        @endif
+                                        {{UserClass::getUser($item->target_id)->name}}
+                                    </a>
+                                </li>
+                            @endforeach
+                        @endif
+                    </ul>
+                </ul>
+            @endif
+
+        </nav>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script>
+            $(function(){
+                $('.btn_menu').click(function(){$('nav.sidebar').toggleClass('open');});
+                $('.btn_menu').click(function(){$('button.btn_menu').toggleClass('open');});
+            })
+        </script>
+
         @yield('user')
 
 {{-- ---------------------------------------------------------------------------------- --}}
 
-
-
-
-{{-- -------------------------------------------------------------------------------------- --}}
-
         {{-- フッター --}}
-        <footer class="footer sticky-bottom bg-dark">
+        <footer class="footer sticky-bottom bg-light">
             <div class="container">
-                <p class="text-muted">フッター</p>
+                <div class="row pt-2 pb-2 pr-2 pl-2">
+                    <div class="col-4 text-muted">
+                        <h5>about us...</h5>
+                        <p>D'où Venons Nous Que Sommes Nous Où Allons Nous</p>
+                    </div>
+                    <div class="col-4 text-muted">
+                        <h5>navigation</h5>
+                        <ul>
+                            <li>top</li>
+                            <li>search</li>
+                            <li>signup</li>
+                            <li>signin</li>
+                            <li>mypage</li>
+                        </ul>                </div>
+                    <div class="col-4 text-muted">
+                        <h5 class="text-muted">contact info</h5>
+                        <ul>
+                            <li>☎</li>
+                            <li>〒</li>
+                            <li>✉</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </footer>
 

@@ -22,7 +22,7 @@
     </head>
 
     <body>
-        <h3 class="text-light">ロケーション編集</h3>
+        <h3 class="text-dark">ロケーション編集</h3>
         <div class="pt-3">
             {{-- バリデーションエラーがある場合は出力 --}}
             @if ($errors->any())

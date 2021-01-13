@@ -11,7 +11,7 @@
     label {color:#ffffff;}
 </style>
 
-<h3 class="text-light">アカウント削除</h3>
+<h3 class="text-dark">アカウント削除</h3>
 <hr>
 <form action="delete" method="post">
     @csrf

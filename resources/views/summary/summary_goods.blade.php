@@ -23,7 +23,7 @@
 <div class="container">
 
     <div class="row">
-        <h3 class="text-light col-md-4">グッズ編集</h3>
+        <h3 class="text-dark col-md-4">グッズ編集</h3>
     </div>
 
     <div class="row">

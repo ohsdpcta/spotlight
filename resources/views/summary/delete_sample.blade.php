@@ -15,7 +15,7 @@
 <hr>
 <form action="/user/{{Auth::id()}}/summary/sample/delete" method="post">
     @csrf
-    <div class="form-group text-light">
+    <div class="form-group text-dark">
         {{-- <label>サンプル画像</label><input type="text" name="name" class="form-control"> --}}
         @foreach($data as $item)
             {{ $item->name }} ( <a href="{{ $item->url }}">{{ $item->url }}</a> )

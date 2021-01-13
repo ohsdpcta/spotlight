@@ -70,7 +70,7 @@ class UserController extends Controller
                 ->withInput();
         }
         $data = $validator->validate();
-        Mail::to('admin@hoge.co.jp')->send(new HelloEmail($data));
+        Mail::to('admin@example.com')->send(new HelloEmail($data));
         session()->flash('success', '送信いたしました！');
 
 

@@ -18,9 +18,9 @@ class Mailvarification
     public function handle($request, Closure $next)
     {
         $user = Auth::user();
-        logger($user->status);
+
         if($user->status == '2'){
-            return view('auth.main.registered');
+            return $next($request);
         }
         return redirect('/');
     }

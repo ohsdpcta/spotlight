@@ -7,11 +7,7 @@
 
 @section('R_form')
 
-<style>
-    label {color:#ffffff;}
-</style>
-
-<h3 class="text-light">アカウント削除</h3>
+<h3 class="text-dark">アカウント削除</h3>
 <hr>
 <div class="form-group text-light">
     {{-- <label>サンプル画像</label><input type="text" name="name" class="form-control"> --}}

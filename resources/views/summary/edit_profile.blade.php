@@ -10,12 +10,9 @@
         <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css" />
         <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
-        <style>
-            label {color:#ffffff;}
-        </style>
     </head>
 
-    <h3 class="text-light">プロフィール編集</h3>
+    <h3 class="text-dark">プロフィール編集</h3>
     <div class="pt-3">
         <form action="/user/{{Auth::id()}}/summary/profile" method="post">
             @csrf
@@ -28,12 +25,12 @@
                     </ul>
                 </div>
             @endif
-            <label>あなたを知らせるためのプロフィールを記入することができます。</label>
+            <label class="text-dark">あなたを知らせるためのプロフィールを記入することができます。</label>
             <input type="hidden" id="content" name="content" cols="80" rows="5" class="form-control">
             <input type="submit" id="edit" class="btn btn-success float-right" value="修正"><br>
         </form>
     </div>
-    <div id="editor" style="background-color:#fff;"></div>
+    <div id="editor" style="background-color:rgb(255, 255, 255);"></div>
 
     <script>
         const Editor = toastui.Editor;

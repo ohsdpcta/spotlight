@@ -7,11 +7,7 @@
 
 @section('R_form')
 
-<style>
-    label {color:#ffffff;}
-</style>
-
-<h3 class="text-light">グッズ情報編集</h3>
+<h3 class="text-dark">グッズ情報編集</h3>
 <hr>
 <form action="edit" method="post">
     @csrf

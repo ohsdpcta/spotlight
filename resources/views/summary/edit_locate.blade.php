@@ -12,7 +12,6 @@
         <meta charset="utf-8">
         <title>ロケーション編集 / Spotlight</title>
         <style>
-            label {color:#ffffff;}
             #map {
             width: 100%;
             height: 400px;
@@ -21,7 +20,7 @@
         </style>
     </head>
 
-    <h3 class="text-light">ロケーション編集</h3>
+    <h3 class="text-dark">ロケーション編集</h3>
     <div class="pt-3 col-lg-12 col-md-12 col-sm-12 col-xs-12">
         {{-- バリデーションエラーがある場合は出力 --}}
         @if ($errors->any())

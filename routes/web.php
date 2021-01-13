@@ -61,7 +61,7 @@ Route::prefix('/user')->group(function(){
             Route::get('account', 'UserController@edit')->middleware('verified');
             Route::post('account', 'UserController@update')->middleware('verified');
             Route::get('account/delete', 'UserController@delete')->middleware('verified');
-            Route::post('account/delete', 'UserController@remove')->middleware('verified');
+            Route::get('account/remove', 'UserController@remove')->middleware('verified');
 
             // プロフィール編集
             Route::get('profile', 'ProfileController@edit')->middleware('verified');
@@ -70,7 +70,7 @@ Route::prefix('/user')->group(function(){
             // ロケーション編集
             Route::get('locate', 'LocateController@edit')->middleware('verified');
             Route::post('locate', 'LocateController@update')->middleware('verified');
-            Route::post('locate/delete', 'LocateController@remove')->middleware('verified');
+            Route::get('locate/delete', 'LocateController@remove')->middleware('verified');
 
             // グッズ編集
             Route::get('goods', 'GoodsController@summary')->middleware('verified');//一覧画面
@@ -93,7 +93,7 @@ Route::prefix('/user')->group(function(){
             // PayPayURL
             Route::get('paypay', 'PaypayController@edit')->middleware('verified');//削除するぜ！
             Route::post('paypay', 'PaypayController@update')->middleware('verified');//削除するぜ！
-            Route::post('paypay/delete', 'PaypayController@remove')->middleware('verified');//削除するぜ！
+            Route::get('paypay/delete', 'PaypayController@remove')->middleware('verified');//削除するぜ！
         });
     });
 });

@@ -7,20 +7,11 @@
 
 @section('R_form')
 
-<style>
-    label {color:#ffffff;}
-</style>
-
 <h3 class="text-dark">アカウント削除</h3>
 <hr>
-<form action="delete" method="post">
-    @csrf
-    <div class="form-group">
-        {{-- <label>サンプル画像</label><input type="text" name="name" class="form-control"> --}}
-        <p>{{ $data->name }}</p>
-        <br>
-        <input type="submit" value="削除" class="btn btn-danger">
-    </div>
-</form>
-
+<div class="form-group text-light">
+    {{-- <label>サンプル画像</label><input type="text" name="name" class="form-control"> --}}
+    <p>{{ $data->name }}</p>
+    <button type="button" class="btn btn-danger" onclick="location.href='/user/{{Auth::id()}}/summary/account/remove'">削除</button>
+</div>
 @endsection

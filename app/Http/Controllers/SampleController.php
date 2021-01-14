@@ -12,10 +12,6 @@ use App\Sample;
 class SampleController extends Controller {
     public function index(Request $request, $id) {
         $data = Sample::where('user_id', $id)->paginate(10);
-        $a = '<iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/1194385924&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/s-taji-939453225" title="s taji" target="_blank" style="color: #cccccc; text-decoration: none;">s taji</a> · <a href="https://soundcloud.com/s-taji-939453225/sets/top-50-rock" title="Top 50: Rock" target="_blank" style="color: #cccccc; text-decoration: none;">Top 50: Rock</a></div>';
-            preg_match_all('/src="(\S+)"|href="(\S+)"|title="(\S+|([\S\s]{1,50}) target=")/', $a, $matches);
-            $a = serialize($matches);
-        logger($a);
         for ($i=0; $i<count($data); $i++) {
             if ($data[$i]->embed_site == "soundcloud") {
                 $data[$i]->url = unserialize($data[$i]->url);

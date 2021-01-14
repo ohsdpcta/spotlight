@@ -226,7 +226,6 @@ class UserController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-        $user = $validator->validate();
         // dataに値を設定
         $data = User::find($id);
         $data->name = $request->name;

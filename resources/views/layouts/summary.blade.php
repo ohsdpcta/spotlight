@@ -13,7 +13,7 @@
         <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
 
         <style>
-            body {background-color: #2c2c2c;}
+            body {background-color: #ffffff;}
         </style>
 
     </head>
@@ -24,8 +24,8 @@
             <br>
             <div class="row">
                 {{-- 左メニュー --}}
-                <div class="bg-dark col-lg-3 col-md-3 col-sm-3 mb-1">
-                    <h3 class="text-light mt-2">設定</h3>
+                <div class="col-lg-3 col-md-3 col-sm-3 mb-1">
+                    <h3 class="text-dark mt-2">設定</h3>
                     <div class="form-group">
                         <p><a class="text-primary btn @if(request()->is('*account*')) disabled @endif" href="/user/{{Auth::id()}}/summary/account/">アカウント情報</a></p>
                         <p><a class="text-primary btn @if(request()->is('*profile*')) disabled @endif" href="/user/{{Auth::id()}}/summary/profile">プロフィール情報</a></p>
@@ -39,7 +39,7 @@
                 <div class="col-lg-1 col-md-1 col-sm-1"></div>
 
                 {{-- 右フォーム --}}
-                <div class="bg-dark col-lg-8 col-md-8 col-sm-8 pt-3 pr-3 pb-3 pl-3">
+                <div class="col-lg-8 col-md-8 col-sm-8 pt-3 pr-3 pb-3 pl-3">
                     @yield('R_form')
                 </div>
 

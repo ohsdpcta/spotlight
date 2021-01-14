@@ -40,7 +40,7 @@ class LocateController extends Controller
     public function update(Request $request, $id){
         // バリデーションの設定
         $rules = [
-            'coordinate'=>'required|regex:/^[-\d]\d{1,2}.\d{5,30},[-\d]\d{1,3}.\d{5,30}$/',
+            'coordinate'=>'required|regex:/^[-\d]\d{0,2}.\d{5,30},[-\d]\d{0,3}.\d{5,30}$/',
         ];
         $messages = [
             'coordinate.required' => '登録したい場所をクリックしてください。',

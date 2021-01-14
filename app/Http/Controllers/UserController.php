@@ -277,7 +277,7 @@ class UserController extends Controller
          // 使用可能なトークンか
         if ( !User::where('email_verify_token',$users->email_verify_token)->exists() )
         {
-            logger('aaa');
+
             return view('auth.main.register')->with('message', '無効なトークンです。');
         } else {
             $user_data = User::where('email_verify_token', $users->email_verify_token)->first();
@@ -286,7 +286,7 @@ class UserController extends Controller
             //$user_data->email_verified_at = Carbon::now();
             $user_data->status = '2';
             $user_data->save();
-            logger('aasssa');
+
             return view('auth.main.registered');
         }
     }

@@ -7,10 +7,6 @@
 
 @section('R_form')
 
-<style>
-    label {color:#ffffff;}
-</style>
-
 <h3 class="text-light">サンプル情報削除</h3>
 <hr>
 <form action="/user/{{Auth::id()}}/summary/sample/delete" method="post">

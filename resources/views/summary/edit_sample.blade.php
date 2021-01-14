@@ -30,7 +30,7 @@
         <br>
         <label>URL</label><input type="text" name="url" class="form-control" value="{{ $data->url }}">
         <br>
-        <input type="submit" value="確定" class="btn btn-primary">
+        <input type="submit" value="修正" class="btn btn-success">
     </div>
 </form>
 

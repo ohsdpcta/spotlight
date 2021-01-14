@@ -52,7 +52,6 @@ class LocateController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-        $user = $validator->validate();
         $locate = new Locate;
         $locate->user_id = $id;
         $this->authorize('edit', $locate);

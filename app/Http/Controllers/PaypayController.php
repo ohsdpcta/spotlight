@@ -31,7 +31,6 @@ class PaypayController extends Controller
                     ->withErrors($validator)
                     ->withInput();
         }
-        $paypay = $validator->validate();
         if(Auth::id() == $id){
             $paypay = Paypay::where('user_id', Auth::id())->first();
             if($paypay){

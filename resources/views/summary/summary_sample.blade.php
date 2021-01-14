@@ -34,7 +34,7 @@
     <hr>
 
     @if(session('flash_message_error'))
-        <div class="alert text-center py-3 my-0" style="color:#fff; background-color:#df1e00">
+        <div class="alert alert-danger text-center py-3 my-0">
             {{ session('flash_message_error') }}
         </div>
     @endif

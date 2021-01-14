@@ -80,7 +80,7 @@
         </nav>
 
         @if(session('flash_message'))
-            <div class="alert text-center py-3 my-0" style="color:#fff; background-color:#414579">
+            <div class="alert alert-primary text-center py-3 my-0">
                 {{ session('flash_message') }}
             </div>
         @endif

@@ -1,0 +1,100 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Tag;
+use App\User;//一応入れた
+use GuzzleHttp\Psr7\Request as Psr7Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+
+class GoodsController extends Controller
+{
+//-----------------------------------------------------------------------------------
+    // 一覧
+    public function index(Request $request, $id){
+        $data = DB::table('')->paginate(10);
+        return view('index.tag', compact('data'));
+        // $data = Tag::where('user_id', $id)->paginate(10);
+        // return view('index.tag', compact('data'));
+    }
+
+    DB::table('employees')
+   ->join('depts','employees.dept_id','=','depts.dept_id')
+   ->get();
+  return view('employee.list')->with('employees',$employees);
+//-------------------------------------------------------------------------------------
+    public function summary(Request $request, $id){
+        $data = Goods::where('user_id', $id)->paginate(10);
+        $goods = new Goods;
+        $goods->user_id = $id;
+        $this->authorize('edit', $goods);
+        return view('summary.summary_goods', compact('data'));
+    }
+
+    //新規追加
+    public function add(Request $request, $id){
+        $goods = new Goods;
+        $goods->user_id = $id;
+        $this->authorize('edit', $goods);
+        return view('summary.add_goods');
+    }
+
+    public function create(Request $request, $id){
+        $addgoods = new Goods;
+        $addgoods->user_id = $id;
+        $this->authorize('edit', $addgoods);
+        // //バリデーションの設定
+        $rules = [
+            'name'=>'required|between:1,25',
+            'url'=>'required|between:1,190|url',
+        ];
+        $messages = [
+            'name.required' => 'グッズ名を入力してください。',
+            'name.between' => '２５文字以内で入力してください。',
+            'url.required' => 'URLを入力してください',
+            'url.between' => '１９０文字以内で入力してください。',
+            'url.url' => 'URLを正しく入力してください。',
+        ];
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if ($validator->fails()) {
+            return redirect("user/{$id}/summary/goods/add")
+                ->withErrors($validator)
+                ->withInput();
+        }
+        $goods = $validator->validate();
+        
+        $addgoods->name = $request->name;
+        $addgoods->url = $request->url;
+        if($addgoods->save()){
+            session()->flash('flash_message', 'グッズの登録が完了しました');
+        }
+        return redirect("user/{$id}/summary/goods");
+    }
+
+    // 削除確認画面
+    public function delete(Request $request, $id) {
+        if(empty($request->checked_items)){
+            session()->flash('flash_message_error', '削除したい項目にチェックを入れてください');
+            return redirect("/user/{$id}/summary/goods");
+        }
+        $checked_id_str = implode(',', $request->checked_items);
+        $data = Goods::find($request->checked_items);
+        foreach($data as $item){
+            $this->authorize('edit', $item);
+        }
+        return view('summary.delete_goods', compact('data', 'checked_id_str'));
+    }
+    // 削除処理
+    public function remove(Request $request, $id) {
+        $delete_item_id = explode(',', $request->checked_id_str);
+        $data = Goods::find($delete_item_id);
+        foreach($data as $item){
+            $this->authorize('edit', $item);
+        }
+        $data->each->delete();
+        session()->flash('flash_message', '削除が完了しました');
+        return redirect("/user/{$id}/summary/goods");
+    }
+}

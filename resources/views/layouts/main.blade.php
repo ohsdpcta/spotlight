@@ -8,11 +8,12 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         <script src="https://code.jquery.com/jquery-2.2.4.js"></script>
-        <script src="/common/js/bootstrap.js"></script> 
+        <script src="/common/js/bootstrap.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/iScroll/5.2.0/iscroll.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.2/js/drawer.min.js"></script>
         <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
-        
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+
         <!-- cssは移設しました -->
         <link rel="stylesheet" href="{{ asset('styles/main.css') }}">
         <link rel="stylesheet" href="{{ asset('styles/sidebar.css') }}">
@@ -80,10 +81,38 @@
         </nav>
 
         @if(session('flash_message'))
-            <div class="alert text-center py-3 my-0" style="color:#fff; background-color:#414579">
-                {{ session('flash_message') }}
-            </div>
+            <transition name="fade" id="flash-message">
+                <div v-if="show" class="alert text-center py-3 my-0" style="color:#fff; background-color:#414579;">
+                    {{ session('flash_message') }}
+                </div>
+            </transition>
         @endif
+
+        <style>
+            .fade-enter-active, .fade-leave-active {
+                transition: all 1s;
+            }
+            .fade-enter, .fade-leave-to {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+        </style>
+        <script>
+            new Vue({
+                el: '#flash-message',
+                data: {
+                    show: false,
+                },
+                created: function(){
+                    setTimeout(()=>{
+                        this.show = !this.show;
+                    }, 100);
+                    setTimeout(()=>{
+                        this.show = !this.show;
+                    }, 3000);
+                }
+            })
+        </script>
 
         <button type="button" class="btn_menu"><i class="fas fa-bars"></i></button>
         <!-- サイド(ドロワー)メニュー https://296.co.jp/article/09392320181809143-->

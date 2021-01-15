@@ -7,12 +7,7 @@
 
 @section('R_form')
 
-    <style>
-        label {color:#ffffff;}
-    </style>
-
-
-    <h3 class="text-light">ユーザー情報編集</h3>
+    <h3 class="text-dark">ユーザー情報編集</h3>
     <br>
     <form action="/user/{{Auth::id()}}/summary/account" method="post">
         @csrf
@@ -27,10 +22,11 @@
         @endif
         <div class="form-group">
             <label>UserName</label><input type="text" name="name" value="{{ $data->name }}" class="form-control">
-            <br>
-            <input type="submit" value="修正" class="btn btn-primary">
+            <div class="mt-2">
+                <input type="submit" value="修正" class="btn btn-success">
+                <button type="button" class="btn btn-danger" onclick="location.href='/user/{{Auth::id()}}/summary/account/delete'">削除</button>
+            </div>
         </div>
     </form>
-    <button type="button" class="btn btn-danger" onclick="location.href='/user/{{Auth::id()}}/summary/account/delete'">削除</button>
 
 @endsection

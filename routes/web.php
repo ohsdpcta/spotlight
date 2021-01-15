@@ -14,7 +14,6 @@ Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'UserController@index');
-
 Route::prefix('/user')->group(function(){
     // 検索結果
     Route::get('search', 'UserController@search');

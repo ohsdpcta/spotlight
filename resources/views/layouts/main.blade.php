@@ -4,10 +4,9 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="/common/css/bootstrap.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.2/css/drawer.min.css">
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-        <script src="https://code.jquery.com/jquery-2.2.4.js"></script>
         <script src="/common/js/bootstrap.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/iScroll/5.2.0/iscroll.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.2/js/drawer.min.js"></script>
@@ -157,23 +156,10 @@
             </nav>
         </div>
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script>
             $(function(){
                 $('.btn_menu').click(function(){$('nav.sidebar').toggleClass('open');});
                 $('.btn_menu').click(function(){$('button.btn_menu').toggleClass('open');});
-
-                $(document).click(function(e) {
-                    // クリックした場所がmenu-wrapper(領域内とみなす範囲)に無ければmenuを消す
-                    if(!$.contains($('div.side-content')[0], e.target)){
-                        if($('nav.sidebar').hasClass('open')){
-                            $('nav.sidebar').removeClass('open');
-                        }
-                        if($('button.btn_menu').hasClass('open')){
-                            $('button.btn_menu').removeClass('open');
-                        }
-                    }
-                });
             })
         </script>
 

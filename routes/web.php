@@ -14,9 +14,6 @@ Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'UserController@index');
-if (request()->isSecure()) {
-    \URL::forceScheme('https');
-}
 Route::prefix('/user')->group(function(){
     // 検索結果
     Route::get('search', 'UserController@search');

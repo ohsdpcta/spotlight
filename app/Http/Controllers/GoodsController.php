@@ -37,7 +37,7 @@ class GoodsController extends Controller
         $addgoods = new Goods;
         $addgoods->user_id = $id;
         $this->authorize('edit', $addgoods);
-        // //バリデーションの設定
+        //バリデーションの設定
         $rules = [
             'name'=>'required|between:1,25',
             'url'=>'required|between:1,190|url',

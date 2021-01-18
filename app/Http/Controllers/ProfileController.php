@@ -7,13 +7,19 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 use App\Profile;
-
+use App\UserTag;
 use Illuminate\Validation\Rule;
 
 class ProfileController extends Controller {
     public function index(Request $request, $id) {
         $data = Profile::where('user_id', $id)->first();
-        return view('index.profile', compact('data'));
+        $tag = UserTag::table('user_tags')
+        ->join('users', 'user_tags.user_id', '=', 'users.id')
+        ->join('tags', 'user_tags.tag_id', '=', 'tags.id')
+        ->where('user.id', $id)
+        ->select('tag.tag_name')
+        ->get();
+        return view('index.profile', compact('data', 'tag'));
     }
 
     public function edit(Request $request, $id) {

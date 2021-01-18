@@ -13,11 +13,14 @@ class TagController extends Controller
 {
 //-----------------------------------------------------------------------------------
     // 一覧
-    public function summary(){
-        $data = User::select()
-            ->join('user_tag','user_tag.user_id','=','user.id')
-            ->get();
-            return view('summary.tag', compact('data'));
+    public function summary(Request $request, $id){
+        // $tag = DB::table('user_tags')
+        //     ->join('users', 'user_tags.user_id', '=', 'users.id')
+        //     ->join('tags', 'user_tags.tag_id', '=', 'tags.id')
+        //     ->where('user.id', $id)
+        //     ->select('tag.tag_name')
+        //     ->get();
+            return view('layouts.user', compact('tag'));
     }
 
     //新規追加

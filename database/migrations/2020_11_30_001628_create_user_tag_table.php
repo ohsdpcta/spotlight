@@ -13,7 +13,7 @@ class CreateUserTagTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_tag', function (Blueprint $table) {
+        Schema::create('user_tags', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('tag_id');
             $table->unsignedBigInteger('user_id');
@@ -30,6 +30,6 @@ class CreateUserTagTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_tag');
+        Schema::dropIfExists('user_tags');
     }
 }

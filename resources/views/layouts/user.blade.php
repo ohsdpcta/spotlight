@@ -24,7 +24,7 @@
                 <p>{{'@'}}{{ UserClass::getUser(request()->id)->social_id }}</p>
                 {{-- タグ(仮) --}}
                 <div class="pt-4">
-                    <h5>タグ挿入予定地(仮)</h5>
+                    <h5>{{ $tag }}</h5>
                 </div>
             </div>
 

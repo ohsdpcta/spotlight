@@ -71,7 +71,7 @@ class UserController extends Controller
         }
         $data = $validator->validate();
         Mail::to($request->email)->send(new HelloEmail($data));
-        session()->flash('success', '送信いたしました！');
+
 
 
         // $userにデータを設定する
@@ -267,10 +267,17 @@ class UserController extends Controller
         return view('social.paypay', compact('url'));
     }
     // メール
-    public function authentication(Request $request){ //いらない説
+    public function authentication(Request $request){
         $users = Auth::user();
 
-        return view('emails.authentication',compact('users'));
+        logger($users->email_verify_token);
+        logger(User::select('email_verify_token')->get());
+        if (User::where('email_verify_token','=',$users->email_verify_token)->get()){
+            return view('emails.authentication',compact('users'));
+        }else{
+            return redirect('/');
+        }
+
     }
     public function confirmation(Request $request){
         $users = Auth::user();
@@ -282,12 +289,16 @@ class UserController extends Controller
         } else {
             $user_data = User::where('email_verify_token', $users->email_verify_token)->first();
              // ユーザーステータス更新
+            if (User::where('email_verify_token',$users->email_verify_token)->exists() ){
+                //$user_data->email_verified_at = Carbon::now();
+                $user_data->status = '2';
+                $user_data->save();
 
-            //$user_data->email_verified_at = Carbon::now();
-            $user_data->status = '2';
-            $user_data->save();
+                return view('auth.main.registered');
+            }else{
+                return view('auth.main.register')->with('message', 'トークンが一致しませんでした。');
+            }
 
-            return view('auth.main.registered');
         }
     }
 

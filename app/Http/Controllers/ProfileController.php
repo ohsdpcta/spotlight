@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 use App\Profile;
-
+use App\UserTag;
 use Illuminate\Validation\Rule;
 
 class ProfileController extends Controller {

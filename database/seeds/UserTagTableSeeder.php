@@ -14,7 +14,7 @@ class UserTagTableSeeder extends Seeder
         $faker = Faker\Factory::create('ja_JP');
         for($i=1; $i<=50; $i++){
             for($l=1; $l<=2; $l++){
-                DB::table('user_tag')->insert([
+                DB::table('user_tags')->insert([
                     'tag_id' => $faker->numberBetween(1, 50),
                     'user_id' => $i,
                 ]);

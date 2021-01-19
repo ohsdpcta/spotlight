@@ -55,9 +55,8 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsTo('App\Sample');
     }
 
-    public function tag()
-    {
-        return $this->belongsToMany('App\Tag', 'id');
+    public function tag(){
+        return $this->belongsToMany('App\Tag', 'user_tags', 'user_id', 'tag_id');
     }
 
     public function followees(){

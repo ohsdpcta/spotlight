@@ -37,7 +37,6 @@ class UserClass{
 
   public static function getFollowList($id){
     $followlist = Follower::where('follower_id', $id)->get();
-    logger(gettype($followlist));
     return $followlist;
   }
 
@@ -51,35 +50,9 @@ class UserClass{
     return $url;
   }
 
-  // public static function getTag($id){
-  //   $tags = \App\Tag::with('users')->find($id);
-  //   return $tags;
-  // }
-  // public static function getTag($id){
-  //   $tags =\app\Tag::with(['tag' => function($id){
-  //     $id->where('id', '==', $id);
-  //   }])->get();
-  //   return $tags;
-  // }
-
-  // 引数の$idは、各ユーザーのid
-  public static function getTag($id)
-  {
-    // $tags = User::with(['tags'])->find($id);
-    // $tags = User::where('id',$id)->first();
-    // $tags = Arr::dot($tags);
-    // $tags = $this->belongsToMany('App\Tag')->withPivot('tag_name');
-    
-    // $tags = App\Tag::with('tag_name')->get();
-    // foreach ($tags as $tag) {
-    //     echo $tags->tags->tag_name;
-    // }
-
-    $tags = App\User::find($id)->
-
-    logger($tags);
-    return $tags;
+  public static function getTag($id){
+    $user = User::find($id);
+    $tag = $user->tag()->get();
+    return $tag;
   }
-
-  // https://blog.hiroyuki90.com/articles/laravel-with/ ←ここを見ながらやった
 }

@@ -26,4 +26,7 @@ class Tag extends Model
         return parent::resolveChildRouteBinding($childType, $value, $field);
     }
 
+    public function user(){
+        return $this->belongsToMany('App\User', 'user_tags', 'tag_id', 'user_id');
+    }
 }

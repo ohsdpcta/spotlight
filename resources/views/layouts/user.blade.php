@@ -23,9 +23,13 @@
                 <h1>{{ UserClass::getUser(request()->id)->name }}</h1>
                 <p>{{'@'}}{{ UserClass::getUser(request()->id)->social_id }}</p>
                 {{-- タグ(仮) --}}
-                <div class="pt-4">
-                    <h5>{{ $tag }}</h5>
-                </div>
+                <?php $tags = UserClass::getTag(request()->id) ?>
+                @foreach($tags as $index => $tag)
+                    #{{ $tag->tag_name }}
+                    @if($index < count($tags) - 1)
+                        ,
+                    @endif
+                @endforeach
             </div>
 
             {{-- フォローボタン, 編集ページリンク等…… --}}

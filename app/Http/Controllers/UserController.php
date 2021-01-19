@@ -17,7 +17,7 @@ use Mail;
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller
-{ 
+{
     // インデックス
     public function index(Request $request){
         return view('index');

@@ -21,7 +21,7 @@
     </style>
 </head>
 <body>
-    <h3 class="text-light">コメント編集</h3>
+    <h3 class="text-dark">コメント編集</h3>
     <div class="pt-3">
         {{-- バリデーションエラーがある場合は出力 --}}
         @if ($errors->any())
@@ -41,18 +41,18 @@
                 <label>コメント入力</label><br>
                 <input type="text" name="scomment" value="{{old('scomment')}}" maxlength="70" placeholder="コメントを入力してください。" class="form-control"><br>
                 {{-- 各種ボタン --}}
-                <input type="submit" value="登録" class="float-right"><br>
+                <input type="submit" value="登録" class="btn btn-success"><br>
             </table>
         </form>
     </div>
 <body>
     @if($data)
-    <h1 class='text-light'>{{ UserClass::getSmallprofile(request()->id)->scomment }}</h1>
+    <h1 class='text-dark'>{{ UserClass::getSmallprofile(request()->id)->scomment }}</h1>
         <form action="/user/{{Auth::id()}}/summary/smallprofile/delete" method="post">
             @csrf
             {{-- 削除ボタン --}}
             <table>
-                <input type="submit" value="削除" class="float-right">
+                <input type="submit" value="削除" class="btn btn-success">
             </table>
         </form>
     @else

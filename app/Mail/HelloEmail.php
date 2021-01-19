@@ -33,6 +33,6 @@ class HelloEmail extends Mailable
         return $this->view('emails.contact')
             ->subject('【Spotlight】仮登録が完了しました')
             ->from($this->user['email'], $this->user['name']);
-            /*->with(['token' => $this->user->email_verify_token,]);
+            /*->with(['token' => $this->user->email_verify_token,]);*/
     }
 }

@@ -69,6 +69,7 @@ class UserController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
+        logger($request->email);
         $data = $validator->validate();
         Mail::to($request->email)->send(new HelloEmail($data));
 
@@ -270,8 +271,6 @@ class UserController extends Controller
     public function authentication(Request $request){
         $users = Auth::user();
 
-        logger($users->email_verify_token);
-        logger(User::select('email_verify_token')->get());
         if (User::where('email_verify_token','=',$users->email_verify_token)->get()){
             return view('emails.authentication',compact('users'));
         }else{

@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 use App\Locate;
-use App\Profile;
 
 class LocateController extends Controller
 {
@@ -37,9 +38,20 @@ class LocateController extends Controller
 
     //ロケーション+住所登録
     public function update(Request $request, $id){
-        $request->validate([
-            'coordinate' => 'required|string'
-        ]);
+        // バリデーションの設定
+        $rules = [
+            'coordinate'=>'required|regex:/^[-\d]\d{0,2}.\d{5,30},[-\d]\d{0,3}.\d{5,30}$/',
+        ];
+        $messages = [
+            'coordinate.required' => '登録したい場所をクリックしてください。',
+            'coordinate.regex' => '入力欄に座標が入っていることを確認してから、もう一度登録してください。',
+        ];
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if ($validator->fails()) {
+            return redirect("user/{$id}/summary/locate")
+                ->withErrors($validator)
+                ->withInput();
+        }
         $locate = new Locate;
         $locate->user_id = $id;
         $this->authorize('edit', $locate);

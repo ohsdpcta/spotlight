@@ -10,13 +10,18 @@
         <div class="row">
 
             <!-- トップ画像 -->
-            <div class="border col-xl-3 col-lg-3 col-md-4 col-sm-12 pt-2 pb-2">
-                <img src="http://placehold.jp/200x200.png" class="rounded-circle">
+            <div class="border-bottom col-xl-3 col-lg-3 col-md-4 col-sm-12 pt-2 pb-2">
+                @if(UserClass::getUser(request()->id)->avatar)
+                    <img src="{{ UserClass::getUser(request()->id)->avatar }}" width="200" height="200" class="rounded-circle">
+                @else
+                    <img src="http://placehold.jp/200x200.png" class="rounded-circle">
+                @endif
             </div>
 
             {{-- ユーザー名 --}}
-            <div class="border col-xl-6 col-lg-6 col-md-8 col-sm-12 col-xs-12 pt-2 pr-2 pb-2 pl-2">
+            <div class="border-bottom col-xl-6 col-lg-6 col-md-8 col-sm-12 col-xs-12 pt-2 pr-2 pb-2 pl-2 text-dark">
                 <h1>{{ UserClass::getUser(request()->id)->name }}</h1>
+                <p>{{'@'}}{{ UserClass::getUser(request()->id)->social_id }}</p>
                 {{-- タグ(仮) --}}
                 <div class="pt-4">
                     <h5>タグ挿入予定地(仮)</h5>
@@ -25,7 +30,7 @@
             </div>
 
             {{-- フォローボタン, 編集ページリンク等…… --}}
-            <div class="border col-xl-2 col-lg-2 col-md-12 col-sm-12">
+            <div class="border-bottom col-xl-3 col-lg-3 col-md-12 col-sm-12">
                 <!-- フォローボタン -->
                 @if(Auth::user() and Auth::user()->id != request()->id)
                     <div class="col-3">
@@ -37,7 +42,7 @@
                     </div>
                 {{-- ユーザーページ編集 --}}
                 @elseif(Auth::user() != '')
-                    <div class="col-3 pt-2">
+                    <div class="col-3 pt-2 pb-2">
                         <input class="btn btn-success" value="ユーザーページ編集" type="button"
                             onclick="location.href='/user/{{Auth::id()}}/summary/@if(request()->is('*profile'))profile\
                             @elseif(request()->is('*locate'))locate\
@@ -50,7 +55,7 @@
 
                 {{-- 投げ銭ボタン --}}
                 @if( !empty(UserClass::get_paypay_url(request()->id)) )
-                    <div class="col-3 pt-2 pb-2">
+                    <div class="col-3 pb-2">
                         <a href="/user/{{request()->id}}/tip"><img src="https://iconlab.kentakomiya.com/wp/wp-content/uploads/2019/06/icon0084.png" alt="投げ銭" width="30" height="30"></a>
                     </div>
                 @endif
@@ -61,8 +66,8 @@
 
         <!-- フォロー、フォロワー -->
         <div class="row">
-            <a class="border col-xl-2 col-lg-2 col-md-2 col-sm-3 col-xs-2" href="/user/{{ request()->id }}/followerlist">{{ UserClass::getFollower(request()->id)['follower'] }} Follower </a>
-            <a class="border col-xl-2 col-lg-2 col-md-2 col-sm-3 col-xs-2" href="/user/{{ request()->id }}/followlist">{{ UserClass::getFollower(request()->id)['follow_count'] }} Follow </a>
+            <a class="border-bottom col-xl-2 col-lg-2 col-md-2 col-sm-3 col-xs-2" href="/user/{{ request()->id }}/followerlist">{{ UserClass::getFollower(request()->id)['follower'] }} Follower </a>
+            <a class="border-bottom col-xl-2 col-lg-2 col-md-2 col-sm-3 col-xs-2" href="/user/{{ request()->id }}/followlist">{{ UserClass::getFollower(request()->id)['follow_count'] }} Follow </a>
         </div>
 
     </div>

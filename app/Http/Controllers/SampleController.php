@@ -5,12 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 use App\Sample;
 
 class SampleController extends Controller {
     public function index(Request $request, $id) {
         $data = Sample::where('user_id', $id)->paginate(10);
+        for ($i=0; $i<count($data); $i++) {
+            if ($data[$i]->embed_site == "soundcloud") {
+                $data[$i]->url = unserialize($data[$i]->url);
+            }
+        }
         return view('index.sample', compact('data'));
     }
 
@@ -36,15 +42,15 @@ class SampleController extends Controller {
         $this->authorize('edit', $addsample);
         // //バリデーションの設定
         $rules = [
-            'name'=>'required|between:1,25',
-            'url'=>'required|between:1,190|url',
+            'name'=>['required','between:1,50'],
+            'url'=>['required','between:1,1000','regex:/^.*youtube.*|.*soundcloud.*$/'],
         ];
         $messages = [
             'name.required' => 'サンプル名を入力してください。',
-            'name.between' => '２５文字以内で入力してください。',
-            'url.required' => 'URLを入力してください',
-            'url.between' => '１９０文字以内で入力してください。',
-            'url.url' => 'URLを正しく入力してください。',
+            'name.between' => '50文字以内で入力してください。',
+            'url.required' => 'urlを入力してください。',
+            'url.between' => '1000文字以内で入力してください。',
+            'url.regex' => 'コピペ',
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
         if ($validator->fails()) {
@@ -52,9 +58,29 @@ class SampleController extends Controller {
                 ->withErrors($validator)
                 ->withInput();
         }
-        $sample = $validator->validate();
         $addsample->name = $request->name;
-        $addsample->url = $request->url;
+        preg_match( '/youtube|soundcloud/', $request->url, $matches );
+        if ($matches[0] == "youtube") {
+            if (preg_match('/src="(\S+)"/', $request->url, $matches )) {
+                $addsample->embed_site = 'youtube';
+                $addsample->url = $matches[1];
+            } elseif (preg_match("/list=(\S+)/", $request->url, $matches)) {
+                $addsample->embed_site = 'youtube_list';
+                $addsample->url = $matches[1];
+            } else {
+                session()->flash('flash_message', '入力内容を確認してもう一度入力してください。');
+                return redirect("user/{$id}/summary/sample/add");
+            }
+        } elseif($matches[0] == 'soundcloud') {
+            if (preg_match_all('/src="(\S+)"|href="(\S+)"|title="(\S+|([\S\s]{1,50}) target=)"/', $request->url, $matches)) {
+                $addsample->embed_site = 'soundcloud';
+                $addsample->url = serialize($matches);
+            }
+        } else {
+            session()->flash('flash_message', '入力内容を確認してもう一度入力してください。');
+            return redirect("user/{$id}/summary/sample/add");
+        }
+
         if($addsample->save()){
             session()->flash('flash_message', 'サンプルの登録が完了しました');
         }
@@ -89,7 +115,6 @@ class SampleController extends Controller {
                 ->withErrors($validator)
                 ->withInput();
         }
-        $sample = $validator->validate();
         if(Auth::id() == $id){
             $addsample = Sample::find($sample_id);
             $addsample->name = $request->name;

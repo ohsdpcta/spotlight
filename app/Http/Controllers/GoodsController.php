@@ -55,8 +55,7 @@ class GoodsController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-        $goods = $validator->validate();
-        
+
         $addgoods->name = $request->name;
         $addgoods->url = $request->url;
         if($addgoods->save()){
@@ -92,7 +91,6 @@ class GoodsController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-        $goods = $validator->validate();
 
         if(Auth::id() == $id){
             $addgoods = Goods::find($goods_id);

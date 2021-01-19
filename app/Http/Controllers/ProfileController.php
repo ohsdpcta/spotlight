@@ -40,8 +40,7 @@ class ProfileController extends Controller {
                 ->withErrors($validator)
                 ->withInput();
         }
-        $user = $validator->validate();
-        
+
         $data->content = $request->content;
         if($data->save()){
             session()->flash('flash_message', 'プロフィールの編集が完了しました');

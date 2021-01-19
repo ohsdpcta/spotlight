@@ -5,6 +5,7 @@ namespace App\Library;
 use App\User;
 use App\Follower;
 use App\Paypay;
+use App\SmallProfile;
 use Illuminate\Support\Facades\Auth;
 
 class UserClass{
@@ -41,5 +42,11 @@ class UserClass{
       $url = '';
     }
     return $url;
+  }
+
+  public static function getSmallprofile($id){
+    $s = SmallProfile::find($id);
+    logger($s);
+    return $s;
   }
 }

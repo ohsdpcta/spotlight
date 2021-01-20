@@ -17,7 +17,7 @@ class SmallProfileController extends Controller
     }*/
 
     public function edit(Request $request, $id) {
-        $data = SmallProfile::find($id);
+        $data = SmallProfile::where('user_id', $id)->first();
         //$this->authorize('edit', $smallProfile);
         return view('summary.edit_smallprofile', compact('data'));
     }

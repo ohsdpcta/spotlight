@@ -51,7 +51,7 @@ class UserClass{
   }
 
   public static function getSmallprofile($id){
-    $s = SmallProfile::find($id);
+    $s = SmallProfile::where('user_id', $id)->first();
     logger($s);
     return $s;
   }

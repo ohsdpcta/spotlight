@@ -73,6 +73,11 @@ Route::prefix('/user')->group(function(){
             Route::get('profile', 'ProfileController@edit')->middleware('verified');
             Route::post('profile', 'ProfileController@update')->middleware('verified');
 
+            //　一言コメント
+            Route::get('smallprofile', 'SmallProfileController@edit')->middleware('verified');
+            Route::post('smallprofile', 'SmallProfileController@update')->middleware('verified');//追加するぜ
+            Route::get('smallprofile/delete', 'SmallProfileController@remove')->middleware('verified');//削除するぜ！
+
             // ロケーション編集
             Route::get('locate', 'LocateController@edit')->middleware('verified');
             Route::post('locate', 'LocateController@update')->middleware('verified');

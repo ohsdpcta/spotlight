@@ -6,6 +6,7 @@ use App\User;
 use App\Tag;
 use App\Follower;
 use App\Paypay;
+use App\SmallProfile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Arr;
 
@@ -48,6 +49,11 @@ class UserClass{
       $url = '';
     }
     return $url;
+  }
+
+  public static function getSmallprofile($id){
+    $sprofile = SmallProfile::where('user_id', $id)->first();
+    return $sprofile;
   }
 
   public static function getTag($id){

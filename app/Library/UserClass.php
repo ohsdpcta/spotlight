@@ -52,11 +52,10 @@ class UserClass{
   }
 
   public static function getSmallprofile($id){
-    $s = SmallProfile::where('user_id', $id)->first();
-    logger($s);
-    return $s;
+    $sprofile = SmallProfile::where('user_id', $id)->first();
+    return $sprofile;
   }
-  
+
   public static function getTag($id){
     $user = User::find($id);
     $tag = $user->tag()->get();

@@ -3,7 +3,7 @@
 {{-- ----------------------------------------------------------------- --}}
 
 <meta charset="utf-8">
-<title>グッズ編集 / Spotlight</title>
+<title>タグ編集 / Spotlight</title>
 
 @section('R_form')
 
@@ -20,22 +20,24 @@
 <div class="container">
 
     <div class="row">
-        <h3 class="text-dark col-md-4">グッズ編集</h3>
+        <h3 class="text-dark col-md-4">タグ編集</h3>
     </div>
 
     <div class="row">
         {{-- 新規追加ボタン --}}
-        <button type="button" class="btn btn-secondary btn-block col-md-2 offset-md-10 mb-1" onclick="location.href='/user/{{Auth::id()}}/summary/goods/add'"><i class="fas fa-plus"></i></button>
+        <button type="button" class="btn btn-secondary btn-block col-md-2 offset-md-10 mb-1" onclick="location.href='/user/{{Auth::id()}}/summary/tag/add'"><i class="fas fa-plus"></i></button>
     </div>
 
     <hr>
 
+    {{-- フラッシュメッセージ --}}
     @if(session('flash_message_error'))
         <div class="alert alert-danger text-center py-3 my-0">
             {{ session('flash_message_error') }}
         </div>
     @endif
-    <form method="get" action="/user/{{Auth::id()}}/summary/goods/delete">
+
+    <form method="get" action="/user/{{Auth::id()}}/summary/tag/delete">
         @csrf
         <input class="btn btn-danger" type="submit" value="削除">
 
@@ -49,10 +51,6 @@
                     <div class="col-md-1">
                         <img src="http://placehold.jp/50x50.png" class="rounded-circle">
                     </div>
-
-                    {{-- グッズ編集へのリンク --}}
-                    <h3 class="col-md-8 fontsize d-flex align-items-center">{{ $item->name }}</h3>
-                    <button class="col-md-2 btn btn-light btn-block" type="button" onclick="location.href='/user/{{$item->user_id}}/summary/goods/{{$item->id}}/edit'">編集</button>
 
                     {{-- 選択削除チェックボックス --}}
                     <input type="checkbox" class="col-lg-1 col-md-1 col-sm-1 col-xs-1 d-flex align-items-center form-control mt-1" name="checked_items[]" value="{{$item->id}}">

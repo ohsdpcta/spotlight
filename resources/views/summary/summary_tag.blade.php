@@ -41,26 +41,18 @@
         @csrf
         <input class="btn btn-danger" type="submit" value="削除">
 
-        @foreach($data as $item)
-
-            {{-- <div class="row"> --}}
-                {{-- 背景の四角 --}}
-                <div class="row maru pt-1 pb-1 mb-1 mt-1" style="background-color: rgb(240, 240, 240)">
-
-                    {{-- サムネ --}}
-                    <div class="col-md-1">
-                        <img src="http://placehold.jp/50x50.png" class="rounded-circle">
-                    </div>
-
-                    {{-- 選択削除チェックボックス --}}
-                    <input type="checkbox" class="col-lg-1 col-md-1 col-sm-1 col-xs-1 d-flex align-items-center form-control mt-1" name="checked_items[]" value="{{$item->id}}">
-
-                </div>
-            {{-- </div> --}}
-
+        {{-- タグ一覧を出力 --}}
+        <?php $tags = UserClass::getTag(request()->id) ?>
+        @foreach($tags as $index => $tag)
+        <div class="row maru pt-1 pb-1 mb-1 mt-1" style="background-color: rgb(240, 240, 240)">
+            #{{ $tag->tag_name }}
+            {{-- 選択削除チェックボックス --}}
+            <input type="checkbox" class="col-lg-1 col-md-1 col-sm-1 col-xs-1 d-flex align-items-center form-control mt-1" name="checked_items[]" value="{{$item->id}}">
+        </div>
         @endforeach
+
     </form>
-    {{ $data->links('vendor.pagination.sample-pagination') }}
+    {{-- {{ $data->links('vendor.pagination.sample-pagination') }} --}}
 
 </div>
 

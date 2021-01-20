@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Tag;
+use App\UserTag;
 use App\User;//一応入れた
 use GuzzleHttp\Psr7\Request as Psr7Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,27 +15,21 @@ class TagController extends Controller
 //-----------------------------------------------------------------------------------
     // 一覧
     public function summary(Request $request, $id){
-        // $tag = DB::table('user_tags')
-        //     ->join('users', 'user_tags.user_id', '=', 'users.id')
-        //     ->join('tags', 'user_tags.tag_id', '=', 'tags.id')
-        //     ->where('user.id', $id)
-        //     ->select('tag.tag_name')
-        //     ->get();
-            return view('layouts.user', compact('tag'));
+        return view('summary.summary_tag');
     }
 
     //新規追加
     public function add(Request $request, $id){
-        $tag = new Tag;
-        $tag->id = $id;
-        $this->authorize('edit', $tag);
+        $usertag = new UserTag;
+        $usertag->user_id = $id;
+        $this->authorize('add', $usertag);
         return view('summary.add_tag');
     }
 
     public function create(Request $request, $id){
-        $tag = new Tag;
-        $tag->id = $id;
-        $this->authorize('edit', $tag);
+        $usertag = new UserTag;
+        $usertag->user_id = $id;
+        $this->authorize('add', $usertag);
         // //バリデーションの設定
         $rules = [
             'name'=>'required|between:1,25'
@@ -51,8 +46,10 @@ class TagController extends Controller
         }
         $tag = $validator->validate();
 
-        $addtag->name = $request->name;
-        if($addtag->save()){
+        $tagname = new Tag;
+        $tagname->tag_name = $request->name;
+        $usertag->user_id = $request->id;
+        if($tagname->save() and $usertag->save()){
             session()->flash('flash_message', 'グッズの登録が完了しました');
         }
         return redirect("user/{$id}/summary/tag");

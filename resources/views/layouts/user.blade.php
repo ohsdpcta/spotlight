@@ -22,7 +22,7 @@
             <div class="border-bottom col-xl-6 col-lg-6 col-md-8 col-sm-12 col-xs-12 pt-2 pr-2 pb-2 pl-2 text-dark">
                 <h1>{{ UserClass::getUser(request()->id)->name }}</h1>
                 <p>{{'@'}}{{ UserClass::getUser(request()->id)->social_id }}</p>
-                {{-- タグ(仮) --}}
+                {{-- タグ --}}
                 <?php $tags = UserClass::getTag(request()->id) ?>
                 @foreach($tags as $index => $tag)
                     #{{ $tag->tag_name }}

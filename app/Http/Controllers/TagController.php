@@ -47,8 +47,9 @@ class TagController extends Controller
                 ->withInput();
         }
 
-        $tag = Tag::where('tag_name', $request->name)->first();
-        //タグの名前が既にDBに登録されていた場合
+        $tag = Tag::where('tag_name', $request->name)->first();//タグの名称が一致するものがあった場合、そのタプルを取り出している
+
+        //タグの名前がDBになかった場合、タグを新たに登録
         if(empty($tag)){
             $tag = new Tag;
             $tag->tag_name = $request->name;    //tagテーブルのtag_nameカラムに
@@ -56,10 +57,18 @@ class TagController extends Controller
                 session()->flash('flash_message', 'グッズの登録が完了しました');
             }
         }
-        //タグとユーザーの関連付け
-        $usertag->tag_id = $tag->id;
+
+        $id = Auth::id();
+        //user_idとtag_idが共に一致するカラムがある場合には、登録をスキップしたい(タグ名は前の分岐で一意に定まっているため、user_idだけ比較)
+        if($tag_rel_equal = UserTag::where('user_id', $id)->first()){
+            session()->flash('flash_message', '既に登録されています');
+        }else{
+            //タグとユーザーの関連付け
+            $usertag->tag_id = $tag->id;
             $usertag->save();
-            return redirect("user/{$id}/summary/tag");
+        }
+
+        return redirect("user/{$id}/summary/tag");
     }
 
     //タグとユーザーの関連付けが既に存在していた場合の対応

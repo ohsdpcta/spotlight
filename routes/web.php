@@ -62,16 +62,16 @@ Route::prefix('/user')->group(function(){
             Route::get('account/delete', 'UserController@delete')->middleware('verified');
             Route::get('account/remove', 'UserController@remove')->middleware('verified');
 
+            // プロフィール編集
+            Route::get('profile', 'ProfileController@edit')->middleware('verified');
+            Route::post('profile', 'ProfileController@update')->middleware('verified');
+
             //タグ編集
             Route::get('tag', 'TagController@summary')->middleware('verified');
             Route::get('tag/add', 'TagController@add')->middleware('verified');
             Route::post('tag/add', 'TagController@create')->middleware('verified');
             Route::get('tag/delete', 'TagController@delete')->middleware('verified');
             Route::post('tag/delete', 'TagController@remove')->middleware('verified');
-
-            // プロフィール編集
-            Route::get('profile', 'ProfileController@edit')->middleware('verified');
-            Route::post('profile', 'ProfileController@update')->middleware('verified');
 
             // ロケーション編集
             Route::get('locate', 'LocateController@edit')->middleware('verified');

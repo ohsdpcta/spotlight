@@ -6,9 +6,10 @@
                 </p>
         <form action="/user/emails/conteact" method="POST">
             @csrf
-        <p>{{$user->email}}</p>
-                <a href="http://127.0.0.1:8000/user/emails/authentication">アカウントの本登録はこちら</a>
+
+        <a href="http://127.0.0.1:8000/user/emails/authentication/{{Auth::user()->email_verify_token}}">アカウントの本登録はこちら</a>
         </form>
+
 
 
 

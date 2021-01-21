@@ -24,7 +24,7 @@ Route::prefix('/user')->group(function(){
     Route::get('signin', 'UserController@signin_form')->middleware('guest')->name('user.signin');
     Route::post('signin', 'UserController@signin')->middleware('guest');
     // サインアウト
-    Route::get('signout', 'UserController@signout')->middleware('verified');
+    Route::get('signout', 'UserController@signout')->middleware('auth');
     // Twitterログイン
     Route::get('signin/twitter', 'UserController@redirectToProvider')->middleware('guest');
     Route::get('signin/twitter/callback', 'UserController@handleProviderCallback')->middleware('guest');
@@ -33,7 +33,7 @@ Route::prefix('/user')->group(function(){
     Route::get('signin/google/callback', 'UserController@handleProviderCallbackGoogle')->middleware('guest');
     //メール
     Route::get('emails/conteact','UserController@conteact')->middleware('auth');
-    Route::get('emails/authentication','UserController@authentication')->middleware('auth');
+    Route::get('emails/authentication/{token}','UserController@authentication')->middleware('auth');
     Route::post('emails/confirmation','UserController@confirmation')->middleware('auth');
 
 

@@ -10,6 +10,7 @@ use App\Library\UserClass;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 //メール
+use Session;
 use Illuminate\Session\SessionManager;
 use App\Mail\HelloEmail;
 use GuzzleHttp\Psr7\Request as Psr7Request;
@@ -72,7 +73,6 @@ class UserController extends Controller
         }
 
         $data = $validator->validate();
-        Mail::to($request->email)->send(new HelloEmail($data));
 
 
 
@@ -83,10 +83,7 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->email_verify_token = base64_encode($request->email);
-        $request->session()->put('email_token',$user->email_verify_token);
         $user->save();
-
-
 
 
         // ログイン
@@ -97,6 +94,7 @@ class UserController extends Controller
         $profile->user_id = $login_user_id;
         $profile->content = 'よろしくお願いします！';
         $profile->save();
+        Mail::to($request->email)->send(new HelloEmail($data));
         // ログイン後にアクセスしようとしていたアクションにリダイレクト、無い場合はprofileへ
         return redirect()->intended("user/{$login_user_id}/profile");
     }
@@ -270,15 +268,13 @@ class UserController extends Controller
     }
     //mail本文
     public function conteact(Request $request){
-
-        $data -> session('email_token');
-        return view('emails.contact');
+        $users = Auth::user();
+        return view('emails.contact',compact('users'));
     }
     // メール
-    public function authentication(Request $request){
+    public function authentication(Request $request, $token){
         $users = Auth::user();
-
-        if (User::where('email_verify_token','=',$users->email_verify_token)->get()){
+        if ($users->email_verify_token === $token){
             return view('emails.authentication',compact('users'));
         }else{
             return redirect('/');

@@ -110,12 +110,12 @@
         display: none;
     }
     .guide {
-        transition: all 1s linear 0s;
+        transition: all 0.5s linear 0s;
         border-radius: 50%;
         cursor: pointer;
     }
     .guide:hover {
-        transform: rotateY(360deg);
+        transform: rotateY(180deg);
     }
 }
 </style>

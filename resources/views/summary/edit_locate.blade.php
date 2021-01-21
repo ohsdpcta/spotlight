@@ -6,7 +6,6 @@
 
 <html>
     <head>
-        <script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?key={{env('GOOGLE_MAP_APP_KEY')}}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gmaps.js/0.4.12/gmaps.min.js"></script>
         <meta charset="utf-8">

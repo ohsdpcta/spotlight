@@ -26,6 +26,21 @@
                 <div class="pt-4">
                     <h5>タグ挿入予定地(仮)</h5>
                 </div>
+                <?php $tags = UserClass::getTag(request()->id) ?>
+                @foreach($tags as $index => $tag)
+                    #{{ $tag->tag_name }}
+                    @if($index < count($tags) - 1)
+                        ,
+                    @endif
+                @endforeach
+            </div>
+
+            <div>
+                @if( !empty(UserClass::getSmallprofile(request()->id)->scomment) )
+                        <div class="col-3 pb-2">
+                            <h5>{{ UserClass::getSmallprofile(request()->id)->scomment }}</h5>
+                        </div>
+                    @endif
             </div>
 
             {{-- フォローボタン, 編集ページリンク等…… --}}

@@ -4,15 +4,15 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="/common/css/bootstrap.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.2/css/drawer.min.css">
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-        <script src="https://code.jquery.com/jquery-2.2.4.js"></script>
-        <script src="/common/js/bootstrap.js"></script> 
+        <script src="/common/js/bootstrap.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/iScroll/5.2.0/iscroll.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.2/js/drawer.min.js"></script>
         <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
-        
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+
         <!-- cssは移設しました -->
         <link rel="stylesheet" href="{{ asset('styles/main.css') }}">
         <link rel="stylesheet" href="{{ asset('styles/sidebar.css') }}">
@@ -80,58 +80,102 @@
         </nav>
 
         @if(session('flash_message'))
-            <div class="alert text-center py-3 my-0" style="color:#fff; background-color:#414579">
-                {{ session('flash_message') }}
-            </div>
+            <transition name="fade" id="flash-message">
+                <div v-if="show" class="alert alert-primary text-center py-3 my-0">
+                    {{ session('flash_message') }}
+                </div>
+            </transition>
         @endif
 
-        <button type="button" class="btn_menu"><i class="fas fa-bars"></i></button>
-        <!-- サイド(ドロワー)メニュー https://296.co.jp/article/09392320181809143-->
-        <nav class="border container sidebar text-dark">
-            <br>
-            {{-- 非ログイン時 --}}
-            @if(!Auth::user())
-            <ul>
-                <li class="mt-2"><a href="/user/signup">signup</a></li>
-                <li class="mt-2"><a href="/user/signin">signin</a></li>
-            </ul>
-            {{-- ログイン時 --}}
-            @else
-                <ul id="accordion_menu">
-                    {{-- フォロー一覧 --}}
-                    <li>
-                        <a data-toggle="collapse" href="#menu01" aria-controls="#menu01" aria-expanded="false">フォロー</a>
-                    </li>
-                    <ul id="menu01" class="collapse" data-parent="#accordion_menu">
-                        <?php $data = UserClass::getFollowList(Auth::user()->id) ?>
-                        @if(count($data)===0)
-                            <li class="text-dark">フォロー中のユーザーがいません<li>
-                        @else
-                        {{-- 項 --}}
-                            @foreach($data as $item)
-                                <li>
-                                    <a href="/user/{{$item->target_id}}/profile">
-                                        @if(UserClass::getUser($item->target_id)->avatar)
-                                            <img src="{{ UserClass::getUser(request()->id)->avatar }}" width="200" height="200" class="rounded-circle">
-                                        @else
-                                            <img src="http://placehold.jp/30x30.png" class="rounded-circle">
-                                        @endif
-                                        {{UserClass::getUser($item->target_id)->name}}
-                                    </a>
-                                </li>
-                            @endforeach
-                        @endif
-                    </ul>
+        <style>
+            .fade-enter-active, .fade-leave-active {
+                transition: all 1s;
+            }
+            .fade-enter, .fade-leave-to {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+        </style>
+        <script>
+            new Vue({
+                el: '#flash-message',
+                data: {
+                    show: false,
+                },
+                created: function(){
+                    setTimeout(()=>{
+                        this.show = !this.show;
+                    }, 100);
+                    setTimeout(()=>{
+                        this.show = !this.show;
+                    }, 3000);
+                }
+            })
+        </script>
+
+        <div class="side-content">
+            <button type="button" class="btn btn-info btn_menu">
+                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                </svg>
+            </button>
+            <!-- サイド(ドロワー)メニュー https://296.co.jp/article/09392320181809143 -->
+            <nav class="border container sidebar text-dark">
+                <br>
+                {{-- 非ログイン時 --}}
+                @if(!Auth::user())
+                <ul>
+                    <li class="mt-2"><a href="/user/signup">signup</a></li>
+                    <li class="mt-2"><a href="/user/signin">signin</a></li>
                 </ul>
-            @endif
+                {{-- ログイン時 --}}
+                @else
+                    <ul id="accordion_menu">
+                        {{-- フォロー一覧 --}}
+                        <li>
+                            <a data-toggle="collapse" href="#menu01" aria-controls="#menu01" aria-expanded="false">フォロー</a>
+                        </li>
+                        <ul id="menu01" class="collapse" data-parent="#accordion_menu">
+                            <?php $data = UserClass::getFollowList(Auth::user()->id) ?>
+                            @if(count($data)===0)
+                                <li class="text-dark">フォロー中のユーザーがいません<li>
+                            @else
+                            {{-- 項 --}}
+                                @foreach($data as $item)
+                                    <li>
+                                        <a href="/user/{{$item->target_id}}/profile">
+                                            @if(UserClass::getUser($item->target_id)->avatar)
+                                                <img src="{{ UserClass::getUser(request()->id)->avatar }}" width="200" height="200" class="rounded-circle">
+                                            @else
+                                                <img src="http://placehold.jp/30x30.png" class="rounded-circle">
+                                            @endif
+                                            {{UserClass::getUser($item->target_id)->name}}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            @endif
+                        </ul>
+                    </ul>
+                @endif
+            </nav>
+        </div>
 
-        </nav>
-
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script>
             $(function(){
                 $('.btn_menu').click(function(){$('nav.sidebar').toggleClass('open');});
                 $('.btn_menu').click(function(){$('button.btn_menu').toggleClass('open');});
+
+                $(document).click(function(e) {
+                    // クリックした場所がmenu-wrapper(領域内とみなす範囲)に無ければmenuを消す
+                    if(!$.contains($('div.side-content')[0], e.target)){
+                        if($('nav.sidebar').hasClass('open')){
+                            $('nav.sidebar').removeClass('open');
+                        }
+                        if($('button.btn_menu').hasClass('open')){
+                            $('button.btn_menu').removeClass('open');
+                        }
+                    }
+                });
             })
         </script>
 

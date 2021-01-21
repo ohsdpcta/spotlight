@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 use App\Profile;
-
+use App\UserTag;
 use Illuminate\Validation\Rule;
 
 class ProfileController extends Controller {
@@ -40,8 +40,7 @@ class ProfileController extends Controller {
                 ->withErrors($validator)
                 ->withInput();
         }
-        $user = $validator->validate();
-        
+
         $data->content = $request->content;
         if($data->save()){
             session()->flash('flash_message', 'プロフィールの編集が完了しました');

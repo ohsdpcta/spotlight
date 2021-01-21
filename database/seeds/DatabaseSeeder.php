@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             PaypayTableSeeder::class,
             TagsTableSeeder::class,
             UserTagTableSeeder::class,
+            SmallProfileTableSeeder::class,
         ]);
     }
 }

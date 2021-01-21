@@ -37,7 +37,7 @@ class GoodsController extends Controller
         $addgoods = new Goods;
         $addgoods->user_id = $id;
         $this->authorize('edit', $addgoods);
-        // //バリデーションの設定
+        //バリデーションの設定
         $rules = [
             'name'=>'required|between:1,25',
             'url'=>'required|between:1,190|url',
@@ -55,8 +55,7 @@ class GoodsController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-        $goods = $validator->validate();
-        
+
         $addgoods->name = $request->name;
         $addgoods->url = $request->url;
         if($addgoods->save()){
@@ -92,7 +91,6 @@ class GoodsController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-        $goods = $validator->validate();
 
         if(Auth::id() == $id){
             $addgoods = Goods::find($goods_id);

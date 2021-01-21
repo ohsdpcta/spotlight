@@ -14,7 +14,6 @@
 Auth::routes(['verify' => true]);
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'UserController@index');
-
 Route::prefix('/user')->group(function(){
      // 検索結果
     Route::get('search', 'UserController@search');
@@ -73,6 +72,7 @@ Route::prefix('/user')->group(function(){
  // 以下編集画面のルート-------------------------------------------------------------------------------
 
         Route::prefix('/summary')->group(function(){
+
              // アカウント情報編集
             Route::get('account', 'UserController@edit')->middleware('Mailvarification');
             Route::post('account', 'UserController@update')->middleware('Mailvarification');
@@ -110,6 +110,19 @@ Route::prefix('/user')->group(function(){
             Route::get('paypay', 'PaypayController@edit')->middleware('Mailvarification');//削除するぜ！
             Route::post('paypay', 'PaypayController@update')->middleware('Mailvarification');//削除するぜ！
             Route::post('paypay/delete', 'PaypayController@remove')->middleware('Mailvarification');//削除するぜ！
+
+            //タグ編集
+            Route::get('tag', 'TagController@summary')->middleware('verified');
+            Route::get('tag/add', 'TagController@add')->middleware('verified');
+            Route::post('tag/add', 'TagController@create')->middleware('verified');
+            Route::get('tag/delete', 'TagController@delete')->middleware('verified');
+            Route::post('tag/delete', 'TagController@remove')->middleware('verified');
+
+            //　一言コメント
+            Route::get('smallprofile', 'SmallProfileController@edit')->middleware('verified');
+            Route::post('smallprofile', 'SmallProfileController@update')->middleware('verified');//追加するぜ
+            Route::get('smallprofile/delete', 'SmallProfileController@remove')->middleware('verified');//削除するぜ！
+
         });
     });
 });

@@ -33,6 +33,7 @@ Route::prefix('/user')->group(function(){
     Route::get('signin/google', 'UserController@redirectToProviderGoogle')->middleware('guest');
     Route::get('signin/google/callback', 'UserController@handleProviderCallbackGoogle')->middleware('guest');
     //メール
+    Route::get('emails/conteact','UserController@conteact')->middleware('auth');
     Route::get('emails/authentication','UserController@authentication')->middleware('auth');
     Route::post('emails/confirmation','UserController@confirmation')->middleware('auth');
 

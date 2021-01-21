@@ -10,6 +10,7 @@ use App\Library\UserClass;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 //メール
+use Illuminate\Session\SessionManager;
 use App\Mail\HelloEmail;
 use GuzzleHttp\Psr7\Request as Psr7Request;
 use Illuminate\Support\Facades\Validator;
@@ -69,7 +70,7 @@ class UserController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-        logger($request->email);
+
         $data = $validator->validate();
         Mail::to($request->email)->send(new HelloEmail($data));
 
@@ -82,6 +83,7 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->email_verify_token = base64_encode($request->email);
+        $request->session()->put('email_token',$user->email_verify_token);
         $user->save();
 
 
@@ -267,6 +269,12 @@ class UserController extends Controller
         $url = UserClass::get_paypay_url($id);
         return view('social.paypay', compact('url'));
     }
+    //mail本文
+    public function conteact(Request $request){
+
+        $data -> session('email_token');
+        return view('emails.contact');
+    }
     // メール
     public function authentication(Request $request){
         $users = Auth::user();
@@ -278,6 +286,7 @@ class UserController extends Controller
         }
 
     }
+    //トークン付与
     public function confirmation(Request $request){
         $users = Auth::user();
          // 使用可能なトークンか

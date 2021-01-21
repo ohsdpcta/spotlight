@@ -27,10 +27,12 @@ class TagController extends Controller
     }
 
     public function create(Request $request, $id){
+        //認証
         $usertag = new UserTag;
-        $usertag->user_id = $id;
+        $usertag->user_id = $id;                //user_tagテーブルのuser_idカラムに自分にidを入力
         $this->authorize('add', $usertag);
-        // //バリデーションの設定
+
+        //バリデーションの設定
         $rules = [
             'name'=>'required|between:1,25'
         ];
@@ -40,23 +42,31 @@ class TagController extends Controller
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
         if ($validator->fails()) {
-            return redirect("user/{$id}/summary/tag/add")
+            return redirect("user/{Auth::id()}/summary/tag/add")
                 ->withErrors($validator)
                 ->withInput();
         }
-        $tag = $validator->validate();
 
-        $tagname = new Tag;
-        $tagname->tag_name = $request->name;
-        $usertag->user_id = $request->id;
-        if($tagname->save() and $usertag->save()){
-            session()->flash('flash_message', 'グッズの登録が完了しました');
+        $tag = Tag::where('tag_name', $request->name)->first();
+        //タグの名前が既にDBに登録されていた場合
+        if(empty($tag)){
+            $tag = new Tag;
+            $tag->tag_name = $request->name;    //tagテーブルのtag_nameカラムに
+            if($tag->save()){
+                session()->flash('flash_message', 'グッズの登録が完了しました');
+            }
         }
-        return redirect("user/{$id}/summary/tag");
+        //タグとユーザーの関連付け
+        $usertag->tag_id = $tag->id;
+            $usertag->save();
+            return redirect("user/{$id}/summary/tag");
     }
 
+    //タグとユーザーの関連付けが既に存在していた場合の対応
+
 //-------------------------------------------------------------------------------------
-//以下goodsのコピー
+//---------------------------以下goodsのコピー------------------------------------------
+//-------------------------------------------------------------------------------------
 
     // 削除確認画面
     public function delete(Request $request, $id) {

@@ -43,13 +43,15 @@
 
         {{-- タグ一覧を出力 --}}
         <?php $tags = UserClass::getTag(request()->id) ?>
-        @foreach($tags as $index => $tag)
-        <div class="row maru pt-1 pb-1 mb-1 mt-1" style="background-color: rgb(240, 240, 240)">
-            #{{ $tag->tag_name }}
-            {{-- 選択削除チェックボックス --}}
-            <input type="checkbox" class="col-lg-1 col-md-1 col-sm-1 col-xs-1 d-flex align-items-center form-control mt-1" name="checked_items[]" value="{{$item->id}}">
-        </div>
-        @endforeach
+        @if($tags)
+            @foreach($tags as $tag)
+                <div class="row maru pt-1 pb-1 mb-1 mt-1" style="background-color: rgb(240, 240, 240)">
+                    {{ $tag->tag_name }}
+                    {{-- 選択削除チェックボックス --}}
+                    <input type="checkbox" class="col-lg-1 col-md-1 col-sm-1 col-xs-1 d-flex align-items-center form-control mt-1" name="checked_items[]" value="{{$tag->id}}">
+                </div>
+            @endforeach
+        @endif
 
     </form>
     {{-- {{ $data->links('vendor.pagination.sample-pagination') }} --}}

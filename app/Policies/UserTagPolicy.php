@@ -13,7 +13,13 @@ class UserTagPolicy
 
     //---------------↓↓↓↓作ったやつ↓↓↓↓---------------------------------
 
-    public function add(User $user, UserTag $usertag){
+    public function add(User $user, UserTag $usertag)
+    {
+        return (string)Auth::user()->id === $usertag->user_id;
+    }
+
+    public function delete(User $user, UserTag $usertag)
+    {
         return (string)Auth::user()->id === $usertag->user_id;
     }
 
@@ -61,18 +67,6 @@ class UserTagPolicy
      * @return mixed
      */
     public function update(User $user, UserTag $userTag)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can delete the user tag.
-     *
-     * @param  \App\User  $user
-     * @param  \App\UserTag  $userTag
-     * @return mixed
-     */
-    public function delete(User $user, UserTag $userTag)
     {
         //
     }

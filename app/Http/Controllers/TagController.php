@@ -70,9 +70,6 @@ class TagController extends Controller
 
         return redirect("user/{$id}/summary/tag");
     }
-
-    //タグとユーザーの関連付けが既に存在していた場合の対応
-
 //-------------------------------------------------------------------------------------
 //---------------------------以下goodsのコピー------------------------------------------
 //-------------------------------------------------------------------------------------
@@ -84,9 +81,10 @@ class TagController extends Controller
             return redirect("/user/{$id}/summary/tag");
         }
         $checked_id_str = implode(',', $request->checked_items);
-        $data = Tag::find($request->checked_items);
+        $data = UserTag::find($request->checked_items);
+        // $data = UserTag::where('tag_id', $request->checked_items)->first();
         foreach($data as $item){
-            $this->authorize('edit', $item);
+            $this->authorize('delete', $item->user_id);
         }
         return view('summary.delete_tag', compact('data', 'checked_id_str'));
     }

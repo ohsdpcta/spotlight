@@ -304,5 +304,16 @@ class UserController extends Controller
 
         }
     }
+    //パスワード変更メール送信ページ
+    public function change(Request $request){
+        return view('emails.change');
+    }
+    //送信
+    public function send(Request $request){
+
+    }
+
+
+
 
 }

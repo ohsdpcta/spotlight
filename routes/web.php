@@ -112,17 +112,20 @@ Route::prefix('/user')->group(function(){
             Route::post('paypay/delete', 'PaypayController@remove')->middleware('Mailvarification');//削除するぜ！
 
             //タグ編集
-            Route::get('tag', 'TagController@summary')->middleware('verified');
-            Route::get('tag/add', 'TagController@add')->middleware('verified');
-            Route::post('tag/add', 'TagController@create')->middleware('verified');
-            Route::get('tag/delete', 'TagController@delete')->middleware('verified');
-            Route::post('tag/delete', 'TagController@remove')->middleware('verified');
+            Route::get('tag', 'TagController@summary')->middleware('Mailvarification');
+            Route::get('tag/add', 'TagController@add')->middleware('Mailvarification');
+            Route::post('tag/add', 'TagController@create')->middleware('Mailvarification');
+            Route::get('tag/delete', 'TagController@delete')->middleware('Mailvarification');
+            Route::post('tag/delete', 'TagController@remove')->middleware('Mailvarification');
 
             //　一言コメント
-            Route::get('smallprofile', 'SmallProfileController@edit')->middleware('verified');
-            Route::post('smallprofile', 'SmallProfileController@update')->middleware('verified');//追加するぜ
-            Route::get('smallprofile/delete', 'SmallProfileController@remove')->middleware('verified');//削除するぜ！
+            Route::get('smallprofile', 'SmallProfileController@edit')->middleware('Mailvarification');
+            Route::post('smallprofile', 'SmallProfileController@update')->middleware('Mailvarification');//追加するぜ
+            Route::get('smallprofile/delete', 'SmallProfileController@remove')->middleware('Mailvarification');//削除するぜ！
 
+            //パスワード変更メール送信
+            Route::get('change','UserController@change')->middleware('Mailvarification');
+            Route::post('change/send','UserController@send')->middleware('Mailvarification');
         });
     });
 });

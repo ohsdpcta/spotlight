@@ -1,5 +1,3 @@
-<!-- タグ削除機能が関連付けの削除ではなく、関連付けとタグそのものの全てを削除する形になっている
-タグ削除昨日に認証機能がつけられていない -->
 <?php
 
 namespace App\Http\Controllers;
@@ -94,11 +92,17 @@ class TagController extends Controller
     // 削除処理
     public function remove(Request $request, $id) {
         $delete_item_id = explode(',', $request->checked_id_str);
-        $data = Tag::find($delete_item_id);
-        // $data = UserTag::find($delete_item_id);
-        // $data = UserTag::where('tag_id', $delete_item_id)->where('user_id', Auth::id())->get();
-        $data->each->delete();
+        // $data = User::find($delete_item_id);
+        // $data = UserTag::find($delete_item_id)->get();
+        foreach($delete_item_id as $i){
+            $data = UserTag::where('tag_id', $i)->get();
+            logger($data);
+            $data->each->delete();
+        }
         session()->flash('flash_message', '削除が完了しました');
         return redirect("/user/{$id}/summary/tag");
     }
 }
+
+// <!-- タグ削除機能が関連付けの削除ではなく、関連付けとタグそのものの全てを削除する形になっている
+// タグ削除昨日に認証機能がつけられていない -->

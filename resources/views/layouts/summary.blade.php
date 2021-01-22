@@ -27,11 +27,14 @@
                     <h3 class="text-dark mt-2">設定</h3>
                     <div class="form-group">
                         <p><a class="text-primary btn @if(request()->is('*account*')) disabled @endif" href="/user/{{Auth::id()}}/summary/account/">アカウント情報</a></p>
+                        <p><a class="text-primary btn @if(request()->is('*account*')) disabled @endif" href="/user/{{Auth::id()}}/summary/tag/">タグ編集</a></p>
                         <p><a class="text-primary btn @if(request()->is('*profile*')) disabled @endif" href="/user/{{Auth::id()}}/summary/profile">プロフィール情報</a></p>
                         <p><a class="text-primary btn @if(request()->is('*locate*')) disabled @endif" href="/user/{{Auth::id()}}/summary/locate/">ロケーション情報</a></p>
                         <p><a class="text-primary btn @if(request()->is('*goods*')) disabled @endif" href="/user/{{Auth::id()}}/summary/goods/">グッズ情報</a></p>
                         <p><a class="text-primary btn @if(request()->is('*sample*')) disabled @endif" href="/user/{{Auth::id()}}/summary/sample/">サンプル情報</a></p>
                         <p><a class="text-primary btn @if(request()->is('*paypay*')) disabled @endif" href="/user/{{Auth::id()}}/summary/paypay/">PayPayURL</a></p>
+                        <p><a class="text-primary btn @if(request()->is('*smallprofile*')) disabled @endif" href="/user/{{Auth::id()}}/summary/smallprofile/">ひと言コメント編集</a></p>
+                        <p><a href="/user/{{Auth::id()}}/summary/change/">パスワード変更</a></p>
                     </div>
                 </div>
 

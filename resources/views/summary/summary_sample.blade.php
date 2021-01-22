@@ -5,7 +5,6 @@
 <meta charset="utf-8">
 <title>サンプル編集 / Spotlight</title>
 
-
 {{-- ------------------------------------------------------------------------------- --}}
 
 @section('R_form')
@@ -18,6 +17,7 @@
     /* .fontsize {
         font-size: 150%;
     } */
+}
 </style>
 
 <div class="container">
@@ -34,7 +34,7 @@
     <hr>
 
     @if(session('flash_message_error'))
-        <div class="alert text-center py-3 my-0" style="color:#fff; background-color:#df1e00">
+        <div class="alert alert-danger text-center py-3 my-0">
             {{ session('flash_message_error') }}
         </div>
     @endif
@@ -59,12 +59,12 @@
 
                     {{-- 選択削除チェックボックス --}}
                     <input type="checkbox" class="col-lg-1 col-md-1 col-sm-1 col-xs-1 d-flex align-items-center form-control mt-1" name="checked_items[]" value="{{$item->id}}">
-
                 </div>
             {{-- </div> --}}
 
         @endforeach
     </form>
+
     {{ $data->links('vendor.pagination.sample-pagination') }}
 
 </div>

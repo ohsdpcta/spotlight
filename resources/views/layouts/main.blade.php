@@ -81,8 +81,14 @@
 
         @if(session('flash_message'))
             <transition name="fade" id="flash-message">
-                <div v-if="show" class="alert text-center py-3 my-0" style="color:#fff; background-color:#414579;">
+                <div v-if="show" class="alert alert-primary text-center py-3 my-0">
                     {{ session('flash_message') }}
+                </div>
+            </transition>
+        @elseif(session('flash_message_error'))
+            <transition name="fade" id="flash-message">
+                <div v-if="show" class="alert alert-danger text-center py-3 my-0">
+                    {{ session('flash_message_error') }}
                 </div>
             </transition>
         @endif
@@ -114,15 +120,29 @@
         </script>
 
         <div class="side-content">
-            <button type="button" class="btn_menu"><i class="fas fa-bars"></i></button>
+            <button type="button" class="btn btn-info btn_menu">
+                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                </svg>
+            </button>
             <!-- サイド(ドロワー)メニュー https://296.co.jp/article/09392320181809143 -->
             <nav class="border container sidebar text-dark">
                 <br>
                 {{-- 非ログイン時 --}}
                 @if(!Auth::user())
                 <ul>
-                    <li class="mt-2"><a href="/user/signup">signup</a></li>
-                    <li class="mt-2"><a href="/user/signin">signin</a></li>
+                    <li class="mt-2">
+                        <button class="btn btn-outline-primary btn-block pl-2" onclick="location.href='/user/signup'">
+                            <i class="fas fa-user-plus" style="font-size: 1.7em"></i>
+                            <strong class="ml-2">sign up</strong>
+                        </button>
+                    </li>
+                    <li class="mt-2">
+                        <button class="btn btn-outline-primary btn-block pl-2" onclick="location.href='/user/signup'">
+                            <i class="fas fa-sign-in-alt fa-2x" style="font-size: 2.1em"></i>
+                            <strong class="ml-2">sign in</strong>
+                        </button>
+                    </li>
                 </ul>
                 {{-- ログイン時 --}}
                 @else

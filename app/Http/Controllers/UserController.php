@@ -10,9 +10,14 @@ use App\Library\UserClass;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 //メール
+use Session;
+use Illuminate\Session\SessionManager;
 use App\Mail\HelloEmail;
+use GuzzleHttp\Psr7\Request as Psr7Request;
 use Illuminate\Support\Facades\Validator;
 use Mail;
+
+
 
 use Illuminate\Validation\Rule;
 
@@ -20,6 +25,7 @@ class UserController extends Controller
 {
     // インデックス
     public function index(Request $request){
+
         return view('index');
     }
 
@@ -56,15 +62,19 @@ class UserController extends Controller
             'password.required' => 'パスワードを入力して下さい。',
             'password.max' => 'パスワードは128文字以下で入力して下さい。',
         ];
+
+
+        //メール送信
         $validator = Validator::make($request->all(), $rules, $messages);
         if ($validator->fails()) {
-            return redirect('/user.signup')
+            return redirect('/user/signup')
                 ->withErrors($validator)
                 ->withInput();
         }
+
         $data = $validator->validate();
-        Mail::to('admin@hoge.co.jp')->send(new HelloEmail($data));
-        session()->flash('success', '送信いたしました！');
+
+
 
         // $userにデータを設定する
         $user = new User;
@@ -72,7 +82,10 @@ class UserController extends Controller
         $user->social_id = $request->social_id;
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
+        $user->email_verify_token = base64_encode($request->email);
         $user->save();
+
+
         // ログイン
         Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')]);
         $login_user_id = Auth::id();
@@ -81,6 +94,7 @@ class UserController extends Controller
         $profile->user_id = $login_user_id;
         $profile->content = 'よろしくお願いします！';
         $profile->save();
+        Mail::to($request->email)->send(new HelloEmail($data));
         // ログイン後にアクセスしようとしていたアクションにリダイレクト、無い場合はprofileへ
         return redirect()->intended("user/{$login_user_id}/profile");
     }
@@ -141,6 +155,7 @@ class UserController extends Controller
                 'name' => $user->name,
                 'email' => $user->email,
                 'avatar' => $user->avatar_original,
+                'status' => '2',
             ]);
             if(empty($socialUser->email_verified_at)){
                 $socialUser->email_verified_at = now();
@@ -178,6 +193,7 @@ class UserController extends Controller
                 'name' => $user->name,
                 'email' => $user->email,
                 'avatar' => $user->avatar_original,
+                'status' => '2',
             ]);
             if(empty($socialUser->email_verified_at)){
                 $socialUser->email_verified_at = now();
@@ -229,6 +245,7 @@ class UserController extends Controller
         // dataに値を設定
         $data = User::find($id);
         $data->name = $request->name;
+        $data->role = $request->role;
         if($data->save()){
             session()->flash('flash_message', 'アカウント情報の編集が完了しました');
         }
@@ -252,13 +269,54 @@ class UserController extends Controller
         $url = UserClass::get_paypay_url($id);
         return view('social.paypay', compact('url'));
     }
+    //mail本文
+    public function conteact(Request $request){
+        $users = Auth::user();
+        return view('emails.contact',compact('users'));
+    }
     // メール
-    public function authentication(Request $request){
-        $user = Auth::user();
-        return view('emails.authentication',compact('user'));
-    }
-    public function confirmation(Request $request,$id){
+    public function authentication(Request $request, $token){
+        $users = Auth::user();
+        if ($users->email_verify_token === $token){
+            return view('emails.authentication',compact('users'));
+        }else{
+            return redirect('/');
+        }
 
-        return redirect("user/{$id}/summary/profile");
     }
+    //トークン付与
+    public function confirmation(Request $request){
+        $users = Auth::user();
+         // 使用可能なトークンか
+        if ( !User::where('email_verify_token',$users->email_verify_token)->exists() )
+        {
+
+            return view('auth.main.register')->with('message', '無効なトークンです。');
+        } else {
+            $user_data = User::where('email_verify_token', $users->email_verify_token)->first();
+             // ユーザーステータス更新
+            if (User::where('email_verify_token',$users->email_verify_token)->exists() ){
+                //$user_data->email_verified_at = Carbon::now();
+                $user_data->status = '2';
+                $user_data->save();
+
+                return view('auth.main.registered');
+            }else{
+                return view('auth.main.register')->with('message', 'トークンが一致しませんでした。');
+            }
+
+        }
+    }
+    //パスワード変更メール送信ページ
+    public function change(Request $request){
+        return view('emails.change');
+    }
+    //送信
+    public function send(Request $request){
+
+    }
+
+
+
+
 }

@@ -3,9 +3,12 @@
 namespace App\Library;
 
 use App\User;
+use App\Tag;
 use App\Follower;
 use App\Paypay;
+use App\SmallProfile;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Arr;
 
 class UserClass{
   public static function getUser($id){
@@ -21,9 +24,9 @@ class UserClass{
       ->where('follower_id', Auth::id())
       ->get();
     if(count($follow)>=1){
-        $follow_flg = 1;
+      $follow_flg = 1;
     }else{
-        $follow_flg = 0;
+      $follow_flg = 0;
     }
     $follow_data = [
       'follower' => $follower,
@@ -35,7 +38,6 @@ class UserClass{
 
   public static function getFollowList($id){
     $followlist = Follower::where('follower_id', $id)->get();
-    logger(gettype($followlist));
     return $followlist;
   }
 
@@ -47,5 +49,16 @@ class UserClass{
       $url = '';
     }
     return $url;
+  }
+
+  public static function getSmallprofile($id){
+    $sprofile = SmallProfile::where('user_id', $id)->first();
+    return $sprofile;
+  }
+
+  public static function getTag($id){
+    $user = User::find($id);
+    $tag = $user->tag()->get();
+    return $tag;
   }
 }

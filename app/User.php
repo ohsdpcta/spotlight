@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use app\Tag;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -16,7 +17,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'social_id','token', 'avatar',
+        'name', 'email', 'password', 'social_id','token', 'avatar','email_verified', 'email_verify_token','status',
     ];
 
     /**
@@ -54,9 +55,8 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsTo('App\Sample');
     }
 
-    public function tag()
-    {
-        return $this->belongsTo('App\Tag');
+    public function tag(){
+        return $this->belongsToMany('App\Tag', 'user_tags', 'user_id', 'tag_id');
     }
 
     public function followees(){

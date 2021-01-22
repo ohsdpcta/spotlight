@@ -10,23 +10,15 @@ use App\SmallProfile;
 
 class SmallProfileController extends Controller
 {
-    /*public function index(Request $request, $id){
-        $data = SmallProfile::where('user_id', $id)->first();
-        //logger($data);
-        return view('layouts.user', compact('data'));
-    }*/
-
     public function edit(Request $request, $id) {
         $data = SmallProfile::where('user_id', $id)->first();
-        //$this->authorize('edit', $smallProfile);
+        $smallprofile = new SmallProfile;
+        $smallprofile->user_id = $id;
+        $this->authorize('edit', $smallprofile);
         return view('summary.edit_smallprofile', compact('data'));
     }
 
     public function update(Request $request, $id) {
-        // dataに値を設定
-        //$data = SmallProfile::where('user_id', $id)->first();
-        //$this->authorize('edit', $data);
-        // //バリデーションの設定
         $rules = [
             'scomment'=>'between:1,50',
         ];
@@ -40,9 +32,11 @@ class SmallProfileController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-        $data = $validator->validate();
+        $smallprofile = new SmallProfile;
+        $smallprofile->user_id = $id;
+        $this->authorize('edit', $smallprofile);
         if(Auth::id() == $id){
-            $data = SmallProfile::where('user_id', Auth::id())->first();
+            $data = SmallProfile::where('user_id', $id)->first();
             if($data){
                 $data->scomment = $request->scomment;
             }else{
@@ -60,6 +54,9 @@ class SmallProfileController extends Controller
 
     public function remove(Request $request, $id){
         // レコードを削除する。
+        $smallprofile = new SmallProfile;
+        $smallprofile->user_id = $id;
+        $this->authorize('edit', $smallprofile);
         if(SmallProfile::where('user_id', Auth::id())->delete()){
             session()->flash('flash_message', 'コメントを削除しました');
         }

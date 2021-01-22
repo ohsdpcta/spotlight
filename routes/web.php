@@ -10,21 +10,21 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Auth::routes(['verify' => true]);
 
+Auth::routes(['verify' => true]);
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'UserController@index');
 Route::prefix('/user')->group(function(){
-    // 検索結果
+     // 検索結果
     Route::get('search', 'UserController@search');
-    // サインアップ
+     // サインアップ
     Route::get('signup', 'UserController@signup_form')->middleware('guest');
     Route::post('signup', 'UserController@signup')->middleware('guest');
-    // サインイン
+     // サインイン
     Route::get('signin', 'UserController@signin_form')->middleware('guest')->name('user.signin');
     Route::post('signin', 'UserController@signin')->middleware('guest');
     // サインアウト
-    Route::get('signout', 'UserController@signout')->middleware('verified');
+    Route::get('signout', 'UserController@signout')->middleware('auth');
     // Twitterログイン
     Route::get('signin/twitter', 'UserController@redirectToProvider')->middleware('guest');
     Route::get('signin/twitter/callback', 'UserController@handleProviderCallback')->middleware('guest');
@@ -32,79 +32,100 @@ Route::prefix('/user')->group(function(){
     Route::get('signin/google', 'UserController@redirectToProviderGoogle')->middleware('guest');
     Route::get('signin/google/callback', 'UserController@handleProviderCallbackGoogle')->middleware('guest');
     //メール
-    Route::get('emails/authentication','UserController@authentication')->middleware('verified');
+    Route::get('emails/conteact','UserController@conteact')->middleware('auth');
+    Route::get('emails/authentication/{token}','UserController@authentication')->middleware('auth');
+    Route::post('emails/confirmation','UserController@confirmation')->middleware('auth');
+
+
+
 
     Route::prefix('/{id}')->group(function(){
-        // フォロー
-        Route::get('follow', 'FollowerController@follow')->middleware('verified');
-        Route::get('unfollow', 'FollowerController@unfollow')->middleware('verified');
-        Route::get('followlist', 'FollowerController@followlist')->middleware('verified');
-        Route::get('followerlist', 'FollowerController@followerlist')->middleware('verified');
-
-        // プロフィール
+         // プロフィール
         Route::get('profile', 'ProfileController@index');
-        // ロケーション
+
+         // フォロー
+        Route::get('follow', 'FollowerController@follow')->middleware('Mailvarification');
+        Route::get('unfollow', 'FollowerController@unfollow')->middleware('Mailvarification');
+        Route::get('followlist', 'FollowerController@followlist')->middleware('Mailvarification');
+        Route::get('followerlist', 'FollowerController@followerlist')->middleware('Mailvarification');
+
+         // ロケーション
         Route::get('locate', 'LocateController@index');
-        //グッズ
+        Route::get('locate/add_locate', 'LocateController@add_locate_form')->middleware('Mailvarification');
+        Route::post('locate/add_locate', 'LocateController@add_locate')->middleware('Mailvarification');
+        Route::get('locate/del_locate', 'LocateController@del_locate_form')->middleware('Mailvarification');
+        Route::post('locate/del_locate', 'LocateController@remove_locate')->middleware('Mailvarification');
+
+         //グッズ
         Route::get('goods', 'GoodsController@index');
-        // サンプル
+        Route::get('goods/multi_del', 'GoodsController@multi_del')->middleware('Mailvarification');
+        Route::post('goods/multi_del', 'GoodsController@multi_remove')->middleware('Mailvarification');
+         // サンプル
         Route::get('sample', 'SampleController@index');
-        // 投げ銭
+        Route::get('sample/multi_del', 'SampleController@multi_del')->middleware('Mailvarification');
+        Route::post('sample/multi_del', 'SampleController@multi_remove')->middleware('Mailvarification');
+
+         // 投げ銭
         Route::get('tip', 'UserController@tip');
 
 
-// 以下編集画面のルート-------------------------------------------------------------------------------
+ // 以下編集画面のルート-------------------------------------------------------------------------------
 
         Route::prefix('/summary')->group(function(){
-            // アカウント情報編集
-            Route::get('account', 'UserController@edit')->middleware('verified');
-            Route::post('account', 'UserController@update')->middleware('verified');
-            Route::get('account/delete', 'UserController@delete')->middleware('verified');
-            Route::get('account/remove', 'UserController@remove')->middleware('verified');
+
+             // アカウント情報編集
+            Route::get('account', 'UserController@edit')->middleware('Mailvarification');
+            Route::post('account', 'UserController@update')->middleware('Mailvarification');
+            Route::get('account/delete', 'UserController@delete')->middleware('Mailvarification');
+            Route::post('account/delete', 'UserController@remove')->middleware('Mailvarification');
+
+             // プロフィール編集
+            Route::get('profile', 'ProfileController@edit')->middleware('Mailvarification');
+            Route::post('profile', 'ProfileController@update')->middleware('Mailvarification');
+
+             // ロケーション編集
+            Route::get('locate', 'LocateController@edit')->middleware('Mailvarification');
+            Route::post('locate', 'LocateController@update')->middleware('Mailvarification');
+            Route::post('locate/delete', 'LocateController@remove')->middleware('Mailvarification');
+
+             // グッズ編集
+            Route::get('goods', 'GoodsController@summary')->middleware('Mailvarification');//一覧画面
+            Route::get('goods/add', 'GoodsController@add')->middleware('Mailvarification');//追加画面
+            Route::post('goods/add', 'GoodsController@create')->middleware('Mailvarification');//追加するぜ！
+            Route::get('goods/{goods_id}/edit', 'GoodsController@edit')->middleware('Mailvarification');//編集画面
+            Route::post('goods/{goods_id}/edit', 'GoodsController@update')->middleware('Mailvarification');//編集するぜ！
+            Route::get('goods/delete', 'GoodsController@delete')->middleware('Mailvarification');//削除画面
+            Route::post('goods/delete', 'GoodsController@remove')->middleware('Mailvarification');//削除するぜ！
+
+             // サンプル編集
+            Route::get('sample', 'SampleController@summary')->middleware('Mailvarification');//一覧画面
+            Route::get('sample/add', 'SampleController@add')->middleware('Mailvarification');//追加画面
+            Route::post('sample/add', 'SampleController@create')->middleware('Mailvarification');//追加するぜ！
+            Route::get('sample/{sample_id}/edit', 'SampleController@edit')->middleware('Mailvarification');//編集画面
+            Route::post('sample/{sample_id}/edit', 'SampleController@update')->middleware('Mailvarification');//編集するぜ！
+            Route::get('sample/delete', 'SampleController@delete')->middleware('Mailvarification');//削除画面
+            Route::post('sample/delete', 'SampleController@remove')->middleware('Mailvarification');//削除するぜ！
+
+             // PayPayURL
+            Route::get('paypay', 'PaypayController@edit')->middleware('Mailvarification');//削除するぜ！
+            Route::post('paypay', 'PaypayController@update')->middleware('Mailvarification');//削除するぜ！
+            Route::post('paypay/delete', 'PaypayController@remove')->middleware('Mailvarification');//削除するぜ！
 
             //タグ編集
-            Route::get('tag', 'TagController@summary')->middleware('verified');
-            Route::get('tag/add', 'TagController@add')->middleware('verified');
-            Route::post('tag/add', 'TagController@create')->middleware('verified');
-            Route::get('tag/delete', 'TagController@delete')->middleware('verified');
-            Route::post('tag/delete', 'TagController@remove')->middleware('verified');
-
-            // プロフィール編集
-            Route::get('profile', 'ProfileController@edit')->middleware('verified');
-            Route::post('profile', 'ProfileController@update')->middleware('verified');
+            Route::get('tag', 'TagController@summary')->middleware('Mailvarification');
+            Route::get('tag/add', 'TagController@add')->middleware('Mailvarification');
+            Route::post('tag/add', 'TagController@create')->middleware('Mailvarification');
+            Route::get('tag/delete', 'TagController@delete')->middleware('Mailvarification');
+            Route::post('tag/delete', 'TagController@remove')->middleware('Mailvarification');
 
             //　一言コメント
-            Route::get('smallprofile', 'SmallProfileController@edit')->middleware('verified');
-            Route::post('smallprofile', 'SmallProfileController@update')->middleware('verified');//追加するぜ
-            Route::get('smallprofile/delete', 'SmallProfileController@remove')->middleware('verified');//削除するぜ！
+            Route::get('smallprofile', 'SmallProfileController@edit')->middleware('Mailvarification');
+            Route::post('smallprofile', 'SmallProfileController@update')->middleware('Mailvarification');//追加するぜ
+            Route::get('smallprofile/delete', 'SmallProfileController@remove')->middleware('Mailvarification');//削除するぜ！
 
-            // ロケーション編集
-            Route::get('locate', 'LocateController@edit')->middleware('verified');
-            Route::post('locate', 'LocateController@update')->middleware('verified');
-            Route::get('locate/delete', 'LocateController@remove')->middleware('verified');
-
-            // グッズ編集
-            Route::get('goods', 'GoodsController@summary')->middleware('verified');//一覧画面
-            Route::get('goods/add', 'GoodsController@add')->middleware('verified');//追加画面
-            Route::post('goods/add', 'GoodsController@create')->middleware('verified');//追加するぜ！
-            Route::get('goods/{goods_id}/edit', 'GoodsController@edit')->middleware('verified');//編集画面
-            Route::post('goods/{goods_id}/edit', 'GoodsController@update')->middleware('verified');//編集するぜ！
-            Route::get('goods/delete', 'GoodsController@delete')->middleware('verified');//削除画面
-            Route::post('goods/delete', 'GoodsController@remove')->middleware('verified');//削除するぜ！
-
-            // サンプル編集
-            Route::get('sample', 'SampleController@summary')->middleware('verified');//一覧画面
-            Route::get('sample/add', 'SampleController@add')->middleware('verified');//追加画面
-            Route::post('sample/add', 'SampleController@create')->middleware('verified');//追加するぜ！
-            Route::get('sample/{sample_id}/edit', 'SampleController@edit')->middleware('verified');//編集画面
-            Route::post('sample/{sample_id}/edit', 'SampleController@update')->middleware('verified');//編集するぜ！
-            Route::get('sample/delete', 'SampleController@delete')->middleware('verified');//削除画面
-            Route::post('sample/delete', 'SampleController@remove')->middleware('verified');//削除するぜ！
-
-            // PayPayURL
-            Route::get('paypay', 'PaypayController@edit')->middleware('verified');//削除するぜ！
-            Route::post('paypay', 'PaypayController@update')->middleware('verified');//削除するぜ！
-            Route::get('paypay/delete', 'PaypayController@remove')->middleware('verified');//削除するぜ！
+            //パスワード変更メール送信
+            Route::get('change','UserController@change')->middleware('Mailvarification');
+            Route::post('change/send','UserController@send')->middleware('Mailvarification');
         });
     });
 });

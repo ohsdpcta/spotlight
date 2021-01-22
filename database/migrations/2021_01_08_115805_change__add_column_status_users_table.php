@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class EditSmallprofileTable extends Migration
+class ChangeAddColumnStatusUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class EditSmallprofileTable extends Migration
      */
     public function up()
     {
-        Schema::table('smallprofile', function (Blueprint $table) {
-            $table->string('scomment')->default('よろしく')->change();
+        Schema::table('users', function (Blueprint $table) {
+                $table->string('status')->default('0')->change();
+
+
         });
     }
 
@@ -25,8 +27,8 @@ class EditSmallprofileTable extends Migration
      */
     public function down()
     {
-        Schema::table('smallprofile', function (Blueprint $table) {
-            $table->string('scomment')->default('aaaaa')->change();
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('status')->change();
         });
     }
 }

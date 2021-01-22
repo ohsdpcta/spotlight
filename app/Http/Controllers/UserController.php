@@ -155,6 +155,7 @@ class UserController extends Controller
                 'name' => $user->name,
                 'email' => $user->email,
                 'avatar' => $user->avatar_original,
+                'status' => '2',
             ]);
             if(empty($socialUser->email_verified_at)){
                 $socialUser->email_verified_at = now();
@@ -192,7 +193,7 @@ class UserController extends Controller
                 'name' => $user->name,
                 'email' => $user->email,
                 'avatar' => $user->avatar_original,
-                'email_verified' => 2,
+                'status' => '2',
             ]);
             if(empty($socialUser->email_verified_at)){
                 $socialUser->email_verified_at = now();

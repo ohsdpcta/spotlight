@@ -10,12 +10,6 @@ use App\SmallProfile;
 
 class SmallProfileController extends Controller
 {
-    /*public function index(Request $request, $id){
-        $data = SmallProfile::where('user_id', $id)->first();
-        //logger($data);
-        return view('layouts.user', compact('data'));
-    }*/
-
     public function edit(Request $request, $id) {
         $data = SmallProfile::where('user_id', $id)->first();
         //$this->authorize('edit', $smallProfile);

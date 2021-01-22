@@ -125,8 +125,18 @@
                 {{-- 非ログイン時 --}}
                 @if(!Auth::user())
                 <ul>
-                    <li class="mt-2"><a href="/user/signup">signup</a></li>
-                    <li class="mt-2"><a href="/user/signin">signin</a></li>
+                    <li class="mt-2">
+                        <button class="btn btn-outline-primary btn-block pl-2" onclick="location.href='/user/signup'">
+                            <i class="fas fa-user-plus" style="font-size: 1.7em"></i>
+                            <strong class="ml-2">sign up</strong>
+                        </button>
+                    </li>
+                    <li class="mt-2">
+                        <button class="btn btn-outline-primary btn-block pl-2" onclick="location.href='/user/signup'">
+                            <i class="fas fa-sign-in-alt fa-2x" style="font-size: 2.1em"></i>
+                            <strong class="ml-2">sign in</strong>
+                        </button>
+                    </li>
                 </ul>
                 {{-- ログイン時 --}}
                 @else

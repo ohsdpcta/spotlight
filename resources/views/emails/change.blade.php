@@ -5,8 +5,9 @@
     </head>
 
         <p>パスワード変更メールの送信を行いますか？</p>
-        <form action="change/send" method="POST">
-
+    <form action="changemail" method="POST">
+        @csrf
+            <label><input type="submit" name="send" value="送信"> </label>
 
         </form>
 </html>

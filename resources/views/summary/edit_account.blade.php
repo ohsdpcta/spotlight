@@ -41,6 +41,9 @@
                 <button type="button" class="btn btn-danger" onclick="location.href='/user/{{Auth::id()}}/summary/account/delete'">削除</button>
             </div>
         </div>
+        <label>*パスワード変更</label>
+            <p><a href="/user/{{Auth::id()}}/summary/change/">パスワード変更</a></p>
+
     </form>
 
 @endsection

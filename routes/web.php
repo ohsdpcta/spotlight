@@ -125,7 +125,9 @@ Route::prefix('/user')->group(function(){
 
             //パスワード変更メール送信
             Route::get('change','UserController@change')->middleware('Mailvarification');
-            Route::post('change/send','UserController@send')->middleware('Mailvarification');
+            Route::post('change/changemail','UserController@changemail')->middleware('Mailvarification');
+            Route::get('changeedit','UserController@changeedit')->middleware('Mailvarification');
+            Route::post('changeedit/edit','UserController@changeupdate')->middleware('Mailvarification');
         });
     });
 });

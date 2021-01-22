@@ -34,7 +34,7 @@
                         <p><a class="text-primary btn @if(request()->is('*sample*')) disabled @endif" href="/user/{{Auth::id()}}/summary/sample/">サンプル情報</a></p>
                         <p><a class="text-primary btn @if(request()->is('*paypay*')) disabled @endif" href="/user/{{Auth::id()}}/summary/paypay/">PayPayURL</a></p>
                         <p><a class="text-primary btn @if(request()->is('*smallprofile*')) disabled @endif" href="/user/{{Auth::id()}}/summary/smallprofile/">ひと言コメント編集</a></p>
-                        <p><a href="/user/{{Auth::id()}}/summary/change/">パスワード変更</a></p>
+
                     </div>
                 </div>
 

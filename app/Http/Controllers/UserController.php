@@ -10,9 +10,8 @@ use App\Library\UserClass;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 //メール
-use Session;
-use Illuminate\Session\SessionManager;
 use App\Mail\HelloEmail;
+use App\Mail\passChangeMaill;
 use GuzzleHttp\Psr7\Request as Psr7Request;
 use Illuminate\Support\Facades\Validator;
 use Mail;
@@ -307,13 +306,25 @@ class UserController extends Controller
     }
     //パスワード変更メール送信ページ
     public function change(Request $request){
+
         return view('emails.change');
     }
     //送信
-    public function send(Request $request){
-
+    public function changemail(Request $request){
+        $user = Auth::user()->email;
+        Mail::to(Auth::user()->email)->send(new passChangeMaill($user));
+        return redirect('/');
     }
+    //入力フォーム作成
+    public function changeedit(Request $request){
 
+        return view('emails.changeedit');
+    }
+    //ここで変更
+    public function changeupdate(Request $request){
+
+        return redirect('/');
+    }
 
 
 

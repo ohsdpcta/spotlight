@@ -6,7 +6,7 @@
 
 <html>
     <head>
-        <script src="https://maps.googleapis.com/maps/api/js?key={{env('GOOGLE_MAP_APP_KEY')}}"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key={{ config('services.gmap.key') }}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gmaps.js/0.4.12/gmaps.min.js"></script>
         <meta charset="utf-8">
         <title>ロケーション編集 / Spotlight</title>
@@ -35,7 +35,6 @@
             <form action="/user/{{Auth::id()}}/summary/locate" method="post">
                 @csrf
                 {{-- 各種フォーム入力欄 --}}
-                {{-- バリデーションエラーがあった場合は、old関数で入力データを復元する --}}
                 <label>活動場所(座標)</label><br>
                 <input type="text" id="latlng" class="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" name="coordinate" value="{{old('coordinate')}}" placeholder="登録したい住所の座標を入力してください。">
                 {{-- 各種ボタン --}}

@@ -33,14 +33,13 @@
                         ,
                     @endif
                 @endforeach
-            </div>
-
-            <div>
-                @if( !empty(UserClass::getSmallprofile(request()->id)->scomment) )
-                        <div class="col-3 pb-2">
-                            <h5>{{ UserClass::getSmallprofile(request()->id)->scomment }}</h5>
+                <div>
+                    @if( !empty(UserClass::getSmallProfile(request()->id)->scomment) )
+                        <div class="pt-4">
+                            <h6>{{ UserClass::getSmallProfile(request()->id)->scomment }}</h6>
                         </div>
                     @endif
+                </div>
             </div>
 
             {{-- フォローボタン, 編集ページリンク等…… --}}

@@ -22,6 +22,7 @@ class Mailvarification
         if($user->status == '2'){
             return $next($request);
         }
-        return redirect('/');
+        session()->flash('flash_message_error', 'メールアドレスの確認をしてください');
+        return redirect(url()->previous());
     }
 }

@@ -7,7 +7,7 @@
         <form action="/user/emails/conteact" method="POST">
             @csrf
 
-        <a href="https://spotlight-ohsdpcta.herokuapp.com/user/emails/authentication/{{Auth::user()->email_verify_token}}">アカウントの本登録はこちら</a>
+        <a href="{{ config('services.host.url') }}/user/emails/authentication/{{ Auth::user()->email_verify_token }}">アカウントの本登録はこちら</a>
         </form>
 
 

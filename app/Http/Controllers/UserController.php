@@ -229,6 +229,7 @@ class UserController extends Controller
         // dataに値を設定
         $data = User::find($id);
         $data->name = $request->name;
+        $data->role = $request->role;
         if($data->save()){
             session()->flash('flash_message', 'アカウント情報の編集が完了しました');
         }

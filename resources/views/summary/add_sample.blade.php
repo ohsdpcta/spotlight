@@ -24,7 +24,14 @@
         {{-- <label>サンプル画像</label><input type="text" name="name" class="form-control"> --}}
         <label>サンプル名</label><input type="text" name="name" class="form-control">
         <br>
-        <label>URL</label><input type="text" name="url" class="form-control">
+        {{-- URL --}}
+        <label>
+            <div class="row pl-3">
+                URL
+                <div class="pt-1 pl-2">@include('components/sample_info')</div>
+            </div>
+        </label>
+        <input type="text" name="url" class="form-control">
         <br>
         <input type="submit" value="追加" class="btn btn-primary">
     </div>

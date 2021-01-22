@@ -40,6 +40,14 @@ return [
         'client_id' => env('GOOGLE_CLIENT_ID'),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
         'redirect' => env('GOOGLE_REDIRECT_URI'),
+    ],
+
+    'gmap' => [
+        'key' => env('GOOGLE_MAP_APP_KEY'),
+    ],
+
+    'host' => [
+        'url' => env('HOST_URL'),
     ]
 
 ];

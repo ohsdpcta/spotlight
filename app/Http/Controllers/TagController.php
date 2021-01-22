@@ -54,13 +54,13 @@ class TagController extends Controller
             $tag = new Tag;
             $tag->tag_name = $request->name;    //tagテーブルのtag_nameカラムに
             if($tag->save()){
-                session()->flash('flash_message', 'グッズの登録が完了しました');
+                session()->flash('flash_message', 'タグの登録が完了しました');
             }
         }
 
         $id = Auth::id();
         //user_idとtag_idが共に一致するカラムがある場合には、登録をスキップしたい(タグ名は前の分岐で一意に定まっているため、user_idだけ比較)
-        if($tag_rel_equal = UserTag::where('user_id', $id)->first()){
+        if($tag_rel_equal = UserTag::where('user_id', $id)->where('tag_id', $tag->id)->first()){
             session()->flash('flash_message', '既に登録されています');
         }else{
             //タグとユーザーの関連付け
@@ -70,31 +70,31 @@ class TagController extends Controller
 
         return redirect("user/{$id}/summary/tag");
     }
-//-------------------------------------------------------------------------------------
-//---------------------------以下goodsのコピー------------------------------------------
-//-------------------------------------------------------------------------------------
 
     // 削除確認画面
     public function delete(Request $request, $id) {
+
         if(empty($request->checked_items)){
             session()->flash('flash_message_error', '削除したい項目にチェックを入れてください');
             return redirect("/user/{$id}/summary/tag");
         }
         $checked_id_str = implode(',', $request->checked_items);
-        $data = UserTag::find($request->checked_items);
-        // $data = UserTag::where('tag_id', $request->checked_items)->first();
-        foreach($data as $item){
-            $this->authorize('delete', $item->user_id);
-        }
+        $data = Tag::find($request->checked_items);//チェックされたタグの値を取得している
+        // foreach($data as $item){
+        //     $this->authorize('delete', $item);
+        // }
+
         return view('summary.delete_tag', compact('data', 'checked_id_str'));
+        //dataにはtagテーブルの削除するタグのタプル
+        //checked_id_strには削除したいタグと自分とを関連付けているuser_tagテーブルのid
+
     }
     // 削除処理
     public function remove(Request $request, $id) {
         $delete_item_id = explode(',', $request->checked_id_str);
         $data = Tag::find($delete_item_id);
-        foreach($data as $item){
-            $this->authorize('edit', $item);
-        }
+        // $data = UserTag::find($delete_item_id);
+        // $data = UserTag::where('tag_id', $delete_item_id)->where('user_id', Auth::id())->get();
         $data->each->delete();
         session()->flash('flash_message', '削除が完了しました');
         return redirect("/user/{$id}/summary/tag");

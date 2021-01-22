@@ -23,7 +23,7 @@ class UserTagPolicy
         return (string)Auth::user()->id === $usertag->user_id;
     }
 
-    //----------------↑↑↑自分で作ったやつ↑↑↑--------------------------------------
+    //----------------↑↑↑作ったやつ↑↑↑--------------------------------------
 
     /**
      * Determine whether the user can view any user tags.

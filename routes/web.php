@@ -124,10 +124,10 @@ Route::prefix('/user')->group(function(){
             Route::get('smallprofile/delete', 'SmallProfileController@remove')->middleware('Mailvarification');//削除するぜ！
 
             //パスワード変更メール送信
-            Route::get('change','UserController@change')->middleware('Mailvarification');
-            Route::post('change/changemail','UserController@changemail')->middleware('Mailvarification');
-            Route::get('changeedit/{token}','UserController@changeedit')->middleware('Mailvarification');
-            Route::post('changeedit/{token}/changeupdate','UserController@changeupdate')->middleware('Mailvarification');
+            Route::get('change','UserController@change')->middleware('Mailvarification');//送信ページ
+            Route::post('change/changemail','UserController@changemail')->middleware('Mailvarification');//メール本文
+            Route::get('changeedit/{token}','UserController@changeedit')->middleware('Mailvarification');//変更ページ
+            Route::post('changeedit/changeupdate','UserController@changeupdate')->middleware('Mailvarification');//変更処理
         });
     });
 });

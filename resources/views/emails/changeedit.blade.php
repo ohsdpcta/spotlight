@@ -7,9 +7,23 @@
 
         <p>今のパスワードと新しいパスワードを入力してください</p>
         <form action="changeupdate" method="POST">
-            <label>今のパスワード::<input type="password" name="old_password" value="old_password"></label>
-            <label>新しいパスワード::<input type="password" name="new_password" value="new_password"></label>
-            <label>新しいパスワードの確認::<input type="password" name="new_password_check" value="new_password_check"></label>
+            @csrf
+            <table>
+                <tr>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>今のパスワード::</td><td><input type="password" name="old_password" value=""></td>
+                </tr>
+                <tr>
+                    <td>新しいパスワード::</td><td><input type="password" name="new_password" value=""></td>
+                <tr>
+                <tr>
+                    <td>新しいパスワードの確認::</td><td><input type="password" name="new_password_check" value=""></td>
+                </tr>
+            </table>
+            <label><input type="submit" name="send" value="変更"> </label>
 
         </form>
 </html>

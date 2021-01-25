@@ -318,18 +318,36 @@ class UserController extends Controller
         return redirect('/');
     }
     //入力フォーム作成
-    public function changeedit(Request $request,$token){
+    public function changeedit(Request $request,$id,$token){
         $users = Auth::user();
         if ($users->email_verify_token === $token){
-            return view('emails.changeedit',compact('users'));
+            return view('emails.changeedit');
         }else{
             return redirect('/');
         }
     }
     //ここで変更
     public function changeupdate(Request $request){
+        //バリデーションの設定
+        $request->validate([
+            'old_password'=>'required|string|between:8,128',
+            'new_password'=>'required|string|between:8,128',
+            'new_password_check'=>'required|string|between:8,128',
+        ]);
+            $data = Auth::user();
+        if($request['old_password']!=$request['new_password']){
+            $data->password = bcrypt($request['new_password']);
+            $data->save();
+        }else{
+            return back()->withInput()->with('flash_message', '古いパスワードと新しいパスワードが同じです');
+        }
+        if($request['new_password_check'] === $request['new_password']){
+                return redirect('/');
+        }else{
+            return back()->withInput()->with('flash_message', '確認パスワードと新しいパスワードが一致しません');
+        }
 
-        return redirect('/');
+
     }
 
 

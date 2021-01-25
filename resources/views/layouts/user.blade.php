@@ -3,6 +3,10 @@
 
 <!-- CSSはmainのものも参照するため注意 -->
 {{-- -------------------------------------------------------------- --}}
+<?php
+    $user = UserClass::getUser(request()->id);
+    $follow = UserClass::getFollower(request()->id);
+?>
 
 <div class="container">
 
@@ -11,8 +15,8 @@
 
             <!-- トップ画像 -->
             <div class="border-bottom col-xl-3 col-lg-3 col-md-4 col-sm-12 pt-2 pb-2">
-                @if(UserClass::getUser(request()->id)->avatar)
-                    <img src="{{ UserClass::getUser(request()->id)->avatar }}" width="200" height="200" class="rounded-circle">
+                @if($user->avatar)
+                    <img src="{{ $user->avatar }}" width="200" height="200" class="rounded-circle">
                 @else
                     <img src="http://placehold.jp/200x200.png" class="rounded-circle">
                 @endif
@@ -20,8 +24,8 @@
 
             {{-- ユーザー名 --}}
             <div class="border-bottom col-xl-6 col-lg-6 col-md-8 col-sm-12 col-xs-12 pt-2 pr-2 pb-2 pl-2 text-dark">
-                <h1>{{ UserClass::getUser(request()->id)->name }}</h1>
-                <p>{{'@'}}{{ UserClass::getUser(request()->id)->social_id }}</p>
+                <h1>{{ $user->name }}</h1>
+                <p>{{'@'}}{{ $user->social_id }}</p>
                 {{-- タグ(仮) --}}
                 <div class="pt-4">
                     <h5>タグ挿入予定地(仮)</h5>
@@ -34,9 +38,10 @@
                     @endif
                 @endforeach
                 <div>
-                    @if( !empty(UserClass::getSmallProfile(request()->id)->scomment) )
+                    <?php $sprofile = UserClass::getSmallProfile(request()->id) ?>
+                    @if( !empty($sprofile->scomment) )
                         <div class="pt-4">
-                            <h6>{{ UserClass::getSmallProfile(request()->id)->scomment }}</h6>
+                            <h6>{{ $sprofile->scomment }}</h6>
                         </div>
                     @endif
                 </div>
@@ -47,7 +52,7 @@
                 <!-- フォローボタン -->
                 @if(Auth::user() and Auth::user()->id != request()->id)
                     <div class="col-3">
-                        @if(UserClass::getFollower(request()->id)['follow_flg'] == 1)
+                        @if($follow['follow_flg'] == 1)
                             <input type="button" onclick="location.href='/user/{{ request()->id }}/unfollow'" class="btn btn-primary" value="フォロー解除">
                         @else
                             <input type="button" onclick="location.href='/user/{{ request()->id }}/follow'" class="btn btn-primary" value=" フォロー ">
@@ -79,8 +84,8 @@
 
         <!-- フォロー、フォロワー -->
         <div class="row">
-            <a class="border-bottom col-xl-2 col-lg-2 col-md-2 col-sm-3 col-xs-2" href="/user/{{ request()->id }}/followerlist">{{ UserClass::getFollower(request()->id)['follower'] }} Follower </a>
-            <a class="border-bottom col-xl-2 col-lg-2 col-md-2 col-sm-3 col-xs-2" href="/user/{{ request()->id }}/followlist">{{ UserClass::getFollower(request()->id)['follow_count'] }} Follow </a>
+            <a class="border-bottom col-xl-2 col-lg-2 col-md-2 col-sm-3 col-xs-2" href="/user/{{ request()->id }}/followerlist">{{ $follow['follower'] }} Follower </a>
+            <a class="border-bottom col-xl-2 col-lg-2 col-md-2 col-sm-3 col-xs-2" href="/user/{{ request()->id }}/followlist">{{ $follow['follow_count'] }} Follow </a>
         </div>
 
     </div>

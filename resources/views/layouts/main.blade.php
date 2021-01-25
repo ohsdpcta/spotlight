@@ -73,7 +73,7 @@
             </div>
 
             {{-- indexのnavbarでは検索フォームを非表示 --}}
-            <div class="col-6">
+            <div class="col-6 collapse navbar-collapse">
                 @if(!(request()->path() == '/'))
                     <form class="form-inline mt-1 mb-1 align-right col-12" action="/user/search">
                         @csrf
@@ -175,12 +175,13 @@
                                 @foreach($data as $item)
                                     <li>
                                         <a href="/user/{{$item->target_id}}/profile">
-                                            @if(UserClass::getUser($item->target_id)->avatar)
-                                                <img src="{{ UserClass::getUser(request()->id)->avatar }}" width="200" height="200" class="rounded-circle">
+                                            <?php $follower = UserClass::getUser($item->target_id) ?>
+                                            @if($follower->avatar)
+                                                <img src="{{ $follower->avatar }}" width="200" height="200" class="rounded-circle">
                                             @else
                                                 <img src="http://placehold.jp/30x30.png" class="rounded-circle">
                                             @endif
-                                            {{UserClass::getUser($item->target_id)->name}}
+                                            {{ $follower->name }}
                                         </a>
                                     </li>
                                 @endforeach

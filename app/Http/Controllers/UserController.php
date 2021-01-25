@@ -311,16 +311,20 @@ class UserController extends Controller
 
         return view('emails.change');
     }
-    //送信
+    //送信動作
     public function changemail(Request $request){
         $user = Auth::user()->email;
         Mail::to(Auth::user()->email)->send(new passChangeMaill($user));
         return redirect('/');
     }
     //入力フォーム作成
-    public function changeedit(Request $request){
-
-        return view('emails.changeedit');
+    public function changeedit(Request $request,$token){
+        $users = Auth::user();
+        if ($users->email_verify_token === $token){
+            return view('emails.changeedit',compact('users'));
+        }else{
+            return redirect('/');
+        }
     }
     //ここで変更
     public function changeupdate(Request $request){

@@ -12,6 +12,7 @@ use Carbon\Carbon;
 //メール
 use App\Mail\HelloEmail;
 use App\Mail\passChangeMaill;
+use  App\Mail\SocalIDChange;
 use GuzzleHttp\Psr7\Request as Psr7Request;
 use Illuminate\Support\Facades\Validator;
 use Mail;
@@ -350,6 +351,54 @@ class UserController extends Controller
 
     }
 
+    //ソーシャルID変更機能
+    //ソーシャルID変更メール送信ページ
+    public function social_change(Request $request){
 
+        return view('emails.social_change');
+    }
+    //送信動作
+    public function socialemail(Request $request){
+        $user = Auth::user()->email;
+        Mail::to(Auth::user()->email)->send(new SocalIDChange($user));
+        return redirect('/');
+    }
+    //入力フォーム
+    public function socialedit(Request $request,$id,$token){
+        $users = Auth::user();
+        if ($users->email_verify_token === $token){
+            return view('emails.socialedit');
+        }else{
+            return redirect('/');
+        }
+    }
+        //ここで変更
+        public function socialupdate(Request $request){
+            //バリデーションの設定
+            $request->validate([
+                'old_social'=>'required|string|max:30',
+                'new_social'=>'required|unique:users,social_id|string|max:30',
+                'new_social_check'=>'required|string|max:30',
+            ]);
+                $data = Auth::user();
+            if($request['old_social'] == $data->social_id){
+                if($request['old_social']!=$request['new_social']){
+                    $data->social_id = $request['new_social'];
+                    $data->save();
+                }else{
+                    return back()->withInput()->with('flash_message', '古いソーシャルIDとソーシャルIDが同じです');
+                }
+            }else{
+                return back()->withInput()->with('flash_message', '古いソーシャルIDが間違っています');
+            }
+
+            if($request['new_social_check'] === $request['new_social']){
+                    return redirect('/');
+            }else{
+                return back()->withInput()->with('flash_message', '確認ソーシャルIDと新しいソーシャルIDが一致しません');
+            }
+
+
+        }
 
 }

@@ -43,6 +43,8 @@
         </div>
         <label>*パスワード変更</label>
             <p><a href="/user/{{Auth::id()}}/summary/change/">パスワード変更</a></p>
+        <label>*ソーシャルID変更</label>
+            <p><a href="/user/{{Auth::id()}}/summary/social_change/">ソーシャルID変更</a></p>
 
     </form>
 

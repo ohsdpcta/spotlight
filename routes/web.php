@@ -128,6 +128,11 @@ Route::prefix('/user')->group(function(){
             Route::post('change/changemail','UserController@changemail')->middleware('Mailvarification');//メール本文
             Route::get('changeedit/{token}','UserController@changeedit')->middleware('Mailvarification');//変更ページ
             Route::post('changeedit/changeupdate','UserController@changeupdate')->middleware('Mailvarification');//変更処理
+            //ソーシャルID変更メール機能
+            Route::get('social_change','UserController@social_change')->middleware('Mailvarification');//送信ページ
+            Route::post('social_change/socialemail','UserController@socialemail')->middleware('Mailvarification');//メール本文
+            Route::get('socialedit/{token}','UserController@socialedit')->middleware('Mailvarification');//変更ページ
+            Route::post('socialedit/socialupdate','UserController@socialupdate')->middleware('Mailvarification');//変更処理
         });
     });
 });

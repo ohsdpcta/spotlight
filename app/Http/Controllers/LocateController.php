@@ -33,14 +33,14 @@ class LocateController extends Controller
         }else{
             $locate_array = [];
         }
-        return view('summary.edit_locate', compact('locate_array'));
+        return view('summary.edit_locate', compact('locate_array', 'locate_data'));
     }
 
     //ロケーション+住所登録
     public function update(Request $request, $id){
         // バリデーションの設定
         $rules = [
-            'coordinate'=>'required|regex:/^[-\d]\d{0,2}.\d{5,30},[-\d]\d{0,3}.\d{5,30}$/',
+            'coordinate' => 'required|regex:/^[-\d]\d{0,2}.\d{5,30},[-\d]\d{0,3}.\d{5,30}$/',
         ];
         $messages = [
             'coordinate.required' => '登録したい場所をクリックしてください。',
@@ -55,8 +55,32 @@ class LocateController extends Controller
         $locate = new Locate;
         $locate->user_id = $id;
         $this->authorize('edit', $locate);
+
+        $locate = Locate::where('user_id', Auth::id())->first();
+        preg_match( '/北海道|県|府|都/', $request->prefecture_city, $matches );
+        logger($matches);
+        if ($matches[0] == "北海道") {
+            preg_match('/(北海道)(\S+市)/', $request->prefecture_city, $matches );
+            $locate->prefecture = $matches[1];
+            $locate->city = $matches[2];
+        } elseif($matches[0] == '県') {
+            preg_match('/(\S+県)(\S+市)/', $request->prefecture_city, $matches );
+            $locate->prefecture = $matches[1];
+            $locate->city = $matches[2];
+        } elseif($matches[0] == '府') {
+            preg_match('/(\S+府)(\S+市)/', $request->prefecture_city, $matches );
+            $locate->prefecture = $matches[1];
+            $locate->city = $matches[2];
+        } elseif($matches[0] == '都') {
+            preg_match('/(\S+都)(\S+[市区])/', $request->prefecture_city, $matches );
+            $locate->prefecture = $matches[1];
+            $locate->city = $matches[2];
+        } else {
+            session()->flash('flash_message', '入力内容を確認してもう一度入力してください。');
+            return redirect("user/{$id}/summary/sample/add");
+        }
+
         if(Auth::id() == $id){
-            $locate = Locate::where('user_id', Auth::id())->first();
             if($locate){
                 $locate->coordinate = $request->coordinate;
             }else{

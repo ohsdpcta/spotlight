@@ -102,7 +102,24 @@ class TagController extends Controller
         session()->flash('flash_message', '削除が完了しました');
         return redirect("/user/{$id}/summary/tag");
     }
+
+    // タグ検索結果(改変中)
+    public function tag_search(Request $request){
+        $input = $request->tag_name;
+        logger($input);
+        // $user_tag = UserTag::where('tag_id', $request->id);//UserTagテーブルのtag_idカラムがtagテーブルのidと一致するものを検索
+        // $user = User::find($user_tag->user_id);
+        // return view('search_result', ['result' => $request]);
+
+
+        // if ($input == '') {
+        //     $result = User::paginate(10);
+        // }else{
+        //     $result = User::where('name', 'like', '%'.$input.'%')->paginate(10);
+        // }
+        // return view('search_result', ['result' => $result]);
+    }
 }
 
-// <!-- タグ削除機能が関連付けの削除ではなく、関連付けとタグそのものの全てを削除する形になっている
 // タグ削除昨日に認証機能がつけられていない -->
+// タグ削除はユーザーとの関連付けのみを削除するため、一度登録されたタグ自体はずっと残る

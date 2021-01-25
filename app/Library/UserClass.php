@@ -50,9 +50,17 @@ class UserClass{
     return $url;
   }
 
+  //ユーザーのidからタグを取得する
   public static function getTag($id){
     $user = User::find($id);
     $tag = $user->tag()->get();
     return $tag;
   }
+
+  // //タグidからユーザーを取得する
+  // public static function getTagtoUser($id){
+  //   $tag = Tag::find($id);
+  //   $user = $tag->
+  // }
 }
+

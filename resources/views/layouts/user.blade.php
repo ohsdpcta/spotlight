@@ -32,9 +32,17 @@
                         ,
                     @endif
                 @endforeach --}}
+
                 @foreach($tags as $index => $tag)
-                    <input type="button" onclick="location.href='/user/{{ request()->id }}/unfollow'" class="tag_btn rounded-pill border-primary px-3 mt-3" value="#{{ $tag->tag_name }}">
+                    <input type="button" onclick="location.href='/user/tag_search'" value="#{{ $tag->tag_name }}" class="tag_btn rounded-pill border-primary px-3 mt-3">
                 @endforeach
+
+                {{-- @foreach($tags as $index => $tag)
+                    <form method="post" action="/user/tag_search">
+                        <input type="hidden" name="tag" value="{{$tag}}">
+                        <input type="submit" value="#{{ $tag->tag_name }}">
+                    </form>
+                @endforeach --}}
             </div>
 
             {{-- フォローボタン, 編集ページリンク等…… --}}

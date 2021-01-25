@@ -7,7 +7,7 @@
 <head>
   <meta charset="utf-8">
   <title>ロケーション / Spotlight</title>
-  <script src="https://maps.googleapis.com/maps/api/js?key={{env('GOOGLE_MAP_APP_KEY')}}"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key={{ config('services.gmap.key') }}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gmaps.js/0.4.12/gmaps.min.js"></script>
   <style>
     #map {

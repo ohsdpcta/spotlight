@@ -24,11 +24,16 @@
                 <p>{{'@'}}{{ UserClass::getUser(request()->id)->social_id }}</p>
                 {{-- タグ --}}
                 <?php $tags = UserClass::getTag(request()->id) ?>
-                @foreach($tags as $index => $tag)
-                    #{{ $tag->tag_name }}
+                {{-- @foreach($tags as $index => $tag)
+                    <a href="">
+                        #{{ $tag->tag_name }}
+                    </a>
                     @if($index < count($tags) - 1)
                         ,
                     @endif
+                @endforeach --}}
+                @foreach($tags as $index => $tag)
+                    <input type="button" onclick="location.href='/user/{{ request()->id }}/unfollow'" class="tag_btn rounded-pill border-primary px-3 mt-3" value="#{{ $tag->tag_name }}">
                 @endforeach
             </div>
 

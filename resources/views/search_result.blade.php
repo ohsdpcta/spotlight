@@ -9,13 +9,6 @@
         <title>検索ページ</title>
     </head>
 
-    <style>
-        .maru {
-            /* 左上　右上　右下　左下 */
-            border-radius: 50px 10px 10px 50px;
-        }
-    </style>
-
     <body>
         <div class="container">
             @foreach($result as $item)

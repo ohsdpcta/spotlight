@@ -46,8 +46,8 @@ Route::prefix('/user')->group(function(){
          // フォロー
         Route::get('follow', 'FollowerController@follow')->middleware('Mailvarification');
         Route::get('unfollow', 'FollowerController@unfollow')->middleware('Mailvarification');
-        Route::get('followlist', 'FollowerController@followlist')->middleware('Mailvarification');
-        Route::get('followerlist', 'FollowerController@followerlist')->middleware('Mailvarification');
+        Route::get('followlist', 'FollowerController@followlist');
+        Route::get('followerlist', 'FollowerController@followerlist');
 
          // ロケーション
         Route::get('locate', 'LocateController@index');

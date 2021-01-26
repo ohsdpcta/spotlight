@@ -35,9 +35,8 @@
             <form action="/user/{{Auth::id()}}/summary/locate" method="post">
                 @csrf
                 {{-- 各種フォーム入力欄 --}}
-                {{-- バリデーションエラーがあった場合は、old関数で入力データを復元する --}}
                 <label>活動地域</label><br>
-                <input type="text" name="prefecture_city" class="form-control" placeholder="登録する住所を入力してください。例:東京都品川区"><br>
+                <input type="text" name="prefecture_city" class="form-control" @isset($locate_data->prefecture) value="{{ $locate_data->prefecture }}{{ $locate_data->city }}" @endisset placeholder="登録する住所を入力してください。例:東京都品川区"><br>
                 <label>活動場所(座標)</label><br>
                 <input type="text" id="latlng" class="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" name="coordinate" value="{{old('coordinate')}}" placeholder="登録する住所の座標を入力してください。">
                 {{-- 各種ボタン --}}

@@ -40,9 +40,11 @@ class LocateController extends Controller
     public function update(Request $request, $id){
         // バリデーションの設定
         $rules = [
-            'coordinate' => 'required|regex:/^[-\d]\d{0,2}.\d{5,30},[-\d]\d{0,3}.\d{5,30}$/',
+            'prefecture_city'=>'required',
+            'coordinate'=>'required|regex:/^[-\d]\d{0,2}.\d{5,30},[-\d]\d{0,3}.\d{5,30}$/',
         ];
         $messages = [
+            'prefecture_city.required' => '活動地域を入力してください。',
             'coordinate.required' => '登録したい場所をクリックしてください。',
             'coordinate.regex' => '入力欄に座標が入っていることを確認してから、もう一度登録してください。',
         ];
@@ -57,8 +59,13 @@ class LocateController extends Controller
         $this->authorize('edit', $locate);
 
         $locate = Locate::where('user_id', Auth::id())->first();
+        if(Auth::id() == $id){
+            if(!$locate){
+                $locate = new Locate;
+                $locate->user_id = Auth::id();
+            }
+        }
         preg_match( '/北海道|県|府|都/', $request->prefecture_city, $matches );
-        logger($matches);
         if ($matches[0] == "北海道") {
             preg_match('/(北海道)(\S+市)/', $request->prefecture_city, $matches );
             $locate->prefecture = $matches[1];

@@ -20,29 +20,11 @@ class LocateTableSeeder extends Seeder
             '35.716465214298985, 139.76193793127192',
             '38.037133423819384, 138.42128048274387',
         ];
-        $pref = [
-            '東京都',
-            '北海道',
-            '京都府',
-            '長野県',
-            '鹿児島県',
-            '大阪府',
-        ];
-        $city = [
-            '品川区',
-            '札幌市',
-            '京都市',
-            '長野市',
-            '鹿児島市',
-            '大阪市',
-        ];
         for($i=1; $i<=50; $i++){
             $l = $i % 6;
             DB::table('locates')->insert([
                 'user_id' => $i,
                 'coordinate' => $gmap_url[$l],
-                'prefecture' => $pref[$l],
-                'city' => $city[$l],
             ]);
         }
     }

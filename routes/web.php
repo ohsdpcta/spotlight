@@ -133,6 +133,12 @@ Route::prefix('/user')->group(function(){
             Route::post('social_change/socialemail','UserController@socialemail')->middleware('Mailvarification');//メール本文
             Route::get('socialedit/{token}','UserController@socialedit')->middleware('Mailvarification');//変更ページ
             Route::post('socialedit/socialupdate','UserController@socialupdate')->middleware('Mailvarification');//変更処理
+            //メールアドレス変更機能
+            Route::get('mail_change','UserController@mail_change')->middleware('Mailvarification');//送信ページ
+            Route::post('mail_change/mail_email','UserController@mail_email')->middleware('Mailvarification');//メール本文
+            Route::get('mailedit/{token}','UserController@mailedit')->middleware('Mailvarification');//変更ページ
+            Route::post('mailedit/mailupdate','UserController@mailupdate')->middleware('Mailvarification');//変更処理
+
         });
     });
 });

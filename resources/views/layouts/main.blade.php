@@ -1,13 +1,12 @@
 <html>
 
     <head>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/common/css/bootstrap.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js" integrity="sha384-LtrjvnR4Twt/qOuYxE721u19sVFLVSA4hf/rRt6PrZTmiPltdZcI7q7PXQBYTKyf" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.2/css/drawer.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-        <script src="/common/js/bootstrap.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/iScroll/5.2.0/iscroll.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.2/js/drawer.min.js"></script>
         <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
@@ -84,12 +83,17 @@
             </div>
             <div class="col-2">
                 <div id="user-icon" class="float-right">
-                    <?php $user = UserClass::getUser(Auth::id()) ?>
-                    @if($user && $user->avatar)
-                        <img src="{{ $user->avatar }}" width="35" height="35" class="rounded-circle">
-                    @else
-                        <img src="http://placehold.jp/200x200.png" style="width: 35; height: 35" class="rounded-circle">
-                    @endif
+                    <div class="nav-item dropdown">
+                        <?php $user = UserClass::getUser(Auth::id()) ?>
+                        @if($user && $user->avatar)
+                            <a class="nav-link dropdown-toggle" role="button"><img src="{{ $user->avatar }}" width="35" height="35" class="rounded-circle"></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item">aaa</a></li>
+                            </ul>
+                        @else
+                            <img src="http://placehold.jp/200x200.png" style="width: 35; height: 35" class="rounded-circle">
+                        @endif
+                    </div>
                 </div>
             </div>
         </nav>

@@ -14,6 +14,7 @@ use App\Mail\HelloEmail;
 use App\Mail\passChangeMaill;
 use  App\Mail\SocalIDChange;
 use App\Mail\MailChange;
+use App\Mail\MailChangeCheck;
 use GuzzleHttp\Psr7\Request as Psr7Request;
 use Illuminate\Support\Facades\Validator;
 use Mail;
@@ -406,12 +407,12 @@ class UserController extends Controller
         //メールアドレス変更機能
         public function mail_change(Request $request){
 
-            return view('emails.social_change');
+            return view('emails.mail_change');
         }
         //送信動作
         public function mail_email(Request $request){
             $user = Auth::user()->email;
-            Mail::to(Auth::user()->email)->send(new SocalIDChange($user));
+            Mail::to(Auth::user()->email)->send(new MailChange($user));
             return redirect('/');
         }
         //入力フォーム
@@ -427,14 +428,16 @@ class UserController extends Controller
         public function mailupdate(Request $request){
             //バリデーションの設定
             $request->validate([
-                'old_mail'=>'required|string|max:30',
-                'new_mail'=>'required|unique:users,social_id|string|max:30',
-                'new_mail_check'=>'required|string|max:30',
+                'old_mail'=>'required|email|max:254',
+                'new_mail'=>'required|email|max:254|unique:users,email',
+                'new_mail_check'=>'required|email|max:254',
             ]);
+
                 $data = Auth::user();
-            if($request['old_mail'] == $data->mail){
+
+            if($request['old_mail'] == $data->email){
                 if($request['old_mail']!=$request['new_mail']){
-                    $data->mail = $request['new_mail'];
+                    $data->email = $request['new_mail'];
                     $data->save();
                 }else{
                     return back()->withInput()->with('flash_message', '古いメールアドレスとメールアドレスが同じです');
@@ -444,6 +447,8 @@ class UserController extends Controller
             }
 
             if($request['new_mail_check'] === $request['new_mail']){
+                $user = Auth::user()->email;
+                Mail::to(Auth::user()->email)->send(new MailChangeCheck($user));
                     return redirect('/');
             }else{
                 return back()->withInput()->with('flash_message', '確認メールアドレスと新しいメールアドレスが一致しません');

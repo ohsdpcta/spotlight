@@ -6,7 +6,7 @@
     </head>
 
         <p>今のメールアドレスと新しいメールアドレスを入力してください</p>
-        <form action="socialupdate" method="POST">
+        <form action="mailupdate" method="POST">
             @csrf
             <table>
                 <tr>

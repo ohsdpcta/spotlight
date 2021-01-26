@@ -46,25 +46,15 @@ Route::prefix('/user')->group(function(){
          // フォロー
         Route::get('follow', 'FollowerController@follow')->middleware('Mailvarification');
         Route::get('unfollow', 'FollowerController@unfollow')->middleware('Mailvarification');
-        Route::get('followlist', 'FollowerController@followlist')->middleware('Mailvarification');
-        Route::get('followerlist', 'FollowerController@followerlist')->middleware('Mailvarification');
+        Route::get('followlist', 'FollowerController@followlist');
+        Route::get('followerlist', 'FollowerController@followerlist');
 
          // ロケーション
         Route::get('locate', 'LocateController@index');
-        Route::get('locate/add_locate', 'LocateController@add_locate_form')->middleware('Mailvarification');
-        Route::post('locate/add_locate', 'LocateController@add_locate')->middleware('Mailvarification');
-        Route::get('locate/del_locate', 'LocateController@del_locate_form')->middleware('Mailvarification');
-        Route::post('locate/del_locate', 'LocateController@remove_locate')->middleware('Mailvarification');
-
          //グッズ
         Route::get('goods', 'GoodsController@index');
-        Route::get('goods/multi_del', 'GoodsController@multi_del')->middleware('Mailvarification');
-        Route::post('goods/multi_del', 'GoodsController@multi_remove')->middleware('Mailvarification');
          // サンプル
         Route::get('sample', 'SampleController@index');
-        Route::get('sample/multi_del', 'SampleController@multi_del')->middleware('Mailvarification');
-        Route::post('sample/multi_del', 'SampleController@multi_remove')->middleware('Mailvarification');
-
          // 投げ銭
         Route::get('tip', 'UserController@tip');
 
@@ -86,7 +76,7 @@ Route::prefix('/user')->group(function(){
              // ロケーション編集
             Route::get('locate', 'LocateController@edit')->middleware('Mailvarification');
             Route::post('locate', 'LocateController@update')->middleware('Mailvarification');
-            Route::post('locate/delete', 'LocateController@remove')->middleware('Mailvarification');
+            Route::get('locate/delete', 'LocateController@remove')->middleware('Mailvarification');
 
              // グッズ編集
             Route::get('goods', 'GoodsController@summary')->middleware('Mailvarification');//一覧画面
@@ -109,7 +99,7 @@ Route::prefix('/user')->group(function(){
              // PayPayURL
             Route::get('paypay', 'PaypayController@edit')->middleware('Mailvarification');//削除するぜ！
             Route::post('paypay', 'PaypayController@update')->middleware('Mailvarification');//削除するぜ！
-            Route::post('paypay/delete', 'PaypayController@remove')->middleware('Mailvarification');//削除するぜ！
+            Route::get('paypay/delete', 'PaypayController@remove')->middleware('Mailvarification');//削除するぜ！
 
             //タグ編集
             Route::get('tag', 'TagController@summary')->middleware('Mailvarification');

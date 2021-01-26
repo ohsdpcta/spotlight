@@ -1,9 +1,14 @@
+@extends('layouts/summary')
+
+{{-- ----------------------------------------------------------------- --}}
 
 <html>
     <head>
         <meta charset="utf-8">
         <title>パスワード変更ページ　/　Spotlight</title>
     </head>
+
+    @section('R_form')
 
         <p>今のパスワードと新しいパスワードを入力してください</p>
         <form action="changeupdate" method="POST">
@@ -26,4 +31,5 @@
             <label><input type="submit" name="send" value="変更"> </label>
 
         </form>
+        @endsection
 </html>

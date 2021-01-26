@@ -105,21 +105,15 @@ class TagController extends Controller
 
     // タグ検索結果(改変中)
     public function tag_search(Request $request){
-        $input = $request->tag_name;
-        logger($input);
-        // $user_tag = UserTag::where('tag_id', $request->id);//UserTagテーブルのtag_idカラムがtagテーブルのidと一致するものを検索
-        // $user = User::find($user_tag->user_id);
-        // return view('search_result', ['result' => $request]);
-
-
-        // if ($input == '') {
-        //     $result = User::paginate(10);
-        // }else{
-        //     $result = User::where('name', 'like', '%'.$input.'%')->paginate(10);
+        $tag = Tag::find($request->tag_id);
+        // foreach($tag->user as $user){
+        //     logger($user);
         // }
-        // return view('search_result', ['result' => $result]);
+        $user = $tag->user;
+        return view('search_result', ['result' => $user]);
     }
 }
 
 // タグ削除昨日に認証機能がつけられていない -->
+
 // タグ削除はユーザーとの関連付けのみを削除するため、一度登録されたタグ自体はずっと残る

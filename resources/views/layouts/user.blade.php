@@ -24,25 +24,15 @@
                 <p>{{'@'}}{{ UserClass::getUser(request()->id)->social_id }}</p>
                 {{-- タグ --}}
                 <?php $tags = UserClass::getTag(request()->id) ?>
-                {{-- @foreach($tags as $index => $tag)
-                    <a href="">
-                        #{{ $tag->tag_name }}
-                    </a>
-                    @if($index < count($tags) - 1)
-                        ,
-                    @endif
-                @endforeach --}}
 
                 @foreach($tags as $index => $tag)
-                    <input type="button" onclick="location.href='/user/tag_search'" value="#{{ $tag->tag_name }}" class="tag_btn rounded-pill border-primary px-3 mt-3">
+                    <form class="" method="get" action="/user/tag_search">
+                        @csrf
+                        <input class="form-control mr-sm-1" type="hidden" name="tag_id" value="{{ $tag->id }}">
+                        <button class="tag_btn rounded-pill border-primary px-3 mt-3" type="submit">#{{ $tag->tag_name }}</button>
+                    </form>
                 @endforeach
 
-                {{-- @foreach($tags as $index => $tag)
-                    <form method="post" action="/user/tag_search">
-                        <input type="hidden" name="tag" value="{{$tag}}">
-                        <input type="submit" value="#{{ $tag->tag_name }}">
-                    </form>
-                @endforeach --}}
             </div>
 
             {{-- フォローボタン, 編集ページリンク等…… --}}

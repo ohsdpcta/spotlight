@@ -18,7 +18,7 @@ Route::prefix('/user')->group(function(){
     // 検索結果
     Route::get('search', 'UserController@search');
     // タグ検索結果
-    Route::post('tag_search','TagController@tag_search');
+    Route::get('tag_search','TagController@tag_search');
     // サインアップ
     Route::get('signup', 'UserController@signup_form')->middleware('guest');
     Route::post('signup', 'UserController@signup')->middleware('guest');

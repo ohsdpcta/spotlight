@@ -106,14 +106,37 @@ class TagController extends Controller
     // タグ検索結果(改変中)
     public function tag_search(Request $request){
         $tag = Tag::find($request->tag_id);
-        // foreach($tag->user as $user){
-        //     logger($user);
-        // }
-        $user = $tag->user;
+        $users = $tag->user;
+        logger($users);
+        foreach($users as $user){
+            logger($user->id);
+        };
+        foreach($users as $user){
+            logger($user->name);
+        };
+
+        // どうやってページネーターと共存させればいいのか全然わからん
+        // とりあえず上の二つの方法で、値を取り出すことはできている。
+        // 最終的にはresult->idって形で取り出せるようにしたい。
+
+        // $user = new LengthAwarePaginator(
+        //     $user->forPage($request->page, 20),
+        //     count($user),
+        //     20,
+        //     $request->page,
+        //     array('path' => $request->url())
+        // );
+        $user = new LengthAwarePaginator(
+            $user = array_slice($user, 0, 20),// // 現在のページのsliceした情報(現在のページ, 1ページあたりの件数)
+            count($user),//// 総件数
+            20,//1ページあたりの件数
+            $request->page,// 現在のページ(ページャーの色がActiveになる)
+            array('path' => $request->url())// ページャーのリンクをOptionのpathで指定
+        );
         return view('search_result', ['result' => $user]);
     }
 }
 
-// タグ削除昨日に認証機能がつけられていない -->
+// タグ削除昨日に認証機能がつけられていない
 
 // タグ削除はユーザーとの関連付けのみを削除するため、一度登録されたタグ自体はずっと残る

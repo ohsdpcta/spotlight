@@ -20,13 +20,14 @@
                     </div>
                     {{-- リンク --}}
                     <div class="col-lg-8 col-md-11 col-sm-10 col-xs-7 align-items-center d-flex">
-                        <button type="button" class="button btn border btn-block" onclick="location.href='/user/{{$item->id}}/profile'">{{ $item->name }}</button>
+                        <button type="button" class="button btn border btn-block" onclick="location.href='/user/{{ $item->id }}/profile'">{{ $item->name }}</button>
                     </div>
                 </div>
             @endforeach
         </div>
         <br>
-        {{ $result->links('vendor.pagination.sample-pagination') }}
+        {{$user->links()}}
+        {{-- {{ $result->links('vendor.pagination.sample-pagination') }} --}}
     </body>
 
 @endsection

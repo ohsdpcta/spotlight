@@ -8,7 +8,7 @@
         <title>メールアドレス変更ページ　/　Spotlight</title>
     </head>
     @section('R_form')
-        <p>今のメールアドレスと新しいメールアドレスを入力してください</p>
+        <p>現在のメールアドレスと新しいメールアドレスを入力してください</p>
         <form action="mailupdate" method="POST">
             @csrf
 
@@ -19,7 +19,7 @@
                 </tr>
                 <tr>
                     <div class="form-group">
-                        <td>今のメールアドレス::</td><td><input type="text" class="form-control" name="old_mail" value=""></td>
+                        <td>現在のメールアドレス::</td><td><input type="text" class="form-control" name="old_mail" value=""></td>
                     </div>
                 </tr>
                 <tr>

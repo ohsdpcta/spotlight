@@ -10,7 +10,7 @@
 
     @section('R_form')
 
-        <p>今のパスワードと新しいパスワードを入力してください</p>
+        <p>現在のパスワードと新しいパスワードを入力してください</p>
         <form action="changeupdate" method="POST">
             @csrf
             <table>
@@ -19,7 +19,7 @@
                     <th></th>
                 </tr>
                 <tr>
-                    <td>今のパスワード::</td><td><input type="password" name="old_password" value=""></td>
+                    <td>現在のパスワード::</td><td><input type="password" name="old_password" value=""></td>
                 </tr>
                 <tr>
                     <td>新しいパスワード::</td><td><input type="password" name="new_password" value=""></td>

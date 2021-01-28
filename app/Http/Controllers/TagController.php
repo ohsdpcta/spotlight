@@ -129,10 +129,16 @@ class TagController extends Controller
         //     array('path' => $request->url())
         // );
 
-        $user = new LengthAwarePaginator($users->forPage(1,2), count($users), 2, $request->page, array('path'=>$request->url()));
+        $user = new LengthAwarePaginator(
+            $users->forPage($request->page,2),  // 現在のページのsliceした情報(現在のページ, 1ページあたりの件数)
+            count($users),  //総件数
+            2,  //1ページあたりの件数。(本来なら20。確認用)
+            $request->page,  // 現在のページ(ページャーの色がActiveになる)
+            array('path'=>"/user/tag_search?tag_id=$request->tag_id") // ページャーのリンクをOptionのpathで指定
+        );
 
         // $users = new LengthAwarePaginator(
-        //     $user = array_slice($user, 0, 20),// // 現在のページのsliceした情報(現在のページ, 1ページあたりの件数)
+        //     $user = array_slice($user, 0, 20),// 
         //     count($user),//// 総件数
         //     20,//1ページあたりの件数
         //     $request->page,// 現在のページ(ページャーの色がActiveになる)

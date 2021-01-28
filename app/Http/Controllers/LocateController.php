@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use App\Library\LocateClass;
 
 use App\Locate;
 
@@ -40,11 +41,9 @@ class LocateController extends Controller
     public function update(Request $request, $id){
         // バリデーションの設定
         $rules = [
-            'prefecture_city'=>'required',
             'coordinate'=>'required|regex:/^[-\d]\d{0,2}.\d{5,30},[-\d]\d{0,3}.\d{5,30}$/',
         ];
         $messages = [
-            'prefecture_city.required' => '活動地域を入力してください。',
             'coordinate.required' => '登録したい場所をクリックしてください。',
             'coordinate.regex' => '入力欄に座標が入っていることを確認してから、もう一度登録してください。',
         ];
@@ -54,51 +53,27 @@ class LocateController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
+
         $locate = new Locate;
         $locate->user_id = $id;
         $this->authorize('edit', $locate);
 
         $locate = Locate::where('user_id', Auth::id())->first();
-        if(Auth::id() == $id){
-            if(!$locate){
-                $locate = new Locate;
-                $locate->user_id = Auth::id();
-            }
+        $formatted_address = LocateClass::regex_address(Auth::id(), $request->address);
+        if($locate){
+            $locate->prefecture = $formatted_address[1];
+            $locate->city = $formatted_address[2];
+            $locate->coordinate = $request->coordinate;
+        }else{
+            $locate = new Locate;
+            //Auth::はログインしているユーザーのデータを持ってこれるコマンド
+            $locate->user_id = Auth::id();
+            $locate->prefecture = $formatted_address[1];
+            $locate->city = $formatted_address[2];
+            $locate->coordinate = $request->coordinate;
         }
-        preg_match( '/北海道|県|府|都/', $request->prefecture_city, $matches );
-        if ($matches[0] == "北海道") {
-            preg_match('/(北海道)(\S+市)/', $request->prefecture_city, $matches );
-            $locate->prefecture = $matches[1];
-            $locate->city = $matches[2];
-        } elseif($matches[0] == '県') {
-            preg_match('/(\S+県)(\S+市)/', $request->prefecture_city, $matches );
-            $locate->prefecture = $matches[1];
-            $locate->city = $matches[2];
-        } elseif($matches[0] == '府') {
-            preg_match('/(\S+府)(\S+市)/', $request->prefecture_city, $matches );
-            $locate->prefecture = $matches[1];
-            $locate->city = $matches[2];
-        } elseif($matches[0] == '都') {
-            preg_match('/(\S+都)(\S+[市区])/', $request->prefecture_city, $matches );
-            $locate->prefecture = $matches[1];
-            $locate->city = $matches[2];
-        } else {
-            session()->flash('flash_message', '入力内容を確認してもう一度入力してください。');
-            return redirect("user/{$id}/summary/sample/add");
-        }
-
-        if(Auth::id() == $id){
-            if($locate){
-                $locate->coordinate = $request->coordinate;
-            }else{
-                $locate = new Locate;
-                //Auth::はログインしているユーザーのデータを持ってこれるコマンド
-                $locate->user_id = Auth::id();
-                $locate->coordinate = $request->coordinate;
-            }
-            if($locate->save()){
-                session()->flash('flash_message', 'ロケーションの設定が完了しました');
-            }
+        if($locate->save()){
+            session()->flash('flash_message', 'ロケーションの設定が完了しました');
         }
         return redirect("/user/{$id}/summary/locate");
     }

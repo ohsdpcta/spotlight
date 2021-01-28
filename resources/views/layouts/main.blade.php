@@ -11,7 +11,7 @@
 
             @include('main.flash')
 
-            {{ session()->flash('flash_message', 'グッズの登録が完了しました') }}
+            {{ session()->flash('flash_message', 'Test Flash Message.') }}
             @include('main.sidebar')
 
             @yield('user')
@@ -22,17 +22,10 @@
 
     <script>
         // ドロップダウン
-        const dropdown = new Vue({
-            el: '#dropdown-container',
+        const app = new Vue({
+            el: '#app',
             data: {
                 dropdown_show: false,
-            },
-            created:function(){
-                this.listen(window, 'click', function(e){
-                    if (!this.$el.contains(e.target)){
-                        this.$emit('close');
-                    }
-                }.bind(this));
             }
         });
 

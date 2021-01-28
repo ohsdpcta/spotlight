@@ -71,11 +71,5 @@
     </nav>
 
     {{-- ドロップダウン --}}
-    <div id="dropdown-container" class="dropdown-container" v-if="dropdown_show" v-on:close="showmenu = false">
-        <ul class="dropdown-list">
-            <a class="nav-link dropdown-item" href="/user/signin">sign in</a>
-            <a class="nav-link dropdown-item" href="/user/signout">sign out</a>
-            <a class="nav-link dropdown-item dropdown-item-last" href="/user/{{ Auth::id() }}/summary/account">setting</a>
-        </ul>
-    </div>
+    <dropdown-menu v-if="dropdown_show" v-on:close="dropdown_show = false"></dropdown-menu>
 </div>

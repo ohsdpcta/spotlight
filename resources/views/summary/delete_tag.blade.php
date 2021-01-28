@@ -16,7 +16,6 @@
 <form action="/user/{{Auth::id()}}/summary/tag/delete" method="post">
     @csrf
     <div class="form-group text-dark">
-        {{-- <label>サンプル画像</label><input type="text" name="name" class="form-control"> --}}
         @foreach($data as $item)
             {{ $item->tag_name }}
             <br>

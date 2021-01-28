@@ -73,17 +73,18 @@ class TagController extends Controller
 
     // 削除確認画面
     public function delete(Request $request, $id) {
-
         if(empty($request->checked_items)){
             session()->flash('flash_message_error', '削除したい項目にチェックを入れてください');
             return redirect("/user/{$id}/summary/tag");
         }
         $checked_id_str = implode(',', $request->checked_items);
         $data = Tag::find($request->checked_items);//チェックされたタグの値を取得している
-        // foreach($data as $item){
-        //     $this->authorize('delete', $item);
-        // }
-
+        $usertag = new UserTag;
+        $usertag->user_id = $id;                //user_tagテーブルのuser_idカラムに自分にidを入力
+        foreach($data as $item){
+            logger($id);
+            $this->authorize('delete', $usertag);//タグを持つユーザーのidで認証したい
+        }
         return view('summary.delete_tag', compact('data', 'checked_id_str'));
         //dataにはtagテーブルの削除するタグのタプル
         //checked_id_strには削除したいタグと自分とを関連付けているuser_tagテーブルのid

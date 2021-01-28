@@ -11,7 +11,7 @@
 
     <body>
         <div class="container">
-            @foreach($result as $item)
+            @foreach($user as $item)
                 {{-- 背景の四角 --}}
                 <div class="border-bottom row bg-white mt-1 pt-1 pb-1 pl-1 maru">
                     {{-- サムネ --}}
@@ -26,8 +26,8 @@
             @endforeach
         </div>
         <br>
-        {{$user->links()}}
-        {{-- {{ $result->links('vendor.pagination.sample-pagination') }} --}}
+        {{-- {{$user->links()}} --}}
+        {{ $user->links('vendor.pagination.sample-pagination') }}
     </body>
 
 @endsection

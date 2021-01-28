@@ -9,6 +9,7 @@ use App\User;//一応入れた
 use GuzzleHttp\Psr7\Request as Psr7Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class TagController extends Controller
 {
@@ -107,13 +108,13 @@ class TagController extends Controller
     public function tag_search(Request $request){
         $tag = Tag::find($request->tag_id);
         $users = $tag->user;
-        logger($users);
-        foreach($users as $user){
-            logger($user->id);
-        };
-        foreach($users as $user){
-            logger($user->name);
-        };
+        // logger($users);
+        // foreach($users as $user){
+        //     logger($user->id);
+        // };
+        // foreach($users as $user){
+        //     logger($user->name);
+        // };
 
         // どうやってページネーターと共存させればいいのか全然わからん
         // とりあえず上の二つの方法で、値を取り出すことはできている。
@@ -126,14 +127,17 @@ class TagController extends Controller
         //     $request->page,
         //     array('path' => $request->url())
         // );
-        $user = new LengthAwarePaginator(
-            $user = array_slice($user, 0, 20),// // 現在のページのsliceした情報(現在のページ, 1ページあたりの件数)
-            count($user),//// 総件数
-            20,//1ページあたりの件数
-            $request->page,// 現在のページ(ページャーの色がActiveになる)
-            array('path' => $request->url())// ページャーのリンクをOptionのpathで指定
-        );
-        return view('search_result', ['result' => $user]);
+
+        $user = new LengthAwarePaginator($users->forPage(1,2), count($users), 2, $request->page, array('path'=>$request->url()));
+
+        // $users = new LengthAwarePaginator(
+        //     $user = array_slice($user, 0, 20),// // 現在のページのsliceした情報(現在のページ, 1ページあたりの件数)
+        //     count($user),//// 総件数
+        //     20,//1ページあたりの件数
+        //     $request->page,// 現在のページ(ページャーの色がActiveになる)
+        //     array('path' => $request->url())// ページャーのリンクをOptionのpathで指定
+        // );
+        return view('search_result', compact('users', 'user'));
     }
 }
 

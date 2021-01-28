@@ -22,6 +22,13 @@
                     <div class="col-lg-8 col-md-11 col-sm-10 col-xs-7 align-items-center d-flex">
                         <button type="button" class="button btn border btn-block" onclick="location.href='/user/{{ $item->id }}/profile'">{{ $item->name }}</button>
                     </div>
+                    <div class="col-lg-4 col-md-1 col-sm-2 col-xs-5 align-items-center d-flex">
+                        <form class="" method="get" action="/user/tag_search">
+                            @csrf
+                            <input class="form-control mr-sm-1" type="hidden" name="tag_id" value="{{ $item->id }}">
+                            <button class="tag_btn rounded-pill border-primary px-3 mt-3" type="submit">#{{ $item->tag_name }}</button>
+                        </form>
+                    </div>
                 </div>
             @endforeach
         </div>

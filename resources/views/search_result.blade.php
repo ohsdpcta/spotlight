@@ -26,7 +26,7 @@
             @endforeach
         </div>
         <br>
-        {{$user->links()}}
+        {{-- {{$user->links()}} --}}
         {{-- {{ $result->links('vendor.pagination.sample-pagination') }} --}}
     </body>
 

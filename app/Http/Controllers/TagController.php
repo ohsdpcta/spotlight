@@ -126,17 +126,24 @@ class TagController extends Controller
         //     $request->page,
         //     array('path' => $request->url())
         // );
-        $user = new LengthAwarePaginator(
-            $user = array_slice($user, 0, 20),// // 現在のページのsliceした情報(現在のページ, 1ページあたりの件数)
-            count($user),//// 総件数
-            20,//1ページあたりの件数
-            $request->page,// 現在のページ(ページャーの色がActiveになる)
-            array('path' => $request->url())// ページャーのリンクをOptionのpathで指定
-        );
-        return view('search_result', ['result' => $user]);
+
+        // $user = new LengthAwarePaginator(
+        //     $user = array_slice($user, 0, 20),// // 現在のページのsliceした情報(現在のページ, 1ページあたりの件数)
+        //     count($user),//// 総件数
+        //     20,//1ページあたりの件数
+        //     $request->page,// 現在のページ(ページャーの色がActiveになる)
+        //     array('path' => $request->url())// ページャーのリンクをOptionのpathで指定
+        // );
+
+
+
+
+
+        return view('search_result', ['result' => $users]);//$○○→id $○○->name
     }
 }
 
+//タグ検索においてぺじねしょんがうまく動かない
 // タグ削除昨日に認証機能がつけられていない
 
 // タグ削除はユーザーとの関連付けのみを削除するため、一度登録されたタグ自体はずっと残る

@@ -121,14 +121,6 @@ class TagController extends Controller
         // とりあえず上の二つの方法で、値を取り出すことはできている。
         // 最終的にはresult->idって形で取り出せるようにしたい。
 
-        // $user = new LengthAwarePaginator(
-        //     $user->forPage($request->page, 20),
-        //     count($user),
-        //     20,
-        //     $request->page,
-        //     array('path' => $request->url())
-        // );
-
         $user = new LengthAwarePaginator(
             $users->forPage($request->page,2),  // 現在のページのsliceした情報(現在のページ, 1ページあたりの件数)
             count($users),  //総件数
@@ -136,14 +128,6 @@ class TagController extends Controller
             $request->page,  // 現在のページ(ページャーの色がActiveになる)
             array('path'=>"/user/tag_search?tag_id=$request->tag_id") // ページャーのリンクをOptionのpathで指定
         );
-
-        // $users = new LengthAwarePaginator(
-        //     $user = array_slice($user, 0, 20),// 
-        //     count($user),//// 総件数
-        //     20,//1ページあたりの件数
-        //     $request->page,// 現在のページ(ページャーの色がActiveになる)
-        //     array('path' => $request->url())// ページャーのリンクをOptionのpathで指定
-        // );
 
         return view('search_result', ['result' => $user]);//$○○→id $○○->name
     }

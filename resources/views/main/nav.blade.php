@@ -60,7 +60,7 @@
         </div>
         <div class="col-2">
             <div class="float-right">
-                <div class="nav-item dropdown" v-on:click="showdropdown">
+                <div class="nav-item dropdown" v-on:click.stop="dropdown_show = !dropdown_show">
                     <?php $user = UserClass::getUser(Auth::id()) ?>
                     @if($user && $user->avatar)
                         <a class="nav-link dropdown-toggle" role="button"><img src="{{ $user->avatar }}" width="35" height="35" class="rounded-circle"></a>
@@ -71,7 +71,7 @@
     </nav>
 
     {{-- ドロップダウン --}}
-    <div class="dropdown-container" v-if="dropdown_show">
+    <div id="dropdown-container" class="dropdown-container" v-if="dropdown_show" v-on:close="showmenu = false">
         <ul class="dropdown-list">
             <a class="nav-link dropdown-item" href="/user/signin">sign in</a>
             <a class="nav-link dropdown-item" href="/user/signout">sign out</a>

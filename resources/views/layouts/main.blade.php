@@ -23,14 +23,16 @@
     <script>
         // ドロップダウン
         const dropdown = new Vue({
-            el: '#dropdown-control',
+            el: '#dropdown-container',
             data: {
                 dropdown_show: false,
             },
-            methods: {
-                showdropdown: function() {
-                    this.dropdown_show = !this.dropdown_show;
-                }
+            created:function(){
+                this.listen(window, 'click', function(e){
+                    if (!this.$el.contains(e.target)){
+                        this.$emit('close');
+                    }
+                }.bind(this));
             }
         });
 

@@ -35,24 +35,29 @@
             <form action="/user/{{Auth::id()}}/summary/locate" method="post" name="locate_form">
                 @csrf
                 {{-- 各種フォーム入力欄 --}}
-                <label>活動地域</label><br>
-                <input type="text" name="prefecture_city" class="form-control" value="{{ $locate_data->prefecture }}{{ $locate_data->city }}" placeholder="登録する住所を入力してください。例:東京都品川区"><br>
-                <label>活動場所(座標)</label><br>
-                <input type="text" id="latlng" class="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" name="coordinate" value="{{old('coordinate')}}" placeholder="登録する住所の座標を入力してください。">
+                
+                @if($locate_data)
+                    <label>活動地域</label>
+                    <div>
+                        <a href="">#{{ $locate_data->prefecture }}</a>
+                        <a href="">#{{ $locate_data->city}}</a>
+                    </div>
+                @endif
+                <input type="text" id="latlng" class="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" name="coordinate" value="{{old('coordinate')}}" hidden>
                 <input type="text" id="address" name="address" hidden>
                 {{-- 各種ボタン --}}
-                <div class="float-lg-right float-md-right float-sm-right float-xs-right pt-1 pb-3">
-                    @if($locate_array)
-                        <input type="submit" value="修正" id="save" class="btn btn-success">
-                        <button type="button" class="btn btn-danger" onclick="location.href='/user/{{Auth::id()}}/summary/locate/delete'">削除</button>
-                    @else
-                        <input type="submit" value="登録" id="save" class="btn btn-primary">
-                    @endif
-                </div>
             </form>
         </div>
     </div>
     <div id="map" class="col-lg-12 col-md-12 col-sm-12 col-xs-12"></div><br>
+    <div class="float-lg-right float-md-right float-sm-right float-xs-right pt-1 pb-3">
+        @if($locate_array)
+            <input type="submit" value="修正" id="save" class="btn btn-success">
+            <button type="button" class="btn btn-danger" onclick="location.href='/user/{{Auth::id()}}/summary/locate/delete'">削除</button>
+        @else
+            <input type="submit" value="登録" id="save" class="btn btn-primary">
+        @endif
+    </div>
 
     <script>
         const geocoder = new google.maps.Geocoder();

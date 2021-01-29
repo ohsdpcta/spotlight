@@ -21,26 +21,24 @@
     </body>
 
     <script>
-        // ドロップダウン
-        const app = new Vue({
-            el: '#app',
+        const dropdown = new Vue({
+            el: '#dropdown-control',
             data: {
                 dropdown_show: false,
             }
         });
 
-        // フラッシュメッセージ
         const flashmsg = new Vue({
             el: '#flash-message',
             data: {
-                show: false,
+                flash_show: false,
             },
             created: function() {
                 setTimeout(() => {
-                    this.show = !this.show;
+                    this.flash_show = !this.flash_show;
                 }, 100);
                 setTimeout(() => {
-                    this.show = !this.show;
+                    this.flash_show = !this.flash_show;
                 }, 3000);
             }
         });

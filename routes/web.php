@@ -17,7 +17,9 @@ Route::get('/', 'UserController@index');
 Route::prefix('/user')->group(function(){
      // 検索結果
     Route::get('search', 'UserController@search');
-     // サインアップ
+    // タグ検索結果
+    Route::get('tag_search','TagController@tag_search');
+    // サインアップ
     Route::get('signup', 'UserController@signup_form')->middleware('guest');
     Route::post('signup', 'UserController@signup')->middleware('guest');
      // サインイン
@@ -100,6 +102,10 @@ Route::prefix('/user')->group(function(){
             Route::get('paypay', 'PaypayController@edit')->middleware('Mailvarification');//削除するぜ！
             Route::post('paypay', 'PaypayController@update')->middleware('Mailvarification');//削除するぜ！
             Route::get('paypay/delete', 'PaypayController@remove')->middleware('Mailvarification');//削除するぜ！
+
+            // プロフィール編集
+            Route::get('profile', 'ProfileController@edit')->middleware('verified');
+            Route::post('profile', 'ProfileController@update')->middleware('verified');
 
             //タグ編集
             Route::get('tag', 'TagController@summary')->middleware('Mailvarification');

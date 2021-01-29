@@ -31,7 +31,7 @@
             <form action="/user/search">
                 @csrf
                 <div class="row align-items-center text-center center">
-                    <input type="search" name="search" value="" class="form-control col-md-11">
+                    <input type="search" name="search" value="" class="form-control col-md-11 input_shadow" placeholder="Where do you SPOTLIGHTING">
                     <button type="sumbit" class="btn col-md-1"><i class="fas fa-search"></i></button>
                 </div>
             </form>

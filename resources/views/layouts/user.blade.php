@@ -24,18 +24,16 @@
 
             {{-- ユーザー名 --}}
             <div class="border-bottom col-xl-6 col-lg-6 col-md-8 col-sm-12 col-xs-12 pt-2 pr-2 pb-2 pl-2 text-dark">
-                <h1>{{ $user->name }}</h1>
-                <p>{{'@'}}{{ $user->social_id }}</p>
-                {{-- タグ(仮) --}}
-                <div class="pt-4">
-                    <h5>タグ挿入予定地(仮)</h5>
-                </div>
+                <h1>{{ UserClass::getUser(request()->id)->name }}</h1>
+                <p>{{'@'}}{{ UserClass::getUser(request()->id)->social_id }}</p>
+                {{-- タグ --}}
                 <?php $tags = UserClass::getTag(request()->id) ?>
+
                 @foreach($tags as $index => $tag)
-                    #{{ $tag->tag_name }}
-                    @if($index < count($tags) - 1)
-                        ,
-                    @endif
+                    <form class="" method="get" action="/user/tag_search">
+                        <input class="form-control mr-sm-1" type="hidden" name="tag_id" value="{{ $tag->id }}">
+                        <button class="tag_btn rounded-pill border-primary px-3 mt-3" type="submit">#{{ $tag->tag_name }}</button>
+                    </form>
                 @endforeach
                 <div>
                     <?php $sprofile = UserClass::getSmallProfile(request()->id) ?>

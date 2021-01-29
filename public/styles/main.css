@@ -121,3 +121,16 @@ a.v-dropdown-item:focus {
     opacity: 0;
     transform: translateY(-50px);
 }
+
+
+/* dropdown animation */
+
+.dropdown-fade-enter-active,
+.dropdown-fade-leave-active {
+    transition: all .8s cubic-bezier(0.8, 1, 0.2, 0);
+}
+
+.dropdown-fade-enter,
+.dropdown-fade-leave-to {
+    transform: translateY(-150px);
+}

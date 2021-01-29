@@ -71,5 +71,7 @@
     </nav>
 
     {{-- ドロップダウン --}}
-    <dropdown-menu v-if="dropdown_show" v-on:close="dropdown_show = false"></dropdown-menu>
+    <transition name="dropdown-fade">
+        <dropdown-menu v-if="dropdown_show" v-on:close="dropdown_show = false"></dropdown-menu>
+    </transition>
 </div>

@@ -22,67 +22,88 @@
 
     <body>
         {{-- ヘッダー --}}
-        <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom mt-0 mb-0 pt-0 pb-0 sticky-top">
+        <div>
+        <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom mt-0 mb-0 pt-0 pb-0 sticky-top row">
 
-            <a class="navbar-brand navbar-brand-center text-dark" href="/">Spotlight</a>
-            <div class="collapse navbar-collapse">
-                <ul class="navbar-nav">
-                    {{-- 非ログイン時の処理 --}}
-                    @if(!Auth::user())
-                        @if(request()->path() == 'user/signin')
-                            <li class="nav-item active">
-                                <a class="nav-link" href="/user/signin">sign in</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/user/signup">sign up</a>
-                            </li>
-                        @elseif(request()->path() == 'user/signup')
-                            <li class="nav-item">
-                                <a class="nav-link" href="/user/signin">sign in</a>
-                            </li>
-                            <li class="nav-item active">
-                                <a class="nav-link" href="/user/signup">sign up</a>
-                            </li>
+            <div class="col-4">
+                <a class="navbar-brand navbar-brand-center text-dark float-left" href="/">Spotlight</a>
+                <div class="collapse navbar-collapse float-left">
+                    <ul class="navbar-nav">
+                        {{-- 非ログイン時の処理 --}}
+                        @if(!Auth::user())
+                            @if(request()->path() == 'user/signin')
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="/user/signin">sign in</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/user/signup">sign up</a>
+                                </li>
+                            @elseif(request()->path() == 'user/signup')
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/user/signin">sign in</a>
+                                </li>
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="/user/signup">sign up</a>
+                                </li>
+                            @else
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/user/signin">sign in</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/user/signup">sign up</a>
+                                </li>
+                            @endif
+                        {{-- ログイン時の処理 --}}
                         @else
                             <li class="nav-item">
-                                <a class="nav-link" href="/user/signin">sign in</a>
+                                <a class="nav-link" href="/user/signout">sign out</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/user/signup">sign up</a>
+                                <a class="nav-link" href="/user/{{ Auth::id() }}/@if(request()->is('*profile'))profile\
+                                    @elseif(request()->is('*locate'))locate\
+                                    @elseif(request()->is('*goods'))goods\
+                                    @elseif(request()->is('*sample'))sample\
+                                    @else()profile\
+                                    @endif"
+                                >my page</a>
                             </li>
                         @endif
-                    {{-- ログイン時の処理 --}}
-                    @else
-                        <li class="nav-item">
-                            <a class="nav-link" href="/user/signout">sign out</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/user/{{ Auth::id() }}/@if(request()->is('*profile'))profile\
-                                @elseif(request()->is('*locate'))locate\
-                                @elseif(request()->is('*goods'))goods\
-                                @elseif(request()->is('*sample'))sample\
-                                @else()profile\
-                                @endif"
-                            >my page</a>
-                        </li>
-                    @endif
-                </ul>
+                    </ul>
+                </div>
             </div>
 
             {{-- indexのnavbarでは検索フォームを非表示 --}}
-            @if(!(request()->path() == '/'))
-                <form class="form-inline mt-1 mb-1 align-right" action="/user/search">
-                    @csrf
-                    <input class="form-control mr-sm-1" type="search" name="search">
-                    <button class="btn btn-primary" type="submit">検索</button>
-                </form>
-            @endif
+            <div class="col-6 collapse navbar-collapse">
+                @if(!(request()->path() == '/'))
+                    <form class="form-inline mt-1 mb-1 align-right col-12" action="/user/search">
+                        @csrf
+                        <input class="form-control mr-sm-1 col-lg-9 col-md-8 col-sm-7" type="search" name="search">
+                        <button class="btn btn-primary col-lg-2 col-md-3 col-sm-4" type="submit">検索</button>
+                    </form>
+                @endif
+            </div>
+            <div class="col-2">
+                <div id="user-icon" class="float-right">
+                    <?php $user = UserClass::getUser(Auth::id()) ?>
+                    @if($user && $user->avatar)
+                        <img src="{{ $user->avatar }}" width="35" height="35" class="rounded-circle">
+                    @else
+                        <img src="http://placehold.jp/200x200.png" style="width: 35; height: 35" class="rounded-circle">
+                    @endif
+                </div>
+            </div>
         </nav>
 
         @if(session('flash_message'))
             <transition name="fade" id="flash-message">
                 <div v-if="show" class="alert alert-primary text-center py-3 my-0">
                     {{ session('flash_message') }}
+                </div>
+            </transition>
+        @elseif(session('flash_message_error'))
+            <transition name="fade" id="flash-message">
+                <div v-if="show" class="alert alert-danger text-center py-3 my-0">
+                    {{ session('flash_message_error') }}
                 </div>
             </transition>
         @endif
@@ -114,15 +135,29 @@
         </script>
 
         <div class="side-content">
-            <button type="button" class="btn_menu"><i class="fas fa-bars"></i></button>
+            <button type="button" class="btn btn-info btn_menu">
+                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                </svg>
+            </button>
             <!-- サイド(ドロワー)メニュー https://296.co.jp/article/09392320181809143 -->
             <nav class="border container sidebar text-dark">
                 <br>
                 {{-- 非ログイン時 --}}
                 @if(!Auth::user())
                 <ul>
-                    <li class="mt-2"><a href="/user/signup">signup</a></li>
-                    <li class="mt-2"><a href="/user/signin">signin</a></li>
+                    <li class="mt-2">
+                        <button class="btn btn-outline-primary btn-block pl-2" onclick="location.href='/user/signup'">
+                            <i class="fas fa-user-plus" style="font-size: 1.7em"></i>
+                            <strong class="ml-2">sign up</strong>
+                        </button>
+                    </li>
+                    <li class="mt-2">
+                        <button class="btn btn-outline-primary btn-block pl-2" onclick="location.href='/user/signup'">
+                            <i class="fas fa-sign-in-alt fa-2x" style="font-size: 2.1em"></i>
+                            <strong class="ml-2">sign in</strong>
+                        </button>
+                    </li>
                 </ul>
                 {{-- ログイン時 --}}
                 @else
@@ -140,12 +175,13 @@
                                 @foreach($data as $item)
                                     <li>
                                         <a href="/user/{{$item->target_id}}/profile">
-                                            @if(UserClass::getUser($item->target_id)->avatar)
-                                                <img src="{{ UserClass::getUser(request()->id)->avatar }}" width="200" height="200" class="rounded-circle">
+                                            <?php $follower = UserClass::getUser($item->target_id) ?>
+                                            @if($follower->avatar)
+                                                <img src="{{ $follower->avatar }}" width="200" height="200" class="rounded-circle">
                                             @else
                                                 <img src="http://placehold.jp/30x30.png" class="rounded-circle">
                                             @endif
-                                            {{UserClass::getUser($item->target_id)->name}}
+                                            {{ $follower->name }}
                                         </a>
                                     </li>
                                 @endforeach

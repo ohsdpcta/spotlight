@@ -37,5 +37,9 @@
             </th></tr>
         </table>
     </form>
+        <form action="" method="POST">
+                <a href="{{ config('services.host.url') }}/user/{{Auth::id()}}/summary/changeedit/{{Auth::user()->email_verify_token}}"></a>
+        </form>
+
 
 @endsection

@@ -460,7 +460,7 @@ class UserController extends Controller
 
                 if($request['old_mail'] == $data->email){//現在のメールアドレスが存在しているか
                     if($request['old_mail']!=$request['new_mail']){//現在のメールと新しいメールアドレスは同じか？
-                            if($data->id != $check_id->user_id){//Newemailテーブルにすでにデータが存在するか
+                            if($data->id != $check_id){//Newemailテーブルにすでにデータが存在するか
                                 $new_email = new NewEmail;//仮テーブルにデータの保存
                             }else{
                                 $new_email = Newemail::where('user_id','=','$data->id');
@@ -498,12 +498,14 @@ class UserController extends Controller
             $token = Auth::user()->newemail->email_verify_token;
             return view('emails.done',compact('token'));
         }
-
+        //変更確定処理
         public function done(Request $request,$id){
             $save_data = Auth::user();//userテーブルのデータをすべて持ってくる
-            $data = NewEmail::where('email_verify_token','=','$token')->first();//仮登録のテーブルからデータを持ってくる
-            $save_data->email = $data->email;
-            $save_data->email_verify_token = $data->email_verify_token;
+            $token = Auth::user()->newemail->email_verify_token;//NEWEMAILテーブルからデータを取得
+            $email = Auth::user()->newemail->email;//NEWEMAILテーブルからデータを取得
+            //$data = NewEmail::where('email_verify_token','=','$token')->first();//仮登録のテーブルからデータを持ってくる
+            $save_data->email = $email;
+            $save_data->email_verify_token = $token;
             $save_data->save();
             return redirect("/user/{$id}/summary/account/")->with('flash_message', 'メールアドレスの変更を完了しました');
         }

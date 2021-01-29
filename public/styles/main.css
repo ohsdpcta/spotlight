@@ -70,9 +70,9 @@ button {
 
 /* dropdown */
 
-.dropdown-container {
+.v-dropdown-container {
     position: absolute;
-    right: 0;
+    right: 27px;
     z-index: 100;
     background-color: white;
     border: solid rgb(225, 223, 233);
@@ -85,16 +85,26 @@ button {
     height: 130px;
 }
 
-.dropdown-list {
+.v-dropdown-list {
     padding-inline-start: 0;
     text-align: center;
 }
 
-.dropdown-item {
+.v-dropdown-item {
     border-bottom: 1px dashed rgb(225, 223, 233);
 }
 
-.dropdown-item-last {
+a.v-dropdown-item {
+    color: #212529;
+}
+
+a.v-dropdown-item:hover,
+a.v-dropdown-item:focus {
+    color: #16181b;
+    background-color: #f8f9fa;
+}
+
+.v-dropdown-item-last {
     border-bottom: 0px;
 }
 

@@ -16,11 +16,11 @@
   <link rel="stylesheet" href="{{ asset('styles/sidebar.css') }}">
 
   <script type="text/x-template" id="dropdown-template">
-    <div id="dropdown-container" class="dropdown-container">
-      <ul class="dropdown-list">
-        <a class="nav-link dropdown-item" href="/user/signin">sign in</a>
-        <a class="nav-link dropdown-item" href="/user/signout">sign out</a>
-        <a class="nav-link dropdown-item dropdown-item-last" href="/user/{{ Auth::id() }}/summary/account">setting</a>
+    <div id="dropdown-container" class="v-dropdown-container">
+      <ul class="v-dropdown-list">
+        <a class="nav-link v-dropdown-item" href="/user/signin">sign in</a>
+        <a class="nav-link v-dropdown-item" href="/user/signout">sign out</a>
+        <a class="nav-link v-dropdown-item v-dropdown-item-last" href="/user/{{ Auth::id() }}/summary/account">setting</a>
       </ul>
     </div>
   </script>

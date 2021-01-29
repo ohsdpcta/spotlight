@@ -6,12 +6,10 @@
 
     <body>
         <div id="app">
-            {{-- navbar --}}
             @include('main.nav')
 
             @include('main.flash')
 
-            {{ session()->flash('flash_message', 'Test Flash Message.') }}
             @include('main.sidebar')
 
             @yield('user')

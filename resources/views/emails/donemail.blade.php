@@ -1,5 +1,13 @@
+
 <p>Spotlight</p>
 <br>
-<p>メールアドレスの変更が完了しました。</p><br>
-<p>こちらのメールには返信不要です。</p>
+<form action="donemail" method="POST">
+    <p>メールアドレスの変更申請が完了しました。以下のURLから変更を確定してください</p><br>
+    <p>こちらのメールには返信不要です。</p>
+    @csrf
+    <a href="{{ config('services.host.url') }}/user/{{Auth::id()}}/summary/donemail/{{Auth::user()->email_verify_token}}">変更確定はこちら</a>
+
+</form>
+
+
 

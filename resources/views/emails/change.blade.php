@@ -9,7 +9,7 @@
     </head>
     @section('R_form')
         <p>パスワード変更を行いますか？</p>
-    <form action="changeedit" method="POST">
+    <form action="changemail" method="POST">
         @csrf
             <label><input type="submit" name="send" value="実行"> </label>
 

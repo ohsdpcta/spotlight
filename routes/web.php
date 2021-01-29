@@ -128,7 +128,8 @@ Route::prefix('/user')->group(function(){
             Route::post('mail_change/mail_email','UserController@mail_email')->middleware('Mailvarification');//メール本文
             Route::get('mailedit/{token}','UserController@mailedit')->middleware('Mailvarification');//変更ページ
             Route::post('mailedit/mailupdate','UserController@mailupdate')->middleware('Mailvarification');//変更処理
-
+            Route::get('donemail/{token}','UserController@donemail')->middleware('Mailvarification');//変更ページ
+            Route::post('donemail/done','UserController@done')->middleware('Mailvarification');//変更処理
         });
     });
 });

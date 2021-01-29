@@ -4,5 +4,5 @@
 <form action="changeedit" method="POST">
     @csrf
 
-<a href="http://127.0.0.1:8000/user/{{Auth::id()}}/summary/changeedit/{{Auth::user()->email_verify_token}}">パスワード変更はこちら</a>
+<a href="{{ config('services.host.url') }}/user/{{Auth::id()}}/summary/changeedit/{{Auth::user()->email_verify_token}}">パスワード変更はこちら</a>
 </form>

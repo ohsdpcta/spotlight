@@ -1,3 +1,7 @@
+html {
+    overflow-y: scroll;
+}
+
 body {
     font-family: "ヒラギノ角ゴ ProN W3", HiraKakuProN-W3, 游ゴシック, "Yu Gothic", メイリオ, Meiryo, Verdana, Helvetica, Arial, sans-serif;
     position: relative;
@@ -125,12 +129,3 @@ a.v-dropdown-item:focus {
 
 /* dropdown animation */
 
-.dropdown-fade-enter-active,
-.dropdown-fade-leave-active {
-    transition: all .8s cubic-bezier(0.8, 1, 0.2, 0);
-}
-
-.dropdown-fade-enter,
-.dropdown-fade-leave-to {
-    transform: translateY(-150px);
-}

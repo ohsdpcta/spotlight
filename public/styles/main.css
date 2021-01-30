@@ -3,7 +3,8 @@ html {
 }
 
 body {
-    font-family: "ヒラギノ角ゴ ProN W3", HiraKakuProN-W3, 游ゴシック, "Yu Gothic", メイリオ, Meiryo, Verdana, Helvetica, Arial, sans-serif;
+    font-family: "ヒラギノ角ゴ ProN W3", HiraKakuProN-W3, 游ゴシック,
+        "Yu Gothic", メイリオ, Meiryo, Verdana, Helvetica, Arial, sans-serif;
     position: relative;
 }
 
@@ -13,7 +14,7 @@ header {
 
 header h1 {
     font-size: small;
-    text-align: center
+    text-align: center;
 }
 
 body {
@@ -71,7 +72,6 @@ button {
     background: rgb(225, 223, 233);
 }
 
-
 /* dropdown */
 
 .v-dropdown-container {
@@ -112,6 +112,23 @@ a.v-dropdown-item:focus {
     border-bottom: 0px;
 }
 
+/* dropdown animation */
+
+.dropdown-fade-enter-active {
+    animation: dropdown .5s ease-in-out 0s 1 normal forwards running;
+}
+.dropdown-fade-leave-active {
+    animation: dropdown .4s ease-in-out 0s 1 reverse forwards running;
+}
+
+@keyframes dropdown {
+    0%{
+        transform: translateY(-130px);
+    }
+    100%{
+        transform: translateY(0px);
+    }
+}
 
 /* flash-messege animation */
 
@@ -125,7 +142,3 @@ a.v-dropdown-item:focus {
     opacity: 0;
     transform: translateY(-50px);
 }
-
-
-/* dropdown animation */
-

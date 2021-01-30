@@ -19,13 +19,6 @@
     </body>
 
     <script>
-        const dropdown = new Vue({
-            el: '#dropdown-control',
-            data: {
-                dropdown_show: false,
-            }
-        });
-
         const flashmsg = new Vue({
             el: '#flash-message',
             data: {

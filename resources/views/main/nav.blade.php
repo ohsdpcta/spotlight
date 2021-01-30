@@ -72,6 +72,18 @@
 
     {{-- ドロップダウン --}}
     <transition name="dropdown-fade">
-        <dropdown-menu v-if="dropdown_show" v-on:close="dropdown_show = false"></dropdown-menu>
+        <dropdown-menu v-if="dropdown_show" v-on:close="dropdown_show = false">
+        </dropdown-menu>
     </transition>
 </div>
+
+<script>
+    const dropdown = new Vue({
+        el: '#dropdown-control',
+        data: {
+            dropdown_show: false,
+        },
+        methods: {
+        }
+    });
+</script>

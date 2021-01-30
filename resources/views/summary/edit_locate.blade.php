@@ -35,7 +35,6 @@
             <form action="/user/{{Auth::id()}}/summary/locate" method="post" name="locate_form">
                 @csrf
                 {{-- 各種フォーム入力欄 --}}
-                
                 @if($locate_data)
                     <label>活動地域</label>
                     <div>

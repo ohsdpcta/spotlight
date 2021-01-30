@@ -4,38 +4,36 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Tag;
+use App\UserTag;
 use App\User;//一応入れた
 use GuzzleHttp\Psr7\Request as Psr7Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class TagController extends Controller
 {
 //-----------------------------------------------------------------------------------
     // 一覧
     public function summary(Request $request, $id){
-        // $tag = DB::table('user_tags')
-        //     ->join('users', 'user_tags.user_id', '=', 'users.id')
-        //     ->join('tags', 'user_tags.tag_id', '=', 'tags.id')
-        //     ->where('user.id', $id)
-        //     ->select('tag.tag_name')
-        //     ->get();
-            return view('layouts.user', compact('tag'));
+        return view('summary.summary_tag');
     }
 
     //新規追加
     public function add(Request $request, $id){
-        $tag = new Tag;
-        $tag->id = $id;
-        $this->authorize('edit', $tag);
+        $usertag = new UserTag;
+        $usertag->user_id = $id;
+        $this->authorize('add', $usertag);
         return view('summary.add_tag');
     }
 
     public function create(Request $request, $id){
-        $tag = new Tag;
-        $tag->id = $id;
-        $this->authorize('edit', $tag);
-        // //バリデーションの設定
+        //認証
+        $usertag = new UserTag;
+        $usertag->user_id = $id;                //user_tagテーブルのuser_idカラムに自分にidを入力
+        $this->authorize('add', $usertag);
+
+        //バリデーションの設定
         $rules = [
             'name'=>'required|between:1,25'
         ];
@@ -45,21 +43,34 @@ class TagController extends Controller
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
         if ($validator->fails()) {
-            return redirect("user/{$id}/summary/tag/add")
+            return redirect("user/{Auth::id()}/summary/tag/add")
                 ->withErrors($validator)
                 ->withInput();
         }
-        $tag = $validator->validate();
 
-        $addtag->name = $request->name;
-        if($addtag->save()){
-            session()->flash('flash_message', 'グッズの登録が完了しました');
+        $tag = Tag::where('tag_name', $request->name)->first();//タグの名称が一致するものがあった場合、そのタプルを取り出している
+
+        //タグの名前がDBになかった場合、タグを新たに登録
+        if(empty($tag)){
+            $tag = new Tag;
+            $tag->tag_name = $request->name;    //tagテーブルのtag_nameカラムに
+            if($tag->save()){
+                session()->flash('flash_message', 'タグの登録が完了しました');
+            }
         }
+
+        $id = Auth::id();
+        //user_idとtag_idが共に一致するカラムがある場合には、登録をスキップしたい(タグ名は前の分岐で一意に定まっているため、user_idだけ比較)
+        if($tag_rel_equal = UserTag::where('user_id', $id)->where('tag_id', $tag->id)->first()){
+            session()->flash('flash_message', '既に登録されています');
+        }else{
+            //タグとユーザーの関連付け
+            $usertag->tag_id = $tag->id;
+            $usertag->save();
+        }
+
         return redirect("user/{$id}/summary/tag");
     }
-
-//-------------------------------------------------------------------------------------
-//以下goodsのコピー
 
     // 削除確認画面
     public function delete(Request $request, $id) {
@@ -68,21 +79,61 @@ class TagController extends Controller
             return redirect("/user/{$id}/summary/tag");
         }
         $checked_id_str = implode(',', $request->checked_items);
-        $data = Tag::find($request->checked_items);
+        $data = Tag::find($request->checked_items);//チェックされたタグの値を取得している
+        $usertag = new UserTag;
+        $usertag->user_id = $id;                //user_tagテーブルのuser_idカラムに自分にidを入力
         foreach($data as $item){
-            $this->authorize('edit', $item);
+            logger($id);
+            $this->authorize('delete', $usertag);//タグを持つユーザーのidで認証したい
         }
         return view('summary.delete_tag', compact('data', 'checked_id_str'));
+        //dataにはtagテーブルの削除するタグのタプル
+        //checked_id_strには削除したいタグと自分とを関連付けているuser_tagテーブルのid
+
     }
     // 削除処理
     public function remove(Request $request, $id) {
         $delete_item_id = explode(',', $request->checked_id_str);
-        $data = Tag::find($delete_item_id);
-        foreach($data as $item){
-            $this->authorize('edit', $item);
+        // $data = User::find($delete_item_id);
+        // $data = UserTag::find($delete_item_id)->get();
+        foreach($delete_item_id as $i){
+            $data = UserTag::where('tag_id', $i)->get();
+            logger($data);
+            $data->each->delete();
         }
-        $data->each->delete();
         session()->flash('flash_message', '削除が完了しました');
         return redirect("/user/{$id}/summary/tag");
     }
+
+    // タグ検索結果(改変中)
+    public function tag_search(Request $request){
+        $tag = Tag::find($request->tag_id);
+        $users = $tag->user;
+        // logger($users);
+        // foreach($users as $user){
+        //     logger($user->id);
+        // };
+        // foreach($users as $user){
+        //     logger($user->name);
+        // };
+
+        // どうやってページネーターと共存させればいいのか全然わからん
+        // とりあえず上の二つの方法で、値を取り出すことはできている。
+        // 最終的にはresult->idって形で取り出せるようにしたい。
+
+        $user = new LengthAwarePaginator(
+            $users->forPage($request->page,2),  // 現在のページのsliceした情報(現在のページ, 1ページあたりの件数)
+            count($users),  //総件数
+            2,  //1ページあたりの件数。(本来なら20。確認用)
+            $request->page,  // 現在のページ(ページャーの色がActiveになる)
+            array('path'=>"/user/tag_search?tag_id=$request->tag_id") // ページャーのリンクをOptionのpathで指定
+        );
+
+        return view('search_result', ['result' => $user]);//$○○→id $○○->name
+    }
 }
+
+//タグ検索においてぺじねしょんがうまく動かない
+// タグ削除昨日に認証機能がつけられていない
+
+// タグ削除はユーザーとの関連付けのみを削除するため、一度登録されたタグ自体はずっと残る

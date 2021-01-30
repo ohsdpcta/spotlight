@@ -1,13 +1,28 @@
-@if(session('flash_message'))
-    <transition name="fade" id="flash-message">
+<transition name="fade" id="flash-message">
+    @if(session('flash_message'))
         <div v-if="flash_show" class="alert alert-primary text-center py-3 my-0">
             {{ session('flash_message') }}
         </div>
-    </transition>
-@elseif(session('flash_message_error'))
-    <transition name="fade" id="flash-message">
+    @elseif(session('flash_message_error'))
         <div v-if="flash_show" class="alert alert-danger text-center py-3 my-0">
             {{ session('flash_message_error') }}
         </div>
-    </transition>
-@endif
+    @endif
+</transition>
+
+<script>
+    const flashmsg = new Vue({
+        el: '#flash-message',
+        data: {
+            flash_show: false,
+        },
+        created: function() {
+            setTimeout(() => {
+                this.flash_show = !this.flash_show;
+            }, 100);
+            setTimeout(() => {
+                this.flash_show = !this.flash_show;
+            }, 3000);
+        }
+    });
+</script>

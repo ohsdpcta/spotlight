@@ -82,8 +82,6 @@
         el: '#dropdown-control',
         data: {
             dropdown_show: false,
-        },
-        methods: {
         }
     });
 </script>

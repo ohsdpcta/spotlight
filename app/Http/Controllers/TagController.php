@@ -83,7 +83,6 @@ class TagController extends Controller
         $usertag = new UserTag;
         $usertag->user_id = $id;                //user_tagテーブルのuser_idカラムに自分にidを入力
         foreach($data as $item){
-            logger($id);
             $this->authorize('delete', $usertag);//タグを持つユーザーのidで認証したい
         }
         return view('summary.delete_tag', compact('data', 'checked_id_str'));
@@ -98,7 +97,6 @@ class TagController extends Controller
         // $data = UserTag::find($delete_item_id)->get();
         foreach($delete_item_id as $i){
             $data = UserTag::where('tag_id', $i)->get();
-            logger($data);
             $data->each->delete();
         }
         session()->flash('flash_message', '削除が完了しました');

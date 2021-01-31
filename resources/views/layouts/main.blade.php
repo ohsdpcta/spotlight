@@ -1,20 +1,20 @@
 <html>
 
-    @include('main.head')
+    @include('layouts.main.head')
 
     <header></header>
 
     <body>
         <div id="app">
-            @include('main.nav')
+            @include('layouts.main.nav')
 
-            @include('main.flash')
+            @include('layouts.main.flash')
 
-            @include('main.sidebar')
+            @include('layouts.main.sidebar')
 
             @yield('user')
 
-            @include('main.footer')
+            @include('layouts.main.footer')
         </div>
     </body>
 </html>

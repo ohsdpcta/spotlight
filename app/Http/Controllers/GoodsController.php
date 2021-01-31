@@ -120,7 +120,6 @@ class GoodsController extends Controller
     public function remove(Request $request, $id) {
         $delete_item_id = explode(',', $request->checked_id_str);
         $data = Goods::find($delete_item_id);
-        // logger($data);
         foreach($data as $item){
             $this->authorize('edit', $item);
         }

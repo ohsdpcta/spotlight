@@ -1,5 +1,3 @@
-
-
 <div class="side-content">
     <button type="button" class="btn btn-info btn_menu sidebar-btn">
         <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
@@ -19,7 +17,7 @@
                     </button>
                 </li>
                 <li class="mt-2">
-                    <button class="btn btn-outline-primary btn-block pl-2" onclick="location.href='/user/signup'">
+                    <button class="btn btn-outline-primary btn-block pl-2" onclick="location.href='/user/signin'">
                         <i class="fas fa-sign-in-alt fa-2x" style="font-size: 2.1em"></i>
                         <strong class="ml-2">sign in</strong>
                     </button>

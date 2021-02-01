@@ -61,9 +61,11 @@
         <div class="col-2">
             <div class="float-right">
                 <div class="nav-item dropdown" v-on:click.stop="dropdown_show = !dropdown_show">
-                    <?php $user = UserClass::getUser(Auth::id()) ?>
+                    <?php $user = Auth::user() ?>
                     @if($user && $user->avatar)
                         <a class="nav-link dropdown-toggle" role="button"><img src="{{ $user->avatar }}" width="35" height="35" class="rounded-circle"></a>
+                    @elseif($user)
+                        <a class="nav-link dropdown-toggle" role="button"><img src="http://placehold.jp/200x200.png" width="35" height="35" class="rounded-circle"></a>
                     @endif
                 </div>
             </div>

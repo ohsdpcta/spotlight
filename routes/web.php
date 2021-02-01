@@ -35,6 +35,11 @@ Route::prefix('/user')->group(function(){
     Route::get('emails/conteact','UserController@conteact')->middleware('auth');
     Route::get('emails/authentication/{token}','UserController@authentication')->middleware('auth');
     Route::post('emails/confirmation','UserController@confirmation')->middleware('auth');
+    //パスワードリセット
+    Route::get('signin/resetform','UserController@resetform')->middleware('guest');
+    Route::post('signin/resetmail','UserController@resetmail')->middleware('guest');
+    Route::get('signin/passform/{token}','UserController@passform')->middleware('guest');
+    Route::post('signin/passform/resetpass','UserController@resetpass')->middleware('guest');
 
 
 
@@ -130,6 +135,7 @@ Route::prefix('/user')->group(function(){
             Route::post('mailedit/mailupdate','UserController@mailupdate')->middleware('Mailvarification');//変更処理
             Route::get('donemail/{token}','UserController@donemail')->middleware('Mailvarification');//変更ページ
             Route::post('donemail/done','UserController@done')->middleware('Mailvarification');//変更処理
+
         });
     });
 });

@@ -15,11 +15,14 @@ use App\Mail\passChangeMaill;
 use  App\Mail\SocalIDChange;
 use App\Mail\MailChange;
 use App\Mail\MailChangeCheck;
+use App\Mail\ResetMail;
 use App\Newemail;
+use Illuminate\Support\Facades\Mail;
+
 
 use GuzzleHttp\Psr7\Request as Psr7Request;
 use Illuminate\Support\Facades\Validator;
-use Mail;
+//use Mail;
 
 
 
@@ -508,6 +511,59 @@ class UserController extends Controller
             $save_data->email_verify_token = $token;
             $save_data->save();
             return redirect("/user/{$id}/summary/account/")->with('flash_message', 'メールアドレスの変更を完了しました');
+        }
+
+        //パスワードリセット
+        public function resetform(Request $request){
+            return view('emails.resetform');
+        }
+        //パスワードリセットメール送信
+        public function resetmail(Request $request){
+            //バリデーションの設定
+            $request->validate([
+                'email'=>'required|email|max:254',
+            ]);
+            $users = User::get();
+                foreach($users as $value){
+                    if($request['email'] === $value->email ){
+                        $data = $value->email;
+                        $data_token = base64_encode($data);
+                        Mail::to($request['email'])->send(new ResetMail($data,$data_token));
+                        return redirect("/user/signin")->with('flash_message', 'パスワードリセットメールの送信が完了しました');
+                    }
+                }
+                return redirect("/user/signin")->with('flash_message', '登録されていないメールアドレスです');
+        }
+        //パスワードリセットフォーム
+        public function passform(Request $request,$token){
+            $email_token = $token;
+
+            return view('emails.passform',compact('email_token'));
+        }
+        //パスワードリセット
+        public function resetpass(Request $request){
+            //バリデーションの設定
+            $request->validate([
+                'new_password'=>'required|string|between:8,128',
+                'new_password_check'=>'required|string|between:8,128',
+            ]);
+            $token = $request->email_token;
+            $users = User::where('email_verify_token',$token )->first();
+
+            if($users->email_verify_token === $token ){
+                $dbdata = User::where('email_verify_token',$token )->first();
+                if($request['new_password'] === $request['new_password_check'] ){
+                    $dbdata->password = bcrypt($request['new_password']);
+                    $dbdata->save();
+                }else{
+                    return back()->withInput()->with('flash_message', '確認パスワードと新規パスワードが一致しません。');
+                }
+            }else{
+                return redirect("/user/signin")->with('flash_message', '不正なアクセスです。');
+            }
+            return redirect("/user/signin")->with('flash_message', 'パスワード変更が完了しました。');
+
+
         }
 
 }

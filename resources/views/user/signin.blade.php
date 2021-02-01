@@ -37,8 +37,10 @@
             </th></tr>
         </table>
     </form>
-        <form action="" method="POST">
-                <a href="{{ config('services.host.url') }}/user/{{Auth::id()}}/summary/changeedit/{{Auth::user()->email_verify_token}}"></a>
+        <form action="resetform" method="POST">
+            @csrf
+
+                <label><a href="{{ config('services.host.url') }}/user/signin/resetform">パスワードリセット</a></label>
         </form>
 
 

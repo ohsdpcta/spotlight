@@ -41,7 +41,7 @@
                                 <a href="/user/{{$item->target_id}}/profile">
                                     <?php $follower = UserClass::getUser($item->target_id) ?>
                                     @if($follower->avatar)
-                                        <img src="{{ $follower->avatar }}" width="200" height="200" class="rounded-circle">
+                                        <img src="{{ $follower->avatar }}" width="30" height="30" class="rounded-circle">
                                     @else
                                         <img src="http://placehold.jp/30x30.png" class="rounded-circle">
                                     @endif

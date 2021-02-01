@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use App\Library\LocateClass;
 
 use App\Locate;
 
@@ -33,7 +34,7 @@ class LocateController extends Controller
         }else{
             $locate_array = [];
         }
-        return view('summary.edit_locate', compact('locate_array'));
+        return view('summary.edit_locate', compact('locate_array', 'locate_data'));
     }
 
     //ロケーション+住所登録
@@ -52,22 +53,27 @@ class LocateController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
+
         $locate = new Locate;
         $locate->user_id = $id;
         $this->authorize('edit', $locate);
-        if(Auth::id() == $id){
-            $locate = Locate::where('user_id', Auth::id())->first();
-            if($locate){
-                $locate->coordinate = $request->coordinate;
-            }else{
-                $locate = new Locate;
-                //Auth::はログインしているユーザーのデータを持ってこれるコマンド
-                $locate->user_id = Auth::id();
-                $locate->coordinate = $request->coordinate;
-            }
-            if($locate->save()){
-                session()->flash('flash_message', 'ロケーションの設定が完了しました');
-            }
+
+        $locate = Locate::where('user_id', Auth::id())->first();
+        $formatted_address = LocateClass::regex_address($request->address);
+        if($locate){
+            $locate->prefecture = $formatted_address[1];
+            $locate->city = $formatted_address[2];
+            $locate->coordinate = $request->coordinate;
+        }else{
+            $locate = new Locate;
+            //Auth::はログインしているユーザーのデータを持ってこれるコマンド
+            $locate->user_id = Auth::id();
+            $locate->prefecture = $formatted_address[1];
+            $locate->city = $formatted_address[2];
+            $locate->coordinate = $request->coordinate;
+        }
+        if($locate->save()){
+            session()->flash('flash_message', 'ロケーションの設定が完了しました');
         }
         return redirect("/user/{$id}/summary/locate");
     }

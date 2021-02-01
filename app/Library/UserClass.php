@@ -51,6 +51,7 @@ class UserClass{
     return $url;
   }
 
+  //ユーザーのidからタグを取得する
   public static function getSmallprofile($id){
     $sprofile = SmallProfile::where('user_id', $id)->first();
     return $sprofile;
@@ -61,4 +62,11 @@ class UserClass{
     $tag = $user->tag()->get();
     return $tag;
   }
+
+  // //タグidからユーザーを取得する
+  // public static function getTagtoUser($id){
+  //   $tag = Tag::find($id);
+  //   $user = $tag->
+  // }
 }
+

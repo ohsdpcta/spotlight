@@ -16,6 +16,8 @@ class CreateLocatesTable extends Migration
         Schema::create('locates', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('user_id');
+            $table->string('prefecture')->nullable();
+            $table->string('city')->nullable();
             $table->text('coordinate');
             $table->timestamps();
         });

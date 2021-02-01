@@ -8,11 +8,6 @@ class Tag extends Model
 {
     protected $table = 'tags';
 
-    public function users()
-    {
-        return $this->belongsToMany('App\User', 'id');
-    }
-
     /*
      * 値を結合する子モデルの取得
      *

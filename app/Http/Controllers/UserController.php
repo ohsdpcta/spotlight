@@ -463,7 +463,7 @@ class UserController extends Controller
 
                 if($request['old_mail'] == $data->email){//現在のメールアドレスが存在しているか
                     if($request['old_mail']!=$request['new_mail']){//現在のメールと新しいメールアドレスは同じか？
-                            if($data->id != $check_id){//Newemailテーブルにすでにデータが存在するか
+                            if($id != $check_id){//Newemailテーブルにすでにデータが存在するか
                                 $new_email = new NewEmail;//仮テーブルにデータの保存
                             }else{
                                 $new_email = Newemail::where('user_id','=','$data->id');

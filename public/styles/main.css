@@ -1,53 +1,154 @@
-body{
-    font-family:  "ヒラギノ角ゴ ProN W3", HiraKakuProN-W3, 游ゴシック, "Yu Gothic", メイリオ, Meiryo, Verdana, Helvetica, Arial, sans-serif;
+html {
+    overflow-y: scroll;
 }
+
+body {
+    font-family: "ヒラギノ角ゴ ProN W3", HiraKakuProN-W3, 游ゴシック,
+        "Yu Gothic", メイリオ, Meiryo, Verdana, Helvetica, Arial, sans-serif;
+    position: relative;
+}
+
 header {
     background-color: blue;
 }
+
 header h1 {
     font-size: small;
-    text-align:center
+    text-align: center;
 }
+
 body {
     background-color: #ffffff;
     /* margin-top: 50px; */
 }
+
 button {
     position: relative;
     z-index: 1;
 }
+
 .top {
-    padding: 0.5em 1em 0; /*上 左右 下*/
+    padding: 0.5em 1em 0;
+    /*上 左右 下*/
     margin: 2em 0 0;
     color: #ffffff;
-    background: #ffffff;/*背景色*/
+    background: #ffffff;
+    /*背景色*/
     align-content: center;
 }
+
 .top p {
     margin: 0;
     padding: 0;
 }
+
 .tab {
     padding: 0.5em 1em;
     margin: 2em 0;
     color: #272727;
-    background: #ffffff;/*背景色*/
+    background: #ffffff;
+    /*背景色*/
 }
+
 .tab p {
     margin: 0;
     padding: 0;
 }
+
 .footer {
     /* bottom: 0; */
     width: 100%;
     /* Set the fixed height of the footer here */
     /* background-color: #3d3d3d; */
 }
+
 .nav-justified {
     display: table;
     table-layout: fixed;
     width: 100%;
 }
+
 .button:hover {
-    background:rgb(225, 223, 233);
+    background: rgb(225, 223, 233);
+}
+.input_shadow {
+    box-shadow: 0px 0px 10px 3px rgb(248, 248, 248) inset;
+}
+.tag_btn {
+    background: none;
+}
+.maru {
+    /* 左上　右上　右下　左下 */
+    border-radius: 50px 10px 10px 50px;
+}
+
+/* dropdown */
+
+.v-dropdown-container {
+    position: absolute;
+    right: 27px;
+    z-index: 100;
+    background-color: white;
+    border: solid rgb(225, 223, 233);
+    border-width: 0 1px 1px 1px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    width: 130px;
+    height: 130px;
+}
+
+.v-dropdown-list {
+    padding-inline-start: 0;
+    text-align: center;
+}
+
+.v-dropdown-item {
+    border-bottom: 1px dashed rgb(225, 223, 233);
+}
+
+a.v-dropdown-item {
+    color: #212529;
+}
+
+a.v-dropdown-item:hover,
+a.v-dropdown-item:focus {
+    color: #16181b;
+    background-color: #f8f9fa;
+}
+
+.v-dropdown-item-last {
+    border-bottom: 0px;
+}
+
+/* dropdown animation */
+
+.dropdown-fade-enter-active {
+    animation: dropdown 0.5s ease-in-out 0s 1 normal forwards running;
+}
+.dropdown-fade-leave-active {
+    animation: dropdown 0.4s ease-in-out 0s 1 reverse forwards running;
+}
+
+@keyframes dropdown {
+    0% {
+        transform: translateY(-130px);
     }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+/* flash-messege animation */
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: all 1s;
+}
+
+.fade-enter,
+.fade-leave-to {
+    opacity: 0;
+    transform: translateY(-50px);
+}

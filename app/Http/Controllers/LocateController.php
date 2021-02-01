@@ -59,7 +59,7 @@ class LocateController extends Controller
         $this->authorize('edit', $locate);
 
         $locate = Locate::where('user_id', Auth::id())->first();
-        $formatted_address = LocateClass::regex_address(Auth::id(), $request->address);
+        $formatted_address = LocateClass::regex_address($request->address);
         if($locate){
             $locate->prefecture = $formatted_address[1];
             $locate->city = $formatted_address[2];

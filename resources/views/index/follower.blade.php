@@ -7,10 +7,7 @@
         </head>
 
         <style>
-            .maru {
-                /* 左上　右上　右下　左下 */
-                border-radius: 50px 10px 10px 50px;
-            }
+
         </style>
 
         <body>
@@ -21,7 +18,7 @@
                 @else
                     @foreach($data as $item)
                         {{-- 背景の四角 --}}
-                        <div class="row bg-white mt-1 pt-1 pb-1 pl-1 maru">
+                        <div class="row border-bottom bg-white mt-1 pt-1 pb-1 pl-1 maru">
                             {{-- サムネ --}}
                             <div class="">
                                 <img src="http://placehold.jp/50x50.png" class="rounded-circle">

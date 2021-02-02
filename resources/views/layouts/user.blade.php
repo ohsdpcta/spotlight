@@ -4,6 +4,8 @@
 <?php
     $user = UserClass::getUser(request()->id);
     $follow = UserClass::getFollower(request()->id);
+    $sprofile = UserClass::getSmallProfile(request()->id);
+    $tags = UserClass::getTag(request()->id);
 ?>
 
 <div class="container">
@@ -22,19 +24,24 @@
 
             {{-- ユーザー名 --}}
             <div class="border-bottom col-xl-6 col-lg-6 col-md-8 col-sm-12 col-xs-12 pt-2 pr-2 pb-2 pl-2 text-dark">
-                <h1>{{ UserClass::getUser(request()->id)->name }}</h1>
-                <p>{{'@'}}{{ UserClass::getUser(request()->id)->social_id }}</p>
-                {{-- タグ --}}
-                <?php $tags = UserClass::getTag(request()->id) ?>
+                @if($user->role == 'Performer')
+                    <span class="badge badge-primary">{{ $user->role }}</span>
+                @elseif($user->role == 'Spotter')
+                    <span class="badge badge-secondary">{{ $user->role }}</span>
+                @endif
+                <h1>{{ $user->name }}</h1>
+                <p>{{'@'}}{{ $user->social_id }}</p>
 
+                {{-- タグ --}}
                 @foreach($tags as $index => $tag)
                     <form class="" method="get" action="/user/tag_search">
                         <input class="form-control mr-sm-1" type="hidden" name="tag_id" value="{{ $tag->id }}">
                         <button class="tag_btn rounded-pill border-primary px-3 mt-3" type="submit">#{{ $tag->tag_name }}</button>
                     </form>
                 @endforeach
+
+                {{-- ショートプロフィール --}}
                 <div>
-                    <?php $sprofile = UserClass::getSmallProfile(request()->id) ?>
                     @if( !empty($sprofile->scomment) )
                         <div class="pt-4">
                             <h6>{{ $sprofile->scomment }}</h6>
@@ -43,9 +50,8 @@
                 </div>
             </div>
 
-            {{-- フォローボタン, 編集ページリンク等…… --}}
             <div class="border-bottom col-xl-3 col-lg-3 col-md-12 col-sm-12">
-                <!-- フォローボタン -->
+                {{-- フォローボタン --}}
                 @if(Auth::user() and Auth::user()->id != request()->id)
                     <div class="col-3">
                         @if($follow['follow_flg'] == 1)

@@ -1,8 +1,6 @@
 @extends('layouts/main')
 @section('user')
 
-<!-- CSSはmainのものも参照するため注意 -->
-{{-- -------------------------------------------------------------- --}}
 <?php
     $user = UserClass::getUser(request()->id);
     $follow = UserClass::getFollower(request()->id);

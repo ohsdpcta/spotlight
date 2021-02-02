@@ -29,10 +29,10 @@
                     <div class="pt-1 pl-2">@include('components/user_info')</div>
                 </div>
             <div class="form-check-inline">
-                <input class="form-check-input" type="radio" name="role" value="パフォーマー" {{ $data->role == "パフォーマー" ? 'checked="checked"' : ''}}>パフォーマー
+                <input class="form-check-input" type="radio" name="role" value="Performer" {{ $data->role == "Performer" ? 'checked="checked"' : ''}}>パフォーマー
             </div>
             <div class="form-check-inline">
-                <input class="form-check-input" type="radio" name="role" value="スポッター" {{ $data->role == "スポッター" ? 'checked="checked"' : ''}}>スポッター
+                <input class="form-check-input" type="radio" name="role" value="Spotter" {{ $data->role == "Spotter" ? 'checked="checked"' : ''}}>スポッター
             </div><div></div>
             <label>
             <br>

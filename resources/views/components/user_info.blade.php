@@ -3,21 +3,21 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js" type="text/javascript"></script>
 
 <style>
-    .myModal_popUp,
-        input[name="myModal_switch"],
-        #myModal_open + label ~ label {
+    .{{ $modal_name }}_popUp,
+        input[name="{{ $modal_name }}_switch"],
+        #{{ $modal_name }}_open + label ~ label {
             display: none;
         }
-        #myModal_open + label,
-        #myModal_close-button + label {
+        #{{ $modal_name }}_open + label,
+        #{{ $modal_name }}_close-button + label {
             cursor: pointer;
     }
 
-    .myModal_popUp {
+    .{{ $modal_name }}_popUp {
         animation: fadeIn 1s ease 0s 1 normal;
         -webkit-animation: fadeIn 1s ease 0s 1 normal;
     }
-    #myModal_open:checked ~ #myModal_close-button + label{
+    #{{ $modal_name }}_open:checked ~ #{{ $modal_name }}_close-button + label{
         animation: fadeIn 2s ease 0s 1 normal;
         -webkit-animation: fadeIn 2s ease 0s 1 normal;
     }
@@ -30,7 +30,7 @@
         100% {opacity: 1;}
     }
 
-    #myModal_open:checked + label ~ .myModal_popUp {
+    #{{ $modal_name }}_open:checked + label ~ .{{ $modal_name }}_popUp {
         background: #fff;
         display: block;
         width: 90%;
@@ -44,7 +44,7 @@
         z-index: 998;
     }
 
-    #myModal_open:checked + label ~ .myModal_popUp > .myModal_popUp-content {
+    #{{ $modal_name }}_open:checked + label ~ .{{ $modal_name }}_popUp > .{{ $modal_name }}_popUp-content {
         width: calc(100% - 40px);
         height: calc(100% - 20px - 44px );
         padding: 10px 20px;
@@ -52,7 +52,7 @@
         -webkit-overflow-scrolling:touch;
     }
 
-    #myModal_open:checked + label + #myModal_close-overlay + label {
+    #{{ $modal_name }}_open:checked + label + #{{ $modal_name }}_close-overlay + label {
         background: rgba(0, 0, 0, 0.70);
         display: block;
         width: 100%;
@@ -66,7 +66,7 @@
         z-index: 997;
     }
 
-    #myModal_open:checked ~ #myModal_close-button + label {
+    #{{ $modal_name }}_open:checked ~ #{{ $modal_name }}_close-button + label {
         display: block;
         background: #fff;
         text-align: center;
@@ -79,25 +79,25 @@
         left: 5%;
         z-index: 999;
     }
-    #myModal_open:checked ~ #myModal_close-button + label::before {
+    #{{ $modal_name }}_open:checked ~ #{{ $modal_name }}_close-button + label::before {
         content: '×';
     }
-    #myModal_open:checked ~ #myModal_close-button + label::after {
+    #{{ $modal_name }}_open:checked ~ #{{ $modal_name }}_close-button + label::after {
         content: 'CLOSE';
         margin-left: 5px;
         font-size: 80%;
     }
 
     @media (min-width: 768px) {
-    #myModal_open:checked + label ~ .myModal_popUp {
+    #{{ $modal_name }}_open:checked + label ~ .{{ $modal_name }}_popUp {
         width: 600px;
         height: 500px;
         border-radius:15px;
     }
-    #myModal_open:checked + label ~ .myModal_popUp > .myModal_popUp-content {
+    #{{ $modal_name }}_open:checked + label ~ .{{ $modal_name }}_popUp > .{{ $modal_name }}_popUp-content {
         height: calc(100% - 20px);
     }
-    #myModal_open:checked ~ #myModal_close-button + label {
+    #{{ $modal_name }}_open:checked ~ #{{ $modal_name }}_close-button + label {
         width: 44px;
         height: 44px;
         left: 50%;
@@ -106,7 +106,7 @@
         margin-top: -285px;
         overflow: hidden;
     }
-    #myModal_open:checked ~ #myModal_close-button + label::after {
+    #{{ $modal_name }}_open:checked ~ #{{ $modal_name }}_close-button + label::after {
         display: none;
     }
     .guide {
@@ -120,30 +120,18 @@
 }
 </style>
 
-<section class="myModal">
-    <input id="myModal_open" type="radio" name="myModal_switch" />
-    <label for="myModal_open">
+<section class="{{ $modal_name }}">
+    <input id="{{ $modal_name }}_open" type="radio" name="{{ $modal_name }}_switch" />
+    <label for="{{ $modal_name }}_open">
         <div class="fas fa-info-circle guide" style="color:#6bb6e9"></div>
     </label>
-    <input id="myModal_close-overlay" type="radio" name="myModal_switch" />
-    <label for="myModal_close-overlay">オーバーレイで閉じる</label>
-    <input id="myModal_close-button" type="radio" name="myModal_switch" />
-    <label for="myModal_close-button"></label>
-    <div class="myModal_popUp">
-        <div class="myModal_popUp-content col-10 offset-1">
-            <h3 class="pt-3">パフォーマーとスポッター</h3>
-            <hr>
-            <h6 class="pb-3">パフォーマーかスポッターを選ぶことで、<br>
-            それぞれ異なる機能を持つことができます。</h6>
-            <p>パフォーマー...<br>
-                自分の活動をより広く知ってもらうためのロール<br>
-                パフォーマーの検索にあなたのユーザーネームが表示されるようになります。<br>
-                ロケーションを登録している場合、あなたの登録した活動場所が他ユーザーのロケーションに表示されます。
-            </p>
-            <p>スポッター...<br>
-                活動せず、他パフォーマーの応援をしたい人へのロール<br>
-                パフォーマーの検索に自分のユーザーネームが表示されず、<br>ロケーションを登録することができません。
-            </p>
+    <input id="{{ $modal_name }}_close-overlay" type="radio" name="{{ $modal_name }}_switch" />
+    <label for="{{ $modal_name }}_close-overlay">オーバーレイで閉じる</label>
+    <input id="{{ $modal_name }}_close-button" type="radio" name="{{ $modal_name }}_switch" />
+    <label for="{{ $modal_name }}_close-button"></label>
+    <div class="{{ $modal_name }}_popUp">
+        <div class="{{ $modal_name }}_popUp-content col-10 offset-1">
+            {!! $user_modal_content !!}
         </div>
     </div>
 </section>

@@ -10,16 +10,16 @@ use Illuminate\Queue\SerializesModels;
 class HelloEmail extends Mailable
 {
     use Queueable, SerializesModels;
-    protected $user;
+    protected $user_token;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct($user_token)
     {
-        $this->user = $user;
+        $this->user_token = $user_token;
     }
 
     /**
@@ -32,7 +32,6 @@ class HelloEmail extends Mailable
 
         return $this->view('emails.contact')
             ->subject('【Spotlight】仮登録が完了しました')
-            ->from($this->user['email'], $this->user['name'])
-            ->with('user',$this->user);
+            ->with(['user_data'=>$this->user_token]);
     }
 }

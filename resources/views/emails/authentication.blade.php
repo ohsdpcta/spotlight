@@ -16,7 +16,7 @@
 
         <p>お名前:{{$users->name}}</p>
         <p>メールアドレス:{{$users->email}}</p>
-        <label><input type="submit" name="conf" value="認証"></label>
+        <label><input type="submit" class="btn btn-primary"  name="conf" value="認証"></label>
         </form>
         <br>
         <br>

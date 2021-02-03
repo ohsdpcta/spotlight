@@ -109,8 +109,8 @@ Route::prefix('/user')->group(function(){
             Route::get('paypay/delete', 'PaypayController@remove')->middleware('Mailvarification');//削除するぜ！
 
             // プロフィール編集
-            Route::get('profile', 'ProfileController@edit')->middleware('verified');
-            Route::post('profile', 'ProfileController@update')->middleware('verified');
+            Route::get('profile', 'ProfileController@edit')->middleware('Mailvarification');
+            Route::post('profile', 'ProfileController@update')->middleware('Mailvarification');
 
             //タグ編集
             Route::get('tag', 'TagController@summary')->middleware('Mailvarification');
@@ -125,20 +125,11 @@ Route::prefix('/user')->group(function(){
             Route::get('smallprofile/delete', 'SmallProfileController@remove')->middleware('Mailvarification');//削除するぜ！
 
             //パスワード変更メール送信
-            Route::get('change','UserController@change')->middleware('Mailvarification');//送信ページ
-            Route::post('change/changemail','UserController@changemail')->middleware('Mailvarification');//メール本文
-            Route::get('changeedit/{token}','UserController@changeedit')->middleware('Mailvarification');//変更ページ
-            Route::post('changeedit/changeupdate','UserController@changeupdate')->middleware('Mailvarification');//変更処理
+            Route::post('changeupdate','UserController@changeupdate')->middleware('Mailvarification');//変更処理
             //ソーシャルID変更メール機能
-            Route::get('social_change','UserController@social_change')->middleware('Mailvarification');//送信ページ
-            Route::post('social_change/socialemail','UserController@socialemail')->middleware('Mailvarification');//メール本文
-            Route::get('socialedit/{token}','UserController@socialedit')->middleware('Mailvarification');//変更ページ
-            Route::post('socialedit/socialupdate','UserController@socialupdate')->middleware('Mailvarification');//変更処理
+            Route::post('socialupdate','UserController@socialupdate')->middleware('Mailvarification');//変更処理
             //メールアドレス変更機能
-            Route::get('mail_change','UserController@mail_change')->middleware('Mailvarification');//送信ページ
-            Route::post('mail_change/mail_email','UserController@mail_email')->middleware('Mailvarification');//メール本文
-            Route::get('mailedit/{token}','UserController@mailedit')->middleware('Mailvarification');//変更ページ
-            Route::post('mailedit/mailupdate','UserController@mailupdate')->middleware('Mailvarification');//変更処理
+            Route::post('/mailupdate','UserController@mailupdate')->middleware('Mailvarification');//変更処理
             Route::get('donemail/{token}','UserController@donemail')->middleware('Mailvarification');//変更ページ
             Route::post('donemail/done','UserController@done')->middleware('Mailvarification');//変更処理
 

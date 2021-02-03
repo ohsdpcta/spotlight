@@ -44,6 +44,12 @@
                 <button type="button" class="btn btn-danger" onclick="location.href='/user/{{Auth::id()}}/summary/account/delete'">削除</button>
             </div>
         </div>
+        <?php
+            $modal_content2 = '
+                <br><h3>サンプル<div class="js-modal-close close float-right">×</div><hr></h3>
+                <h6 class="font-weight-bold">サンプル</h6>
+            '
+        ?>
         <label>*パスワード変更</label>
         <p>現在のパスワードと新しいパスワードを入力してください</p>
         <form action="changeupdate" method="POST">

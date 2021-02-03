@@ -58,6 +58,9 @@
                 <button type="button" class="btn btn-danger" onclick="location.href='/user/{{Auth::id()}}/summary/account/delete'">削除</button>
             </div>
         </div>
+
+        <hr>
+
         サンプルボーダル@include('components/modal/edit_account/modal_email')
     </form>
 @endsection

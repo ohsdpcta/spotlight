@@ -246,7 +246,7 @@ class UserController extends Controller
         }
         //画像アップロードhttps://noumenon-th.net/programming/2020/02/26/laravel-aws-s3/
         $image = $request->file('image');
-        $path = Storage::disk('s3')->put('myprefix', $image, 'public');
+        $path = Storage::disk('s3')->put('tmp/myprefix', $image, 'public');
 
         // dataに値を設定
         $data = User::find($id);

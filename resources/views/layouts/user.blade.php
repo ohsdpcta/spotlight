@@ -35,8 +35,8 @@
 
                 {{-- 居場所タグ --}}
                 @if($locate)
-                    <span class="badge badge-pill badge-success">#{{ $locate->prefecture }}</span>
-                    <span class="badge badge-pill badge-success">#{{ $locate->city }}</span>
+                    <a class="badge badge-pill badge-success">#{{ $locate->prefecture }}</a>
+                    <a class="badge badge-pill badge-success">#{{ $locate->city }}</a>
                 @endif
 
                 {{-- タグ --}}

@@ -3,21 +3,21 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js" type="text/javascript"></script>
 
 <style>
-    .myModal_popUp,
-        input[name="myModal_switch"],
-        #myModal_open + label ~ label {
+    .{{ $modal_name }}_popUp,
+        input[name="{{ $modal_name }}_switch"],
+        #{{ $modal_name }}_open + label ~ label {
             display: none;
         }
-        #myModal_open + label,
-        #myModal_close-button + label {
+        #{{ $modal_name }}_open + label,
+        #{{ $modal_name }}_close-button + label {
             cursor: pointer;
     }
 
-    .myModal_popUp {
+    .{{ $modal_name }}_popUp {
         animation: fadeIn 1s ease 0s 1 normal;
         -webkit-animation: fadeIn 1s ease 0s 1 normal;
     }
-    #myModal_open:checked ~ #myModal_close-button + label{
+    #{{ $modal_name }}_open:checked ~ #{{ $modal_name }}_close-button + label{
         animation: fadeIn 2s ease 0s 1 normal;
         -webkit-animation: fadeIn 2s ease 0s 1 normal;
     }
@@ -30,7 +30,7 @@
         100% {opacity: 1;}
     }
 
-    #myModal_open:checked + label ~ .myModal_popUp {
+    #{{ $modal_name }}_open:checked + label ~ .{{ $modal_name }}_popUp {
         background: #fff;
         display: block;
         width: 90%;
@@ -44,7 +44,7 @@
         z-index: 998;
     }
 
-    #myModal_open:checked + label ~ .myModal_popUp > .myModal_popUp-content {
+    #{{ $modal_name }}_open:checked + label ~ .{{ $modal_name }}_popUp > .{{ $modal_name }}_popUp-content {
         width: calc(100% - 40px);
         height: calc(100% - 20px - 44px );
         padding: 10px 20px;
@@ -52,7 +52,7 @@
         -webkit-overflow-scrolling:touch;
     }
 
-    #myModal_open:checked + label + #myModal_close-overlay + label {
+    #{{ $modal_name }}_open:checked + label + #{{ $modal_name }}_close-overlay + label {
         background: rgba(0, 0, 0, 0.70);
         display: block;
         width: 100%;
@@ -66,7 +66,7 @@
         z-index: 997;
     }
 
-    #myModal_open:checked ~ #myModal_close-button + label {
+    #{{ $modal_name }}_open:checked ~ #{{ $modal_name }}_close-button + label {
         display: block;
         background: #fff;
         text-align: center;
@@ -79,25 +79,25 @@
         left: 5%;
         z-index: 999;
     }
-    #myModal_open:checked ~ #myModal_close-button + label::before {
+    #{{ $modal_name }}_open:checked ~ #{{ $modal_name }}_close-button + label::before {
         content: '×';
     }
-    #myModal_open:checked ~ #myModal_close-button + label::after {
+    #{{ $modal_name }}_open:checked ~ #{{ $modal_name }}_close-button + label::after {
         content: 'CLOSE';
         margin-left: 5px;
         font-size: 80%;
     }
 
     @media (min-width: 768px) {
-    #myModal_open:checked + label ~ .myModal_popUp {
+    #{{ $modal_name }}_open:checked + label ~ .{{ $modal_name }}_popUp {
         width: 600px;
         height: 500px;
         border-radius:15px;
     }
-    #myModal_open:checked + label ~ .myModal_popUp > .myModal_popUp-content {
+    #{{ $modal_name }}_open:checked + label ~ .{{ $modal_name }}_popUp > .{{ $modal_name }}_popUp-content {
         height: calc(100% - 20px);
     }
-    #myModal_open:checked ~ #myModal_close-button + label {
+    #{{ $modal_name }}_open:checked ~ #{{ $modal_name }}_close-button + label {
         width: 44px;
         height: 44px;
         left: 50%;
@@ -106,7 +106,7 @@
         margin-top: -285px;
         overflow: hidden;
     }
-    #myModal_open:checked ~ #myModal_close-button + label::after {
+    #{{ $modal_name }}_open:checked ~ #{{ $modal_name }}_close-button + label::after {
         display: none;
     }
     .guide {
@@ -120,36 +120,18 @@
 }
 </style>
 
-<section class="myModal">
-    <input id="myModal_open" type="radio" name="myModal_switch" />
-    <label for="myModal_open">
+<section class="{{ $modal_name }}">
+    <input id="{{ $modal_name }}_open" type="radio" name="{{ $modal_name }}_switch" />
+    <label for="{{ $modal_name }}_open">
         <div class="fas fa-info-circle guide" style="color:#6bb6e9"></div>
     </label>
-    <input id="myModal_close-overlay" type="radio" name="myModal_switch" />
-    <label for="myModal_close-overlay">オーバーレイで閉じる</label>
-    <input id="myModal_close-button" type="radio" name="myModal_switch" />
-    <label for="myModal_close-button"></label>
-    <div class="myModal_popUp">
-        <div class="myModal_popUp-content col-10 offset-1">
-            <h3 class="pt-3">サンプルの利用方法</h3>
-            <hr>
-            <h6 class="pb-3">あなたの動画やプレイリストを埋め込むことができます。<br>
-                埋め込みたいメディアのボタンをクリックして下さい。</h6>
-            <p>youtubeの動画を埋め込む...<br>
-                <a href="https://stat.ameba.jp/user_images/20210118/13/tajitaji2121/88/d3/j/o1283091314883367026.jpg?caw=800" data-lightbox="youtube"><button class="btn btn-danger">YouTube</button></a>
-                <a href="https://stat.ameba.jp/user_images/20210118/13/tajitaji2121/50/cb/j/o0807061114883367062.jpg?caw=800" data-lightbox="youtube"></a>
-                <a href="https://stat.ameba.jp/user_images/20210118/13/tajitaji2121/59/d8/j/o0846069214883367070.jpg?caw=800" data-lightbox="youtube"></a>
-                <a href="https://stat.ameba.jp/user_images/20210118/13/tajitaji2121/8b/77/j/o1022044514883367100.jpg?caw=800" data-lightbox="youtube"></a>
-            </p>
-            <p>youtubeの再生リストを埋め込む...<br>
-                <a href="https://stat.ameba.jp/user_images/20210118/14/tajitaji2121/08/f8/j/o1097065714883387205.jpg?caw=800" data-lightbox="youtube_list"><button class="btn btn-danger">YouTube_list</button></a>
-                <a href="https://stat.ameba.jp/user_images/20210118/13/tajitaji2121/8b/77/j/o1022044514883367100.jpg?caw=800" data-lightbox="youtube_list"></a>
-            </p>
-            <p>soundcloudのプレイリストを埋め込む...<br>
-                <a href="https://stat.ameba.jp/user_images/20210118/14/tajitaji2121/dd/81/j/o0953067314883387213.jpg?caw=800" data-lightbox="soundcloud"><button class="btn btn-primary">SoundCloud</button></a>
-                <a href="https://stat.ameba.jp/user_images/20210118/14/tajitaji2121/4c/cb/j/o0772054214883387224.jpg?caw=800" data-lightbox="soundcloud"></a>
-                <a href="https://stat.ameba.jp/user_images/20210118/13/tajitaji2121/8b/77/j/o1022044514883367100.jpg?caw=800" data-lightbox="soundcloud"></a>
-            </p>
+    <input id="{{ $modal_name }}_close-overlay" type="radio" name="{{ $modal_name }}_switch" />
+    <label for="{{ $modal_name }}_close-overlay">オーバーレイで閉じる</label>
+    <input id="{{ $modal_name }}_close-button" type="radio" name="{{ $modal_name }}_switch" />
+    <label for="{{ $modal_name }}_close-button"></label>
+    <div class="{{ $modal_name }}_popUp">
+        <div class="{{ $modal_name }}_popUp-content col-10 offset-1">
+            {!! $sample_modal_content !!}
         </div>
     </div>
 </section>

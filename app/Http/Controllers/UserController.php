@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Validator;
 use Mail;
 //aws s3アップロード
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Contracts\Filesystem\Filesystem;
 
 
 
@@ -245,8 +246,8 @@ class UserController extends Controller
                 ->withInput();
         }
         //画像アップロードhttps://noumenon-th.net/programming/2020/02/26/laravel-aws-s3/
-        $image = $request->file('file');
-        $path = Storage::disk('s3')->put('/', $image, 'public');
+        $image = $request->file('image');
+        $path = Storage::disk('s3')->put('tmp/', $image, 'public');
 
         // dataに値を設定
         $data = User::find($id);

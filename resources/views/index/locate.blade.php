@@ -19,11 +19,13 @@
 </head>
 
 <body>
-  @if($locate_array)
-    <div id="map"></div>
-  @else
-    ロケーションが未設定です
-  @endif
+  <div class="border border-top-0 rounded-bottom px-4 py-3">
+    @if($locate_array)
+      <div id="map"></div>
+    @else
+      ロケーションが未設定です
+    @endif
+  </div>
 </body>
 @if($locate_array)
   <script>

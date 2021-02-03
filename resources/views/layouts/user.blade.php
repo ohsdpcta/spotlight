@@ -7,6 +7,7 @@
     $sprofile = UserClass::getSmallProfile(request()->id);
     $locate = UserClass::getLocate(request()->id);
     $tags = UserClass::getTag(request()->id);
+    $hasrecord = UserClass::hasRecord(request()->id);
 ?>
 
 <div class="container">
@@ -100,19 +101,7 @@
     </div>
 
     <div class="tab nav-justified">
-        <ul class="nav nav-tabs">
-            <li class="nav-item">
-                <a class="nav-link @if(request()->is('*profile')) active @endif" href="/user/{{request()->id}}/profile">プロフィール</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link @if(request()->is('*locate')) active @endif" href="/user/{{request()->id}}/locate">ロケーション</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link @if(request()->is('*goods')) active @endif" href="/user/{{request()->id}}/goods">グッズ</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link @if(request()->is('*sample')) active @endif" href="/user/{{request()->id}}/sample">サンプルリンク</a>
-        </ul>
+        @include('layouts.user/tab', ['user' => $user, 'hasrecord' => $hasrecord])
 
         <div>@yield('content')</div>
 

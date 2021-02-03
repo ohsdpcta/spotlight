@@ -68,5 +68,24 @@ class UserClass{
     $locate = $user->locate;
     return $locate;
   }
+
+  public static function hasRecord($id){
+    $flg = [
+      'locate' => false,
+      'goods' => false,
+      'sample' => false,
+    ];
+    $user = User::find($id);
+    if($user->locate){
+      $flg['locate'] = true;
+    }
+    if(count($user->goods)){
+      $flg['goods'] = true;
+    }
+    if(count($user->sample)){
+      $flg['sample'] = true;
+    }
+    return $flg;
+  }
 }
 

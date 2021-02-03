@@ -48,11 +48,11 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function goods(){
-        return $this->belongsTo('App\Goods');
+        return $this->hasMany('App\Goods');
     }
 
     public function sample(){
-        return $this->belongsTo('App\Sample');
+        return $this->hasMany('App\Sample');
     }
 
     public function tag(){

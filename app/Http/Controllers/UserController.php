@@ -21,7 +21,6 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Filesystem\Filesystem;
 
 
-
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller

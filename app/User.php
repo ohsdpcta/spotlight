@@ -44,7 +44,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function locate(){
-        return $this->belongsTo('App\Locate');
+        return $this->hasOne('App\Locate');
     }
 
     public function goods(){

@@ -5,6 +5,7 @@
     $user = UserClass::getUser(request()->id);
     $follow = UserClass::getFollower(request()->id);
     $sprofile = UserClass::getSmallProfile(request()->id);
+    $locate = UserClass::getLocate(request()->id);
     $tags = UserClass::getTag(request()->id);
 ?>
 
@@ -31,6 +32,12 @@
                 @endif
                 <h1>{{ $user->name }}</h1>
                 <p>{{'@'}}{{ $user->social_id }}</p>
+
+                {{-- 居場所タグ --}}
+                @if($locate)
+                    <span class="badge badge-pill badge-success">#{{ $locate->prefecture }}</span>
+                    <span class="badge badge-pill badge-success">#{{ $locate->city }}</span>
+                @endif
 
                 {{-- タグ --}}
                 @foreach($tags as $index => $tag)

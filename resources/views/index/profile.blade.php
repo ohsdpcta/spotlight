@@ -10,7 +10,9 @@
 </head>
 
 <body>
-    {{ Illuminate\Mail\Markdown::parse(e($data->content)) }}
+    <div class="border border-top-0 rounded-bottom px-4 py-3">
+        {{ Illuminate\Mail\Markdown::parse(e($data->content)) }}
+    </div>
 </body>
 
 </html>

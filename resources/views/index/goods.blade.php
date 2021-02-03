@@ -11,10 +11,10 @@
     @if(count($data)==0)
         リンクが登録されていません
     @else
-        <ul class="list-group">
+        <ul class="border border-top-0 rounded-bottom px-4 py-3">
             @foreach ($data as $item)
-                <li class="list-group-item">
-                <a href="{{ $item->url }}">{{ $item->name }}</a>
+                <li>
+                    <a href="{{ $item->url }}">{{ $item->name }}</a>
                 </li>
             @endforeach
         </ul>

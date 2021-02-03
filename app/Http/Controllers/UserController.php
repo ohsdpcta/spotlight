@@ -269,18 +269,24 @@ class UserController extends Controller
     }
     // アカウント削除
     public function delete(Request $request, $id) {
+        $user = Profile::where('user_id', $id)->first();
+        $this->authorize('edit', $user);
         $data = User::find($id);
         return view('summary.delete_account', compact('data'));
     }
 
     public function remove(Request $request, $id) {
         // レコードを削除する。
+        $user = Profile::where('user_id', $id)->first();
+        $this->authorize('edit', $user);
         User::find($id)->delete();
         return redirect("/");
     }
 
     // 投げ銭
     public function tip(Request $request, $id){
+        $user = Profile::where('user_id', $id)->first();
+        $this->authorize('edit', $user);
         $url = UserClass::get_paypay_url($id);
         return view('social.paypay', compact('url'));
     }

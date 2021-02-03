@@ -10,9 +10,9 @@
     @if(count($data)==0)
         リンクが登録されていません
     @else
-        <ul class="list-group">
+        <ul class="border border-top-0 rounded-bottom px-4 py-3">
             @foreach ($data as $item)
-                <li class="list-group-item">
+                <li>
                 {{-- <a href="{{ $item->url }}">{{ $item->name }}</a> --}}
                 @if($item->embed_site=="youtube")
                     <iframe width="560" height="315" src="{{ $item->url }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

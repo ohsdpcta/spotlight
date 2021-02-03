@@ -16,6 +16,9 @@ class TagController extends Controller
 //-----------------------------------------------------------------------------------
     // 一覧
     public function summary(Request $request, $id){
+        $usertag = new UserTag;
+        $usertag->user_id = $id;
+        $this->authorize('edit', $usertag);
         return view('summary.summary_tag');
     }
 

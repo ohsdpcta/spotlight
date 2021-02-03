@@ -28,7 +28,7 @@
         <label>
             <div class="row pl-3">
                 URL
-                <div class="pt-1 pl-2">@include('components/sample_info')</div>
+                <div class="pt-1 pl-2">@include('components/modal/add_sample/modal_video')</div>
             </div>
         </label>
         <input type="text" name="url" class="form-control">

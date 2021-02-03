@@ -17,7 +17,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'social_id','token', 'avatar','email_verified', 'email_verify_token','status',
+        'name', 'email', 'password', 'role', 'social_id','token', 'avatar','email_verified', 'email_verify_token','status',
     ];
 
     /**
@@ -44,15 +44,15 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function locate(){
-        return $this->belongsTo('App\Locate');
+        return $this->hasOne('App\Locate');
     }
 
     public function goods(){
-        return $this->belongsTo('App\Goods');
+        return $this->hasMany('App\Goods');
     }
 
     public function sample(){
-        return $this->belongsTo('App\Sample');
+        return $this->hasMany('App\Sample');
     }
 
     public function tag(){

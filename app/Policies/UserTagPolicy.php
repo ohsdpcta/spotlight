@@ -12,15 +12,19 @@ class UserTagPolicy
     use HandlesAuthorization;
 
     //---------------↓↓↓↓作ったやつ↓↓↓↓---------------------------------
+    public function edit(User $user, UserTag $usertag)
+    {
+        return (string)Auth::user()->id === $usertag->user_id and (string)Auth::user()->role === "Performer";
+    }
 
     public function add(User $user, UserTag $usertag)
     {
-        return (string)Auth::user()->id === $usertag->user_id;
+        return (string)Auth::user()->id === $usertag->user_id and (string)Auth::user()->role === "Performer";
     }
 
     public function delete(User $user, UserTag $usertag)
     {
-        return (string)Auth::user()->id === $usertag->user_id;
+        return (string)Auth::user()->id === $usertag->user_id and (string)Auth::user()->role === "Performer";
     }
 
     //----------------↑↑↑作ったやつ↑↑↑--------------------------------------

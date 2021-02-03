@@ -32,7 +32,7 @@ class GoodsPolicy
      */
     public function edit(User $user, Goods $goods)
     {
-        return (string)Auth::user()->id === $goods->user_id and (string)Auth::user()->role === "パフォーマー";
+        return (string)Auth::user()->id === $goods->user_id and (string)Auth::user()->role === "Performer";
     }
 
     /**

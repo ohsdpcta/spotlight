@@ -31,7 +31,7 @@ class locatePolicy
      */
     public function edit(User $user, Locate $locate)
     {
-        return (string)Auth::user()->id === $locate->user_id and (string)Auth::user()->role === "パフォーマー";
+        return (string)Auth::user()->id === $locate->user_id and (string)Auth::user()->role === "Performer";
     }
 
     /**

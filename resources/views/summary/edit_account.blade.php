@@ -38,10 +38,21 @@
                 </div>
             </label>
             <br>
+            <br>
 
             <!-- アップロードフォームの作成 -->
-            <label>プロフィールアイコン</label>
-            <input type="file" name="image">
+            <div class="row">
+                <label class="col-12">プロフィールアイコン</label>
+                <!-- トップ画像 -->
+                <div class="border-bottom col-xl-3 col-lg-3 col-md-4 col-sm-12 pt-2 pb-2">
+                    @if($data->avatar)
+                        <img src="{{ $data->avatar }}" width="200" height="200" class="rounded-circle">
+                    @else
+                        <img src="http://placehold.jp/200x200.png" class="rounded-circle">
+                    @endif
+                </div>
+                <input class="col-12" type="file" name="image">
+            </div>
             <br>
 
             <div class="mt-2">

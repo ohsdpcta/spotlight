@@ -229,7 +229,7 @@ class UserController extends Controller
     public function update(Request $request, $id) {
         $user = Profile::where('user_id', $id)->first();
         $this->authorize('edit', $user);
-        // //バリデーションの設定
+        //バリデーションの設定
         $rules = [
             'name'=>'required|string|max:30',
         ];
@@ -246,13 +246,13 @@ class UserController extends Controller
         }
         //画像アップロードhttps://noumenon-th.net/programming/2020/02/26/laravel-aws-s3/
         $image = $request->file('image');
-        $path = Storage::disk('s3')->put('tmp/', $image, 'public');
+        $path = Storage::disk('s3')->put('myprefix', $image, 'public');
 
         // dataに値を設定
         $data = User::find($id);
         $data->name = $request->name;
         $data->role = $request->role;
-        $data->path = Storage::disk('s3')->url($path);
+        $data->avatar = Storage::disk('s3')->url($path);
         if($data->save()){
             session()->flash('flash_message', 'アカウント情報の編集が完了しました');
         }

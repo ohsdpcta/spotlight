@@ -44,89 +44,87 @@
                 <button type="button" class="btn btn-danger" onclick="location.href='/user/{{Auth::id()}}/summary/account/delete'">削除</button>
             </div>
         </div>
-        <?php
-            $modal_content2 = '
-                <br><h3>サンプル<div class="js-modal-close close float-right">×</div><hr></h3>
-                <h6 class="font-weight-bold">サンプル</h6>
-            '
-        ?>
-        <label>*パスワード変更</label>
-        <p>現在のパスワードと新しいパスワードを入力してください</p>
-        <form action="changeupdate" method="POST">
-            @csrf
-            <table>
-                <tr>
-                    <th></th>
-                    <th></th>
-                </tr>
-                <tr>
-                    <td>現在のパスワード::</td><td><input type="password" name="old_password" value=""></td>
-                </tr>
-                <tr>
-                    <td>新しいパスワード::</td><td><input type="password" name="new_password" value=""></td>
-                <tr>
-                <tr>
-                    <td>新しいパスワードの確認::</td><td><input type="password" name="new_password_check" value=""></td>
-                </tr>
-            </table>
-            <label><input type="submit" class="btn btn-primary" name="send" value="変更"> </label>
+    </form>
+    <?php
+        $modal_content2 = '
+            <br><h3>サンプル<div class="js-modal-close close float-right">×</div><hr></h3>
+            <h6 class="font-weight-bold">サンプル</h6>
+        '
+    ?>
+    <label>*パスワード変更</label>
+    <p>現在のパスワードと新しいパスワードを入力してください</p>
+    <form action="changeupdate" method="POST">
+        @csrf
+        <table>
+            <tr>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>
+                <td>現在のパスワード::</td><td><input type="password" name="old_password" value=""></td>
+            </tr>
+            <tr>
+                <td>新しいパスワード::</td><td><input type="password" name="new_password" value=""></td>
+            <tr>
+            <tr>
+                <td>新しいパスワードの確認::</td><td><input type="password" name="new_password_check" value=""></td>
+            </tr>
+        </table>
+        <label><input type="submit" class="btn btn-primary" name="send" value="変更"> </label>
 
-        </form>
-        <label>*ソーシャルID変更</label>
-        <p>現在のソーシャルIDと新しいソーシャルIDを入力してください</p>
-        <form action="socialupdate" method="POST">
-            @csrf
-            <table>
-                <tr>
-                    <th></th>
-                    <th></th>
-                </tr>
-                <tr>
-                    <td>現在のソーシャルID::</td><td><input type="text" name="old_social" value=""></td>
-                </tr>
-                <tr>
-                    <td>新しいソーシャルID::</td><td><input type="text" name="new_social" value=""></td>
-                <tr>
-                <tr>
-                    <td>新しいソーシャルIDの確認::</td><td><input type="text" name="new_social_check" value=""></td>
-                </tr>
-            </table>
-            <label><input type="submit" class="btn btn-primary" name="send" value="変更"> </label>
+    </form>
+    <label>*ソーシャルID変更</label>
+    <p>現在のソーシャルIDと新しいソーシャルIDを入力してください</p>
+    <form action="socialupdate" method="POST">
+        @csrf
+        <table>
+            <tr>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>
+                <td>現在のソーシャルID::</td><td><input type="text" name="old_social" value=""></td>
+            </tr>
+            <tr>
+                <td>新しいソーシャルID::</td><td><input type="text" name="new_social" value=""></td>
+            <tr>
+            <tr>
+                <td>新しいソーシャルIDの確認::</td><td><input type="text" name="new_social_check" value=""></td>
+            </tr>
+        </table>
+        <label><input type="submit" class="btn btn-primary" name="send" value="変更"> </label>
 
-        </form>
-        <label>*メールアドレス変更</label>
-        <p>現在のメールアドレスと新しいメールアドレスを入力してください</p>
-        <form action="mailupdate" method="POST">
-            @csrf
-            <table>
-                <tr>
-                    <th></th>
-                    <th></th>
-                </tr>
-                <tr>
-                    <div class="form-group">
-                        <td>現在のメールアドレス::</td><td><input type="text" class="form-control" name="old_mail" value=""></td>
-                    </div>
-                </tr>
-                <tr>
-                    <div class="form-group">
-                        <td>新しいメールアドレス::</td><td><input type="text"  class="form-control" name="new_mail" value=""></td>
-                    </div>
-                <tr>
-                <tr>
-                    <div class="form-group">
-                        <td>新しいメールアドレスの確認::</td><td><input type="text" class="form-control" name="new_mail_check" value=""></td>
-                    </div>
-                </tr>
-            </table>
-            <label><input type="submit" class="btn btn-primary" name="send" value="変更"> </label>
+    </form>
+    <label>*メールアドレス変更</label>
+    <p>現在のメールアドレスと新しいメールアドレスを入力してください</p>
+    <form action="mailupdate" method="POST">
+        @csrf
+        <table>
+            <tr>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>
+                <div class="form-group">
+                    <td>現在のメールアドレス::</td><td><input type="text" class="form-control" name="old_mail" value=""></td>
+                </div>
+            </tr>
+            <tr>
+                <div class="form-group">
+                    <td>新しいメールアドレス::</td><td><input type="text"  class="form-control" name="new_mail" value=""></td>
+                </div>
+            <tr>
+            <tr>
+                <div class="form-group">
+                    <td>新しいメールアドレスの確認::</td><td><input type="text" class="form-control" name="new_mail_check" value=""></td>
+                </div>
+            </tr>
+        </table>
+        <label><input type="submit" class="btn btn-primary" name="send" value="変更"> </label>
 
-
-        </form>
 
     </form>
 
-@endsection
-        サンプルボーダル@include('components/modal/edit_account/modal_email')
-    </form>
+
+    サンプルボーダル@include('components/modal/edit_account/modal_email')
 @endsection

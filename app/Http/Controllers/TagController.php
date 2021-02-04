@@ -106,7 +106,7 @@ class TagController extends Controller
         return redirect("/user/{$id}/summary/tag");
     }
 
-    // タグ検索結果(改変中)
+    // タグ検索結果
     public function tag_search(Request $request){
         $tag = Tag::find($request->tag_id);
         $users = $tag->user;
@@ -130,7 +130,7 @@ class TagController extends Controller
             array('path'=>"/user/tag_search?tag_id=$request->tag_id") // ページャーのリンクをOptionのpathで指定
         );
 
-        return view('search_result', ['result' => $user]);//$○○→id $○○->name
+        return view('search_result', ['users' => $user]);//$○○→id $○○->name
     }
 }
 

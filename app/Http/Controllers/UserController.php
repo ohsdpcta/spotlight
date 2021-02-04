@@ -70,7 +70,6 @@ class UserController extends Controller
             'password.max' => 'パスワードは128文字以下で入力して下さい。',
         ];
 
-
         //メール送信
         $validator = Validator::make($request->all(), $rules, $messages);
         if ($validator->fails()) {
@@ -78,10 +77,6 @@ class UserController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-
-        $data = $validator->validate();
-
-
 
         // $userにデータを設定する
         $user = new User;
@@ -102,16 +97,8 @@ class UserController extends Controller
         $profile->content = 'よろしくお願いします！';
         $profile->save();
         Mail::to($request->email)->send(new HelloEmail($user_token));
-        /*
-        // $fakeに仮データを設定
-        $fake = new Newemail;
-        $fake->user_id = $login_user_id;
-        $fake->email = $request->email;
-        $fake->email_verify_token = base64_encode($request->email);
-        $fake->save();
-        */
         // ログイン後にアクセスしようとしていたアクションにリダイレクト、無い場合はprofileへ
-        return redirect()->intended("user/{$login_user_id}/profile");
+        return redirect()->intended("user/{$login_user_id}/profile")->with('flash_message', 'メールアドレスに本登録メールを送信しました');
     }
 
     //サインインフォーム

@@ -53,7 +53,7 @@
     ?>
     <label>*パスワード変更</label>
     <p>現在のパスワードと新しいパスワードを入力してください</p>
-    <form action="changeupdate" method="POST">
+    <form action="/user/{{Auth::id()}}/summary/account/changeupdate" method="POST">
         @csrf
         <table>
             <tr>
@@ -75,7 +75,7 @@
     </form>
     <label>*ソーシャルID変更</label>
     <p>現在のソーシャルIDと新しいソーシャルIDを入力してください</p>
-    <form action="socialupdate" method="POST">
+    <form action="/user/{{Auth::id()}}/summary/account/socialupdate" method="POST">
         @csrf
         <table>
             <tr>
@@ -97,7 +97,7 @@
     </form>
     <label>*メールアドレス変更</label>
     <p>現在のメールアドレスと新しいメールアドレスを入力してください</p>
-    <form action="mailupdate" method="POST">
+    <form action="/user/{{Auth::id()}}/summary/account/mailupdate" method="POST">
         @csrf
         <table>
             <tr>
@@ -124,7 +124,6 @@
 
 
     </form>
-
 
     サンプルボーダル@include('components/modal/edit_account/modal_email')
 @endsection

@@ -83,7 +83,7 @@ Route::prefix('/user')->group(function(){
                 //メールアドレス変更機能
                 Route::post('mailupdate','UserController@mailupdate')->middleware('Mailvarification');//変更処理
                 Route::get('donemail/{token}','UserController@donemail')->middleware('Mailvarification');//変更ページ
-                Route::post('donemail/done','UserController@done')->middleware('Mailvarification');//変更処理
+                Route::post('donemail/done/{token}','UserController@done')->middleware('Mailvarification');//変更処理
             });
 
             // プロフィール編集

@@ -353,31 +353,16 @@ class UserController extends Controller
     }
 
     //ソーシャルここで変更
-    public function socialupdate(Request $request){
+    public function socialupdate(Request $request, $id){
         //バリデーションの設定
         $request->validate([
-            'old_social'=>'required|string|max:30',
-            'new_social'=>'required|unique:users,social_id|string|max:30',
-            'new_social_check'=>'required|string|max:30',
+            'new_social'=>'required|unique:users,social_id|string|max:30|confirmed',
+            'new_social_confirmation'=>'required|string|max:30',
         ]);
-            $data = Auth::user();
-            $id = Auth::id();
-        if($request['old_social'] == $data->social_id){
-            if($request['old_social']!=$request['new_social']){
-                $data->social_id = $request['new_social'];
-                $data->save();
-            }else{
-                return back()->withInput()->with('flash_message', '古いソーシャルIDとソーシャルIDが同じです');
-            }
-        }else{
-            return back()->withInput()->with('flash_message', '古いソーシャルIDが間違っています');
-        }
-
-        if($request['new_social_check'] === $request['new_social']){
-                return redirect("/user/{$id}/summary/account/")->with('flash_message', 'ソーシャルIDの変更完了しました');
-        }else{
-            return back()->withInput()->with('flash_message', '確認ソーシャルIDと新しいソーシャルIDが一致しません');
-        }
+        $user = User::find($id);
+        $user->social_id = $request->new_social;
+        $user->save();
+        return redirect("/user/{$id}/summary/account/")->with('flash_message', 'ソーシャルIDの変更完了しました');
     }
 
     //メールアドレス変更機能
@@ -390,7 +375,7 @@ class UserController extends Controller
         ]);
 
         if(User::where('email', $request->new_mail)->first()){
-            return redirect("/user/{$id}/summary/account/")->with('flash_message_error', 'そのメールアドレスは使用されています');
+            return redirect("/user/{$id}/summary/account/")->with('flash_message_error', '入力されたメールアドレスは使用されています');
         }
         $older_new_mail_data = Newemail::where('email', $request->new_mail)->first();
         if($older_new_mail_data){

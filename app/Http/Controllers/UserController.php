@@ -347,7 +347,7 @@ class UserController extends Controller
                 $data->password = bcrypt($request['new_password']);
                 $data->save();
             }else{
-                return back()->withInput()->with('flash_message', '現在のパスワードが間違っています');
+                return back()->withInput()->with('flash_message_error', '現在のパスワードが間違っています');
             }
         }else{
             return back()->withInput()->with('flash_message', '現在のパスワードと新しいパスワードが同じです');

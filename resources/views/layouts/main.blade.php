@@ -4,17 +4,15 @@
 
     <header></header>
 
-    <body>
-        <div id="app">
-            @include('layouts.main.nav')
+    <body class="d-flex flex-column h-100">
+        @include('layouts.main.nav')
 
-            @include('layouts.main.flash')
+        @include('layouts.main.flash')
 
-            @include('layouts.main.sidebar')
+        @include('layouts.main.sidebar')
 
-            @yield('user')
+        @yield('user')
 
-            @include('layouts.main.footer')
-        </div>
+        @include('layouts.main.footer')
     </body>
 </html>

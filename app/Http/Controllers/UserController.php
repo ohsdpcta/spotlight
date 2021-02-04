@@ -37,7 +37,7 @@ class UserController extends Controller
         }else{
             $result = User::where('name', 'like', '%'.$input.'%')->paginate(10);
         }
-        return view('search_result', ['result' => $result]);
+        return view('search_result', ['users' => $result]);
     }
 
     //サインアップフォーム

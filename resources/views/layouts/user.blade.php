@@ -39,13 +39,11 @@
                     <a class="badge badge-pill badge-success">#{{ $locate->prefecture }}</a>
                     <a class="badge badge-pill badge-success">#{{ $locate->city }}</a>
                 @endif
+                <br>
 
                 {{-- タグ --}}
                 @foreach($tags as $index => $tag)
-                    <form class="" method="get" action="/user/tag_search">
-                        <input class="form-control mr-sm-1" type="hidden" name="tag_id" value="{{ $tag->id }}">
-                        <button class="tag_btn rounded-pill border-primary px-3 mt-3" type="submit">#{{ $tag->tag_name }}</button>
-                    </form>
+                    <a class="badge badge-pill badge-primary" href="/user/tag_search?tag_id={{ $tag->id }}">#{{ $tag->tag_name }}</a>
                 @endforeach
 
                 {{-- ショートプロフィール --}}

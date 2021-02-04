@@ -37,6 +37,11 @@ Route::prefix('/user')->group(function(){
     Route::get('emails/conteact','UserController@conteact')->middleware('auth');
     Route::get('emails/authentication/{token}','UserController@authentication')->middleware('auth');
     Route::post('emails/confirmation','UserController@confirmation')->middleware('auth');
+    //パスワードリセット
+    Route::get('signin/resetform','UserController@resetform')->middleware('guest');
+    Route::post('signin/resetmail','UserController@resetmail')->middleware('guest');
+    Route::get('signin/passform/{token}','UserController@passform')->middleware('guest');
+    Route::post('signin/passform/resetpass','UserController@resetpass')->middleware('guest');
 
 
 
@@ -66,12 +71,22 @@ Route::prefix('/user')->group(function(){
         Route::prefix('/summary')->group(function(){
 
              // アカウント情報編集
-            Route::get('account', 'UserController@edit')->middleware('Mailvarification');
-            Route::post('account', 'UserController@update')->middleware('Mailvarification');
-            Route::get('account/delete', 'UserController@delete')->middleware('Mailvarification');
-            Route::post('account/delete', 'UserController@remove')->middleware('Mailvarification');
+            Route::prefix('/account')->group(function(){
+                Route::get('/', 'UserController@edit')->middleware('Mailvarification');
+                Route::post('account', 'UserController@update')->middleware('Mailvarification');
+                Route::get('account/delete', 'UserController@delete')->middleware('Mailvarification');
+                Route::post('account/delete', 'UserController@remove')->middleware('Mailvarification');
+                //パスワード変更メール送信
+                Route::post('changeupdate','UserController@changeupdate')->middleware('Mailvarification');//変更処理
+                //ソーシャルID変更メール機能
+                Route::post('socialupdate','UserController@socialupdate')->middleware('Mailvarification');//変更処理
+                //メールアドレス変更機能
+                Route::post('mailupdate','UserController@mailupdate')->middleware('Mailvarification');//変更処理
+                Route::get('donemail/{token}','UserController@donemail')->middleware('Mailvarification');//変更ページ
+                Route::post('donemail/done/{token}','UserController@done')->middleware('Mailvarification');//変更処理
+            });
 
-             // プロフィール編集
+            // プロフィール編集
             Route::get('profile', 'ProfileController@edit')->middleware('Mailvarification');
             Route::post('profile', 'ProfileController@update')->middleware('Mailvarification');
 
@@ -104,8 +119,8 @@ Route::prefix('/user')->group(function(){
             Route::get('paypay/delete', 'PaypayController@remove')->middleware('Mailvarification');//削除するぜ！
 
             // プロフィール編集
-            Route::get('profile', 'ProfileController@edit')->middleware('verified');
-            Route::post('profile', 'ProfileController@update')->middleware('verified');
+            Route::get('profile', 'ProfileController@edit')->middleware('Mailvarification');
+            Route::post('profile', 'ProfileController@update')->middleware('Mailvarification');
 
             //タグ編集
             Route::get('tag', 'TagController@summary')->middleware('Mailvarification');
@@ -118,10 +133,6 @@ Route::prefix('/user')->group(function(){
             Route::get('smallprofile', 'SmallProfileController@edit')->middleware('Mailvarification');
             Route::post('smallprofile', 'SmallProfileController@update')->middleware('Mailvarification');//追加するぜ
             Route::get('smallprofile/delete', 'SmallProfileController@remove')->middleware('Mailvarification');//削除するぜ！
-
-            //パスワード変更メール送信
-            Route::get('change','UserController@change')->middleware('Mailvarification');
-            Route::post('change/send','UserController@send')->middleware('Mailvarification');
         });
     });
 });

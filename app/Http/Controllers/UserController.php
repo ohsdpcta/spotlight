@@ -10,12 +10,19 @@ use App\Library\UserClass;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 //メール
-use Session;
-use Illuminate\Session\SessionManager;
 use App\Mail\HelloEmail;
+use App\Mail\passChangeMaill;
+use  App\Mail\SocalIDChange;
+use App\Mail\MailChange;
+use App\Mail\MailChangeCheck;
+use App\Mail\ResetMail;
+use App\Newemail;
+use Illuminate\Support\Facades\Mail;
+
+
 use GuzzleHttp\Psr7\Request as Psr7Request;
 use Illuminate\Support\Facades\Validator;
-use Mail;
+//use Mail;
 
 
 
@@ -37,7 +44,7 @@ class UserController extends Controller
         }else{
             $result = User::where('name', 'like', '%'.$input.'%')->paginate(10);
         }
-        return view('search_result', ['result' => $result]);
+        return view('search_result', ['users' => $result]);
     }
 
     //サインアップフォーム
@@ -63,7 +70,6 @@ class UserController extends Controller
             'password.max' => 'パスワードは128文字以下で入力して下さい。',
         ];
 
-
         //メール送信
         $validator = Validator::make($request->all(), $rules, $messages);
         if ($validator->fails()) {
@@ -71,10 +77,6 @@ class UserController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-
-        $data = $validator->validate();
-
-
 
         // $userにデータを設定する
         $user = new User;
@@ -84,7 +86,7 @@ class UserController extends Controller
         $user->password = bcrypt($request->password);
         $user->email_verify_token = base64_encode($request->email);
         $user->save();
-
+        $user_token = $user->email_verify_token;
 
         // ログイン
         Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')]);
@@ -94,9 +96,9 @@ class UserController extends Controller
         $profile->user_id = $login_user_id;
         $profile->content = 'よろしくお願いします！';
         $profile->save();
-        Mail::to($request->email)->send(new HelloEmail($data));
+        Mail::to($request->email)->send(new HelloEmail($user_token));
         // ログイン後にアクセスしようとしていたアクションにリダイレクト、無い場合はprofileへ
-        return redirect()->intended("user/{$login_user_id}/profile");
+        return redirect()->intended("user/{$login_user_id}/profile")->with('flash_message', 'メールアドレスに本登録メールを送信しました');
     }
 
     //サインインフォーム
@@ -254,22 +256,28 @@ class UserController extends Controller
     }
     // アカウント削除
     public function delete(Request $request, $id) {
+        $user = Profile::where('user_id', $id)->first();
+        $this->authorize('edit', $user);
         $data = User::find($id);
         return view('summary.delete_account', compact('data'));
     }
 
     public function remove(Request $request, $id) {
         // レコードを削除する。
+        $user = Profile::where('user_id', $id)->first();
+        $this->authorize('edit', $user);
         User::find($id)->delete();
         return redirect("/");
     }
 
     // 投げ銭
     public function tip(Request $request, $id){
+        $user = Profile::where('user_id', $id)->first();
+        $this->authorize('edit', $user);
         $url = UserClass::get_paypay_url($id);
         return view('social.paypay', compact('url'));
     }
-    //mail本文
+    //mail認証
     public function conteact(Request $request){
         $users = Auth::user();
         return view('emails.contact',compact('users'));
@@ -307,16 +315,151 @@ class UserController extends Controller
 
         }
     }
-    //パスワード変更メール送信ページ
-    public function change(Request $request){
-        return view('emails.change');
+
+    //passここで変更
+    public function changeupdate(Request $request){
+        //バリデーションの設定
+        $request->validate([
+            'old_password'=>'required|string|between:8,128',
+            'new_password'=>'required|string|between:8,128',
+            'new_password_check'=>'required|string|between:8,128',
+        ]);
+            $data = Auth::user();
+            $id = Auth::id();
+            $pass_data = User::where('password',$request['old_password'])->first();
+            //現在のパスワードがデータベースにあることを確認するようにする
+
+        if($request['old_password']!=$request['new_password']){//現在のパスワードと新しいパスワードが同じではない
+            if($request['old_password'] === $pass_data){
+                $data->password = bcrypt($request['new_password']);
+                $data->save();
+            }else{
+                return back()->withInput()->with('flash_message_error', '現在のパスワードが間違っています');
+            }
+        }else{
+            return back()->withInput()->with('flash_message', '現在のパスワードと新しいパスワードが同じです');
+        }
+        if($request['new_password_check'] === $request['new_password']){
+                return redirect("/user/{$id}/summary/account/")->with('flash_message', 'パスワードの変更を完了しました');
+        }else{
+            return back()->withInput()->with('flash_message', '確認パスワードと新しいパスワードが一致しません');
+        }
     }
-    //送信
-    public function send(Request $request){
 
+    //ソーシャルここで変更
+    public function socialupdate(Request $request, $id){
+        //バリデーションの設定
+        $request->validate([
+            'new_social'=>'required|unique:users,social_id|string|max:30|confirmed',
+            'new_social_confirmation'=>'required|string|max:30',
+        ]);
+        $user = User::find($id);
+        $user->social_id = $request->new_social;
+        $user->save();
+        return redirect("/user/{$id}/summary/account/")->with('flash_message', 'ソーシャルIDの変更完了しました');
     }
 
+    //メールアドレス変更機能
+    //ここで変更
+    public function mailupdate(Request $request, $id){
+        //バリデーションの設定
+        $request->validate([
+            'new_mail'=>'required|email|max:254|confirmed',
+            'new_mail_confirmation'=>'required|email|max:254',
+        ]);
+
+        if(User::where('email', $request->new_mail)->first()){
+            return redirect("/user/{$id}/summary/account/")->with('flash_message_error', '入力されたメールアドレスは使用されています');
+        }
+        $older_new_mail_data = Newemail::where('email', $request->new_mail)->first();
+        if($older_new_mail_data){
+            $older_new_mail_data->delete();
+        }
+        $new_mail_data = new Newemail;
+        $new_mail_data->user_id = Auth::id();
+        $new_mail_data->email = $request->new_mail;
+        $new_mail_data->email_verify_token = base64_encode($request->new_mail);
+        $new_mail_data->save();
+
+        Mail::to($request->new_mail)->send(new MailChangeCheck($new_mail_data->email_verify_token));
+        return redirect("/user/{$id}/summary/account/")->with('flash_message', 'メール送信完了しました');
+    }
+
+    //メール
+    public function donemail(Request $request, $id, $token){
+        return view('emails.done', compact('id', 'token'));
+    }
+
+    //変更確定処理
+    public function done(Request $request, $id, $token){
+        $new_email_data = Newemail::where('email_verify_token', $token)->first();
+        $user = $new_email_data->user;
+        if(Auth::user()){
+            if(Auth::id() == $user->id){
+                $user->email = $new_email_data->email;
+                $user->save();
+            }else{
+                return redirect("/user/{Auth::user()->id}/profile")->with('flash_message', 'ログインユーザーが異なります');
+            }
+        }else{
+            return redirect("/user/signin")->with('flash_message', 'ログインしてから再度実行してください');
+        }
+
+        $new_email_data->delete();  //Newemailから新メールアドレスの削除
+        return redirect("/user/{$id}/summary/account/")->with('flash_message', 'メールアドレスの変更を完了しました');
+    }
+
+        //パスワードリセット
+    public function resetform(Request $request){
+            return view('emails.resetform');
+        }
+        //パスワードリセットメール送信
+        public function resetmail(Request $request){
+            //バリデーションの設定
+            $request->validate([
+                'email'=>'required|email|max:254',
+            ]);
+            $users = User::get();
+                foreach($users as $value){
+                    if($request['email'] === $value->email ){
+                        $data = $value->email;
+                        $data_token = base64_encode($data);
+                        Mail::to($request['email'])->send(new ResetMail($data,$data_token));
+                        return redirect("/user/signin")->with('flash_message', 'パスワードリセットメールの送信が完了しました');
+                    }
+                }
+                return redirect("/user/signin")->with('flash_message', '登録されていないメールアドレスです');
+        }
+        //パスワードリセットフォーム
+        public function passform(Request $request,$token){
+            $email_token = $token;
+
+            return view('emails.passform',compact('email_token'));
+        }
+        //パスワードリセット
+        public function resetpass(Request $request){
+            //バリデーションの設定
+            $request->validate([
+                'new_password'=>'required|string|between:8,128',
+                'new_password_check'=>'required|string|between:8,128',
+            ]);
+            $token = $request->email_token;
+            $users = User::where('email_verify_token',$token )->first();
+
+            if($users->email_verify_token === $token ){
+                $dbdata = User::where('email_verify_token',$token )->first();
+                if($request['new_password'] === $request['new_password_check'] ){
+                    $dbdata->password = bcrypt($request['new_password']);
+                    $dbdata->save();
+                }else{
+                    return back()->withInput()->with('flash_message', '確認パスワードと新規パスワードが一致しません。');
+                }
+            }else{
+                return redirect("/user/signin")->with('flash_message', '不正なアクセスです。');
+            }
+            return redirect("/user/signin")->with('flash_message', 'パスワード変更が完了しました。');
 
 
+        }
 
 }

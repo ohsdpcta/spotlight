@@ -16,6 +16,9 @@ class TagController extends Controller
 //-----------------------------------------------------------------------------------
     // 一覧
     public function summary(Request $request, $id){
+        $usertag = new UserTag;
+        $usertag->user_id = $id;
+        $this->authorize('edit', $usertag);
         return view('summary.summary_tag');
     }
 
@@ -103,10 +106,10 @@ class TagController extends Controller
         return redirect("/user/{$id}/summary/tag");
     }
 
-    // タグ検索結果(改変中)
+    // タグ検索結果
     public function tag_search(Request $request){
         $tag = Tag::find($request->tag_id);
-        $users = $tag->user;
+        $users = $tag->user()->where('role', 'Performer')->get();
         // logger($users);
         // foreach($users as $user){
         //     logger($user->id);
@@ -127,7 +130,7 @@ class TagController extends Controller
             array('path'=>"/user/tag_search?tag_id=$request->tag_id") // ページャーのリンクをOptionのpathで指定
         );
 
-        return view('search_result', ['result' => $user]);//$○○→id $○○->name
+        return view('search_result', ['users' => $user]);//$○○→id $○○->name
     }
 }
 

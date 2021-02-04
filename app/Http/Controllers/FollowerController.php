@@ -19,6 +19,9 @@ class FollowerController extends Controller
     }
 
     public function unfollow(Request $request, $id){
+        $follower = new Follower;
+        $follower->target_id = $id;
+        $this->authorize('edit', $follower);
         Follower::where('target_id', $id)
             ->where('follower_id', Auth::id())
             ->delete();

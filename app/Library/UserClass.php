@@ -63,10 +63,29 @@ class UserClass{
     return $tag;
   }
 
-  // //タグidからユーザーを取得する
-  // public static function getTagtoUser($id){
-  //   $tag = Tag::find($id);
-  //   $user = $tag->
-  // }
+  public static function getLocate($id){
+    $user = User::find($id);
+    $locate = $user->locate;
+    return $locate;
+  }
+
+  public static function hasRecord($id){
+    $flg = [
+      'locate' => false,
+      'goods' => false,
+      'sample' => false,
+    ];
+    $user = User::find($id);
+    if($user->locate){
+      $flg['locate'] = true;
+    }
+    if(count($user->goods)){
+      $flg['goods'] = true;
+    }
+    if(count($user->sample)){
+      $flg['sample'] = true;
+    }
+    return $flg;
+  }
 }
 

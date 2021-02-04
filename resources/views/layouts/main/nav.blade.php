@@ -2,7 +2,7 @@
     <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom mt-0 mb-0 pt-0 pb-0 sticky-top row">
 
         <div class="col-4">
-            <a class="navbar-brand navbar-brand-center text-dark float-left" href="/">Spotlight</a>
+            <a class="navbar-brand navbar-brand-center text-secondary float-left" style="font-family: 'Lobster', cursive;" href="/">Spotlight</a>
             <div class="collapse navbar-collapse float-left">
                 <ul class="navbar-nav">
                     {{-- 非ログイン時の処理 --}}
@@ -65,7 +65,7 @@
                     @if($user && $user->avatar)
                         <a class="nav-link dropdown-toggle" role="button"><img src="{{ $user->avatar }}" width="35" height="35" class="rounded-circle"></a>
                     @elseif($user)
-                        <a class="nav-link dropdown-toggle" role="button"><img src="http://placehold.jp/200x200.png" width="35" height="35" class="rounded-circle"></a>
+                        <a class="nav-link dropdown-toggle" role="button"><img src="http://placehold.jp/35x35.png" class="rounded-circle"></a>
                     @endif
                 </div>
             </div>

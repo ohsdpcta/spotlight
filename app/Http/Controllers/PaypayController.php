@@ -12,6 +12,9 @@ class PaypayController extends Controller
 {
     public function edit(Request $request, $id){
         $url = UserClass::get_paypay_url($id);
+        $paypay = new Paypay;
+        $paypay->user_id = $id;
+        $this->authorize('edit', $paypay);
         return view('summary.edit_paypay', compact('url'));
     }
 
@@ -31,6 +34,10 @@ class PaypayController extends Controller
                     ->withErrors($validator)
                     ->withInput();
         }
+        $paypay = new Paypay;
+        $paypay->user_id = $id;
+        $this->authorize('edit', $paypay);
+
         if(Auth::id() == $id){
             $paypay = Paypay::where('user_id', Auth::id())->first();
             if($paypay){
@@ -49,6 +56,9 @@ class PaypayController extends Controller
     }
 
     public function remove(Request $request, $id){
+        $paypay = new Paypay;
+        $paypay->user_id = $id;
+        $this->authorize('edit', $paypay);
         // レコードを削除する。
         if(Paypay::where('user_id', Auth::id())->delete()){
             session()->flash('flash_message', 'URLを削除しました');

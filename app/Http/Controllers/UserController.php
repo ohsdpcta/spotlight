@@ -339,11 +339,18 @@ class UserController extends Controller
         ]);
             $data = Auth::user();
             $id = Auth::id();
-        if($request['old_password']!=$request['new_password']){
-            $data->password = bcrypt($request['new_password']);
-            $data->save();
+            $pass_data = User::where('password',$request['old_password'])->first();
+            //現在のパスワードがデータベースにあることを確認するようにする
+
+        if($request['old_password']!=$request['new_password']){//現在のパスワードと新しいパスワードが同じではない
+            if($request['old_password'] === $pass_data){
+                $data->password = bcrypt($request['new_password']);
+                $data->save();
+            }else{
+                return back()->withInput()->with('flash_message', '現在のパスワードが間違っています');
+            }
         }else{
-            return back()->withInput()->with('flash_message', '古いパスワードと新しいパスワードが同じです');
+            return back()->withInput()->with('flash_message', '現在のパスワードと新しいパスワードが同じです');
         }
         if($request['new_password_check'] === $request['new_password']){
                 return redirect("/user/{$id}/summary/account/")->with('flash_message', 'パスワードの変更を完了しました');

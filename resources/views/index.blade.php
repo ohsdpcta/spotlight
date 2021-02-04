@@ -25,7 +25,7 @@
         {{-- ページトップ部分 --}}
         <div class="borde container mb-1">
             {{-- spotlightロゴ --}}
-            <h1 class="text-center text-primary">SpotLight</h1>
+            <h1 class="text-center text-primary" style="font-family: 'Lobster', cursive;">Spotlight</h1>
 
             {{-- 検索フォーム --}}
             <form action="/user/search">
@@ -49,7 +49,7 @@
             <br>
             <br>
             <h3 class="text-center">こんにちは！</h3>
-            <h3 class="text-center">SpotLightはストリートパフォーマーとそのファンを繋ぐ</h3>
+            <h3 class="text-center"><span  style="font-family: 'Lobster', cursive;">Spotlight</span>はストリートパフォーマーとそのファンを繋ぐ</h3>
             <h3 class="text-center">ハブとなる場所です</h3>
             <br>
             <br>

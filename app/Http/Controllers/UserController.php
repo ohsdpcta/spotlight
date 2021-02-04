@@ -70,7 +70,6 @@ class UserController extends Controller
             'password.max' => 'パスワードは128文字以下で入力して下さい。',
         ];
 
-
         //メール送信
         $validator = Validator::make($request->all(), $rules, $messages);
         if ($validator->fails()) {
@@ -78,10 +77,6 @@ class UserController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-
-        $data = $validator->validate();
-
-
 
         // $userにデータを設定する
         $user = new User;
@@ -102,16 +97,8 @@ class UserController extends Controller
         $profile->content = 'よろしくお願いします！';
         $profile->save();
         Mail::to($request->email)->send(new HelloEmail($user_token));
-        /*
-        // $fakeに仮データを設定
-        $fake = new Newemail;
-        $fake->user_id = $login_user_id;
-        $fake->email = $request->email;
-        $fake->email_verify_token = base64_encode($request->email);
-        $fake->save();
-        */
         // ログイン後にアクセスしようとしていたアクションにリダイレクト、無い場合はprofileへ
-        return redirect()->intended("user/{$login_user_id}/profile");
+        return redirect()->intended("user/{$login_user_id}/profile")->with('flash_message', 'メールアドレスに本登録メールを送信しました');
     }
 
     //サインインフォーム
@@ -347,7 +334,7 @@ class UserController extends Controller
                 $data->password = bcrypt($request['new_password']);
                 $data->save();
             }else{
-                return back()->withInput()->with('flash_message', '現在のパスワードが間違っています');
+                return back()->withInput()->with('flash_message_error', '現在のパスワードが間違っています');
             }
         }else{
             return back()->withInput()->with('flash_message', '現在のパスワードと新しいパスワードが同じです');
@@ -360,78 +347,42 @@ class UserController extends Controller
     }
 
     //ソーシャルここで変更
-    public function socialupdate(Request $request){
+    public function socialupdate(Request $request, $id){
         //バリデーションの設定
         $request->validate([
-            'old_social'=>'required|string|max:30',
-            'new_social'=>'required|unique:users,social_id|string|max:30',
-            'new_social_check'=>'required|string|max:30',
+            'new_social'=>'required|unique:users,social_id|string|max:30|confirmed',
+            'new_social_confirmation'=>'required|string|max:30',
         ]);
-            $data = Auth::user();
-            $id = Auth::id();
-        if($request['old_social'] == $data->social_id){
-            if($request['old_social']!=$request['new_social']){
-                $data->social_id = $request['new_social'];
-                $data->save();
-            }else{
-                return back()->withInput()->with('flash_message', '古いソーシャルIDとソーシャルIDが同じです');
-            }
-        }else{
-            return back()->withInput()->with('flash_message', '古いソーシャルIDが間違っています');
-        }
-
-        if($request['new_social_check'] === $request['new_social']){
-                return redirect("/user/{$id}/summary/account/")->with('flash_message', 'ソーシャルIDの変更完了しました');
-        }else{
-            return back()->withInput()->with('flash_message', '確認ソーシャルIDと新しいソーシャルIDが一致しません');
-        }
+        $user = User::find($id);
+        $user->social_id = $request->new_social;
+        $user->save();
+        return redirect("/user/{$id}/summary/account/")->with('flash_message', 'ソーシャルIDの変更完了しました');
     }
 
     //メールアドレス変更機能
     //ここで変更
-    public function mailupdate(Request $request,$id){
+    public function mailupdate(Request $request, $id){
         //バリデーションの設定
         $request->validate([
-            'old_mail'=>'required|email|max:254',
-            'new_mail'=>'required|email|max:254',
-            'new_mail_check'=>'required|email|max:254',
+            'new_mail'=>'required|email|max:254|confirmed',
+            'new_mail_confirmation'=>'required|email|max:254',
         ]);
-        $data = Auth::user();
-        $user_data = User::select('email')->get();
-        $old_new_email = NewEmail::where('email','$request->new_email')->first();//NEWEMAILテーブルの新しいEmailと同じデータを持ってくる
-        $id = Auth::id();//IDデータ
-        foreach($user_data as $value){
 
-            if($request['new_email'] === $value->email){//newemailがユーザーテーブルのemailに既に登録されていない
-
-                return redirect("/user/{$id}/summary/account/")->with('flash_message', 'すでにそのメールアドレスは使用されています');
-            }
+        if(User::where('email', $request->new_mail)->first()){
+            return redirect("/user/{$id}/summary/account/")->with('flash_message_error', '入力されたメールアドレスは使用されています');
         }
-            $new_email = new NewEmail;//NEWEMAILテーブルにデータの保存
-            $new_email->user_id = $data->id;
-            $new_email->email = $request['new_mail'];
-            $new_email->email_verify_token = base64_encode($request['new_mail']);
-        if($request['new_email'] != $old_new_email){//newemailがnewemailテーブルに登録されていないか
-
-            $new_email->save();//NEWEMAILテーブルにデータの保存
-            $email_data = $new_email->email_verify_token;//メールに送るデータ
-            Mail::to($request['new_mail'])->send(new MailChangeCheck($email_data));
-            return redirect("/user/{$id}/summary/account/")->with('flash_message', 'メール送信完了しました');
-        }else{
-
-            if($data->id === $new_email->user_id){//登録したのがログインユーザーかどうか
-
-                Newemail::where('user_id', $data->id)->delete();//Newemailから新メールアドレスの削除
-                $new_email->save();//NEWEMAILテーブルにデータの保存
-                $email_data = $new_email->email_verify_token;//メールに送るデータ
-                Mail::to($request['new_mail'])->send(new MailChangeCheck($email_data));
-                //ここにリダイレクト必須
-                return redirect("/user/{$id}/summary/account/")->with('flash_message', 'メール送信完了しました');
-            }else{
-
-                return redirect("/user/{$id}/summary/account/")->with('flash_message', 'ほかのユーザーのメールアドレスは保存できません');
-            }
+        $older_new_mail_data = Newemail::where('email', $request->new_mail)->first();
+        if($older_new_mail_data){
+            $older_new_mail_data->delete();
         }
+        $new_mail_data = new Newemail;
+        $new_mail_data->user_id = Auth::id();
+        $new_mail_data->email = $request->new_mail;
+        $new_mail_data->email_verify_token = base64_encode($request->new_mail);
+        $new_mail_data->save();
+
+        Mail::to($request->new_mail)->send(new MailChangeCheck($new_mail_data->email_verify_token));
+        return redirect("/user/{$id}/summary/account/")->with('flash_message', 'メール送信完了しました');
     }
 
     //メール

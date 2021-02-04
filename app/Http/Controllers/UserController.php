@@ -19,6 +19,7 @@ use Mail;
 //aws s3アップロード
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Filesystem\Filesystem;
+use Illuminate\Support\Str;
 
 
 use Illuminate\Validation\Rule;
@@ -245,8 +246,16 @@ class UserController extends Controller
                 ->withInput();
         }
         //画像アップロードhttps://noumenon-th.net/programming/2020/02/26/laravel-aws-s3/
+        $random = Str::random(32);
+        logger($random);
         $image = $request->file('image');
-        $path = Storage::disk('s3')->put('tmp/myprefix', $image, 'public');
+        logger($image);
+        $path = Storage::disk('s3')->put("tmp/{$random}", $image, 'public');
+        // $path = Storage::disk('s3')->putFile("tmp/{$random}", $request->file('image'), 'public');
+        // $path = Storage::disk('s3')->put("tmp/{$random}", file_get_contents($image));
+        // $path = Storage::disk('s3')->putFile("tmp/{$random}", new \Illuminate\Http\File($image));
+
+        logger($path);
 
         // dataに値を設定
         $data = User::find($id);

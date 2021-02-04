@@ -50,7 +50,7 @@
                         <img src="http://placehold.jp/200x200.png" class="rounded-circle">
                     @endif
                 </div>
-                <input class="col-12" type="file" name="image">
+                <input type="file" name="image" accept="image/jpeg, image/png" class="col-12">
             </div>
 
             <div class="mt-2">

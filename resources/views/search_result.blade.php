@@ -28,7 +28,9 @@
                     </div>
                     {{-- ショートプロフィール --}}
                     <div class="pl-5 col-10 align-items-center d-flex">
-                        {{ $user->sprofile->scomment }}
+                        @if($user->sprofile)
+                            {{ $user->sprofile->scomment }}
+                        @endif
                     </div>
                 </div>
             @endforeach

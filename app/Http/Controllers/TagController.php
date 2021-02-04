@@ -109,7 +109,7 @@ class TagController extends Controller
     // タグ検索結果
     public function tag_search(Request $request){
         $tag = Tag::find($request->tag_id);
-        $users = $tag->user;
+        $users = $tag->user()->where('role', 'Performer')->get();
         // logger($users);
         // foreach($users as $user){
         //     logger($user->id);

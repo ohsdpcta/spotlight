@@ -42,9 +42,11 @@
                 <br>
 
                 {{-- タグ --}}
-                @foreach($tags as $index => $tag)
-                    <a class="badge badge-pill badge-primary" href="/user/tag_search?tag_id={{ $tag->id }}">#{{ $tag->tag_name }}</a>
-                @endforeach
+                @if($user->role == 'Performer' && $tags)
+                    @foreach($tags as $tag)
+                        <a class="badge badge-pill badge-primary" href="/user/tag_search?tag_id={{ $tag->id }}">#{{ $tag->tag_name }}</a>
+                    @endforeach
+                @endif
 
                 {{-- ショートプロフィール --}}
                 <div>

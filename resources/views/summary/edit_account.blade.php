@@ -74,16 +74,13 @@
 
     </form>
     <label>*ソーシャルID変更</label>
-    <p>現在のソーシャルIDと新しいソーシャルIDを入力してください</p>
+    <p>新しいソーシャルIDを入力してください</p>
     <form action="/user/{{Auth::id()}}/summary/account/socialupdate" method="POST">
         @csrf
         <table>
             <tr>
                 <th></th>
                 <th></th>
-            </tr>
-            <tr>
-                <td>現在のソーシャルID::</td><td><input type="text" name="old_social" value=""></td>
             </tr>
             <tr>
                 <td>新しいソーシャルID::</td><td><input type="text" name="new_social" value=""></td>
@@ -96,7 +93,7 @@
 
     </form>
     <label>*メールアドレス変更</label>
-    <p>現在のメールアドレスと新しいメールアドレスを入力してください</p>
+    <p>新しいメールアドレスを入力してください</p>
     <form action="/user/{{Auth::id()}}/summary/account/mailupdate" method="POST">
         @csrf
         <table>
@@ -106,17 +103,12 @@
             </tr>
             <tr>
                 <div class="form-group">
-                    <td>現在のメールアドレス::</td><td><input type="text" class="form-control" name="old_mail" value=""></td>
-                </div>
-            </tr>
-            <tr>
-                <div class="form-group">
                     <td>新しいメールアドレス::</td><td><input type="text"  class="form-control" name="new_mail" value=""></td>
                 </div>
             <tr>
             <tr>
                 <div class="form-group">
-                    <td>新しいメールアドレスの確認::</td><td><input type="text" class="form-control" name="new_mail_check" value=""></td>
+                    <td>新しいメールアドレスの確認::</td><td><input type="text" class="form-control" name="new_mail_confirmation" value=""></td>
                 </div>
             </tr>
         </table>

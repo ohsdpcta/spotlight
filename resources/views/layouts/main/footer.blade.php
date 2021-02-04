@@ -1,4 +1,4 @@
-<footer class="footer sticky-bottom bg-light">
+<footer class="footer mt-auto bg-light">
     <div class="container">
         <div class="row pt-2 pb-2 pr-2 pl-2">
             <div class="col-4 text-muted">

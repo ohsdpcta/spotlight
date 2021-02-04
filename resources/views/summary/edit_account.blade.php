@@ -32,11 +32,11 @@
                 </div>
             </div>
             <div class="form-check-inline">
-                <label><input class="form-check-input" type="radio" name="role" value="パフォーマー" {{ $data->role == "パフォーマー" ? 'checked="checked"' : ''}}>パフォーマー</label>
+                <label><input class="form-check-input" type="radio" name="role" value="Performer" {{ $data->role == "Performer" ? 'checked="checked"' : ''}}>パフォーマー</label>
             </div>
             <div class="form-check-inline">
-                <label><input class="form-check-input" type="radio" name="role" value="スポッター" {{ $data->role == "スポッター" ? 'checked="checked"' : ''}}>スポッター</label>
-            </div><div></div>
+                <label><input class="form-check-input" type="radio" name="role" value="Spotter" {{ $data->role == "Spotter" ? 'checked="checked"' : ''}}>スポッター</label>
+            </div>
             <br>
 
             <div class="mt-2">

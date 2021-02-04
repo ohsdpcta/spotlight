@@ -65,7 +65,7 @@
                     @if($user && $user->avatar)
                         <a class="nav-link dropdown-toggle" role="button"><img src="{{ $user->avatar }}" width="35" height="35" class="rounded-circle"></a>
                     @elseif($user)
-                        <a class="nav-link dropdown-toggle" role="button"><img src="http://placehold.jp/200x200.png" width="35" height="35" class="rounded-circle"></a>
+                        <a class="nav-link dropdown-toggle" role="button"><img src="http://placehold.jp/35x35.png" class="rounded-circle"></a>
                     @endif
                 </div>
             </div>

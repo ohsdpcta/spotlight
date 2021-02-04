@@ -1,11 +1,13 @@
 @extends('layouts/main')
 @section('user')
 
-<!-- CSSはmainのものも参照するため注意 -->
-{{-- -------------------------------------------------------------- --}}
 <?php
     $user = UserClass::getUser(request()->id);
     $follow = UserClass::getFollower(request()->id);
+    $sprofile = UserClass::getSmallProfile(request()->id);
+    $locate = UserClass::getLocate(request()->id);
+    $tags = UserClass::getTag(request()->id);
+    $hasrecord = UserClass::hasRecord(request()->id);
 ?>
 
 <div class="container">
@@ -24,19 +26,30 @@
 
             {{-- ユーザー名 --}}
             <div class="border-bottom col-xl-6 col-lg-6 col-md-8 col-sm-12 col-xs-12 pt-2 pr-2 pb-2 pl-2 text-dark">
-                <h1>{{ UserClass::getUser(request()->id)->name }}</h1>
-                <p>{{'@'}}{{ UserClass::getUser(request()->id)->social_id }}</p>
-                {{-- タグ --}}
-                <?php $tags = UserClass::getTag(request()->id) ?>
+                @if($user->role == 'Performer')
+                    <span class="badge badge-primary">{{ $user->role }}</span>
+                @elseif($user->role == 'Spotter')
+                    <span class="badge badge-secondary">{{ $user->role }}</span>
+                @endif
+                <h1>{{ $user->name }}</h1>
+                <p>{{'@'}}{{ $user->social_id }}</p>
 
-                @foreach($tags as $index => $tag)
-                    <form class="" method="get" action="/user/tag_search">
-                        <input class="form-control mr-sm-1" type="hidden" name="tag_id" value="{{ $tag->id }}">
-                        <button class="tag_btn rounded-pill border-primary px-3 mt-3" type="submit">#{{ $tag->tag_name }}</button>
-                    </form>
-                @endforeach
+                {{-- 居場所タグ --}}
+                @if($locate)
+                    <a class="badge badge-pill badge-success">#{{ $locate->prefecture }}</a>
+                    <a class="badge badge-pill badge-success">#{{ $locate->city }}</a>
+                @endif
+                <br>
+
+                {{-- タグ --}}
+                @if($user->role == 'Performer' && $tags)
+                    @foreach($tags as $tag)
+                        <a class="badge badge-pill badge-primary" href="/user/tag_search?tag_id={{ $tag->id }}">#{{ $tag->tag_name }}</a>
+                    @endforeach
+                @endif
+
+                {{-- ショートプロフィール --}}
                 <div>
-                    <?php $sprofile = UserClass::getSmallProfile(request()->id) ?>
                     @if( !empty($sprofile->scomment) )
                         <div class="pt-4">
                             <h6>{{ $sprofile->scomment }}</h6>
@@ -45,9 +58,8 @@
                 </div>
             </div>
 
-            {{-- フォローボタン, 編集ページリンク等…… --}}
             <div class="border-bottom col-xl-3 col-lg-3 col-md-12 col-sm-12">
-                <!-- フォローボタン -->
+                {{-- フォローボタン --}}
                 @if(Auth::user() and Auth::user()->id != request()->id)
                     <div class="col-3">
                         @if($follow['follow_flg'] == 1)
@@ -89,19 +101,7 @@
     </div>
 
     <div class="tab nav-justified">
-        <ul class="nav nav-tabs">
-            <li class="nav-item">
-                <a class="nav-link @if(request()->is('*profile')) active @endif" href="/user/{{request()->id}}/profile">プロフィール</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link @if(request()->is('*locate')) active @endif" href="/user/{{request()->id}}/locate">ロケーション</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link @if(request()->is('*goods')) active @endif" href="/user/{{request()->id}}/goods">グッズ</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link @if(request()->is('*sample')) active @endif" href="/user/{{request()->id}}/sample">サンプルリンク</a>
-        </ul>
+        @include('layouts.user/tab', ['user' => $user, 'hasrecord' => $hasrecord])
 
         <div>@yield('content')</div>
 

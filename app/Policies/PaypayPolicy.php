@@ -31,7 +31,7 @@ class PaypayPolicy
      */
     public function edit(User $user, Paypay $paypay)
     {
-        return (string)Auth::user()->id === $paypay->user_id and (string)Auth::user()->role === "パフォーマー";
+        return (string)Auth::user()->id === $paypay->user_id and (string)Auth::user()->role === "Performer";
     }
 
     /**

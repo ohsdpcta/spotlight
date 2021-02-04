@@ -24,13 +24,13 @@
 
 
     <body class="parent">
-        
+
         <div class="container align-items-center">
         <div class="row mt-5 mb-5"><br></div>
             <div class="row d-flex align-items-center">
 
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 center-block text-dark">
-                    <h1>SpotLightへようこそ！</h1>
+                    <h1><span  style="font-family: 'Lobster', cursive;">Spotlight</span>へようこそ！</h1>
                     <p>あなたの推しを見つけましょう</p>
                     <p>あなたのパフォーマンスの場は一か所に留まりません。</p>
                     <p>あなたが今、どこで何をしているのか。ファンに伝えましょう</p>

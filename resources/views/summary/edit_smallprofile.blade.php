@@ -33,7 +33,7 @@
             {{-- 各種フォーム入力欄 --}}
             {{-- バリデーションエラーがあった場合は、old関数で入力データを復元する --}}
             <label>ひと言コメント</label><br>
-            <input type="text" name="scomment" value="{{old('scomment')}}" maxlength="70" placeholder="ひと言コメントを入力してください。" class="form-control col-12 mb-2">
+            <input type="text" name="scomment" value="{{$data->scomment}}" maxlength="50" placeholder="ひと言コメントを入力してください。" class="form-control col-12 mb-2" >
             {{-- 各種ボタン --}}
             <div class="float-right">
                 @if($data)
@@ -44,7 +44,7 @@
                 @endif
             </div>
             @if($data)
-                <h1 class='text-dark'>{{ $data->scomment }}</h1>
+
             @else
                 <label>ひと言コメントが未登録です。</label>
             @endif

@@ -44,7 +44,6 @@
                 </ul>
             </div>
         </div>
-        {{ logger(request()->path()) }}
 
         {{-- indexのnavbarでは検索フォームを非表示 --}}
         <div class="col-7 collapse navbar-collapse">

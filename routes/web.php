@@ -113,11 +113,6 @@ Route::prefix('/user')->group(function(){
             Route::get('sample/delete', 'SampleController@delete')->middleware('Mailvarification');//削除画面
             Route::post('sample/delete', 'SampleController@remove')->middleware('Mailvarification');//削除するぜ！
 
-             // PayPayURL
-            Route::get('paypay', 'PaypayController@edit')->middleware('Mailvarification');//削除するぜ！
-            Route::post('paypay', 'PaypayController@update')->middleware('Mailvarification');//削除するぜ！
-            Route::get('paypay/delete', 'PaypayController@remove')->middleware('Mailvarification');//削除するぜ！
-
             // プロフィール編集
             Route::get('profile', 'ProfileController@edit')->middleware('Mailvarification');
             Route::post('profile', 'ProfileController@update')->middleware('Mailvarification');

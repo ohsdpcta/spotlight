@@ -19,8 +19,6 @@ Route::prefix('/user')->group(function(){
     Route::get('search', 'UserController@search');
     // タグ検索結果
     Route::get('tag_search','TagController@tag_search');
-    // ロケートタグ検索結果
-    Route::get('locate_tag_search', 'LocateController@locate_tag_search');
     // サインアップ
     Route::get('signup', 'UserController@signup_form')->middleware('guest');
     Route::post('signup', 'UserController@signup')->middleware('guest');

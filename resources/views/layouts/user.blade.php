@@ -37,11 +37,8 @@
 
                 {{-- 居場所タグ --}}
                 @if($locate_tag)
-                    <form class="" method="get" action="/user/locate_tag_search">
-                        <input type="hidden" name="locate_tag_id" value="{{ $locate_tag->id }}">
-                        <button class="btn badge badge-pill badge-success" type="submit">#{{ $locate_tag->prefecture_tag_name }}</button>
-                        <button class="btn badge badge-pill badge-success" type="submit">#{{ $locate_tag->city_tag_name }}</button>
-                    </form>
+                    <a class="badge badge-pill badge-success" href="/user/tag_search?locate_tag_id={{ $locate_tag->id }}">#{{ $locate_tag->prefecture_tag_name }}</a>
+                    <a class="badge badge-pill badge-success" href="/user/tag_search?locate_tag_id={{ $locate_tag->id }}">#{{ $locate_tag->city_tag_name }}</a>
                 @endif
                 <br>
 

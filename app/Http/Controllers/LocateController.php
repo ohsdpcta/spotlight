@@ -107,19 +107,4 @@ class LocateController extends Controller
         }
         return redirect("/user/{$id}/summary/locate");
     }
-
-    public function locate_tag_search(Request $request){
-        $locate_tag = LocateTag::find($request->tag_id);
-        $users = $locate_tag->user; //ここのuserがわからず。
-
-        $user = new LengthAwarePaginator(
-            $users->forPage($request->page,2),  // 現在のページのsliceした情報(現在のページ, 1ページあたりの件数)
-            count($users),  //総件数
-            2,  //1ページあたりの件数。(本来なら20。確認用)
-            $request->page,  // 現在のページ(ページャーの色がActiveになる)
-            array('path'=>"/user/locate_tag_search?tag_id=$locate_tag->prefecture_name_tag, $locate_tag->city_name_tag") // ページャーのリンクをOptionのpathで指定
-        );
-
-        return view('search_locate', ['result' => $user]);//$○○→id $○○->name
-    }
 }

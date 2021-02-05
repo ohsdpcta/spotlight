@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Tag;
+use App\LocateTag;
 use App\UserTag;
 use App\User;//一応入れた
 use GuzzleHttp\Psr7\Request as Psr7Request;
@@ -108,7 +109,11 @@ class TagController extends Controller
 
     // タグ検索結果
     public function tag_search(Request $request){
-        $tag = Tag::find($request->tag_id);
+        if($request->tag_id){
+            $tag = Tag::find($request->tag_id);
+        }elseif($request->locate_tag_id){
+            $tag = LocateTag::find($request->locate_tag_id);
+        }
         $users = $tag->user()->where('role', 'Performer')->get();
         // logger($users);
         // foreach($users as $user){

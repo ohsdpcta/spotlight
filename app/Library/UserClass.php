@@ -56,11 +56,9 @@ class UserClass{
   }
 
   public static function getLocateTag($id){
-    if (!empty(UserLocateTag::where('user_id', $id)->first())){
-      $locate_tag_id = UserLocateTag::where('user_id', $id)->latest()->first();
-      $locate_tag = LocateTag::where('id', $locate_tag_id->tag_id)->first();
-      return $locate_tag;
-    }
+    $user = User::find($id);
+    $locate_tag = $user->locate_tag;
+    return $locate_tag[0];
   }
 
   public static function getLocate($id){

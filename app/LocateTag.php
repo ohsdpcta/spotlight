@@ -14,6 +14,6 @@ class LocateTag extends Model
     }
 
     public function user(){
-        return $this->belongsToMany('App\User', 'user_tags', 'tag_id', 'user_id');
+        return $this->belongsToMany('App\User', 'user_locate_tags', 'tag_id', 'user_id');
     }
 }

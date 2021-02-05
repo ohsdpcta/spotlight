@@ -6,9 +6,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Illuminate\Pagination\LengthAwarePaginator;
 use App\Library\LocateClass;
+use App\Library\UserClass;
 
+use App\User;
 use App\Locate;
+use App\LocateTag;
+use App\UserLocateTag;
 
 class LocateController extends Controller
 {
@@ -25,7 +30,6 @@ class LocateController extends Controller
 
     //ロケーション+住所登録フォーム
     public function edit(Request $request, $id){
-        $locate_data = Locate::where('user_id', $id)->first();
         $locate = new Locate;
         $locate->user_id = $id;
         $this->authorize('edit', $locate);
@@ -34,7 +38,7 @@ class LocateController extends Controller
         }else{
             $locate_array = [];
         }
-        return view('summary.edit_locate', compact('locate_array', 'locate_data'));
+        return view('summary.edit_locate', compact('locate_array'));
     }
 
     //ロケーション+住所登録
@@ -58,21 +62,36 @@ class LocateController extends Controller
         $locate->user_id = $id;
         $this->authorize('edit', $locate);
 
-        $locate = Locate::where('user_id', Auth::id())->first();
+
         $formatted_address = LocateClass::regex_address($request->address);
+        $locate_tag = LocateTag::where('city_tag_name', $formatted_address[2])->first();//タグの名称が一致するものがあった場合、そのタプルを取り出している
+        //タグの名前がDBになかった場合、タグを新たに登録
+        if(empty($locate_tag)){
+            $locate_tag = new LocateTag;
+            $locate_tag->prefecture_tag_name = $formatted_address[1];    //tagテーブルのtag_nameカラムに
+            $locate_tag->city_tag_name = $formatted_address[2];
+            $locate_tag->save();
+        }
+        $id = Auth::id();
+        //user_idとtag_idが共に一致するカラムがある場合には、削除して再登録(タグ名は前の分岐で一意に定まっているため、user_idだけ比較)
+        if($locate_tag_re_register = UserLocateTag::where('user_id', $id)->where('tag_id', $locate_tag->id)->first()){
+            $locate_tag_re_register->delete();
+        }
+        //タグとユーザーの関連付け
+        $user_locatetag = new UserLocateTag;
+        $user_locatetag->user_id = $id;
+        $user_locatetag->tag_id = $locate_tag->id;
+
+        $locate = Locate::where('user_id', Auth::id())->first();
         if($locate){
-            $locate->prefecture = $formatted_address[1];
-            $locate->city = $formatted_address[2];
             $locate->coordinate = $request->coordinate;
         }else{
             $locate = new Locate;
             //Auth::はログインしているユーザーのデータを持ってこれるコマンド
             $locate->user_id = Auth::id();
-            $locate->prefecture = $formatted_address[1];
-            $locate->city = $formatted_address[2];
             $locate->coordinate = $request->coordinate;
         }
-        if($locate->save()){
+        if($locate->save() and $user_locatetag->save()){
             session()->flash('flash_message', 'ロケーションの設定が完了しました');
         }
         return redirect("/user/{$id}/summary/locate");
@@ -87,5 +106,20 @@ class LocateController extends Controller
             session()->flash('flash_message', 'ロケーションを削除しました');
         }
         return redirect("/user/{$id}/summary/locate");
+    }
+
+    public function locate_tag_search(Request $request){
+        $locate_tag = LocateTag::find($request->tag_id);
+        $users = $locate_tag->user; //ここのuserがわからず。
+
+        $user = new LengthAwarePaginator(
+            $users->forPage($request->page,2),  // 現在のページのsliceした情報(現在のページ, 1ページあたりの件数)
+            count($users),  //総件数
+            2,  //1ページあたりの件数。(本来なら20。確認用)
+            $request->page,  // 現在のページ(ページャーの色がActiveになる)
+            array('path'=>"/user/locate_tag_search?tag_id=$locate_tag->prefecture_name_tag, $locate_tag->city_name_tag") // ページャーのリンクをOptionのpathで指定
+        );
+
+        return view('search_locate', ['result' => $user]);//$○○→id $○○->name
     }
 }

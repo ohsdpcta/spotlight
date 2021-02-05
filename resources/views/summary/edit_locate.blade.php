@@ -4,6 +4,9 @@
 
 @section('R_form')
 
+<?php
+    $locate_tag = UserClass::getLocateTag(request()->id);
+?>
 <html>
     <head>
         <script src="https://maps.googleapis.com/maps/api/js?key={{ config('services.gmap.key') }}"></script>
@@ -34,11 +37,11 @@
         <div>
             <form action="/user/{{Auth::id()}}/summary/locate" method="post" name="locate_form">
                 @csrf
-                @if($locate_data)
+                @if($locate_tag)
                     <label>活動地域</label>
                     <div>
-                        <a href="">#{{ $locate_data->prefecture }}</a>
-                        <a href="">#{{ $locate_data->city}}</a>
+                        <a href="">#{{ $locate_tag->prefecture_tag_name }}</a>
+                        <a href="">#{{ $locate_tag->city_tag_name }}</a>
                     </div>
                 @endif
                 <input type="text" id="placename" class="form-control" placeholder="地名を入力で移動">

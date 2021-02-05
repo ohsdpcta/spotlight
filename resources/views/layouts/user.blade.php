@@ -7,6 +7,7 @@
     $sprofile = UserClass::getSmallProfile(request()->id);
     $locate = UserClass::getLocate(request()->id);
     $tags = UserClass::getTag(request()->id);
+    $locate_tag = UserClass::getLocateTag(request()->id);
 ?>
 
 <div class="container">
@@ -34,9 +35,12 @@
                 <p>{{'@'}}{{ $user->social_id }}</p>
 
                 {{-- 居場所タグ --}}
-                @if($locate)
-                    <a class="badge badge-pill badge-success">#{{ $locate->prefecture }}</a>
-                    <a class="badge badge-pill badge-success">#{{ $locate->city }}</a>
+                @if($locate_tag)
+                    <form class="" method="get" action="/user/locate_tag_search">
+                        <input type="hidden" name="locate_tag_id" value="{{ $locate_tag->id }}">
+                        <button class="btn badge badge-pill badge-success" type="submit">#{{ $locate_tag->prefecture_tag_name }}</button>
+                        <button class="btn badge badge-pill badge-success" type="submit">#{{ $locate_tag->city_tag_name }}</button>
+                    </form>
                 @endif
 
                 {{-- タグ --}}

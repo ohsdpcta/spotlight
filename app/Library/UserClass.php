@@ -7,6 +7,9 @@ use App\Tag;
 use App\Follower;
 use App\Paypay;
 use App\SmallProfile;
+use App\Locate;
+use App\LocateTag;
+use App\UserLocateTag;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Arr;
 
@@ -61,6 +64,14 @@ class UserClass{
     $user = User::find($id);
     $tag = $user->tag()->get();
     return $tag;
+  }
+
+  public static function getLocateTag($id){
+    if (!empty(UserLocateTag::where('user_id', $id)->first())){
+      $locate_tag_id = UserLocateTag::where('user_id', $id)->latest()->first();
+      $locate_tag = LocateTag::where('id', $locate_tag_id->tag_id)->first();
+      return $locate_tag;
+    }
   }
 
   public static function getLocate($id){

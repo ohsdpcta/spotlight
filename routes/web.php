@@ -73,7 +73,7 @@ Route::prefix('/user')->group(function(){
              // アカウント情報編集
             Route::prefix('/account')->group(function(){
                 Route::get('/', 'UserController@edit')->middleware('Mailvarification');
-                Route::post('account', 'UserController@update')->middleware('Mailvarification');
+                Route::post('/', 'UserController@update')->middleware('Mailvarification');
                 Route::get('account/delete', 'UserController@delete')->middleware('Mailvarification');
                 Route::post('account/delete', 'UserController@remove')->middleware('Mailvarification');
                 //パスワード変更メール送信

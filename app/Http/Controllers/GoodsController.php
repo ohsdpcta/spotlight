@@ -17,7 +17,7 @@ class GoodsController extends Controller
         return view('index.goods', compact('data'));
     }
 
-    public function summary(Request $request, $id){
+    public function summary(Request $request, $id){//一覧画面
         $data = Goods::where('user_id', $id)->paginate(10);
         $goods = new Goods;
         $goods->user_id = $id;
@@ -26,14 +26,14 @@ class GoodsController extends Controller
     }
 
     //新規追加
-    public function add(Request $request, $id){
+    public function add(Request $request, $id){//追加画面
         $goods = new Goods;
         $goods->user_id = $id;
         $this->authorize('edit', $goods);
         return view('summary.add_goods');
     }
 
-    public function create(Request $request, $id){
+    public function create(Request $request, $id){//追加するぜ！
         $addgoods = new Goods;
         $addgoods->user_id = $id;
         $this->authorize('edit', $addgoods);

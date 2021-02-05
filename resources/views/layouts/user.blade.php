@@ -37,8 +37,8 @@
 
                 {{-- 居場所タグ --}}
                 @if($locate_tag)
-                    <a class="badge badge-pill badge-success" href="/user/tag_search?locate_tag_id={{ $locate_tag->id }}">#{{ $locate_tag->prefecture_tag_name }}</a>
-                    <a class="badge badge-pill badge-success" href="/user/tag_search?locate_tag_id={{ $locate_tag->id }}">#{{ $locate_tag->city_tag_name }}</a>
+                    <a class="badge badge-pill badge-success" href="/user/tag_search?prefecture={{ $locate_tag->prefecture_tag_name }}">#{{ $locate_tag->prefecture_tag_name }}</a>
+                    <a class="badge badge-pill badge-success" href="/user/tag_search?city={{ $locate_tag->city_tag_name }}">#{{ $locate_tag->city_tag_name }}</a>
                 @endif
                 <br>
 

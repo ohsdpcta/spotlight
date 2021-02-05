@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Tag;
 use App\LocateTag;
 use App\UserTag;
-use App\User;//一応入れた
+use App\User;
 use GuzzleHttp\Psr7\Request as Psr7Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -109,12 +109,20 @@ class TagController extends Controller
 
     // タグ検索結果
     public function tag_search(Request $request){
-        if($request->tag_id){
-            $tag = Tag::find($request->tag_id);
-        }elseif($request->locate_tag_id){
-            $tag = LocateTag::find($request->locate_tag_id);
+        if($request->tag_id || $request->prefecture || $request->city){
+            if($request->tag_id){
+                $result = Tag::find($request->tag_id);
+            }elseif($request->prefecture){
+                $result = LocateTag::where('prefecture_tag_name', $request->prefecture)->first();
+                logger($result);
+            }elseif($request->city){
+                $result = LocateTag::where('city_tag_name', $request->city)->first();
+            }
+            $users = $result->user()->where('role', 'Performer')->get();
+            logger($users);
+        }else{
+            $users = User::all();
         }
-        $users = $tag->user()->where('role', 'Performer')->get();
         // logger($users);
         // foreach($users as $user){
         //     logger($user->id);

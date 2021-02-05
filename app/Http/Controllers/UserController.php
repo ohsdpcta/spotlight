@@ -270,13 +270,6 @@ class UserController extends Controller
         return redirect("/");
     }
 
-    // 投げ銭
-    public function tip(Request $request, $id){
-        $user = Profile::where('user_id', $id)->first();
-        $this->authorize('edit', $user);
-        $url = UserClass::get_paypay_url($id);
-        return view('social.paypay', compact('url'));
-    }
     //mail認証
     public function conteact(Request $request){
         $users = Auth::user();

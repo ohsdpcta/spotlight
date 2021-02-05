@@ -58,7 +58,12 @@ class UserClass{
   public static function getLocateTag($id){
     $user = User::find($id);
     $locate_tag = $user->locate_tag;
-    return $locate_tag[0];
+    if(count($locate_tag)){
+      $result = $locate_tag[0];
+    }else{
+      $result = '';
+    }
+    return $result;
   }
 
   public static function getLocate($id){

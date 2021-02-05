@@ -75,13 +75,13 @@
                     <th></th>
                 </tr>
                 <tr>
-                    <td>現在のパスワード::</td><td><input type="password" name="old_password" value=""></td>
+                    <td>現在のパスワード::</td><td><input type="password" class="form-control" name="old_password" value=""></td>
                 </tr>
                 <tr>
-                    <td>新しいパスワード::</td><td><input type="password" name="new_password" value=""></td>
+                    <td>新しいパスワード::</td><td><input type="password" class="form-control" name="new_password" value=""></td>
                 <tr>
                 <tr>
-                    <td>新しいパスワードの確認::</td><td><input type="password" name="new_password_check" value=""></td>
+                    <td>新しいパスワードの確認::</td><td><input type="password" class="form-control" name="new_password_check" value=""></td>
                 </tr>
             </table>
             <label><input type="submit" class="btn btn-primary" name="send" value="変更"> </label>
@@ -106,7 +106,12 @@
         <label><input type="submit" class="btn btn-primary" name="send" value="変更"> </label>
     </form>
     @if(empty($data->token))
-        <label>*メールアドレス変更</label>
+        <div class="row pl-3">
+            <label>*メールアドレス変更</label>
+            <div class="pt-1 pl-2">
+                @include('components/modal/edit_account/modal_email')
+            </div>
+        </div>
         <p>新しいメールアドレスを入力してください</p>
         <form action="/user/{{Auth::id()}}/summary/account/mailupdate" method="POST">
             @csrf
@@ -129,6 +134,4 @@
             <label><input type="submit" class="btn btn-primary" name="send" value="変更"> </label>
         </form>
     @endif
-
-    サンプルボーダル@include('components/modal/edit_account/modal_email')
 @endsection

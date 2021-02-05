@@ -233,11 +233,13 @@ class UserController extends Controller
         //バリデーションの設定
         $rules = [
             'name'=>'required|string|max:30',
+            // 'image'=>'image',
         ];
         $messages = [
             'name.required' => 'ユーザー名を入力してください。',
             'name.max' => '３０文字以内で入力してください。',
             'name.string' => '入力方法が違います。',
+            // 'image.image' => '画像を選択してください。',
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
         if ($validator->fails()) {
@@ -246,16 +248,23 @@ class UserController extends Controller
                 ->withInput();
         }
         //画像アップロードhttps://noumenon-th.net/programming/2020/02/26/laravel-aws-s3/
-        $random = Str::random(32);
-        logger($random);
-        $image = $request->file('image');
-        logger($image);
-        $path = Storage::disk('s3')->put("tmp/{$random}", $image, 'public');
-        // $path = Storage::disk('s3')->putFile("tmp/{$random}", $request->file('image'), 'public');
-        // $path = Storage::disk('s3')->put("tmp/{$random}", file_get_contents($image));
-        // $path = Storage::disk('s3')->putFile("tmp/{$random}", new \Illuminate\Http\File($image));
-
-        logger($path);
+        if(request('image')){
+            $random = Str::random(32);
+            $image = $request->file('image');
+            $path = Storage::disk('s3')->put("tmp/{$random}", $image, 'public');
+            // $path = Storage::disk('s3')->putFile("tmp/{$random}", $request->file('image'), 'public');
+            // $path = Storage::disk('s3')->put("tmp/{$random}", file_get_contents($image));
+            // $path = Storage::disk('s3')->putFile("tmp/{$random}", new \Illuminate\Http\File($image));
+            logger("ランダム");
+            logger($random);
+            logger("画像");
+            logger($image);
+            logger("パス");
+            logger($path);
+        }
+        // logger($random);
+        // logger($image);
+        // logger($path);
 
         // dataに値を設定
         $data = User::find($id);

@@ -10,7 +10,7 @@
 
     <h3 class="text-dark">ユーザー情報編集</h3>
     <br>
-    <form action="/user/{{Auth::id()}}/summary/account" method="post">
+    <form action="/user/{{Auth::id()}}/summary/account" method="post" enctype="multipart/form-data">
         @csrf
         @if ($errors->any())
             <div class="alert alert-danger">
@@ -50,7 +50,7 @@
                         <img src="http://placehold.jp/200x200.png" class="rounded-circle">
                     @endif
                 </div>
-                <input type="file" name="image" accept="image/jpeg, image/png" class="col-12">
+                <input type="file" name="image" class="col-12">
             </div>
 
             <div class="mt-2">

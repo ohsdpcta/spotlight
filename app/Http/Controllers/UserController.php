@@ -310,17 +310,20 @@ class UserController extends Controller
     }
 
     //passここで変更
-    public function changeupdate(Request $request){
+    public function changeupdate(Request $request, $id){
         //バリデーションの設定
         $request->validate([
             'old_password'=>'required|string|between:8,128',
             'new_password'=>'required|string|between:8,128',
             'new_password_check'=>'required|string|between:8,128',
         ]);
-            $data = Auth::user();
-            $id = Auth::id();
-            $pass_data = User::where('password',$request['old_password'])->first();
-            //現在のパスワードがデータベースにあることを確認するようにする
+        $user = Profile::where('user_id', $id)->first();
+        $this->authorize('social', $user);
+
+        $data = Auth::user();
+        $id = Auth::id();
+        $pass_data = User::where('password',$request['old_password'])->first();
+        //現在のパスワードがデータベースにあることを確認するようにする
 
         if($request['old_password']!=$request['new_password']){//現在のパスワードと新しいパスワードが同じではない
             if($request['old_password'] === $pass_data){
@@ -360,6 +363,9 @@ class UserController extends Controller
             'new_mail'=>'required|email|max:254|confirmed',
             'new_mail_confirmation'=>'required|email|max:254',
         ]);
+
+        $user = Profile::where('user_id', $id)->first();
+        $this->authorize('social', $user);
 
         if(User::where('email', $request->new_mail)->first()){
             return redirect("/user/{$id}/summary/account/")->with('flash_message_error', '入力されたメールアドレスは使用されています');

@@ -249,18 +249,18 @@ class UserController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-        //画像アップロードhttps://noumenon-th.net/programming/2020/02/26/laravel-aws-s3/
+
+        //画像アップロード
         if(request('image')){
             $random = Str::random(32);
             $image = $request->file('image');
             $path = Storage::disk('s3')->putFile("tmp/{$random}", $image, 'public');
         }
-
         // dataに値を設定
         $data = User::find($id);
         $data->name = $request->name;
         $data->role = $request->role;
-        $data->avatar = Storage::disk('s3')->url($path);
+        if(request('image'))$data->avatar = Storage::disk('s3')->url($path);//dataに値を設定
         if($data->save()){
             session()->flash('flash_message', 'アカウント情報の編集が完了しました');
         }

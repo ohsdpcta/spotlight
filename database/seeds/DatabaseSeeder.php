@@ -18,7 +18,6 @@ class DatabaseSeeder extends Seeder
             LocateTableSeeder::class,
             GoodsTableSeeder::class,
             SampleTableSeeder::class,
-            PaypayTableSeeder::class,
             TagsTableSeeder::class,
             UserTagTableSeeder::class,
             SmallProfileTableSeeder::class,

@@ -37,5 +37,11 @@
             </th></tr>
         </table>
     </form>
+        <form action="resetform" method="POST">
+            @csrf
+
+                <label><a href="{{ config('services.host.url') }}/user/signin/resetform">パスワードリセット</a></label>
+        </form>
+
 
 @endsection

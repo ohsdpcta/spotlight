@@ -5,7 +5,6 @@ namespace App\Library;
 use App\User;
 use App\Tag;
 use App\Follower;
-use App\Paypay;
 use App\SmallProfile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Arr;
@@ -39,16 +38,6 @@ class UserClass{
   public static function getFollowList($id){
     $followlist = Follower::where('follower_id', $id)->get();
     return $followlist;
-  }
-
-  public static function get_paypay_url($id){
-    $target = Paypay::where('user_id', $id)->first();
-    if($target){
-      $url = $target->url;
-    }else{
-      $url = '';
-    }
-    return $url;
   }
 
   //ユーザーのidからタグを取得する

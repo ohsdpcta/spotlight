@@ -39,14 +39,14 @@
                     <a class="badge badge-pill badge-success">#{{ $locate->prefecture }}</a>
                     <a class="badge badge-pill badge-success">#{{ $locate->city }}</a>
                 @endif
+                <br>
 
                 {{-- タグ --}}
-                @foreach($tags as $index => $tag)
-                    <form class="" method="get" action="/user/tag_search">
-                        <input class="form-control mr-sm-1" type="hidden" name="tag_id" value="{{ $tag->id }}">
-                        <button class="tag_btn rounded-pill border-primary px-3 mt-3" type="submit">#{{ $tag->tag_name }}</button>
-                    </form>
-                @endforeach
+                @if($user->role == 'Performer' && $tags)
+                    @foreach($tags as $tag)
+                        <a class="badge badge-pill badge-primary" href="/user/tag_search?tag_id={{ $tag->id }}">#{{ $tag->tag_name }}</a>
+                    @endforeach
+                @endif
 
                 {{-- ショートプロフィール --}}
                 <div>
@@ -80,16 +80,8 @@
                         >
                     </div>
                 @endif
-
-                {{-- 投げ銭ボタン --}}
-                @if( !empty(UserClass::get_paypay_url(request()->id)) )
-                    <div class="col-3 pb-2">
-                        <a href="/user/{{request()->id}}/tip"><img src="https://iconlab.kentakomiya.com/wp/wp-content/uploads/2019/06/icon0084.png" alt="投げ銭" width="30" height="30"></a>
-                    </div>
-                @endif
-
-            {{-- @endif後で表示 --}}
             </div>
+
         </div>
 
         <!-- フォロー、フォロワー -->

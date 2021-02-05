@@ -58,9 +58,78 @@
                 <button type="button" class="btn btn-danger" onclick="location.href='/user/{{Auth::id()}}/summary/account/delete'">削除</button>
             </div>
         </div>
-
-        <hr>
-
-        サンプルボーダル@include('components/modal/edit_account/modal_email')
     </form>
+    <?php
+        $modal_content2 = '
+            <br><h3>サンプル<div class="js-modal-close close float-right">×</div><hr></h3>
+            <h6 class="font-weight-bold">サンプル</h6>
+        '
+    ?>
+    <label>*パスワード変更</label>
+    <p>現在のパスワードと新しいパスワードを入力してください</p>
+    <form action="/user/{{Auth::id()}}/summary/account/changeupdate" method="POST">
+        @csrf
+        <table>
+            <tr>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>
+                <td>現在のパスワード::</td><td><input type="password" name="old_password" value=""></td>
+            </tr>
+            <tr>
+                <td>新しいパスワード::</td><td><input type="password" name="new_password" value=""></td>
+            <tr>
+            <tr>
+                <td>新しいパスワードの確認::</td><td><input type="password" name="new_password_check" value=""></td>
+            </tr>
+        </table>
+        <label><input type="submit" class="btn btn-primary" name="send" value="変更"> </label>
+
+    </form>
+    <label>*ソーシャルID変更</label>
+    <p>新しいソーシャルIDを入力してください</p>
+    <form action="/user/{{Auth::id()}}/summary/account/socialupdate" method="POST">
+        @csrf
+        <table>
+            <tr>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>
+                <td>新しいソーシャルID::</td><td><input type="text" class="form-control" name="new_social" value=""></td>
+            <tr>
+            <tr>
+                <td>新しいソーシャルIDの確認::</td><td><input type="text" class="form-control" name="new_social_confirmation" value=""></td>
+            </tr>
+        </table>
+        <label><input type="submit" class="btn btn-primary" name="send" value="変更"> </label>
+
+    </form>
+    <label>*メールアドレス変更</label>
+    <p>新しいメールアドレスを入力してください</p>
+    <form action="/user/{{Auth::id()}}/summary/account/mailupdate" method="POST">
+        @csrf
+        <table>
+            <tr>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>
+                <div class="form-group">
+                    <td>新しいメールアドレス::</td><td><input type="text"  class="form-control" name="new_mail" value=""></td>
+                </div>
+            <tr>
+            <tr>
+                <div class="form-group">
+                    <td>新しいメールアドレスの確認::</td><td><input type="text" class="form-control" name="new_mail_confirmation" value=""></td>
+                </div>
+            </tr>
+        </table>
+        <label><input type="submit" class="btn btn-primary" name="send" value="変更"> </label>
+
+
+    </form>
+
+    サンプルボーダル@include('components/modal/edit_account/modal_email')
 @endsection

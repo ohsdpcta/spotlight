@@ -47,6 +47,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne('App\Locate');
     }
 
+    public function sprofile(){
+        return $this->hasOne('App\SmallProfile');
+    }
+
     public function goods(){
         return $this->hasMany('App\Goods');
     }
@@ -65,5 +69,9 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function followers(){
         return $this->belongsToMany(User::class, 'followers', 'target_id', 'follower_id');
+    }
+
+    public function newemail(){
+        return $this->hasMany('App\Newemail');
     }
 }

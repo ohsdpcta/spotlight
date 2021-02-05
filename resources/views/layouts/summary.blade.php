@@ -34,7 +34,6 @@
                             <p><a class="text-primary btn @if(request()->is('*/locate*')) disabled @endif" href="/user/{{Auth::id()}}/summary/locate/">ロケーション情報</a></p>
                             <p><a class="text-primary btn @if(request()->is('*/goods*')) disabled @endif" href="/user/{{Auth::id()}}/summary/goods/">グッズ情報</a></p>
                             <p><a class="text-primary btn @if(request()->is('*/sample*')) disabled @endif" href="/user/{{Auth::id()}}/summary/sample/">サンプル情報</a></p>
-                            <p><a class="text-primary btn @if(request()->is('*/paypay*')) disabled @endif" href="/user/{{Auth::id()}}/summary/paypay/">PayPayURL</a></p>
                         @endif
                     </div>
                 </div>

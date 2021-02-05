@@ -73,7 +73,7 @@ Route::prefix('/user')->group(function(){
              // アカウント情報編集
             Route::prefix('/account')->group(function(){
                 Route::get('/', 'UserController@edit')->middleware('Mailvarification');
-                Route::post('account', 'UserController@update')->middleware('Mailvarification');
+                Route::post('/', 'UserController@update')->middleware('Mailvarification');
                 Route::get('account/delete', 'UserController@delete')->middleware('Mailvarification');
                 Route::post('account/delete', 'UserController@remove')->middleware('Mailvarification');
                 //パスワード変更メール送信
@@ -112,11 +112,6 @@ Route::prefix('/user')->group(function(){
             Route::post('sample/{sample_id}/edit', 'SampleController@update')->middleware('Mailvarification');//編集するぜ！
             Route::get('sample/delete', 'SampleController@delete')->middleware('Mailvarification');//削除画面
             Route::post('sample/delete', 'SampleController@remove')->middleware('Mailvarification');//削除するぜ！
-
-             // PayPayURL
-            Route::get('paypay', 'PaypayController@edit')->middleware('Mailvarification');//削除するぜ！
-            Route::post('paypay', 'PaypayController@update')->middleware('Mailvarification');//削除するぜ！
-            Route::get('paypay/delete', 'PaypayController@remove')->middleware('Mailvarification');//削除するぜ！
 
             // プロフィール編集
             Route::get('profile', 'ProfileController@edit')->middleware('Mailvarification');

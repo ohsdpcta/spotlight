@@ -31,7 +31,7 @@ class SamplePolicy
      */
     public function edit(User $user, Sample $sample)
     {
-        return (string)Auth::user()->id === $sample->user_id;
+        return (string)Auth::user()->id === $sample->user_id and (string)Auth::user()->role === "Performer";
     }
 
     /**

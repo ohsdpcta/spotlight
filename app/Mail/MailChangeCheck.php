@@ -7,19 +7,20 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class HelloEmail extends Mailable
+class MailChangeCheck extends Mailable
 {
     use Queueable, SerializesModels;
-    protected $user_token;
 
+    protected $email_data;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($user_token)
+    public function __construct($email_data)
     {
-        $this->user_token = $user_token;
+
+        $this->email_data = $email_data;
     }
 
     /**
@@ -29,9 +30,8 @@ class HelloEmail extends Mailable
      */
     public function build()
     {
-
-        return $this->view('emails.contact')
-            ->subject('【Spotlight】仮登録が完了しました')
-            ->with(['user_data'=>$this->user_token]);
+        return $this->view('emails.donemail')
+            ->subject('【Spotlight】メールアドレス変更完了メール')
+            ->with(['email_token'=>$this->email_data]);
     }
 }

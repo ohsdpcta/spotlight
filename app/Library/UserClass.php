@@ -5,7 +5,6 @@ namespace App\Library;
 use App\User;
 use App\Tag;
 use App\Follower;
-use App\Paypay;
 use App\SmallProfile;
 use App\Locate;
 use App\LocateTag;
@@ -44,16 +43,6 @@ class UserClass{
     return $followlist;
   }
 
-  public static function get_paypay_url($id){
-    $target = Paypay::where('user_id', $id)->first();
-    if($target){
-      $url = $target->url;
-    }else{
-      $url = '';
-    }
-    return $url;
-  }
-
   //ユーザーのidからタグを取得する
   public static function getSmallprofile($id){
     $sprofile = SmallProfile::where('user_id', $id)->first();
@@ -78,6 +67,25 @@ class UserClass{
     $user = User::find($id);
     $locate = $user->locate;
     return $locate;
+  }
+
+  public static function hasRecord($id){
+    $flg = [
+      'locate' => false,
+      'goods' => false,
+      'sample' => false,
+    ];
+    $user = User::find($id);
+    if($user->locate){
+      $flg['locate'] = true;
+    }
+    if(count($user->goods)){
+      $flg['goods'] = true;
+    }
+    if(count($user->sample)){
+      $flg['sample'] = true;
+    }
+    return $flg;
   }
 }
 

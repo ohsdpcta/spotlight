@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Goods;
 use App\User;
+use App\Library\UserClass;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -31,7 +32,7 @@ class GoodsPolicy
      */
     public function edit(User $user, Goods $goods)
     {
-        return (string)Auth::user()->id === $goods->user_id;
+        return (string)Auth::user()->id === $goods->user_id and (string)Auth::user()->role === "Performer";
     }
 
     /**

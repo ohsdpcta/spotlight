@@ -8,6 +8,9 @@
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+
   <!-- cssは移設しました -->
   <script src="{{ asset('/js/main.js') }}"></script>
   <link rel="stylesheet" href="{{ asset('styles/main.css') }}">
@@ -16,9 +19,15 @@
   <script type="text/x-template" id="dropdown-template">
     <div class="v-dropdown-container">
       <ul class="v-dropdown-list">
-        <a class="nav-link v-dropdown-item" href="/user/signin">sign in</a>
-        <a class="nav-link v-dropdown-item" href="/user/signout">sign out</a>
-        <a class="nav-link v-dropdown-item v-dropdown-item-last" href="/user/{{ Auth::id() }}/summary/account">setting</a>
+        <a class="nav-link v-dropdown-item" href="/user/{{ Auth::id() }}/@if(request()->is('*profile'))profile\
+          @elseif(request()->is('*locate'))locate\
+          @elseif(request()->is('*goods'))goods\
+          @elseif(request()->is('*sample'))sample\
+          @else()profile\
+          @endif"
+        >my page</a>
+        <a class="nav-link v-dropdown-item" href="/user/{{ Auth::id() }}/summary/account">setting</a>
+        <a class="nav-link v-dropdown-item v-dropdown-item-last" href="/user/signout">sign out</a>
       </ul>
     </div>
   </script>

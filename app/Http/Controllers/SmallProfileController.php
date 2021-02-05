@@ -46,7 +46,7 @@ class SmallProfileController extends Controller
                 $data->scomment = $request->scomment;
             }
         if($data->save()){
-            session()->flash('flash_message', 'プロフィールの編集が完了しました');
+            session()->flash('flash_message', 'ひと言コメントの編集が完了しました');
         }
     }
         return redirect("user/{$id}/summary/smallprofile");

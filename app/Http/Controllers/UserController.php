@@ -12,7 +12,7 @@ use Carbon\Carbon;
 //メール
 use App\Mail\HelloEmail;
 use App\Mail\passChangeMaill;
-use  App\Mail\SocalIDChange;
+use App\Mail\SocalIDChange;
 use App\Mail\MailChange;
 use App\Mail\MailChangeCheck;
 use App\Mail\ResetMail;

@@ -3,14 +3,9 @@
 namespace App\Library;
 
 use App\User;
-use App\Tag;
 use App\Follower;
 use App\SmallProfile;
-use App\Locate;
-use App\LocateTag;
-use App\UserLocateTag;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Arr;
 
 class UserClass{
   public static function getUser($id){
@@ -55,13 +50,24 @@ class UserClass{
     return $tag;
   }
 
-  public static function getLocateTag($id){
+  public static function getPrefecture($id){
     $user = User::find($id);
-    $locate_tag = $user->locate_tag;
-    if(count($locate_tag)){
-      $result = $locate_tag[0];
+    $prefecture = $user->prefecture;
+    if(count($prefecture)){
+      $result = $prefecture[0];
     }else{
-      $result = '';
+      $result = false;
+    }
+    return $result;
+  }
+
+  public static function getCity($id){
+    $user = User::find($id);
+    $city = $user->city;
+    if(count($city)){
+      $result = $city[0];
+    }else{
+      $result = false;
     }
     return $result;
   }

@@ -7,7 +7,8 @@
     $sprofile = UserClass::getSmallProfile(request()->id);
     $locate = UserClass::getLocate(request()->id);
     $tags = UserClass::getTag(request()->id);
-    $locate_tag = UserClass::getLocateTag(request()->id);
+    $prefecture = UserClass::getPrefecture(request()->id);
+    $city = UserClass::getCity(request()->id);
     $hasrecord = UserClass::hasRecord(request()->id);
 ?>
 
@@ -36,9 +37,9 @@
                 <p>{{'@'}}{{ $user->social_id }}</p>
 
                 {{-- 居場所タグ --}}
-                @if($locate_tag)
-                    <a class="badge badge-pill badge-success" href="/user/tag_search?prefecture={{ $locate_tag->prefecture_tag_name }}">#{{ $locate_tag->prefecture_tag_name }}</a>
-                    <a class="badge badge-pill badge-success" href="/user/tag_search?city={{ $locate_tag->city_tag_name }}">#{{ $locate_tag->city_tag_name }}</a>
+                @if($prefecture && $city)
+                    <a class="badge badge-pill badge-success" href="/user/tag_search?prefecture={{ $prefecture->name }}">#{{ $prefecture->name }}</a>
+                    <a class="badge badge-pill badge-success" href="/user/tag_search?city={{ $city->name }}">#{{ $city->name }}</a>
                 @endif
                 <br>
 

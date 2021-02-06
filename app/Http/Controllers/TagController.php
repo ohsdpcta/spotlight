@@ -109,25 +109,17 @@ class TagController extends Controller
 
     // タグ検索結果
     public function tag_search(Request $request){
-        if($request->tag_id || $request->prefecture || $request->city){
-            if($request->tag_id){
-                $result = Tag::find($request->tag_id);
-            }elseif($request->prefecture){
-                $result = LocateTag::where('prefecture_tag_name', $request->prefecture)->first();
-                logger($result);
-            }elseif($request->city){
-                $result = LocateTag::where('city_tag_name', $request->city)->first();
-            }
+        if($request->tag_id){
+            $result = Tag::find($request->tag_id);
             $users = $result->user()->where('role', 'Performer')->get();
-            logger($users);
         }else{
             $users = User::all();
         }
 
         $user = new LengthAwarePaginator(
-            $users->forPage($request->page,2),  // 現在のページのsliceした情報(現在のページ, 1ページあたりの件数)
+            $users->forPage($request->page, 10),  // 現在のページのsliceした情報(現在のページ, 1ページあたりの件数)
             count($users),  //総件数
-            2,  //1ページあたりの件数。(本来なら20。確認用)
+            10,  //1ページあたりの件数。(本来なら20。確認用)
             $request->page,  // 現在のページ(ページャーの色がActiveになる)
             array('path'=>"/user/tag_search?tag_id=$request->tag_id") // ページャーのリンクをOptionのpathで指定
         );

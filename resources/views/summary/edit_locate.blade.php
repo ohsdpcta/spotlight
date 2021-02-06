@@ -5,7 +5,8 @@
 @section('R_form')
 
 <?php
-    $locate_tag = UserClass::getLocateTag(request()->id);
+    $prefecture = UserClass::getPrefecture(Auth::id());
+    $city = UserClass::getCity(Auth::id());
 ?>
 <html>
     <head>
@@ -37,11 +38,11 @@
         <div>
             <form action="/user/{{Auth::id()}}/summary/locate" method="post" name="locate_form">
                 @csrf
-                @if($locate_tag)
+                @if($prefecture && $city)
                     <label>活動地域</label>
                     <div>
-                        <a href="">#{{ $locate_tag->prefecture_tag_name }}</a>
-                        <a href="">#{{ $locate_tag->city_tag_name }}</a>
+                        <a class="badge badge-pill badge-success" href="/user/search?prefecture={{ $prefecture->name }}">#{{ $prefecture->name }}</a>
+                        <a class="badge badge-pill badge-success" href="/user/search?city={{ $city->name }}">#{{ $city->name }}</a>
                     </div>
                 @endif
                 <input type="text" id="placename" class="form-control" placeholder="地名を入力で移動">

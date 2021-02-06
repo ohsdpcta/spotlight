@@ -39,8 +39,8 @@
             <form action="/user/{{Auth::id()}}/summary/locate" method="post" name="locate_form">
                 @csrf
                 @if($prefecture && $city)
-                    <label>活動地域</label>
                     <div>
+                        <label class="mr-2">登録地域</label>
                         <a class="badge badge-pill badge-success" href="/user/search?prefecture={{ $prefecture->name }}">#{{ $prefecture->name }}</a>
                         <a class="badge badge-pill badge-success" href="/user/search?city={{ $city->name }}">#{{ $city->name }}</a>
                     </div>

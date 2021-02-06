@@ -37,7 +37,7 @@
                 <p>{{'@'}}{{ $user->social_id }}</p>
 
                 {{-- 居場所タグ --}}
-                @if($prefecture && $city)
+                @if($user->role == 'Performer' && $prefecture && $city)
                     <a class="badge badge-pill badge-success" href="/user/search?prefecture={{ $prefecture->name }}">#{{ $prefecture->name }}</a>
                     <a class="badge badge-pill badge-success" href="/user/search?city={{ $city->name }}">#{{ $city->name }}</a>
                 @endif

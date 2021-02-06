@@ -63,10 +63,6 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany('App\Tag', 'user_tags', 'user_id', 'tag_id');
     }
 
-    public function locate_tag(){
-        return $this->belongsToMany('App\LocateTag', 'user_locate_tags', 'user_id', 'tag_id');
-    }
-
     public function followees(){
         return $this->belongsToMany(User::class, 'followers', 'follower_id', 'target_id');
     }
@@ -77,5 +73,13 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function newemail(){
         return $this->hasMany('App\Newemail');
+    }
+
+    public function prefecture(){
+        return $this->belongsToMany('App\Prefecture', 'user_prefectures', 'user_id', 'prefecture_id');
+    }
+
+    public function city(){
+        return $this->belongsToMany('App\City', 'user_cities', 'user_id', 'city_id');
     }
 }

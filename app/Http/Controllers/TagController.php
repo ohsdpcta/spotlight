@@ -109,6 +109,7 @@ class TagController extends Controller
 
     // タグ検索結果
     public function tag_search(Request $request){
+        $params = array();
         if($request->tag_id){
             $users = Tag::find($request->tag_id)->user();
         }else{
@@ -124,7 +125,7 @@ class TagController extends Controller
             array('path'=>"/user/tag_search?tag_id=$request->tag_id") // ページャーのリンクをOptionのpathで指定
         );
 
-        return view('search_result', ['users' => $user]);//$○○→id $○○->name
+        return view('search_result', ['users' => $user], compact('params'));//$○○→id $○○->name
     }
 }
 

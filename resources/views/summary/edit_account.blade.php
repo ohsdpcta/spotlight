@@ -62,7 +62,7 @@
     @if(empty($data->token))
         <label>*パスワード変更</label>
         <p>現在のパスワードと新しいパスワードを入力してください</p>
-        <form action="/user/{{Auth::id()}}/summary/account/changeupdate" method="POST">
+        <form action="/user/{{Auth::id()}}/summary/account/changepassword" method="POST">
             @csrf
             <table>
                 <tr>

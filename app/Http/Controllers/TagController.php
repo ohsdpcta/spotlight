@@ -123,17 +123,6 @@ class TagController extends Controller
         }else{
             $users = User::all();
         }
-        // logger($users);
-        // foreach($users as $user){
-        //     logger($user->id);
-        // };
-        // foreach($users as $user){
-        //     logger($user->name);
-        // };
-
-        // どうやってページネーターと共存させればいいのか全然わからん
-        // とりあえず上の二つの方法で、値を取り出すことはできている。
-        // 最終的にはresult->idって形で取り出せるようにしたい。
 
         $user = new LengthAwarePaginator(
             $users->forPage($request->page,2),  // 現在のページのsliceした情報(現在のページ, 1ページあたりの件数)

@@ -21,6 +21,8 @@ class DatabaseSeeder extends Seeder
             TagsTableSeeder::class,
             UserTagTableSeeder::class,
             SmallProfileTableSeeder::class,
+            PrefectureTableSeeder::class,
+            UserPrefectureTableSeeder::class,
         ]);
     }
 }

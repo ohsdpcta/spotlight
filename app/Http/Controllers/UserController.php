@@ -20,7 +20,6 @@ use App\Mail\ResetMail;
 use Illuminate\Support\Facades\Mail;
 
 //aws s3アップロード
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Contracts\Filesystem\Filesystem;

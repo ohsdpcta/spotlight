@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 use App\Library\LocateClass;
 
 use App\Locate;
+use App\Prefecture;
+use App\UserPrefecture;
+use App\City;
+use App\UserCity;
 
 class LocateController extends Controller
 {
@@ -25,16 +28,16 @@ class LocateController extends Controller
 
     //ロケーション+住所登録フォーム
     public function edit(Request $request, $id){
-        $locate_data = Locate::where('user_id', $id)->first();
         $locate = new Locate;
         $locate->user_id = $id;
         $this->authorize('edit', $locate);
+        $locate_data = Locate::where('user_id', $id)->first();
         if(!empty($locate_data->coordinate)){
             $locate_array = explode(',', $locate_data->coordinate);
         }else{
             $locate_array = [];
         }
-        return view('summary.edit_locate', compact('locate_array', 'locate_data'));
+        return view('summary.edit_locate', compact('locate_array'));
     }
 
     //ロケーション+住所登録
@@ -58,22 +61,43 @@ class LocateController extends Controller
         $locate->user_id = $id;
         $this->authorize('edit', $locate);
 
-        $locate = Locate::where('user_id', Auth::id())->first();
+
         $formatted_address = LocateClass::regex_address($request->address);
+        $prefecture = Prefecture::where('name', $formatted_address[1])->first();
+        $city = City::where('name', $formatted_address[2])->first();
+        //タグの名前がDBになかった場合、タグを新たに登録
+        if(empty($prefecture)){
+            $prefecture = new Prefecture;
+            $prefecture->name = $formatted_address[1];
+            $prefecture->save();
+        }
+        if(empty($city)){
+            $city = new City;
+            $city->name = $formatted_address[2];
+            $city->save();
+        }
+        $id = Auth::id();
+        UserPrefecture::where('user_id', $id)->delete();
+        $user_pref = new UserPrefecture;
+        $user_pref->user_id = $id;
+        $user_pref->prefecture_id = $prefecture->id;
+        UserCity::where('user_id', $id)->delete();
+        $user_city = new UserCity;
+        $user_city->user_id = $id;
+        $user_city->city_id = $city->id;
+
+        $locate = Locate::where('user_id', Auth::id())->first();
         if($locate){
-            $locate->prefecture = $formatted_address[1];
-            $locate->city = $formatted_address[2];
             $locate->coordinate = $request->coordinate;
         }else{
             $locate = new Locate;
-            //Auth::はログインしているユーザーのデータを持ってこれるコマンド
             $locate->user_id = Auth::id();
-            $locate->prefecture = $formatted_address[1];
-            $locate->city = $formatted_address[2];
             $locate->coordinate = $request->coordinate;
         }
-        if($locate->save()){
+        if($locate->save() && $user_pref->save() && $user_city->save()){
             session()->flash('flash_message', 'ロケーションの設定が完了しました');
+        }else{
+            session()->flash('flash_message_error', 'ロケーションの設定が失敗しました');
         }
         return redirect("/user/{$id}/summary/locate");
     }

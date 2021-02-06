@@ -2,52 +2,53 @@
 
 namespace App\Http\Controllers;
 
-use Socialite;
-use Illuminate\Http\Request;
+use Exception;
 use App\User;
 use App\Profile;
-use App\Library\UserClass;
+use App\Prefecture;
+use App\City;
 use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Laravel\Socialite\Facades\Socialite;
+
 //メール
+use App\Newemail;
 use App\Mail\HelloEmail;
-use App\Mail\passChangeMaill;
-use  App\Mail\SocalIDChange;
-use App\Mail\MailChange;
 use App\Mail\MailChangeCheck;
 use App\Mail\ResetMail;
-use App\Newemail;
 use Illuminate\Support\Facades\Mail;
-
-use GuzzleHttp\Psr7\Request as Psr7Request;
-use Illuminate\Support\Facades\Validator;
-// use Mail;
 
 //aws s3アップロード
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Support\Str;
-
-
-use Illuminate\Validation\Rule;
+use Illuminate\Contracts\Filesystem\Filesystem;
 
 class UserController extends Controller
 {
     // インデックス
-    public function index(Request $request){
+    public function index(){
 
         return view('index');
     }
 
     // 検索結果
     public function search(Request $request){
-        $input = $request->search;
-        if ($input == '') {
+        $params = array();
+        // ワード検索
+        if($request->search == false) {
             $result = User::paginate(10);
         }else{
-            $result = User::where('name', 'like', '%'.$input.'%')->paginate(10);
+            $result = User::where('name', 'like', '%'.$request->search.'%')->paginate(10);
         }
-        return view('search_result', ['users' => $result]);
+        if($request->prefecture){
+            $result = Prefecture::where('name', $request->prefecture)->first()->user()->paginate(10);
+            $params['prefecture'] = $request->prefecture;
+        }elseif($request->city){
+            $result = City::where('name', $request->city)->first()->user()->paginate(10);
+            $params['city'] = $request->city;
+        }
+        return view('search_result', ['users' => $result], compact('params'));
     }
 
     //サインアップフォーム
@@ -138,7 +139,7 @@ class UserController extends Controller
     }
 
     // サインアウト
-    public function signout(Request $request){
+    public function signout(){
         Auth::logout();
         return redirect('/');
     }
@@ -254,13 +255,14 @@ class UserController extends Controller
         if(request('image')){
             $random = Str::random(32);
             $image = $request->file('image');
-            $path = Storage::disk('s3')->putFile("tmp/{$random}", $image, 'public');
+            $disk = Storage::disk('s3');
+            $path = $disk->putFile("tmp/{$random}", $image, 'public');
         }
         // dataに値を設定
         $data = User::find($id);
         $data->name = $request->name;
         $data->role = $request->role;
-        if(request('image'))$data->avatar = Storage::disk('s3')->url($path);//dataに値を設定
+        if(request('image'))$data->avatar = $disk->url($path);//dataに値を設定
         if($data->save()){
             session()->flash('flash_message', 'アカウント情報の編集が完了しました');
         }
@@ -323,7 +325,7 @@ class UserController extends Controller
     }
 
     //passここで変更
-    public function changeupdate(Request $request, $id){
+    public function changepassword(Request $request, $id){
         //バリデーションの設定
         $request->validate([
             'old_password'=>'required|string|between:8,128',
@@ -333,15 +335,13 @@ class UserController extends Controller
         $user = Profile::where('user_id', $id)->first();
         $this->authorize('social', $user);
 
-        $data = Auth::user();
-        $id = Auth::id();
         $pass_data = User::where('password',$request['old_password'])->first();
-        //現在のパスワードがデータベースにあることを確認するようにする
 
+        //現在のパスワードがデータベースにあることを確認するようにする
         if($request['old_password']!=$request['new_password']){//現在のパスワードと新しいパスワードが同じではない
             if($request['old_password'] === $pass_data){
-                $data->password = bcrypt($request['new_password']);
-                $data->save();
+                $user->password = bcrypt($request['new_password']);
+                $user->save();
             }else{
                 return back()->withInput()->with('flash_message_error', '現在のパスワードが間違っています');
             }

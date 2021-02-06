@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Tag;
+use App\LocateTag;
 use App\UserTag;
-use App\User;//一応入れた
+use App\User;
 use GuzzleHttp\Psr7\Request as Psr7Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -108,24 +109,17 @@ class TagController extends Controller
 
     // タグ検索結果
     public function tag_search(Request $request){
-        $tag = Tag::find($request->tag_id);
-        $users = $tag->user()->where('role', 'Performer')->get();
-        // logger($users);
-        // foreach($users as $user){
-        //     logger($user->id);
-        // };
-        // foreach($users as $user){
-        //     logger($user->name);
-        // };
-
-        // どうやってページネーターと共存させればいいのか全然わからん
-        // とりあえず上の二つの方法で、値を取り出すことはできている。
-        // 最終的にはresult->idって形で取り出せるようにしたい。
+        if($request->tag_id){
+            $users = Tag::find($request->tag_id)->user();
+        }else{
+            $users = User::all();
+        }
+        $users = $users->where('role', 'Performer')->get();
 
         $user = new LengthAwarePaginator(
-            $users->forPage($request->page,2),  // 現在のページのsliceした情報(現在のページ, 1ページあたりの件数)
+            $users->forPage($request->page, 10),  // 現在のページのsliceした情報(現在のページ, 1ページあたりの件数)
             count($users),  //総件数
-            2,  //1ページあたりの件数。(本来なら20。確認用)
+            10,  //1ページあたりの件数。(本来なら20。確認用)
             $request->page,  // 現在のページ(ページャーの色がActiveになる)
             array('path'=>"/user/tag_search?tag_id=$request->tag_id") // ページャーのリンクをOptionのpathで指定
         );

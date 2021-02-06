@@ -59,15 +59,10 @@
             </div>
         </div>
     </form>
-    <?php
-        $modal_content2 = '
-            <br><h3>サンプル<div class="js-modal-close close float-right">×</div><hr></h3>
-            <h6 class="font-weight-bold">サンプル</h6>
-        '
-    ?>@if(empty($data->token))
+    @if(empty($data->token))
         <label>*パスワード変更</label>
         <p>現在のパスワードと新しいパスワードを入力してください</p>
-        <form action="/user/{{Auth::id()}}/summary/account/changeupdate" method="POST">
+        <form action="/user/{{Auth::id()}}/summary/account/changepassword" method="POST">
             @csrf
             <table>
                 <tr>

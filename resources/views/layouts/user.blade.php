@@ -98,7 +98,6 @@
         @include('layouts.user/tab', ['user' => $user, 'hasrecord' => $hasrecord])
 
         <div>@yield('content')</div>
-
     </div>
 
 </div>

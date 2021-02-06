@@ -110,11 +110,11 @@ class TagController extends Controller
     // タグ検索結果
     public function tag_search(Request $request){
         if($request->tag_id){
-            $result = Tag::find($request->tag_id);
-            $users = $result->user()->where('role', 'Performer')->get();
+            $users = Tag::find($request->tag_id)->user();
         }else{
             $users = User::all();
         }
+        $users = $users->where('role', 'Performer')->get();
 
         $user = new LengthAwarePaginator(
             $users->forPage($request->page, 10),  // 現在のページのsliceした情報(現在のページ, 1ページあたりの件数)

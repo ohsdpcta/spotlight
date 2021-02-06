@@ -47,7 +47,7 @@
 
         {{-- indexのnavbarでは検索フォームを非表示 --}}
         <div class="col-7 collapse navbar-collapse">
-            @if(!request()->is('/') && !request()->is('user/search*') )
+            @if(!request()->is('/') && !request()->is('user/search*') && !request()->is('user/tag_search*') )
                 <form class="form-inline mt-1 mb-1 align-right col-12" action="/user/search">
                     @csrf
                     <input class="form-control mr-sm-1 col-lg-10 col-md-9 col-sm-8" type="search" name="search">

@@ -23,6 +23,8 @@ class DatabaseSeeder extends Seeder
             SmallProfileTableSeeder::class,
             PrefectureTableSeeder::class,
             UserPrefectureTableSeeder::class,
+            CityTableSeeder::class,
+            UserCityTableSeeder::class,
         ]);
     }
 }

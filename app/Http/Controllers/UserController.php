@@ -6,20 +6,14 @@ use Socialite;
 use Illuminate\Http\Request;
 use App\User;
 use App\Profile;
-use App\Library\UserClass;
 use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
 //メール
 use App\Mail\HelloEmail;
-use App\Mail\passChangeMaill;
-use App\Mail\SocalIDChange;
-use App\Mail\MailChange;
 use App\Mail\MailChangeCheck;
 use App\Mail\ResetMail;
 use App\Newemail;
 use Illuminate\Support\Facades\Mail;
 
-use GuzzleHttp\Psr7\Request as Psr7Request;
 use Illuminate\Support\Facades\Validator;
 // use Mail;
 

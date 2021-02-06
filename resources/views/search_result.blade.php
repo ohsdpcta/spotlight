@@ -36,7 +36,7 @@
             @endforeach
         </div>
         <br>
-        {{ $users->links('vendor.pagination.sample-pagination') }}
+        {{ $users->appends($params)->links('vendor.pagination.sample-pagination') }}
     </body>
 
 @endsection

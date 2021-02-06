@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Exception;
 use App\User;
 use App\Profile;
+use App\Prefecture;
+use App\City;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -33,13 +35,21 @@ class UserController extends Controller
 
     // 検索結果
     public function search(Request $request){
-        $input = $request->search;
-        if ($input == '') {
+        $params = array();
+        // ワード検索
+        if($request->search == false) {
             $result = User::paginate(10);
         }else{
-            $result = User::where('name', 'like', '%'.$input.'%')->paginate(10);
+            $result = User::where('name', 'like', '%'.$request->search.'%')->paginate(10);
         }
-        return view('search_result', ['users' => $result]);
+        if($request->prefecture){
+            $result = Prefecture::where('name', $request->prefecture)->first()->user()->paginate(10);
+            $params['prefecture'] = $request->prefecture;
+        }elseif($request->city){
+            $result = City::where('name', $request->city)->first()->user()->paginate(10);
+            $params['city'] = $request->city;
+        }
+        return view('search_result', ['users' => $result], compact('params'));
     }
 
     //サインアップフォーム

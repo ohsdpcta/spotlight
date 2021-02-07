@@ -254,7 +254,7 @@ class UserController extends Controller
         if(request('image')){
             $random = Str::random(32);
             $image = $request->file('image');
-            $path = Storage::disk('s3')->putFile("tmp/{$random}", $image, 'public');
+            $path = Storage::disk('s3')->putFile("top/{$random}", $image, 'public');
         }
         // dataに値を設定
         $data = User::find($id);

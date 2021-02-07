@@ -259,14 +259,15 @@ class UserController extends Controller
         if(request('image')){
             $random = Str::random(32);
             $image = $request->file('image');
-            $disk = Storage::disk('s3');
-            $path = $disk->putFile("tmp/{$random}", $image, 'public');
+            $path = Storage::disk('s3')->putFile("top/{$random}", $image, 'public');
         }
         // dataに値を設定
         $data = User::find($id);
         $data->name = $request->name;
         $data->role = $request->role;
-        if(request('image'))$data->avatar = $disk->url($path);//dataに値を設定
+        if(request('image')){
+            $data->avatar = Storage::disk('s3')->url($path);
+        }
         if($data->save()){
             session()->flash('flash_message', 'アカウント情報の編集が完了しました');
         }

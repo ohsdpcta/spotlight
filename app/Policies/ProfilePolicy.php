@@ -17,11 +17,10 @@ class ProfilePolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function viewAny(User $user)
+    public function social(User $user, Profile $profile)
     {
-        //
+        return (string)Auth::user()->id === $profile->user_id and empty($user->token);
     }
-
     /**
      * Determine whether the user can view the profile.
      *

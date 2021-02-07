@@ -4,36 +4,42 @@
         <a class="nav-link @if(request()->is('*profile')) active @endif" href="/user/{{request()->id}}/profile">プロフィール</a>
     </li>
     @if($user->role == 'Performer')
-        <li class="nav-item">
-            @if($hasrecord['locate'])
+        @if($hasrecord['locate'])
+            <li class="nav-item">
                 <a class="nav-link @if(request()->is('*locate')) active @endif" href="/user/{{request()->id}}/locate">ロケーション</a>
-            @else
-                <a class="nav-link disabled" href="/user/{{request()->id}}/locate">ロケーション</a>
-            @endif
-        </li>
-        <li class="nav-item">
-            @if($hasrecord['goods'])
+            </li>
+        @endif
+        @if($hasrecord['goods'])
+            <li class="nav-item">
                 <a class="nav-link @if(request()->is('*goods')) active @endif" href="/user/{{request()->id}}/goods">グッズ</a>
-            @else
-                <a class="nav-link disabled" href="/user/{{request()->id}}/goods">グッズ</a>
-            @endif
-        </li>
-        <li class="nav-item">
-            @if($hasrecord['sample'])
-                <a class="nav-link @if(request()->is('*sample')) active @endif" href="/user/{{request()->id}}/sample">サンプルリンク</a>
-            @else
-                <a class="nav-link disabled" href="/user/{{request()->id}}/sample">サンプルリンク</a>
-            @endif
-        </li>
+            </li>
+        @endif
+        @if($hasrecord['sample'])
+            <li class="nav-item">
+                <a class="nav-link @if(request()->is('*sample')) active @endif" href="/user/{{request()->id}}/sample">サンプル</a>
+            </li>
+        @endif
+        @if(!$hasrecord['locate'])
+            <li class="nav-item">
+            </li>
+        @endif
+        @if(!$hasrecord['goods'])
+            <li class="nav-item">
+            </li>
+        @endif
+        @if(!$hasrecord['sample'])
+            <li class="nav-item">
+            </li>
+        @endif
     @elseif($user->role == 'Spotter')
         <li class="nav-item">
-            <a class="nav-link disabled" href="/user/{{request()->id}}/locate">ロケーション</a>
+            <a class="nav-link disabled" href="#"></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link disabled" href="/user/{{request()->id}}/goods">グッズ</a>
+            <a class="nav-link disabled" href="#"></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link disabled" href="/user/{{request()->id}}/sample">サンプルリンク</a>
+            <a class="nav-link disabled" href="#"></a>
         </li>
     @endif
 </ul>

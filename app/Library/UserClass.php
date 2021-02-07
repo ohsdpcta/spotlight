@@ -3,11 +3,9 @@
 namespace App\Library;
 
 use App\User;
-use App\Tag;
 use App\Follower;
 use App\SmallProfile;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Arr;
 
 class UserClass{
   public static function getUser($id){
@@ -50,6 +48,28 @@ class UserClass{
     $user = User::find($id);
     $tag = $user->tag()->get();
     return $tag;
+  }
+
+  public static function getPrefecture($id){
+    $user = User::find($id);
+    $prefecture = $user->prefecture;
+    if(count($prefecture)){
+      $result = $prefecture[0];
+    }else{
+      $result = false;
+    }
+    return $result;
+  }
+
+  public static function getCity($id){
+    $user = User::find($id);
+    $city = $user->city;
+    if(count($city)){
+      $result = $city[0];
+    }else{
+      $result = false;
+    }
+    return $result;
   }
 
   public static function getLocate($id){

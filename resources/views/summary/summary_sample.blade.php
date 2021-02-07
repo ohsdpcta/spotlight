@@ -23,12 +23,12 @@
 <div class="container">
 
     <div class="row">
-        <h3 class="text-dark col-md-4">サンプル編集</h3>
+        <h3 class="text-dark col-12">サンプル編集</h3>
     </div>
 
     <div class="row">
         {{-- 新規追加ボタン --}}
-        <button type="button" class="btn btn-secondary btn-block col-md-2 offset-md-10 mb-1" onclick="location.href='/user/{{Auth::id()}}/summary/sample/add'"><i class="fas fa-plus"></i></button>
+        <button type="button" class="btn btn-secondary btn-block col-2 offset-10 mb-1" onclick="location.href='/user/{{Auth::id()}}/summary/sample/add'"><i class="fas fa-plus"></i></button>
     </div>
 
     <hr>
@@ -40,7 +40,11 @@
     @endif
     <form method="get" action="/user/{{Auth::id()}}/summary/sample/delete">
         @csrf
-        <input class="btn btn-danger" type="submit" value="削除">
+        <!-- <input class="btn btn-danger" type="submit" value="削除"> -->
+        <button type="submit" class="btn btn-danger py-2 px-3 mb-1">
+            <i class="fas fa-trash-alt"></i>
+            <i class="far fa-check-square"></i>
+        </button>
 
         @foreach($data as $item)
 

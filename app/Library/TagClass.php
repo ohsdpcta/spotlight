@@ -28,29 +28,37 @@ class TagClass{
 
     public static function getTopTag(){
         $tags = Tag::select('*')->get();
-        $get_top_params = self::getTop($tags, 10);
-        $ids_order = $get_top_params['ids_order'];
-        $popular_item = Tag::whereIn('id', $get_top_params['top_item_ids'])
-            ->orderByRaw(DB::raw("FIELD(id, $ids_order)"))
-            ->get();
-        $top_tag = array(
-            'tags' => $popular_item,
-            'tag_amount' => $get_top_params['top_item_user_amount']
-        );
+        if(count($tags)){
+            $get_top_params = self::getTop($tags, 10);
+            $ids_order = $get_top_params['ids_order'];
+            $popular_item = Tag::whereIn('id', $get_top_params['top_item_ids'])
+                ->orderByRaw(DB::raw("FIELD(id, $ids_order)"))
+                ->get();
+            $top_tag = array(
+                'tags' => $popular_item,
+                'tag_amount' => $get_top_params['top_item_user_amount']
+            );
+        }else{
+            $top_tag = false;
+        }
         return $top_tag;
     }
 
     public static function getTopPrefecture(){
         $prefectures = Prefecture::select('*')->get();
-        $get_top_params = self::getTop($prefectures, 5);
-        $ids_order = $get_top_params['ids_order'];
-        $popular_item = Prefecture::whereIn('id', $get_top_params['top_item_ids'])
-            ->orderByRaw(DB::raw("FIELD(id, $ids_order)"))
-            ->get();
-        $top_pref = array(
-            'prefs' => $popular_item,
-            'pref_amount' => $get_top_params['top_item_user_amount']
-        );
+        if(count($prefectures)){
+            $get_top_params = self::getTop($prefectures, 5);
+            $ids_order = $get_top_params['ids_order'];
+            $popular_item = Prefecture::whereIn('id', $get_top_params['top_item_ids'])
+                ->orderByRaw(DB::raw("FIELD(id, $ids_order)"))
+                ->get();
+            $top_pref = array(
+                'prefs' => $popular_item,
+                'pref_amount' => $get_top_params['top_item_user_amount']
+            );
+        }else{
+            $top_pref = false;
+        }
         return $top_pref;
     }
 }

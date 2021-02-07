@@ -260,7 +260,9 @@ class UserController extends Controller
         $data = User::find($id);
         $data->name = $request->name;
         $data->role = $request->role;
-        if(request('image'))$data->avatar = Storage::disk('s3')->url($path);//dataに値を設定
+        if(request('image')){
+            $data->avatar = Storage::disk('s3')->url($path);
+        }
         if($data->save()){
             session()->flash('flash_message', 'アカウント情報の編集が完了しました');
         }

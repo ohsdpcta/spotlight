@@ -37,7 +37,7 @@
             <div class="form-check-inline">
                 <label><input class="form-check-input" type="radio" name="role" value="Spotter" {{ $data->role == "Spotter" ? 'checked="checked"' : ''}}>スポッター</label>
             </div>
-            <br>
+            <br><br>
 
             <!-- アップロードフォームの作成 -->
             <div class="row">
@@ -45,9 +45,9 @@
                 <!-- トップ画像 -->
                 <div class="border-bottom col-xl-3 col-lg-3 col-md-4 col-sm-12 pt-2 pb-2">
                     @if($data->avatar)
-                        <img src="{{ $data->avatar }}" width="200" height="200" class="rounded-circle">
+                        <img src="{{ $data->avatar }}" width="200" height="200" class="rounded-circle border">
                     @else
-                        <img src="http://placehold.jp/200x200.png" class="rounded-circle">
+                        <img src="http://placehold.jp/200x200.png" class="rounded-circle border">
                     @endif
                 </div>
                 <input type="file" name="image" class="col-12">
@@ -59,6 +59,9 @@
             </div>
         </div>
     </form>
+
+    <br><hr><br>
+
     @if(empty($data->token))
         <label>*パスワード変更</label>
         <p>現在のパスワードと新しいパスワードを入力してください</p>

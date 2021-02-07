@@ -9,6 +9,11 @@ use GuzzleHttp\Psr7\Request as Psr7Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
+//aws s3アップロード
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Illuminate\Contracts\Filesystem\Filesystem;
+
 class GoodsController extends Controller
 {
     // 一覧
@@ -22,6 +27,7 @@ class GoodsController extends Controller
         $goods = new Goods;
         $goods->user_id = $id;
         $this->authorize('edit', $goods);
+        logger($data);
         return view('summary.summary_goods', compact('data'));
     }
 
@@ -33,7 +39,7 @@ class GoodsController extends Controller
         return view('summary.add_goods');
     }
 
-    public function create(Request $request, $id){//追加するぜ！
+    public function create(Request $request, $id){//追加
         $addgoods = new Goods;
         $addgoods->user_id = $id;
         $this->authorize('edit', $addgoods);
@@ -56,8 +62,17 @@ class GoodsController extends Controller
                 ->withInput();
         }
 
+        //画像アップロード
+        if(request('goods_picture')){
+            $random = Str::random(32);
+            $goods_picture = $request->file('goods_picture');
+            $path = Storage::disk('s3')->putFile("goods/{$random}", $goods_picture, 'public');
+        }
         $addgoods->name = $request->name;
         $addgoods->url = $request->url;
+        if(request('goods_picture')){
+            $addgoods->picture = Storage::disk('s3')->url($path);
+        }
         if($addgoods->save()){
             session()->flash('flash_message', 'グッズの登録が完了しました');
         }

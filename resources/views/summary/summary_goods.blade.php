@@ -37,17 +37,24 @@
     @endif
     <form method="get" action="/user/{{Auth::id()}}/summary/goods/delete">
         @csrf
-        <input class="btn btn-danger" type="submit" value="削除">
+
+        <!-- <input class="btn btn-danger" type="submit" value="削除"> -->
+        <button type="submit" class="btn btn-danger py-2 px-4 mb-1">
+            <i class="fas fa-trash-alt"></i>
+        </button>
 
         @foreach($data as $item)
 
-            {{-- <div class="row"> --}}
                 {{-- 背景の四角 --}}
                 <div class="row maru pt-1 pb-1 mb-1 mt-1" style="background-color: rgb(240, 240, 240)">
 
                     {{-- サムネ --}}
                     <div class="col-md-1">
-                        <img src="http://placehold.jp/50x50.png" class="rounded-circle">
+                        @if($item->picture)
+                            <img src="{{ $item->picture }}" width="50" height="50" class="rounded-circle border">
+                        @else
+                            <img src="http://placehold.jp/50x50.png" class="rounded-circle border">
+                        @endif
                     </div>
 
                     {{-- グッズ編集へのリンク --}}
@@ -58,7 +65,6 @@
                     <input type="checkbox" class="col-lg-1 col-md-1 col-sm-1 col-xs-1 d-flex align-items-center form-control mt-1" name="checked_items[]" value="{{$item->id}}">
 
                 </div>
-            {{-- </div> --}}
 
         @endforeach
     </form>

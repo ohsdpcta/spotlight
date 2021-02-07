@@ -35,8 +35,15 @@
                     <button type="sumbit" class="btn col-md-1"><i class="fas fa-search"></i></button>
                 </div>
             </form>
-            <div class="border row mt-3 mb-3 col-md-10 col-md-offset-1">
-                <p>ここにタグとかつける？</p>
+            {{-- タグ --}}
+            <div class="border row mt-3 mb-3 p-2 col-11">
+                @foreach($top_pref['prefs'] as $pref)
+                    <a class="badge badge-pill badge-success mr-1 d-flex align-items-center" href="/user/search?prefecture={{ $pref->name }}">#{{ $pref->name }}<span class="badge badge-light ml-1">{{ $top_pref['pref_amount'][$pref->id] }}</span></a>
+                @endforeach
+                <div class="w-100 mb-1"></div>
+                @foreach($top_tag['tags'] as $tag)
+                    <a class="badge badge-pill badge-primary mr-1 d-flex align-items-center" href="/user/tag_search?tag_id= {{ $tag->id }}">#{{ $tag->tag_name }}<span class="badge badge-light ml-1">{{ $top_tag['tag_amount'][$tag->id] }}</span></a>
+                @endforeach
             </div>
 
         </div>

@@ -1,12 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Exception;
 use App\User;
 use App\Profile;
 use App\Prefecture;
 use App\City;
+use App\Library\TagClass;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -28,8 +28,9 @@ class UserController extends Controller
 {
     // インデックス
     public function index(){
-
-        return view('index');
+        $top_tag = TagClass::getTopTag();
+        $top_pref = TagClass::getTopPrefecture();
+        return view('index', compact('top_pref', 'top_tag'));
     }
 
     // 検索結果

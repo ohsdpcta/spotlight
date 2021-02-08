@@ -46,10 +46,10 @@
         @if($tags)
             @foreach($tags as $tag)
 
-                    <div class="rounded-pill col-auto pt-1 pb-1 pr-2 pb-1 mb-1 mt-1" style="background-color: rgb(240, 240, 240)">
-                        <p class=" col-md-auto border fontsize d-inline-flex">{{ $tag->tag_name }}</p>
+                    <div class=" row rounded-pill  col-auto pt-1 pl-1 pr-1 pb-1 mb-1 mt-1 mr-1 ml-1" style="background-color: rgb(240, 240, 240)">
+                        <p class=" col-md-auto  fontsize d-inline-flex mb-1 mt-1">{{ $tag->tag_name }}</p>
                         {{-- 選択削除チェックボックス --}}
-                        <input type="checkbox" class="col-md-4 d-flex align-items-center form-control" name="checked_items[]" value="{{$tag->id}}">
+                        <input type="checkbox" class="col-2 ml-auto d-inline-flex align-items-center form-control mt-1" name="checked_items[]" value="{{$tag->id}}">
                     </div>
 
             @endforeach

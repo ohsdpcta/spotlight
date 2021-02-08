@@ -1,5 +1,5 @@
 
-<p>Spotlight</p>
+<h3>Spotlight</h3>
 <br>
 <form action="donemail" method="POST">
     <p>メールアドレスの変更申請が完了しました。以下のURLから変更を確定してください</p><br>

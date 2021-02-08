@@ -40,11 +40,13 @@
     @endif
     <form method="get" action="/user/{{Auth::id()}}/summary/sample/delete">
         @csrf
-        <!-- <input class="btn btn-danger" type="submit" value="削除"> -->
-        <button type="submit" class="btn btn-danger py-2 px-3 mb-1">
-            <i class="fas fa-trash-alt"></i>
-            <i class="far fa-check-square"></i>
-        </button>
+        <div class="row">
+            <!-- <input class="btn btn-danger" type="submit" value="削除"> -->
+            <button type="submit" class="btn btn-danger col-1 offset-11 mb-2">
+                <i class="fas fa-trash-alt"></i>
+                <i class="far fa-check-square"></i>
+            </button>
+        </div>
 
         @foreach($data as $item)
 

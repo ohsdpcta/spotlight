@@ -20,7 +20,7 @@
 <div class="container">
 
     <div class="row">
-        <h3 class="text-dark col-12 border">グッズ編集</h3>
+        <h3 class="text-dark col-12">グッズ編集</h3>
     </div>
 
     <div class="row">
@@ -39,10 +39,12 @@
         @csrf
 
         <!-- <input class="btn btn-danger" type="submit" value="削除"> -->
-        <button type="submit" class="btn btn-danger py-2 px-3 mb-1">
-            <i class="fas fa-trash-alt"></i>
-            <i class="far fa-check-square"></i>
-        </button>
+        <div class="row">
+            <button type="submit" class="btn btn-danger col-1 offset-11 mb-2">
+                <i class="fas fa-trash-alt"></i>
+                <i class="far fa-check-square"></i>
+            </button>
+        </div>
 
         @foreach($data as $item)
 

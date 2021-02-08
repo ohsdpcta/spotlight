@@ -19,9 +19,15 @@
   <script type="text/x-template" id="dropdown-template">
     <div class="v-dropdown-container">
       <ul class="v-dropdown-list">
-        <a class="nav-link v-dropdown-item" href="/user/signin">sign in</a>
-        <a class="nav-link v-dropdown-item" href="/user/signout">sign out</a>
-        <a class="nav-link v-dropdown-item v-dropdown-item-last" href="/user/{{ Auth::id() }}/summary/account">setting</a>
+        <a class="nav-link v-dropdown-item" href="/user/{{ Auth::id() }}/@if(request()->is('*profile'))profile\
+          @elseif(request()->is('*locate'))locate\
+          @elseif(request()->is('*goods'))goods\
+          @elseif(request()->is('*sample'))sample\
+          @else()profile\
+          @endif"
+        >my page</a>
+        <a class="nav-link v-dropdown-item" href="/user/{{ Auth::id() }}/summary/account">setting</a>
+        <a class="nav-link v-dropdown-item v-dropdown-item-last" href="/user/signout">sign out</a>
       </ul>
     </div>
   </script>

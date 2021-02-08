@@ -1,7 +1,7 @@
 <div id="dropdown-control">
     <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom mt-0 mb-0 pt-0 pb-0 sticky-top row">
 
-        <div class="col-4">
+        <div class="col-3">
             <a class="navbar-brand navbar-brand-center text-secondary float-left" style="font-family: 'Lobster', cursive;" href="/">Spotlight</a>
             <div class="collapse navbar-collapse float-left">
                 <ul class="navbar-nav">
@@ -32,9 +32,6 @@
                     {{-- ログイン時の処理 --}}
                     @else
                         <li class="nav-item">
-                            <a class="nav-link" href="/user/signout">sign out</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" href="/user/{{ Auth::id() }}/@if(request()->is('*profile'))profile\
                                 @elseif(request()->is('*locate'))locate\
                                 @elseif(request()->is('*goods'))goods\
@@ -49,12 +46,12 @@
         </div>
 
         {{-- indexのnavbarでは検索フォームを非表示 --}}
-        <div class="col-6 collapse navbar-collapse">
-            @if(!(request()->path() == '/'))
+        <div class="col-7 collapse navbar-collapse">
+            @if(!request()->is('/') && !request()->is('user/search*') && !request()->is('user/tag_search*') )
                 <form class="form-inline mt-1 mb-1 align-right col-12" action="/user/search">
                     @csrf
-                    <input class="form-control mr-sm-1 col-lg-9 col-md-8 col-sm-7" type="search" name="search">
-                    <button class="btn btn-primary col-lg-2 col-md-3 col-sm-4" type="submit">検索</button>
+                    <input class="form-control mr-sm-1 col-lg-10 col-md-9 col-sm-8" type="search" name="search">
+                    <button class="btn col-lg-1 col-md-2 col-sm-3" type="sumbit"><i class="fas fa-search"></i></button>
                 </form>
             @endif
         </div>
@@ -72,7 +69,7 @@
         </div>
     </nav>
 
-    {{-- ドロップダウン --}}
+    {{-- ドロップダウン | テンプレートはhead.blade --}}
     <transition name="dropdown-fade">
         <dropdown-menu v-if="dropdown_show" v-on:close="dropdown_show = false">
         </dropdown-menu>

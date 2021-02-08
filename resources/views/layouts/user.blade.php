@@ -7,6 +7,8 @@
     $sprofile = UserClass::getSmallProfile(request()->id);
     $locate = UserClass::getLocate(request()->id);
     $tags = UserClass::getTag(request()->id);
+    $prefecture = UserClass::getPrefecture(request()->id);
+    $city = UserClass::getCity(request()->id);
     $hasrecord = UserClass::hasRecord(request()->id);
 ?>
 
@@ -35,9 +37,9 @@
                 <p>{{'@'}}{{ $user->social_id }}</p>
 
                 {{-- 居場所タグ --}}
-                @if($locate)
-                    <a class="badge badge-pill badge-success">#{{ $locate->prefecture }}</a>
-                    <a class="badge badge-pill badge-success">#{{ $locate->city }}</a>
+                @if($user->role == 'Performer' && $prefecture && $city)
+                    <a class="badge badge-pill badge-success" href="/user/search?prefecture={{ $prefecture->name }}">#{{ $prefecture->name }}</a>
+                    <a class="badge badge-pill badge-success" href="/user/search?city={{ $city->name }}">#{{ $city->name }}</a>
                 @endif
                 <br>
 
@@ -96,7 +98,6 @@
         @include('layouts.user/tab', ['user' => $user, 'hasrecord' => $hasrecord])
 
         <div>@yield('content')</div>
-
     </div>
 
 </div>

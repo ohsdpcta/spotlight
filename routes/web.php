@@ -77,7 +77,7 @@ Route::prefix('/user')->group(function(){
                 Route::get('account/delete', 'UserController@delete')->middleware('Mailvarification');
                 Route::post('account/delete', 'UserController@remove')->middleware('Mailvarification');
                 //パスワード変更メール送信
-                Route::post('changeupdate','UserController@changeupdate')->middleware('Mailvarification');//変更処理
+                Route::post('changepassword','UserController@changepassword')->middleware('Mailvarification');//変更処理
                 //ソーシャルID変更メール機能
                 Route::post('socialupdate','UserController@socialupdate')->middleware('Mailvarification');//変更処理
                 //メールアドレス変更機能

@@ -1,50 +1,58 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use Socialite;
-use Illuminate\Http\Request;
+use Exception;
 use App\User;
 use App\Profile;
-use App\Library\UserClass;
+use App\Prefecture;
+use App\City;
+use App\Library\TagClass;
 use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Laravel\Socialite\Facades\Socialite;
+
 //メール
+use App\Newemail;
 use App\Mail\HelloEmail;
-use App\Mail\passChangeMaill;
-use  App\Mail\SocalIDChange;
-use App\Mail\MailChange;
 use App\Mail\MailChangeCheck;
 use App\Mail\ResetMail;
-use App\Newemail;
 use Illuminate\Support\Facades\Mail;
 
-
-use GuzzleHttp\Psr7\Request as Psr7Request;
-use Illuminate\Support\Facades\Validator;
-//use Mail;
-
-
-
-use Illuminate\Validation\Rule;
+//aws s3アップロード
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Illuminate\Contracts\Filesystem\Filesystem;
 
 class UserController extends Controller
 {
     // インデックス
-    public function index(Request $request){
-
-        return view('index');
+    public function index(){
+        $top_tag = TagClass::getTopTag();
+        $top_pref = TagClass::getTopPrefecture();
+        return view('index', compact('top_pref', 'top_tag'));
     }
 
     // 検索結果
     public function search(Request $request){
-        $input = $request->search;
-        if ($input == '') {
-            $result = User::paginate(10);
+        $params = array();
+        // ワード検索
+        if($request->search == false) {
+            $result = User::where('role', 'Performer')->paginate(10);
         }else{
-            $result = User::where('name', 'like', '%'.$input.'%')->paginate(10);
+            $result = User::where('name', 'like', '%'.$request->search.'%')
+                ->where('role', 'Performer')->paginate(10);
         }
-        return view('search_result', ['users' => $result]);
+        if($request->prefecture){
+            $result = Prefecture::where('name', $request->prefecture)->first()
+                ->user()->where('role', 'Performer')->paginate(10);
+            $params['prefecture'] = $request->prefecture;
+        }elseif($request->city){
+            $result = City::where('name', $request->city)->first()
+                ->user()->where('role', 'Performer')->paginate(10);
+            $params['city'] = $request->city;
+        }
+        return view('search_result', ['users' => $result], compact('params'));
     }
 
     //サインアップフォーム
@@ -135,7 +143,7 @@ class UserController extends Controller
     }
 
     // サインアウト
-    public function signout(Request $request){
+    public function signout(){
         Auth::logout();
         return redirect('/');
     }
@@ -229,14 +237,16 @@ class UserController extends Controller
     public function update(Request $request, $id) {
         $user = Profile::where('user_id', $id)->first();
         $this->authorize('edit', $user);
-        // //バリデーションの設定
+        //バリデーションの設定
         $rules = [
             'name'=>'required|string|max:30',
+            'image'=>'image',
         ];
         $messages = [
             'name.required' => 'ユーザー名を入力してください。',
             'name.max' => '３０文字以内で入力してください。',
             'name.string' => '入力方法が違います。',
+            'image.image' => '画像を選択してください。',
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
         if ($validator->fails()) {
@@ -244,16 +254,26 @@ class UserController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
+
+        //画像アップロード
+        if(request('image')){
+            $random = Str::random(32);
+            $image = $request->file('image');
+            $path = Storage::disk('s3')->putFile("top/{$random}", $image, 'public');
+        }
         // dataに値を設定
         $data = User::find($id);
         $data->name = $request->name;
         $data->role = $request->role;
+        if(request('image')){
+            $data->avatar = Storage::disk('s3')->url($path);
+        }
         if($data->save()){
             session()->flash('flash_message', 'アカウント情報の編集が完了しました');
         }
-
         return redirect("user/{$id}/summary/account");
     }
+
     // アカウント削除
     public function delete(Request $request, $id) {
         $user = Profile::where('user_id', $id)->first();
@@ -310,22 +330,23 @@ class UserController extends Controller
     }
 
     //passここで変更
-    public function changeupdate(Request $request){
+    public function changepassword(Request $request, $id){
         //バリデーションの設定
         $request->validate([
             'old_password'=>'required|string|between:8,128',
             'new_password'=>'required|string|between:8,128',
             'new_password_check'=>'required|string|between:8,128',
         ]);
-            $data = Auth::user();
-            $id = Auth::id();
-            $pass_data = User::where('password',$request['old_password'])->first();
-            //現在のパスワードがデータベースにあることを確認するようにする
+        $user = Profile::where('user_id', $id)->first();
+        $this->authorize('social', $user);
 
+        $pass_data = User::where('password',$request['old_password'])->first();
+
+        //現在のパスワードがデータベースにあることを確認するようにする
         if($request['old_password']!=$request['new_password']){//現在のパスワードと新しいパスワードが同じではない
             if($request['old_password'] === $pass_data){
-                $data->password = bcrypt($request['new_password']);
-                $data->save();
+                $user->password = bcrypt($request['new_password']);
+                $user->save();
             }else{
                 return back()->withInput()->with('flash_message_error', '現在のパスワードが間違っています');
             }
@@ -360,6 +381,9 @@ class UserController extends Controller
             'new_mail'=>'required|email|max:254|confirmed',
             'new_mail_confirmation'=>'required|email|max:254',
         ]);
+
+        $user = Profile::where('user_id', $id)->first();
+        $this->authorize('social', $user);
 
         if(User::where('email', $request->new_mail)->first()){
             return redirect("/user/{$id}/summary/account/")->with('flash_message_error', '入力されたメールアドレスは使用されています');

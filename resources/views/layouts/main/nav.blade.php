@@ -1,5 +1,5 @@
 <div id="dropdown-control">
-    <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom mt-0 mb-0 pt-0 pb-0 sticky-top row">
+    <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom mt-0 mb-0 pt-0 pb-0 sticky-top">
 
         <div class="col-3">
             <a class="navbar-brand navbar-brand-center text-secondary float-left" style="font-family: 'Lobster', cursive;" href="/">Spotlight</a>

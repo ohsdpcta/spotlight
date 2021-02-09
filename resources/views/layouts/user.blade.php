@@ -80,6 +80,13 @@
                             @elseif(request()->is('*sample'))sample\
                             @endif'"
                         >
+                        <button class="btn"
+                            onclick="location.href='/user/{{Auth::id()}}/summary/@if(request()->is('*profile'))profile\
+                            @elseif(request()->is('*locate'))locate\
+                            @elseif(request()->is('*goods'))goods\
+                            @elseif(request()->is('*sample'))sample\
+                            @endif'"
+                        ><i class="far fa-edit fa-3x text-primary"></i></button>
                     </div>
                 @endif
             </div>

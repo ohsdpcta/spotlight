@@ -12,9 +12,11 @@ class LocateClass{
         preg_match($regex[0], $address, $matches );
         if(!$matches){
             preg_match($regex[1], $address, $matches );
-            $tmp = $matches[1];
-            $matches[1] = $matches[2];
-            $matches[2] = $tmp;
+            if($matches){
+                $tmp = $matches[1];
+                $matches[1] = $matches[2];
+                $matches[2] = $tmp;
+            }
         }
         return $matches;
     }

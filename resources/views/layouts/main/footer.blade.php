@@ -19,8 +19,8 @@
                 <h5 class="text-muted">contact info</h5>
                 <ul>
                     <li>☎  xxx-xxxx-xxxx</li>
+                    <li>☎  xxx-xxxx-xxxx</li>
                     <li>〒  xxx-xxxx</li>
-                    <li>✉  xxxx@spotlight.com</li>
                 </ul>
             </div>
         </div>

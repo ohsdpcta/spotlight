@@ -60,8 +60,6 @@
         </div>
     </form>
 
-    <br><hr><br>
-
     @if(empty($data->token))
         <label>*パスワード変更</label>
         <p>現在のパスワードと新しいパスワードを入力してください</p>

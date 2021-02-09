@@ -10,10 +10,11 @@
     <style>
         .imagetileview {
             overflow: hidden;
-            display: flex;
-            flex-wrap: wrap;
-            position:relative;
-            padding-bottom:100%;
+            text-align: center;
+            /* display: flex; */
+            /* flex-wrap: wrap; */
+            /* position:relative; */
+            /* padding-bottom:100%; */
         }
         .image img{
   position:absolute;
@@ -27,18 +28,36 @@
     @else
     <div class="border border-top-0 rounded-bottom px-4 py-3">
 
-        <ul class="row">
+        {{-- <ul class="row">
             @foreach ($data as $item)
                 <li class="border col-4 imagetileview">
-                    {{-- <a href="{{ $item->url }}">{{ $item->name }}</a> --}}
                     @if($item->picture)
-                        <a href="{{ $item->url }}"><img src="{{ $item->picture }}" class="border"></a>
+                        <a href="{{ $item->url }}"><img src="{{ $item->picture }}" width="200" height="200" class="border rounded-circle"></a>
                     @else
-                        <a href=""><img src="http://placehold.jp/200x200.png" class="border"></a>
+                        <a href="{{ $item->url }}"><img src="http://placehold.jp/200x200.png" class="border"></a>
                     @endif
                 </li>
             @endforeach
-        </ul>
+        </ul> --}}
+
+        <div class="container">
+            <div class="row">
+                @foreach ($data as $item)
+                <div class="col-4">
+                    <div class="card imagetileview">
+                        <div class="card-body">
+                            @if($item->picture)
+                                <a href="{{ $item->url }}"><img src="{{ $item->picture }}" width="200" height="200" class="card-img-top"></a>
+                            @else
+                                <a href="{{ $item->url }}"><img src="http://placehold.jp/200x200.png" class="border"></a>
+                            @endif
+                        </div>
+                        <h5 class="card-text">{{ $item->name }}</h5>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
 
         {{ $data->links('vendor.pagination.sample-pagination') }}
 

@@ -10,7 +10,7 @@
     @section('user')
     <div class="container">
         <br>
-    <h1>エラーが発生しました！！</h1>
+    <h3>エラーが発生しました！！</h3>
     <p>認証エラーが発生しました。<br>
     エラー内容:{{$message}}</p>
     <a href="/">ホーム画面へ</a>

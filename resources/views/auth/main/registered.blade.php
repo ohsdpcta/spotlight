@@ -8,7 +8,7 @@
     @section('user')
     <div class="container">
         <br>
-        <p>本会員登録が完了しました。</p>
+        <h3>本会員登録が完了しました。</h3>
             <a href="/">トップページへ戻る</a>
             <br>
             <br>

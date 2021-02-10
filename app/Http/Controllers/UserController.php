@@ -274,14 +274,7 @@ class UserController extends Controller
         return redirect("user/{$id}/summary/account");
     }
 
-    // アカウント削除
-    public function delete(Request $request, $id) {
-        $user = Profile::where('user_id', $id)->first();
-        $this->authorize('edit', $user);
-        $data = User::find($id);
-        return view('summary.delete_account', compact('data'));
-    }
-
+    //アカウント削除
     public function remove(Request $request, $id) {
         // レコードを削除する。
         $user = Profile::where('user_id', $id)->first();

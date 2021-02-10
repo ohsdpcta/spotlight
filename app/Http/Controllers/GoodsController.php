@@ -144,6 +144,7 @@ class GoodsController extends Controller
         $data = Goods::find($delete_item_id);
         foreach($data as $item){
             $this->authorize('edit', $item);
+            Storage::disk('s3')->delete("goods/{$item->picture}");//画像削除
         }
         $data->each->delete();
         session()->flash('flash_message', '削除が完了しました');

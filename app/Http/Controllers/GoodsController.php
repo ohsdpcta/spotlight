@@ -88,7 +88,7 @@ class GoodsController extends Controller
         $addgoods = new Goods;
         $addgoods->user_id = $id;
         $this->authorize('edit', $addgoods);
-        // //バリデーションの設定
+        //バリデーションの設定
         $rules = [
             'name'=>'required|between:1,25',
             'url'=>'required|between:1,190|url',
@@ -106,11 +106,18 @@ class GoodsController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-
+        // 登録
         if(Auth::id() == $id){
             $addgoods = Goods::find($goods_id);
             $addgoods->name = $request->name;
             $addgoods->url = $request->url;
+            if(request('image')){
+                Storage::disk('s3')->delete("goods/{$addgoods->picture}");
+                $random = Str::random(32);
+                $image = $request->file('image');
+                $path = Storage::disk('s3')->put("goods/aaaa", $image, 'public');
+                $addgoods->picture = Storage::disk('s3')->url($path);
+            }
             if($addgoods->save()){
                 session()->flash('flash_message', 'グッズの編集が完了しました');
             }

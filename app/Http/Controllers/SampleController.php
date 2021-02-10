@@ -50,7 +50,7 @@ class SampleController extends Controller {
             'name.between' => '50文字以内で入力してください。',
             'url.required' => 'urlを入力してください。',
             'url.between' => '1000文字以内で入力してください。',
-            'url.regex' => 'コピペ',
+            'url.regex' => 'URLは【i】のアイコンをクリックし、サンプル登録方法をお選びください',
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
         if ($validator->fails()) {

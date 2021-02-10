@@ -7,8 +7,8 @@ use App\Profile;
 use App\Prefecture;
 use App\City;
 use App\Library\TagClass;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Socialite\Facades\Socialite;
 

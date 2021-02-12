@@ -27,7 +27,6 @@ class GoodsController extends Controller
         $goods = new Goods;
         $goods->user_id = $id;
         $this->authorize('edit', $goods);
-        logger($data);
         return view('summary.summary_goods', compact('data'));
     }
 
@@ -112,10 +111,11 @@ class GoodsController extends Controller
             $addgoods->name = $request->name;
             $addgoods->url = $request->url;
             if(request('image')){
-                Storage::disk('s3')->delete("goods/{$addgoods->picture}");
+                logger($addgoods->picture);
+                Storage::disk('s3')->delete("{$addgoods->picture}");
                 $random = Str::random(32);
                 $image = $request->file('image');
-                $path = Storage::disk('s3')->put("goods/aaaa", $image, 'public');
+                $path = Storage::disk('s3')->put("goods/{$random}", $image, 'public');
                 $addgoods->picture = Storage::disk('s3')->url($path);
             }
             if($addgoods->save()){
@@ -144,7 +144,7 @@ class GoodsController extends Controller
         $data = Goods::find($delete_item_id);
         foreach($data as $item){
             $this->authorize('edit', $item);
-            Storage::disk('s3')->delete("goods/{$item->picture}");//画像削除
+            Storage::disk('s3')->delete("{$item->picture}");//画像削除
         }
         $data->each->delete();
         session()->flash('flash_message', '削除が完了しました');

@@ -18,52 +18,26 @@
         <div class="row">
 
             <!-- トップ画像 -->
-            <div class="border-bottom col-xl-3 col-lg-3 col-md-4 col-sm-12 pt-2 pb-2">
+            <div class="col-3 col-sm-3 col-md-3 py-2 pl-4 align-self-center">
                 @if($user->avatar)
-                    <img src="{{ $user->avatar }}" width="200" height="200" class="rounded-circle">
-                @else
-                    <img src="http://placehold.jp/200x200.png" class="rounded-circle">
-                @endif
-            </div>
-
-            {{-- ユーザー名 --}}
-            <div class="border-bottom col-xl-6 col-lg-6 col-md-8 col-sm-12 col-xs-12 pt-2 pr-2 pb-2 pl-2 text-dark">
-                @if($user->role == 'Performer')
-                    <span class="badge badge-primary">{{ $user->role }}</span>
-                @elseif($user->role == 'Spotter')
-                    <span class="badge badge-secondary">{{ $user->role }}</span>
-                @endif
-                <h1>{{ $user->name }}</h1>
-                <p>{{'@'}}{{ $user->social_id }}</p>
-
-                {{-- 居場所タグ --}}
-                @if($user->role == 'Performer' && $prefecture && $city)
-                    <a class="badge badge-pill badge-success" href="/user/search?prefecture={{ $prefecture->name }}">#{{ $prefecture->name }}</a>
-                    <a class="badge badge-pill badge-success" href="/user/search?city={{ $city->name }}">#{{ $city->name }}</a>
-                @endif
-                <br>
-
-                {{-- タグ --}}
-                @if($user->role == 'Performer' && $tags)
-                    @foreach($tags as $tag)
-                        <a class="badge badge-pill badge-primary" href="/user/tag_search?tag_id={{ $tag->id }}">#{{ $tag->tag_name }}</a>
-                    @endforeach
-                @endif
-
-                {{-- ショートプロフィール --}}
-                <div>
-                    @if( !empty($sprofile->scomment) )
-                        <div class="pt-4">
-                            <h6>{{ $sprofile->scomment }}</h6>
-                        </div>
+                    @if(session('device') == "mobile")
+                        <img src="{{ $user->avatar }}" width="40" height="40" class="rounded-circle">
+                    @else
+                        <img src="{{ $user->avatar }}" width="200" height="200" class="rounded-circle">
                     @endif
-                </div>
+                @else
+                    @if(session('device') == "mobile")
+                        <img src="https://placehold.jp/60x60.png" class="rounded-circle">
+                    @else
+                        <img src="http://placehold.jp/200x200.png" class="rounded-circle">
+                    @endif
+                @endif
             </div>
 
-            <div class="border-bottom col-xl-3 col-lg-3 col-md-12 col-sm-12">
+            <div class="col-9 col-sm-9 col-md-9 @if(session('device')=='mobile')align-self-center\@endif">
                 {{-- フォローボタン --}}
                 @if(Auth::user() and Auth::user()->id != request()->id)
-                    <div class="col-3">
+                    <div class="float-right">
                         @if($follow['follow_flg'] == 1)
                             <input type="button" onclick="location.href='/user/{{ request()->id }}/unfollow'" class="btn btn-primary" value="フォロー解除">
                         @else
@@ -72,36 +46,68 @@
                     </div>
                 {{-- ユーザーページ編集 --}}
                 @elseif(Auth::user() != '')
-                    <div class="col-3 pt-2 pb-2">
-                        <input class="btn btn-success" value="ユーザーページ編集" type="button"
+                    <div class="float-right">
+                        <input class="btn btn-sm btn-success" value="ユーザーページ編集" type="button"
                             onclick="location.href='/user/{{Auth::id()}}/summary/@if(request()->is('*profile'))profile\
                             @elseif(request()->is('*locate'))locate\
                             @elseif(request()->is('*goods'))goods\
                             @elseif(request()->is('*sample'))sample\
                             @endif'"
                         >
-                        <button class="btn"
-                            onclick="location.href='/user/{{Auth::id()}}/summary/@if(request()->is('*profile'))profile\
-                            @elseif(request()->is('*locate'))locate\
-                            @elseif(request()->is('*goods'))goods\
-                            @elseif(request()->is('*sample'))sample\
-                            @endif'"
-                        ><i class="far fa-edit fa-3x text-primary"></i></button>
                     </div>
                 @endif
             </div>
 
-        </div>
+            {{-- ユーザー名 --}}
+            <div class="col-12 col-sm-12 col-md-8 pr-2 pb-2 pl-1 text-dark">
+                <h4 class="d-inline">{{ $user->name }}</h4>
+                @if($user->role == 'Performer')
+                    <span class="badge badge-primary align-text-top">{{ $user->role }}</span>
+                @elseif($user->role == 'Spotter')
+                    <span class="badge badge-secondary align-text-top">{{ $user->role }}</span>
+                @endif
+            </div>
 
-        <!-- フォロー、フォロワー -->
-        <div class="row">
-            <a class="border-bottom col-xl-2 col-lg-2 col-md-2 col-sm-3 col-xs-2" href="/user/{{ request()->id }}/followerlist">{{ $follow['follower'] }} Follower </a>
-            <a class="border-bottom col-xl-2 col-lg-2 col-md-2 col-sm-3 col-xs-2" href="/user/{{ request()->id }}/followlist">{{ $follow['follow_count'] }} Follow </a>
-        </div>
+            <div class="col-12 col-sm-12 px-0">
+                <p>{{'@'}}{{ $user->social_id }}</p>
+            </div>
 
+            {{-- 居場所タグ --}}
+            @if($user->role == 'Performer' && $prefecture && $city)
+                <div>
+                    <a class="badge badge-pill badge-success" href="/user/search?prefecture={{ $prefecture->name }}">#{{ $prefecture->name }}</a>
+                    <a class="badge badge-pill badge-success" href="/user/search?city={{ $city->name }}">#{{ $city->name }}</a>
+                <br>
+                </div>
+            @endif
+
+            {{-- タグ --}}
+            @if($user->role == 'Performer' && $tags)
+                <div>
+                    @foreach($tags as $tag)
+                        <a class="badge badge-pill badge-primary" href="/user/tag_search?tag_id={{ $tag->id }}">#{{ $tag->tag_name }}</a>
+                    @endforeach
+                </div>
+            @endif
+
+            {{-- ショートプロフィール --}}
+            @if( !empty($sprofile->scomment) )
+                <div>
+                    <div class="pt-4">
+                        <h6>{{ $sprofile->scomment }}</h6>
+                    </div>
+                </div>
+            @endif
+
+            <!-- フォロー、フォロワー -->
+            <div>
+                <a class="col-4 col-sm-4 pl-0" href="/user/{{ request()->id }}/followerlist">{{ $follow['follower'] }} Follower </a>
+                <a class="col-4 col-sm-4" href="/user/{{ request()->id }}/followlist">{{ $follow['follow_count'] }} Follow </a>
+            </div>
+        </div>
     </div>
 
-    <div class="tab nav-justified">
+    <div class="tab nav-justified mt-3">
         @include('layouts.user/tab', ['user' => $user, 'hasrecord' => $hasrecord])
 
         <div>@yield('content')</div>

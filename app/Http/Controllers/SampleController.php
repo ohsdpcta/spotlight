@@ -40,7 +40,7 @@ class SampleController extends Controller {
         $addsample = new Sample;
         $addsample->user_id = $id;
         $this->authorize('edit', $addsample);
-        // //バリデーションの設定
+        //バリデーションの設定
         $rules = [
             'name'=>['required','between:1,50'],
             'url'=>['required','between:1,1000','regex:/^.*youtube.*|.*soundcloud.*$/'],

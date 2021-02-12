@@ -43,16 +43,16 @@
         <div class="container">
             <div class="row">
                 @foreach ($data as $item)
-                <div class="col-4">
-                    <div class="card imagetileview">
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+                    <div class="card">
                         <div class="card-body">
                             @if($item->picture)
-                                <a href="{{ $item->url }}"><img src="{{ $item->picture }}" width="200" height="200" class="card-img-top"></a>
+                                <a href="{{ $item->url }}"><img src="{{ $item->picture }}" class="card-img-top"></a>
                             @else
                                 <a href="{{ $item->url }}"><img src="http://placehold.jp/200x200.png" class="border"></a>
                             @endif
                         </div>
-                        <h5 class="card-text">{{ $item->name }}</h5>
+                        <h5 class="card-title text-center">{{ $item->name }}</h5>
                     </div>
                 </div>
                 @endforeach

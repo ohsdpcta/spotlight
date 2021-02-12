@@ -8,6 +8,7 @@
 <head>
     <meta charset="utf-8">
     <title>ひと言コメント編集 / Spotlight</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.min.js"></script>
     <style>
         #map {
         width: 100%;
@@ -33,7 +34,21 @@
             {{-- 各種フォーム入力欄 --}}
             {{-- バリデーションエラーがあった場合は、old関数で入力データを復元する --}}
             <label>ひと言コメント</label><br>
-            <input type="text" name="scomment" value="{{ $data ? $data->scomment : '' }}" maxlength="50" placeholder="ひと言コメントを入力してください。" class="form-control col-12 mb-2" >
+
+            <body>
+                <div id="app">
+                <input type="text" v-model.trim="message" name="scomment" value="{{ $data ? $data->scomment : '' }}" maxlength="50" placeholder="ひと言コメントを入力してください。" class="form-control col-12 mb-2" >
+                    <p>@{{ message.length }}/50</p>
+                    <p>最大文字数50文字</p>
+                </div>
+                <script>
+                    new Vue({
+                 el: "#app",
+                 data: { message: "" }
+                });
+                </script>
+            </body>
+
             {{-- 各種ボタン --}}
             <div class="float-right">
                 @if($data)
@@ -53,3 +68,5 @@
 </html>
 
 @endsection
+
+

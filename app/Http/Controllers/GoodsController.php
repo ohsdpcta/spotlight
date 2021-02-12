@@ -9,6 +9,11 @@ use GuzzleHttp\Psr7\Request as Psr7Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
+//aws s3アップロード
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Illuminate\Contracts\Filesystem\Filesystem;
+
 class GoodsController extends Controller
 {
     // 一覧
@@ -33,7 +38,7 @@ class GoodsController extends Controller
         return view('summary.add_goods');
     }
 
-    public function create(Request $request, $id){//追加するぜ！
+    public function create(Request $request, $id){//追加
         $addgoods = new Goods;
         $addgoods->user_id = $id;
         $this->authorize('edit', $addgoods);
@@ -56,8 +61,17 @@ class GoodsController extends Controller
                 ->withInput();
         }
 
+        //画像アップロード
+        if(request('goods_picture')){
+            $random = Str::random(32);
+            $goods_picture = $request->file('goods_picture');
+            $path = Storage::disk('s3')->putFile("goods/{$random}", $goods_picture, 'public');
+        }
         $addgoods->name = $request->name;
         $addgoods->url = $request->url;
+        if(request('goods_picture')){
+            $addgoods->picture = Storage::disk('s3')->url($path);
+        }
         if($addgoods->save()){
             session()->flash('flash_message', 'グッズの登録が完了しました');
         }
@@ -73,7 +87,7 @@ class GoodsController extends Controller
         $addgoods = new Goods;
         $addgoods->user_id = $id;
         $this->authorize('edit', $addgoods);
-        // //バリデーションの設定
+        //バリデーションの設定
         $rules = [
             'name'=>'required|between:1,25',
             'url'=>'required|between:1,190|url',
@@ -91,11 +105,19 @@ class GoodsController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-
+        // 登録
         if(Auth::id() == $id){
             $addgoods = Goods::find($goods_id);
             $addgoods->name = $request->name;
             $addgoods->url = $request->url;
+            if(request('image')){
+                logger($addgoods->picture);
+                Storage::disk('s3')->delete("{$addgoods->picture}");
+                $random = Str::random(32);
+                $image = $request->file('image');
+                $path = Storage::disk('s3')->put("goods/{$random}", $image, 'public');
+                $addgoods->picture = Storage::disk('s3')->url($path);
+            }
             if($addgoods->save()){
                 session()->flash('flash_message', 'グッズの編集が完了しました');
             }
@@ -122,6 +144,7 @@ class GoodsController extends Controller
         $data = Goods::find($delete_item_id);
         foreach($data as $item){
             $this->authorize('edit', $item);
+            Storage::disk('s3')->delete("{$item->picture}");//画像削除
         }
         $data->each->delete();
         session()->flash('flash_message', '削除が完了しました');

@@ -61,8 +61,10 @@ class LocateController extends Controller
         $locate->user_id = $id;
         $this->authorize('edit', $locate);
 
-
         $formatted_address = LocateClass::regex_address($request->address);
+        if(!$formatted_address){
+            return redirect("user/{$id}/summary/locate")->with('flash_message_error', '登録可能な住所が見つかりませんでした。');
+        }
         $prefecture = Prefecture::where('name', $formatted_address[1])->first();
         $city = City::where('name', $formatted_address[2])->first();
         //タグの名前がDBになかった場合、タグを新たに登録

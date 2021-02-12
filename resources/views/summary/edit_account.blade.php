@@ -59,75 +59,37 @@
             </div>
         </div>
     </form>
-
+    <br>
+    <hr>
+    <br>
+    <h4 class="text-dark">ユーザー情報変更</h4>
+    <br>
     @if(empty($data->token))
-        <label>*パスワード変更</label>
-        <p>現在のパスワードと新しいパスワードを入力してください</p>
+        <!-- *パスワード変更 -->
         <form action="/user/{{Auth::id()}}/summary/account/changepassword" method="POST">
             @csrf
-            <table>
-                <tr>
-                    <th></th>
-                    <th></th>
-                </tr>
-                <tr>
-                    <td>現在のパスワード::</td><td><input type="password" class="form-control" name="old_password" value=""></td>
-                </tr>
-                <tr>
-                    <td>新しいパスワード::</td><td><input type="password" class="form-control" name="new_password" value=""></td>
-                <tr>
-                <tr>
-                    <td>新しいパスワードの確認::</td><td><input type="password" class="form-control" name="new_password_check" value=""></td>
-                </tr>
-            </table>
-            <label><input type="submit" class="btn btn-primary" name="send" value="変更"> </label>
+            @include('components/modal/edit_account/modal_password')
         </form>
     @endif
-    <label>*ソーシャルID変更</label>
-    <p>新しいソーシャルIDを入力してください</p>
+    <!-- *ソーシャルID変更 -->
     <form action="/user/{{Auth::id()}}/summary/account/socialupdate" method="POST">
         @csrf
-        <table>
-            <tr>
-                <th></th>
-                <th></th>
-            </tr>
-            <tr>
-                <td>新しいソーシャルID::</td><td><input type="text" class="form-control" name="new_social" value=""></td>
-            <tr>
-            <tr>
-                <td>新しいソーシャルIDの確認::</td><td><input type="text" class="form-control" name="new_social_confirmation" value=""></td>
-            </tr>
-        </table>
-        <label><input type="submit" class="btn btn-primary" name="send" value="変更"> </label>
+        @include('components/modal/edit_account/modal_social')
     </form>
     @if(empty($data->token))
+        <!-- *メールアドレス変更 -->
         <div class="row pl-3">
-            <label>*メールアドレス変更</label>
-            <div class="pt-1 pl-2">
+            <form action="/user/{{Auth::id()}}/summary/account/mailupdate" method="POST">
+                @csrf
                 @include('components/modal/edit_account/modal_email')
-            </div>
+            </form>
         </div>
-        <p>新しいメールアドレスを入力してください</p>
-        <form action="/user/{{Auth::id()}}/summary/account/mailupdate" method="POST">
-            @csrf
-            <table>
-                <tr>
-                    <th></th>
-                    <th></th>
-                </tr>
-                <tr>
-                    <div class="form-group">
-                        <td>新しいメールアドレス::</td><td><input type="text"  class="form-control" name="new_mail" value=""></td>
-                    </div>
-                <tr>
-                <tr>
-                    <div class="form-group">
-                        <td>新しいメールアドレスの確認::</td><td><input type="text" class="form-control" name="new_mail_confirmation" value=""></td>
-                    </div>
-                </tr>
-            </table>
-            <label><input type="submit" class="btn btn-primary" name="send" value="変更"> </label>
-        </form>
     @endif
+    <hr>
+    <div class="row pl-3">
+        <form action="/user/{{Auth::id()}}/summary/account/delete" method="POST" enctype="multipart/form-data">
+            @csrf
+            @include('components/modal/edit_account/modal_delete')
+        </form>
+    </div>
 @endsection

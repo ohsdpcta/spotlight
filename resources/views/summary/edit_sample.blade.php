@@ -25,12 +25,17 @@
         </div>
     @endif
     <div class="form-group">
-        {{-- <label>サンプル画像</label><input type="text" name="name" class="form-control"> --}}
-        <label>サンプル名</label><input type="text" name="name" class="form-control" value="{{ $data->name }}">
+        <label style="color:#353535">サンプル名</label><input type="text" name="name" class="form-control">
         <br>
-        <label>URL</label><input type="text" name="url" class="form-control" value="{{ $data->url }}">
+        <label>
+            <div class="row pl-3">
+                <h6 style="color:#505050">URL</h6>
+                <div class="pt-1 pl-2">@include('components/modal/add_sample/modal_video')</div>
+            </div>
+        </label>
+        <input type="text" name="url" class="form-control">
         <br>
-        <input type="submit" value="修正" class="btn btn-success">
+        <input type="submit" value="編集" class="btn btn-primary">
     </div>
 </form>
 

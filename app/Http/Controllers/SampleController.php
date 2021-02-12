@@ -94,34 +94,55 @@ class SampleController extends Controller {
     }
     public function update(Request $request, $id, $sample_id)
     {
-        $sample = new Sample;
-        $sample->user_id = $id;
-        $this->authorize('edit', $sample);
+        $editsample = new Sample;
+        $editsample->user_id = $id;
+        $this->authorize('edit', $editsample);
         // //バリデーションの設定
         $rules = [
-            'name'=>'required|between:1,25',
-            'url'=>'required|between:1,190|url',
+            'name'=>['required','between:1,50'],
+            'url'=>['required','between:1,1000','regex:/^.*youtube.*|.*soundcloud.*$/'],
         ];
         $messages = [
             'name.required' => 'サンプル名を入力してください。',
-            'name.between' => '２５文字以内で入力してください。',
-            'url.required' => 'URLを入力してください',
-            'url.between' => '１９０文字以内で入力してください。',
-            'url.url' => 'URLを正しく入力してください。',
+            'name.between' => '50文字以内で入力してください。',
+            'url.required' => 'urlを入力してください。',
+            'url.between' => '1000文字以内で入力してください。',
+            'url.regex' => 'URLは【i】のアイコンをクリックし、サンプル登録方法をお選びください',
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
         if ($validator->fails()) {
-            return redirect("user/{$id}/summary/sample/{$sample_id}/edit")
+            return redirect("user/{$id}/summary/sample/add")
                 ->withErrors($validator)
                 ->withInput();
         }
-        if(Auth::id() == $id){
-            $addsample = Sample::find($sample_id);
-            $addsample->name = $request->name;
-            $addsample->url = $request->url;
-            if($addsample->save()){
-                session()->flash('flash_message', 'サンプルの編集が完了しました');
+        $editsample->name = $request->name;
+        preg_match( '/youtube|soundcloud/', $request->url, $matches );
+        if ($matches[0] == "youtube") {
+            if (preg_match('/src="(\S+)"/', $request->url, $matches )) {
+                $editsample = Sample::find($sample_id);
+                $editsample->embed_site = 'youtube';
+                $editsample->url = $matches[1];
+            } elseif (preg_match("/list=(\S+)/", $request->url, $matches)) {
+                $editsample = Sample::find($sample_id);
+                $editsample->embed_site = 'youtube_list';
+                $editsample->url = $matches[1];
+            } else {
+                session()->flash('flash_message', '入力内容を確認してもう一度入力してください。');
+                return redirect("user/{$id}/summary/sample/add");
             }
+        } elseif($matches[0] == 'soundcloud') {
+            if (preg_match_all('/src="(\S+)"|href="(\S+)"|title="(\S+|([\S\s]{1,50}) target=)"/', $request->url, $matches)) {
+                $editsample = Sample::find($sample_id);
+                $editsample->embed_site = 'soundcloud';
+                $editsample->url = serialize($matches);
+            }
+        } else {
+            session()->flash('flash_message', '入力内容を確認してもう一度入力してください。');
+            return redirect("user/{$id}/summary/sample/add");
+        }
+
+        if($editsample->save()){
+            session()->flash('flash_message', 'サンプルの登録が完了しました');
         }
         return redirect("user/{$id}/summary/sample");
     }

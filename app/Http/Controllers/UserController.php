@@ -360,6 +360,8 @@ class UserController extends Controller
             'new_social'=>'required|unique:users,social_id|string|max:30|confirmed',
             'new_social_confirmation'=>'required|string|max:30',
         ]);
+        $user = Profile::where('user_id', $id)->first();
+        $this->authorize('edit', $user);
         $user = User::find($id);
         $user->social_id = $request->new_social;
         $user->save();

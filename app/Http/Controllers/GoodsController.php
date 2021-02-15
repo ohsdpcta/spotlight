@@ -84,9 +84,8 @@ class GoodsController extends Controller
         return view('summary.edit_goods',compact('data'));
     }
     public function update(Request $request, $id, $goods_id){
-        $addgoods = new Goods;
-        $addgoods->user_id = $id;
-        $this->authorize('edit', $addgoods);
+        $data = Goods::find($goods_id);
+        $this->authorize('edit', $data);
         //バリデーションの設定
         $rules = [
             'name'=>'required|between:1,25',

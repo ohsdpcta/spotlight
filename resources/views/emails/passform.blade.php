@@ -35,7 +35,7 @@
                     <td>新しいパスワードの確認::</td><td><input type="password" name="new_password_check" value=""></td>
                 </tr>
             </table>
-            <p><input type="hidden" name="email_token" value="{{$email_token}}""></p>
+            <p><input type="hidden" name="email_token" value="{{$email_token}}"></p>
             <label><input type="submit" name="send" value="変更"> </label>
 
         </form>

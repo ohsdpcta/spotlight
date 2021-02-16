@@ -56,7 +56,11 @@
 
                     {{-- サムネ --}}
                     <div class="col-md-1">
-                        <img src="http://placehold.jp/50x50.png" class="rounded-circle">
+                        @if($item->picture == !NULL)
+                            <img src="{{ $item->picture }}" hight=50px width=50px class="rounded-circle">
+                        @else
+                            <img src="http://placehold.jp/50x50.png" class="rounded-circle">
+                        @endif
                     </div>
 
                     {{-- サンプル編集へのリンク --}}

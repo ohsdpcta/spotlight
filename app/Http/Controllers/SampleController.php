@@ -40,7 +40,7 @@ class SampleController extends Controller {
         $addsample = new Sample;
         $addsample->user_id = $id;
         $this->authorize('edit', $addsample);
-        // //バリデーションの設定
+        //バリデーションの設定
         $rules = [
             'name'=>['required','between:1,50'],
             'url'=>['required','between:1,1000','regex:/^.*youtube.*|.*soundcloud.*$/'],
@@ -61,6 +61,7 @@ class SampleController extends Controller {
         $addsample->name = $request->name;
         preg_match( '/youtube|soundcloud/', $request->url, $matches );
         if ($matches[0] == "youtube") {
+            $addsample->picture = 'https://spotlight-images01.s3-ap-northeast-1.amazonaws.com/resources/youtube_social_squircle_white.png';
             if (preg_match('/src="(\S+)"/', $request->url, $matches )) {
                 $addsample->embed_site = 'youtube';
                 $addsample->url = $matches[1];
@@ -72,6 +73,7 @@ class SampleController extends Controller {
                 return redirect("user/{$id}/summary/sample/add");
             }
         } elseif($matches[0] == 'soundcloud') {
+            $addsample->picture = 'https://spotlight-images01.s3-ap-northeast-1.amazonaws.com/resources/th.jpg';
             if (preg_match_all('/src="(\S+)"|href="(\S+)"|title="(\S+|([\S\s]{1,50}) target=)"/', $request->url, $matches)) {
                 $addsample->embed_site = 'soundcloud';
                 $addsample->url = serialize($matches);

@@ -45,7 +45,7 @@
                 @foreach ($data as $item)
                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
                     <div class="card mb-3">
-                        <div class="card-body">
+                        <div class="card-body text-center">
                             @if($item->picture)
                                 <a href="{{ $item->url }}"><img src="{{ $item->picture }}" class="card-img-top"></a>
                             @else

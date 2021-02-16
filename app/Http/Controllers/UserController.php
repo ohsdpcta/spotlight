@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\Hash;
 
 //メール
 use App\Newemail;
@@ -333,14 +334,17 @@ class UserController extends Controller
         $user = Profile::where('user_id', $id)->first();
         $this->authorize('social', $user);
 
-        $pass_data = User::where('password',$request['old_password'])->first();
+        $old_pass = $request->old_password;
+        $pass_data = Auth::user()->password;
+        $users = Auth::user();
 
         //現在のパスワードがデータベースにあることを確認するようにする
-        if($request['old_password']!=$request['new_password']){//現在のパスワードと新しいパスワードが同じではない
-            if($request['old_password'] === $pass_data){
-                $user->password = bcrypt($request['new_password']);
-                $user->save();
+        if($old_pass!=$request['new_password']){//現在のパスワードと新しいパスワードが同じではない
+            if(Hash::check($old_pass,$pass_data)){//現在のパスワードとログインユーザーのパスワードが一致するか
+                $users->password = bcrypt($request['new_password']);
+                $users->save();
             }else{
+
                 return back()->withInput()->with('flash_message_error', '現在のパスワードが間違っています');
             }
         }else{
@@ -380,7 +384,7 @@ class UserController extends Controller
         $user = Profile::where('user_id', $id)->first();
         $this->authorize('social', $user);
 
-        if(User::where('email', $request->new_mail)->first()){
+        if(User::where('email','=', $request->new_mail)->first()){
             return redirect("/user/{$id}/summary/account/")->with('flash_message_error', '入力されたメールアドレスは使用されています');
         }
         $older_new_mail_data = Newemail::where('email', $request->new_mail)->first();

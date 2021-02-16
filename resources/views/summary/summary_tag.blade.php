@@ -45,11 +45,13 @@
         <?php $tags = UserClass::getTag(request()->id) ?>
         @if($tags)
             @foreach($tags as $tag)
-                <div class="row maru pt-1 pb-1 mb-1 mt-1" style="background-color: rgb(240, 240, 240)">
-                    {{ $tag->tag_name }}
-                    {{-- 選択削除チェックボックス --}}
-                    <input type="checkbox" class="col-lg-1 col-md-1 col-sm-1 col-xs-1 d-flex align-items-center form-control mt-1" name="checked_items[]" value="{{$tag->id}}">
-                </div>
+
+                    <div class=" row rounded-pill  col-auto pt-1 pl-1 pr-1 pb-1 mb-1 mt-1 mr-1 ml-1" style="background-color: rgb(240, 240, 240)">
+                        <p class=" col-md-auto  fontsize d-inline-flex mb-1 mt-1">{{ $tag->tag_name }}</p>
+                        {{-- 選択削除チェックボックス --}}
+                        <input type="checkbox" class="col-2 ml-auto d-inline-flex align-items-center form-control mt-1" name="checked_items[]" value="{{$tag->id}}">
+                    </div>
+
             @endforeach
         @endif
 

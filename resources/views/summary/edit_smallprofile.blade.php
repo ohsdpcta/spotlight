@@ -33,23 +33,29 @@
             {{-- 各種フォーム入力欄 --}}
             {{-- バリデーションエラーがあった場合は、old関数で入力データを復元する --}}
             <label>ひと言コメント</label><br>
-            <input type="text" name="scomment" value="{{ $data ? $data->scomment : '' }}" maxlength="50" placeholder="ひと言コメントを入力してください。" class="form-control col-12 mb-2" >
-            {{-- 各種ボタン --}}
-            <div class="float-right">
-                @if($data)
-                    <input type="submit" value="修正" class="btn btn-success">
-                    <button type="button" class="btn btn-danger" onclick="location.href='/user/{{Auth::id()}}/summary/smallprofile/delete'">削除</button>
-                @else
-                    <input type="submit" value="登録" class="btn btn-primary">
-                @endif
+            <div id="sprofile">
+                <input class="form-control" type="text" v-model.trim="message" name="scomment" value="{{ $data ? $data->scomment : '' }}" maxlength="50" placeholder="ひと言コメントを入力してください。">
+                <div class="mt-2 float-right">
+                    @if($data)
+                        <a class="p-0 mb-0 text-muted">@{{ message.length }}/50</a>
+                        <input class="btn btn-success ml-1" type="submit" value="修正">
+                        <button class="btn btn-danger ml-1" type="button" onclick="location.href='/user/{{Auth::id()}}/summary/smallprofile/delete'">削除</button>
+                    @else
+                        <p class="col-1 p-0 mb-0 text-muted">@{{ message.length }}/50</p>
+                        <input class="btn btn-primary col-2" type="submit" value="登録">
+                    @endif
+                </div>
             </div>
-            @if($data)
-
-            @else
-                <label>ひと言コメントが未登録です。</label>
-            @endif
+            <script>
+                new Vue({
+                    el: "#sprofile",
+                    data: { message: "" }
+                });
+            </script>
         </form>
     </div>
 </html>
 
 @endsection
+
+

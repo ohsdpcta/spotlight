@@ -10,12 +10,14 @@
     @section('user')
     <div class="container">
         <br>
-        <p>ご登録した名前とメールアドレスのご確認をお願いいたします。</p>
+        <h3>アカウント本登録</h3>
+        <br>
+        <h5>ご登録した名前とメールアドレスのご確認をお願いいたします。</h5>
         <form action="/user/emails/confirmation" method="POST">
         @csrf
 
-        <p>お名前:{{$users->name}}</p>
-        <p>メールアドレス:{{$users->email}}</p>
+        <h6>お名前:{{$users->name}}</h6>
+        <h6>メールアドレス:{{$users->email}}</h6>
         <label><input type="submit" class="btn btn-primary"  name="conf" value="認証"></label>
         </form>
         <br>

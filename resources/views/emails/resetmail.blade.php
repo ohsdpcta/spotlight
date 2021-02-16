@@ -1,5 +1,5 @@
 
-<p>Spotlight</p>
+<h3>Spotlight</h3>
 <br>
 <form action="donemail" method="POST">
     <p>パスワードリセットメールです。以下のURLから変更をしてください</p><br>

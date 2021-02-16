@@ -15,10 +15,13 @@
                 <li>
                 {{-- <a href="{{ $item->url }}">{{ $item->name }}</a> --}}
                 @if($item->embed_site=="youtube")
+                    <h5>{{ $item->name }}</h5>
                     <iframe width="560" height="315" src="{{ $item->url }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 @elseif($item->embed_site=="youtube_list")
+                    <h5>{{ $item->name }}</h5>
                     <iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?list={{ $item->url }}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                 @elseif($item->embed_site=="soundcloud")
+                    <h5>{{ $item->name }}</h5>
                     <iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" src="{{ $item->url[1][0] }}"></iframe>
                     <div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;">
                     <a href="{{ $item->url[2][1] }}" title="{{ $item->url[3][2] }}" target="_blank" style="color: #cccccc; text-decoration: none;">{{ $item->url[3][2] }}</a>
@@ -26,6 +29,7 @@
                     </div>
                 @endif
                 </li>
+                <br><br>
             @endforeach
         </ul>
         {{ $data->links('vendor.pagination.sample-pagination') }}

@@ -73,7 +73,7 @@ class SampleController extends Controller {
                 return redirect("user/{$id}/summary/sample/add");
             }
         } elseif($matches[0] == 'soundcloud') {
-            $addsample->picture = 'https://www.bing.com/th?id=AMMS_f4af29fdeba21593100cb6880c5cb238&w=110&h=110&c=7&rs=1&qlt=95&pcl=f9f9f9&cdv=1&dpr=1.25&pid=16.1';
+            $addsample->picture = 'https://spotlight-images01.s3-ap-northeast-1.amazonaws.com/resources/th.jpg';
             if (preg_match_all('/src="(\S+)"|href="(\S+)"|title="(\S+|([\S\s]{1,50}) target=)"/', $request->url, $matches)) {
                 $addsample->embed_site = 'soundcloud';
                 $addsample->url = serialize($matches);

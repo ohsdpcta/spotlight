@@ -41,8 +41,8 @@
                         <input class="btn btn-success ml-1" type="submit" value="修正">
                         <button class="btn btn-danger ml-1" type="button" onclick="location.href='/user/{{Auth::id()}}/summary/smallprofile/delete'">削除</button>
                     @else
-                        <p class="col-1 p-0 mb-0 text-muted">@{{ message.length }}/50</p>
-                        <input class="btn btn-primary col-2" type="submit" value="登録">
+                        <a class="p-0 mb-0 text-muted">@{{ message.length }}/50</a>
+                        <input class="btn btn-success ml-1" type="submit" value="登録">
                     @endif
                 </div>
             </div>
